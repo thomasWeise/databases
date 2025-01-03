@@ -1,0 +1,3 @@
+[submodule "bookbase"]
+	path = bookbase
+	url = ssh://git@github.com/thomasWeise/bookbase
