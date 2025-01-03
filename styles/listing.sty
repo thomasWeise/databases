@@ -1,0 +1,168 @@
+%%
+%% Listings and Listing Styles.
+%%
+%
+\RequirePackage{listings}%
+%
+\def\@lstbasicstyle{\small\color{listing-text-color}\linespread{1.0}\lst@ifdisplaystyle\small\fi\ttfamily{}}%
+%
+\newsavebox\@lst@mypostbreak%
+\savebox\@lst@mypostbreak{\textcolor{red}{$\hookrightarrow$}\space}%
+%
+\lstdefinestyle{basic_style}{%
+backgroundcolor=\color{listing-background},%
+numbers=left,%
+frame=single,%
+rulecolor=\color{listing-rule},%
+frameround=ffff,%
+breaklines=true,%
+tabsize=4,%
+sensitive=true,%
+basicstyle=\@lstbasicstyle,%
+identifierstyle=\color{listing-identifier},%
+numberstyle=\color{listing-line-numbers},%
+keywordstyle=\color{listing-keyword-1}\bfseries,%
+emphstyle=\color{listing-emph-1}\bfseries,%
+emphstyle=[2]\color{listing-emph-2},%
+emphstyle=[3]\color{listing-emph-3},%
+emphstyle=[4]\color{listing-emph-4}\bfseries,%
+emphstyle=[5]\color{listing-emph-5},%
+emphstyle=[6]\color{listing-emph-6},%
+emphstyle=[7]\color{listing-emph-7}\bfseries,%
+emphstyle={[8]\color{listing-emph-8}\bfseries},%
+keywordstyle={[2]\color{listing-keyword-2}\bfseries},%
+keywordstyle={[3]\color{listing-keyword-3}\bfseries\itshape},%
+commentstyle=\itshape\color{listing-comment},%
+stringstyle=\color{listing-string},%
+showspaces=false,%
+showtabs=false,%
+showstringspaces=false,%
+postbreak=\usebox\@lst@mypostbreak,%
+%
+literate=%
+{á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1%
+{Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1%
+{à}{{\`a}}1 {è}{{\'e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1%
+{À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1%
+{ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1%
+{Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1%
+{â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1%
+{Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1%
+{œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1%
+{ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1%
+{š}{{\v{s}}}1%
+{€}{{\EUR}}1 {£}{{\pounds}}1 {«}{{\guillemotleft}}1%
+{»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1%
+{…}{{\ldots}}1 {≥}{{>=}}1 {≤}{{<=}}1 {„}{{\glqq}}1 {“}{{\grqq}}1%
+{━}{{\textbf{-}}}1%
+{”}{{''}}1%
+{α}{{$\alpha$}}1 {β}{{$\beta$}}1 {γ}{{$\gamma$}}1 {δ}{{$\delta$}}1%
+{ε}{{$\epsilon$}}1 {ζ}{{$\zeta$}}1 {η}{{$\eta$}}1 {θ}{{$\theta$}}1%
+{ι}{{$\iota$}}1 {κ}{{$\kappa$}}1 {λ}{{$\lambda$}}1 {μ}{{$\mu$}}1%
+{ν}{{$\nu$}}1 {ξ}{{$\xi$}}1 {ο}{{o}}1 {π}{{$\pi$}}1 {ρ}{{$\rho$}}1%
+{σ}{{$\sigma$}}1 {τ}{{$\tau$}}1 {υ}{{$\upsilon$}}1 {φ}{{$\phi$}}1%
+{χ}{{$\chi$}}1 {ψ}{{$\psi$}}1 {ω}{{$\omega$}}1 {Α}{{A}}1 {Β}{{B}}1%
+{Γ}{{$\Gamma$}}1 {Δ}{{$\Delta$}}1 {Ε}{{E}}1 {Ζ}{{Z}}1 {Η}{{H}}1%
+{Θ}{{$\Theta$}}1 {Ι}{{I}}1 {Κ}{{K}}1 {Λ}{{$\Lambda$}}1 {Μ}{{M}}1%
+{Ν}{{N}}1 {Ξ}{{$\Xi$}}1 {Ο}{{O}}1 {Π}{{$\Pi$}}1 {Ρ}{{P}}1%
+{Σ}{{$\Sigma$}}1 {Τ}{{T}}1 {Υ}{{Y}}1 {Φ}{{$\Phi$}}1 {Χ}{{X}}1%
+{Ψ}{{$\Psi$}}1 {Ω}{{$\Omega$}}1%
+{∖}{{$\setminus$}}1 {∪}{{$\cup$}}1 {∩}{{$\cap$}}1%
+{≈}{{$\approx$}}1 {∈}{{$\in$}}1 {∉}{{$\notin$}}1%
+{√}{{\raisebox{0.55ex}{$\sqrt{\relax}$}}}1%
+{²}{{\textsuperscript{2}}}1{³}{{\textsuperscript{3}}}1%
+{∫}{{$\int$}}1%
+}%
+%
+%
+\lstdefinestyle{text_style}{%
+style=basic_style,%
+language={},%
+basicstyle=\@lstbasicstyle,%
+identifierstyle=\@lstbasicstyle,%
+keywords={},%
+otherkeywords={},%
+keywordstyle=\@lstbasicstyle,%
+emphstyle=\@lstbasicstyle,%
+commentstyle=\@lstbasicstyle,%
+stringstyle=\@lstbasicstyle,%
+keywordstyle={[2]\@lstbasicstyle},%
+keywordstyle={[3]\@lstbasicstyle},%
+keywordstyle={[4]\@lstbasicstyle},%
+keywordstyle={[5]\@lstbasicstyle},%
+keywordstyle={[6]\@lstbasicstyle},%
+keywordstyle={[7]\@lstbasicstyle},%
+emph={[2]},%
+emphstyle={[2]\@lstbasicstyle},%
+emph={[3]},%
+emphstyle={[3]\@lstbasicstyle},%
+emph={[4]},%
+emphstyle={[4]\@lstbasicstyle},%
+emph={[5]},%
+emphstyle={[5]\@lstbasicstyle},%
+emph={[6]},%
+emphstyle={[6]\@lstbasicstyle},%
+emph={[7]},%
+emphstyle={[7]\@lstbasicstyle},%
+emph={[8]},%
+emphstyle={[8]\@lstbasicstyle},%
+breaklines=true%
+}%
+%
+%
+\lstdefinestyle{bash_style}{%
+style=basic_style,%
+language=bash,%
+}%
+%
+%
+\lstdefinestyle{bat_style}{%
+style=basic_style,%
+language=command.com,%
+}%
+%
+%
+\lstdefinestyle{sql_style}{%
+style=basic_style,%
+language=SQL,%
+}%
+%
+%
+%
+%% the box around the inline listings
+\protected\gdef\inlinelistingbox#1{\bgroup%
+\fboxsep=0.5pt%
+\fboxrule=0.5pt%
+\mbox{\fcolorbox{listing-rule}{listing-background}{\mbox{#1}}}%
+\egroup}%
+%
+%% print some text inline
+%% #1 the optional args
+%% #2 the code to be printed inline
+\gdef\textil#1{%
+\inlinelistingbox{\lstinline[style=text_style]$#1$}}%
+%
+%% print some sql inline
+%% #1 the optional args
+%% #2 the code to be printed inline
+\gdef\sqlil#1{%
+\inlinelistingbox{\lstinline[style=sql_style]$#1$}}%
+%
+%% print some Bash code inline
+%% #1 the optional args
+%% #2 the code to be printed inline
+\gdef\bashil#1{%
+\inlinelistingbox{\lstinline[style=bash_style]$#1$}}%
+%
+%% print some BAT code inline
+%% #1 the optional args
+%% #2 the code to be printed inline
+\gdef\batil#1{%
+\inlinelistingbox{\lstinline[style=bat_style]$#1$}}%
+%
+%
+%
+\newlength\@lstbasicstylesheight%
+\settoheight{\@lstbasicstylesheight}{\mbox{\bgroup\@lstbasicstyle{s}\egroup}}%
+%
+%

@@ -1,0 +1,21 @@
+%
+\backmatter%
+\bookmarksetup{startatroot}%
+\hsection{Backmatter}%
+\refstepcounter{chapter}%
+%
+%% Use smaller margins for backmatter.
+\setlrmarginsandblock{2cm}{2cm}{*}%
+\setulmarginsandblock{2.5cm}{2.5cm}{*}%0
+\checkandfixthelayout%
+%
+\printBestPractices%
+\printglossaries%
+\printindex[sql]%
+%
+\begingroup%
+\setlength{\emergencystretch}{6em}%
+\printbibliography%
+\endgroup%
+%
+%
