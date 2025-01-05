@@ -31,10 +31,14 @@ For example, if we want to represent all the personnel, schools, students, and a
 This document would need to store which teacher belongs to which school, which student belongs to which school, which student is supervised by which teacher, and so on.
 Maybe a single person could write such a document.
 But as soon as multiple people need to work on such a document together, everything will collapse.
-Clearly, another way to work with relational data is needed.
+Clearly, another way to work with \emph{relational} data is needed.
 
 Welcome to the course \emph{Databases}.
-Here, we learn about exactly such a way.%
+Here, we learn about exactly such a way:%
+%
+\begin{definition}[Relational Database]%
+A \pgls{rdb} is a \pgls{db} that organizes data into rows~(tuples, records) and columns~(attributes), which collectively form tables~(relations) where the data points are related to each other~\cite{I2021WIARDB,C1970ARMODFLSDB,SC1975OTPOARADI,T2018ISARD,H2016RDDAI,HM2024IMARD}.
+\end{definition}%
 %
 %
 \endhsection\endhsection%
