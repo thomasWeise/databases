@@ -18,12 +18,14 @@ Once we found the right document, we arrive at the end of what traditional techn
 Nowadays, maybe we can generate an AI summary, but in the end, we still have unstructured information to digest.
 
 Then, there is data that is tightly structured and self-contained.
-For tabular data, simple text formats like \pgls{CSV}~\cite{S2005CFAMTFCSVCF} or Excel tables~\cite{B2023DMWME,G2024ECRFMME} are common.
-If the data is more complex, maybe hierarchically structured, formats like \pgls{XML}~\cite{BPSMM2008EMLX1FE,K2019ITXJY,CH2013XFCAMLTMC}, \pgls{JSON}~\cite{E2017SE4TJDIS,B2017TJONJDIF}, or \pgls{YAML}~\cite{DNMAASBE2021YAMLYV1,K2019ITXJY,CGTYB2022YFFDCAIE} may be more suitable.
+For data that can be stored in a single table, simple text formats like \pgls{CSV}~\cite{S2005CFAMTFCSVCF} or Excel tables~\cite{B2023DMWME,G2024ECRFMME} are common.
+If the data is more complex, maybe hierarchically structured, formats like \pgls{xml}~\cite{BPSMM2008EMLX1FE,K2019ITXJY,CH2013XFCAMLTMC}, \pgls{json}~\cite{E2017SE4TJDIS,B2017TJONJDIF}, or \pgls{yaml}~\cite{DNMAASBE2021YAMLYV1,K2019ITXJY,CGTYB2022YFFDCAIE} may be more suitable.
 All of these formats have in common that they store data in singular documents.
 They offer clear and strict rules how the data can be defined, structured, stored, and retrieved.
 They are open standards and vendor-independent.
-With the exception of Excel tables, they are also text-based formats.
+With the exception of Excel tables, they are also text-based formats.\footnote{%
+Today, Excel tables are basically compressed collections of \pgls{xml} documents.%
+} %
 However, they are mainly suitable for data that, well, can be stored in single files efficiently.
 They are not suitable for manipulating huge datasets.
 They are also not suitable for modelling more complex relationships between different datasets.
@@ -34,12 +36,81 @@ But as soon as multiple people need to work on such a document together, everyth
 Clearly, another way to work with \emph{relational} data is needed.
 
 Welcome to the course \emph{Databases}.
-Here, we learn about exactly such a way:%
+Here, we learn about exactly such a way.
+Before we begin to do that, let us clarify some simple definitions:%
+%
+\begin{definition}[Database]%
+A \acrfull{DB} is a computerized collection of interrelated stored data of potentially many types, maybe accessed by many users and applications concurrently.%
+\end{definition}%
+%
+There exist many types of \pglspl{db}.
+There are \pglspl{db} for documents, \pglspl{db} for complex objects, and \pglspl{db} geographical data.
+We, however, will mainly focus on \pglspl{db} that store data in tables which may be coupled by relationships:%
 %
 \begin{definition}[Relational Database]%
 A \pgls{rdb} is a \pgls{db} that organizes data into rows~(tuples, records) and columns~(attributes), which collectively form tables~(relations) where the data points are related to each other~\cite{I2021WIARDB,C1970ARMODFLSDB,SC1975OTPOARADI,T2018ISARD,H2016RDDAI,HM2024IMARD}.
 \end{definition}%
 %
+\begin{definition}[Record]%
+A record is a group of related data items treated as a unit by an application program.%
+\end{definition}%
+%
+For example, a record with student information could store the student's name, date of birth, ID number, and mobile phone number.
+Records are the basic units of data stored in \pglspl{rdb}.
+A second key element of \pglspl{rdb} are the relationships between records.
+These relationships guard the correctness and integrity of the data.
+Before, we mentioned that a \pgls{db} for our university could store \inQuotes{which student is supervised by which teacher}.
+This would mean that each student record can be linked to teacher records.
+Does it have to be linked?
+Maybe not, because when the student enrolls into the university, they may not yet have a supervisor.
+So maybe it is OK if a student record is not linked to any supervisor record.
+But if it is linked to a supervisor record, then it must be ensured that this record exists and is valid.
+Of course, it may also be permissible that a student record is linked to more than one supervisor record.
+Maybe the student has a primary supervisor and a secondary supervisor.
+As you can see, figuring out how the records can be related alone can already be a bit challenging.%
+%
+\begin{definition}[Database Management System]%
+The \acrfull{DBMS} is a software system for manipulating \pglspl{db}. %
+It offers the ability to create, modify, and delete \pglspl{db}, tables, and records, to add rows to tables, and so on.
+It also manages and controls the access rights to the \pgls{db}.%
+\end{definition}%
+%
+\Pglspl{dbms} can be arbitrarily complex pieces of software.
+If you think about what things we would like to have when dealing with important data, it becomes immediately clear why.
+First, they provide efficient access to the data.
+Thus, they need efficient and therefore complicated datastructures and access algorithms.
+\pglspl{dbms} also allow us to specify the possible relationships between data.
+And they need enforce that the data never violates the relationships.
+
+Additionally, they also need to offer a user management and access rights management.
+In a \pglspl{db} for the \acrfull{HR} in a big organization, for example, not every \pgls{HR} staff member is allowed to access (and much less to modify) all the data.
+The same holds for the applications that access the data and, maybe, present some of it on the website.
+
+The \pglspl{dbms} also must take care to properly manage concurrent access, i.e., in situations where multiple users and multiple programs work on the same \pgls{db} at the same time, it must preserve data integrity and consistency.
+It also has to offer functionality to create backups, i.e., copies of the \pglspl{db} that are preserved in case of errors, hardware faults, or other situations that could destroy the original~\pglspl{db}.
+In some scenarios, \pglspl{db} can become very huge, too big to be stored on a single computer.
+Today's \pglspl{dbms} often allow us to partition the \pglspl{db} and distribute them over a cluster of computers.
+
+From the fact that \pglspl{dbms} need to take care of many complex tasks, it follows that using, configuring, and maintaining them over many years is probably challenging, too.
+Working with and maintaining \pglspl{db} is a job that can require a lot of expertise.
+In many organizations, there are specific positions for \pgls{db} experts:%
+%
+\begin{definition}[Database Administrator]
+A \acrfull{DBA} is the person or group responsible for the effective use of \pgls{db} technology in an organization or enterprise.
+\end{definition}%
+%
+And \emph{many organizations} is an understatement.
+The \pgls{HR} departments for organizations like universities and companies use \pglspl{rdb} to manage the members of the organization.
+The financial departments keep track of salary payments, of budgets for projects, of funding, and benefits in \pglspl{rdb}.
+Asset management departments maintain lists of, well, assets, like computers, furniture, cars, tools, machines, expensive equipment, in \pglspl{rdb}.
+Banks manage accounts using \pglspl{rdb}.
+The government manages tax payments using \pglspl{rdb}.
+\Pglspl{rdb} store the information about the inventory and cashflow of online shops.
+Basically every organization with a certain size uses multiple \pglspl{rdb}.%
+%
+\hinput{features}{features.tex}%
+\hinput{history}{history.tex}%
+\hinput{abstractions}{abstractions.tex}%
 %
 \endhsection\endhsection%
 %

@@ -1,0 +1,149 @@
+\hsection{Features that we want from a Database}%
+%
+So far, we developed some rough ideas about what a \pgls{db} is and what kind of features it offers us.
+Let us try to come up with a clearer list.
+
+We will work through this list by imagining that we are building a database for a bank.
+The database is supposed to store customers, accounts, transactions, and bank employees.
+Without getting too specific, we can iterate our expectations based on this idea.%
+%
+\hsection{Data Modelling and Representation}%
+First of all, the \pgls{dbms} must give us the tools into our hands to create and implement a model for our data.
+Matter of fact, we can distinguish several facets of modeling and representing data.
+We here focus on the \emph{relational} data model, based on tables on the relations between them.
+There can also be \pglspl{db} using other models, such as graphs, hierarchies, objects, and such and such.
+
+Based on the data model, we must be able to define a conceptual or logical schema for our \pgls{db}.
+For example, we want to specify which kind of tables exist, e.g., a table with customer information, a table with bank employee information, a table for the accounts that exist, and a table with all the transactions.
+We can define which information we want to store about customers, say their name, ID number, mobile phone number, etc.
+This includes some basic validity constraints, e.g., names cannot be empty, ID numbers must follow the standard Chinese ID number scheme, and so on.
+We must also be able to specify the relationships between these tables.
+For example, each bank account must be associated with exactly one customer, but one customer may have multiple accounts.
+Ideally, this can be done using a simple programming language.
+
+This logical schema can be separate from the physical schema of the \pgls{db}, namely how the data is actually organized on the disk.
+The \pglspl{dbms} should allow the \pgls{db} designers to, for instance, define indexes for tables to speed up the access.
+
+Nevertheless, the concept of \emph{Data Independence} is important:
+There are different levels of abstraction.
+The application programs that access the data based on the logical schema should be independent from the physical organization of the data.
+It should not really matter to them whether records are stored in a hash, a B-tree, or as simple sequences in a file.
+If we create an easy-to-use application as interface for our banking \pgls{db}, this interface would interact with the logical view of the data via the \pgls{dbms}.
+How the data is actually stored does not matter to our application.
+This is called \emph{physical data independence}.
+
+Let's say we create two applications:
+We create an application for the bank employees to manage accounts and customers.
+We also create a web application through which the customers can log into their bank accounts and make transfers.
+The first application may offer much more information to the bank employees.
+Customers have do not have access to the accounts of other customers, for example.
+The web application for customers can also not access information about the bank employee who is managing their accounts.
+Therefore, it should work independently from such information.
+If the structure of these information (that it cannot see) is changed later, then this should have no impact on that program.
+This is called \emph{logical data independence}.
+\endhsection%
+%
+\hsection{Data Availability} %
+The \pgls{dbms} makes a collection of data is available to users and applications in a meaningful format at a reasonable performance.
+We expect that the speed of reading, writing, changing, deleting, and adding of data to the \pgls{db} be high.
+A simple and reasonably abstract programming language should be provided for querying and updating the \pgls{db}.
+There should also be tools available that further simplify the modeling, editing, and sorting of data as well as the generation of reports from data.%
+\endhsection%
+%
+\hsection{Data Integrity}%
+The correctness and validity of the data is ensured.
+This includes several aspects:
+First, the modeled relationships must be enforced.
+If it is stated each bank account is associated with exactly one customer, then there must never be a bank account record that is not associated with an existing customer.
+Also, there can never be two bank accounts with the same account~ID.
+This property is called \emph{Consistency}.
+
+Let's say that for each account, we store the current balance.
+If a customer deposits money, then we can simply add the amount to their account's balance.
+This is one operation where not much can ge wrong.
+However, if money is transferred from one account of our bank to another account, then this \inQuotes{looks like} two operations.
+But it actually is a single \emph{transaction}.
+A \pgls{db} should be consistent before and after each transaction.
+
+\emph{Atomicity} means that such a transaction will either complete successfully in its entirety or fail.
+If the transaction is completed successfully, i.e., \emph{commits}, then all the changes become visible.
+If the transaction is aborted, no change is performed.
+No transaction can complete partially, it is all-or-nothing.
+This means that either the money is correctly subtracted from one account and added to another \emph{or} nothing happens.
+It must never happen that money is subtracted from one account but does not arrive in another due to an intermediate error.%
+\endhsection%
+%
+\hsection{Concurrency Support and Isolation}%
+Closely related to data integrity is the support for concurrency.
+Multiple users and multiple processes can access and modify the \pgls{db} at the same time.
+The \pgls{dbms} preserves the integrity of the \pgls{db} and of all the views that the users and process have on the data.
+
+Different concurrent updates to the same account must take place atomically and in isolation.
+This means that if money is transferred from account~$A$ to account~$B$ while simultaneously money is transferred from account~$B$ to account~$C$, the two transactions should not influence each other.
+Both transactions should be isolated.%
+\endhsection%
+%
+%
+\hsection{Durability and Data Safety}%
+A basic feature that any \pgls{db} needs to support is \emph{Durability}:
+Once a transaction is committed, its changes are permanent.
+The changes caused by the transaction are saved to the database permanently.
+
+The \pgls{dbms} has to ensure that data can be preserved in case of unforeseen situations.
+Indeed, durability extends also to system crashes and failures.
+This includes the support of checkpoints and recovery after restarts.
+
+Of course, there are limits to this:
+At some lower layers, \pglspl{db} are stored as files in the filesystem.
+If the underlying hard disk fails, these files can be destroyed.
+There is no magical way a \pgls{dbms} can guard against this.
+No system can be entirely safe from hard disk failures and crashes.
+
+Therefore, \glspl{dbms} need to offer methods to back up the data, i.e., to create copies of the \pglspl{db} and store them on other devices.
+Then, as long as reasonable backup strategies are employed, it must be possible to re-create the data after the original \pgls{db} was lost.%
+\endhsection%
+
+The features \emph{A}tomicity, \emph{C}onsistency, \emph{I}solation, and \emph{D}urability together are often called \emph{ACID}~properties.
+%
+\hsection{Data Privacy and Security}
+The \pgls{dbms} must enable the protection of data against access from unauthorized access from both within and outside of the organization.
+
+It must be possible to specify roles for users and processes that define which data they can access or modify.
+For example, the \pgls{dba} of the bank's \pgls{db} needs to be able to modify the structure of the \pgls{db}, maybe add and modify tables.
+A normal bank employee should not be able to do that.
+But they may be allowed to enter new records into certain tables of the the \pgls{db}, for instance, to add customers or to create new accounts.
+Thinking this through even further, a bank employee may be assigned as manager to some customer's accounts.
+The employees should only be able to see the information in these accounts.
+All of this can be done by assigning roles to users and processes and access rights to roles.
+
+Another aspect of this is the so-called Three-Schema Architecture:
+It should be possible to provide different views on the data for different users and applications.
+As already mentioned before, the application for bank employees should be able to \inQuotes{see} other data than an application for customers.
+In other words, at the bottom layer of the \pgls{db} is the physical schema managing how data is stored.
+On top of that sits the conceptual (or logical) layer, where the structure of the tables and the relationships between them are defined.
+On the highest level, different views on the data can be provided for different applications.
+This way, users can only see the data that they need to be able to see and nothing more.
+
+This goes hand-in-hand with security measures.
+Examples could be that all access to the \pgls{db} is password protected.
+Communication with the \pgls{db} happens over encrypted connections.
+
+A \pgls{dbms} should also support accounting and an audit trail.
+It must be possible to log information regarding which user changed which dataset and when.
+This is required to pass certain government, financial, or ISO certification audits.
+\endhsection%
+%
+\hsection{Summary}%
+It is quite obvious that the basic filesystem only offers very few of the properties discussed above.
+Using simple data formats like \pgls{CSV} or even Excel tables will not be a good choice either.
+While one might realize concurrency by placing multiple interrelated such documents on a shared folder, there certainly would not be any \emph{ACID} guarantees.
+Multiple people editing them at the same time will wreak havoc.
+Structured formats like \pgls{json}, \pgls{xml}, or \pgls{yaml} would allow us to represent complex data in single documents, but this would make the multi-user access situation even worse.
+And none of these solutions could provide any means to protect data integrity, let alone access control.
+
+Instead, we require a software layer between the \pgls{db} and the user processes.
+Honestly, we do not even really care of this software layer actually stores the data, how the data is organized internally, or how \emph{ACID} is implemented.
+As long as this software, the \pgls{dbms}, offers us the above features, we will be happy.%
+\endhsection%
+\endhsection%
+%
