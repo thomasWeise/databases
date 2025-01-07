@@ -1,11 +1,12 @@
 \hsection{Features that we want from a Database}%
 %
-So far, we developed some rough ideas about what a \pgls{db} is and what kind of features it offers us.
-Let us try to come up with a clearer list.
-
-We will work through this list by imagining that we are building a database for a bank.
-The database is supposed to store customers, accounts, transactions, and bank employees.
-Without getting too specific, we can iterate our expectations based on this idea.%
+So far, we developed some rough ideas about what a \pgls{db} is.
+We developed these ideas by contrasting the requirements of organizations with the limitations of simple document files.
+To get maybe some further ideas of what we want to accomplish with \glspl{db}, let us reiterate what requirements organizations face when dealing with data.
+Let us work through this list of desired features by imagining that we are building a database for a bank.
+We can imagine that the database is supposed to store customers, accounts, transactions, and bank employees.
+Without getting too specific, we can explore our expectations based on this idea.
+Our goal will be to compile some sort of wishlist of features.%
 %
 \hsection{Data Modelling and Representation}%
 First of all, the \pgls{dbms} must give us the tools into our hands to create and implement a model for our data.
@@ -80,7 +81,12 @@ The \pgls{dbms} preserves the integrity of the \pgls{db} and of all the views th
 
 Different concurrent updates to the same account must take place atomically and in isolation.
 This means that if money is transferred from account~$A$ to account~$B$ while simultaneously money is transferred from account~$B$ to account~$C$, the two transactions should not influence each other.
-Both transactions should be isolated.%
+Both transactions should be isolated.
+
+Another aspect of concurrency is that in some cases, we want to distribute databases over cluster of computers.
+Maybe the databases are too big.
+Maybe we want to increase the performance further by dividing the data into several sets which are almost independent.
+Either way, an ideal \pgls{dbms} should offer us the functionality for doing that.%
 \endhsection%
 %
 %
@@ -100,14 +106,16 @@ There is no magical way a \pgls{dbms} can guard against this.
 No system can be entirely safe from hard disk failures and crashes.
 
 Therefore, \glspl{dbms} need to offer methods to back up the data, i.e., to create copies of the \pglspl{db} and store them on other devices.
-Then, as long as reasonable backup strategies are employed, it must be possible to re-create the data after the original \pgls{db} was lost.%
+Then, as long as reasonable backup strategies are employed, it must be possible to re-create the data after the original \pgls{db} was lost.
+It is clear that for a bank, the data about its and its customers' accounts is its business.
+If that data is lost, the bank is lost.
+So ensuring that the database is robust and that it can be recreated from backups is of paramount importance.%
 \endhsection%
 
 The features \emph{A}tomicity, \emph{C}onsistency, \emph{I}solation, and \emph{D}urability together are often called \emph{ACID}~properties.
 %
 \hsection{Data Privacy and Security}
 The \pgls{dbms} must enable the protection of data against access from unauthorized access from both within and outside of the organization.
-
 It must be possible to specify roles for users and processes that define which data they can access or modify.
 For example, the \pgls{dba} of the bank's \pgls{db} needs to be able to modify the structure of the \pgls{db}, maybe add and modify tables.
 A normal bank employee should not be able to do that.
@@ -116,7 +124,14 @@ Thinking this through even further, a bank employee may be assigned as manager t
 The employees should only be able to see the information in these accounts.
 All of this can be done by assigning roles to users and processes and access rights to roles.
 
-Another aspect of this is the so-called Three-Schema Architecture:
+\begin{figure}%
+\centering%
+\includegraphics[width=0.85\linewidth]{\currentDir/threeSchemas}%
+\caption{The Three Schema Architecture of databases~\cite{AXSSGDMS1978FRODMS,TK1978TAXSDFROTSGODMS,BFJKMRGRT1985RMFDSDAFTGDOTAXSDSSG}.}%
+\label{fig:threeSchemas}%
+\end{figure}
+
+Another aspect of this is the so-called Three-Schema Architecture~\cite{AXSSGDMS1978FRODMS,TK1978TAXSDFROTSGODMS,BFJKMRGRT1985RMFDSDAFTGDOTAXSDSSG} illustrated in \cref{fig:threeSchemas}:
 It should be possible to provide different views on the data for different users and applications.
 As already mentioned before, the application for bank employees should be able to \inQuotes{see} other data than an application for customers.
 In other words, at the bottom layer of the \pgls{db} is the physical schema managing how data is stored.
