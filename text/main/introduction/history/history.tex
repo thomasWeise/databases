@@ -1,5 +1,117 @@
 \hsection{History}%
 %
+We will now take a brief look at the history of \pglspl{db}.
+People began storing and processing information a very long time ago.
+A driving force to collect and analyze data must have been the management of limited resources.
+Some of the earliest discovered writings are Sumerian accounting and tax records on clay tablets from Mesopotamia, dating back four thousand years~\cite{LOCCTFTROGOLTSI,T1999CTRAA,KT2021IAITWWICF4Y}
+The collection and analysis of information never stopped from then onwards.
+
+When much data is stored, three big questions emerge:
+\emph{How do we store the information?},
+\emph{How can I find a specific record?},
+and
+\emph{How can we condense and extract representation information from all of this data?}
+
+Examples for the data organization include the Dewey system for organizing books in a libray, which emerged in the 1870s~\cite{CM2003DDCPAA}.
+Not much later, we enter the earliest stage of data processing with machines.
+Data storage happened using physical tools~\cite{H1997SATAPCS1}.
+The punched cards system by \citeauthor{H1884AFCS}, patented in the late 1880s~\cite{H1884AFCS,H1892MFTS}, was used in the 1890s US~Census.
+The automatic processing of these cards allowed the census to finish under budget and ahead of time~\cite{ITIPCTPORTTIAOHMOTWD}.
+\citeauthor{H1884AFCS}'s Tabulating Machine Company eventually merged with three other companies into International Business Machines~(IBM).
+Punch cards made up 20\% of the revenue of IBM as late as the mid\nobreakdashes-1950s~\cite{ITIPCTPORTTIAOHMOTWD}.
+
+In addition to punch cards, reels of punched tape emerged as data storages and later magnetic tapes.
+The way data can be retrieved depends on how the data is stored.
+Punch cards can be sorted, stacked, and otherwise cleverly be arranged to access information quickly.
+Tape-based storages requires us to sequentially spool through the tape to find the data we are looking for.
+Either way, efficient organization of data and media became more and more important.
+In \citeyear{BIF1958OARORGIALSEP}, the Electronic Recording Machine Accounting~(ERMA) Mark~1 was developed as automated system for organizing banking records~\cite{BIF1958OARORGIALSEP}.
+It had features of file system, although the term \inQuotes{files} was meant literally -- they organized paper-based documents, using a structure reminiscent of the aforementioned hierarchical, number-based Dewey categorization method.
+
+In 1956, the IBM 305 RAMAC came out: the first to use a random-access disk drive~\cite{IRTFRADDRHBUCASTSFEFSFTE}.
+It could store five to ten megabytes.
+Its true innovation was that from now on, it was no longer necessary to store and access innovation in a sequential order~\cite{C20245YOQ}.
+Instead, the data on its disks could be accessed in any order.
+
+The first file systems for computers appeared in the 1960s.
+The Atlas system in the UK had offered a rudimentary file system functionality already in~\citeyear{KPH1961TAS}~\cite{KPH1961TAS}.
+The \pgls{OS} \emph{Compatible Time-Sharing System}~(CTSS)~\cite{CMDDCHOK1963TCTSSAPG} at the MIT had a flat filesystem only one or two years later~\cite{OD1963TCCSLABTCDE}.
+The hierarchical file system for the \emph{Multics}~\pgls{OS}~\cite{CV1965IAOOTMS}, published in \citeyear{DN1965AGPFSFSS}, already had surprisingly many advanced features that we know from today's file systems: fine-grained access control for data privacy, backup ability, links, and IO~queue management.
+File systems are very good for organizing documents and heterogeneous data.
+They are not very suitable to main the sort of relational data and to achieve the features that would like \pglspl{db} to have.
+
+The first version of the Integrated Data Store~(IDS) was developed by \citeauthor{B2009TOOTIDSITFDAD} in 1961/62 at General Electric~\cite{B2009TOOTIDSITFDAD,B1965SFRAP}.
+IDS offered the first direct access \pgls{db}, holding data in virtual memory.
+It may have been the first real \pgls{DBMS} and \citeauthor{B2009TOOTIDSITFDAD} won the 1973~A.M.~Turing Award for this work~\cite{H2016HCBITDAFOODW}.
+IDS was based on a network model, further advancing data management by structuring complex relationships in data.
+The programmer acted as navigator through the data.
+The idea to step-by-step navigate through data, updating it if needed, is more complicated and slower compared to the relational approach of today's \pglspl{db}.
+IDS and similar systems encode elements of the views of the data as part of the \pgls{db} structure, which make IDS less flexible.
+The Database Task Group of the Conference on Data Systems Languages~(CODASYL), a standardization body for the data processing industry, took over many of \citeauthor{B2009TOOTIDSITFDAD}'s ideas for IDS in the late 1960s.
+CODASYL is best known for its creation of the COBOL programming language~\cite{H2016HCBITDAFOODW}.
+
+Only slightly later than IDS, another \pglspl{dbms} that could handle the structured storage of records obeying datatype constraints appeared.
+IBM developed the Information Management System~(IMS) for the Apollo space program~\cite{KLBGNLWBS2012ITIYCGTIIMS}.
+The system was launched 1965/1967~\cite{BBP2007TBOI}.
+IMS is still sold as a product and still exists today.
+Like IDS, it was not a \pgls{dbms} for \emph{relational \pglspl{db}}.
+Instead, it offered hierarchically structured records.
+This system, too, had a set of disadvantages~\cite{KC2024DS}:
+If your data is not structured hierarchically, some records may need to be duplicated.
+For example, if we have a database that assigns students to courses, then a student would appear in each of the records of the courses that she attends.
+The programming language is also relatively low-level and, for example, the search strategy has to be implemented.
+Finally, if changes to the logical schema will require us to perform cascading changes in the code accessing them.
+
+Both IDS and IMS offered a strikingly new concept:
+The application code and the code for physical data storage and retrieval were separated.
+Between them, the Data Language One~(DL/I) was located as interface in IMS.
+IDS offered the Data Description Language~(DDL) to define types of logical records and the Data Manipulation Language~(DML) to manipulate and navigate the data.
+The \pgls{dbms} controls how the data is stored and loaded.
+Application programs can navigate through the data using the much simpler interface languages.
+As we briefly mentioned before: \pglspl{DBMS} can become arbitrarily complicated pieces of software, and one major part of this is the code to efficiently store and retrieve data.
+
+Just think about it:
+All data is eventually mapped/stored to sequential files on a hard disk or other storage medium.
+You must be able to add new records and delete old records.
+You must also be able to find them.
+This alone is not easy to implement, but all of that has to be efficient, so (today) one would probably like to use data structures like hashes, tress, and sorted lists {\dots} all of which are actually located in sequential files.
+Before IDS and IMS, this had to be part of your application's code.
+Actually, it had to be part of the code of \emph{all} applications that accessed the data, if multiple such applications exist~\cite{BBP2007TBOI}.
+Now this is part of IDS and IMS, and the user can ignore this complexity and just use a simple programming language where she can define which record to load, change, delete, or add.%
+%
+\quotation{C1970ARMODFLSDB}{Future users of large data banks must be protected from having to know how the data is organized in the machine (the internal representation).}%
+%
+In \citeyear{C1970ARMODFLSDB}, the seminal paper \emph{\citetitle{C1970ARMODFLSDB}} by \citeauthor{C1970ARMODFLSDB} appeared, starting with the above quote.
+He noticed the shortcomings of the IDS network model, namely that the programmers accessing the data still need a lot of information about how the data is actually represented and organized internally.
+Even \citeauthor{B2009TOOTIDSITFDAD} himself mentioned that issues with IDS arose when users did not consider how data is internally sorted~\cite{B2009TOOTIDSITFDAD}.
+\Citeauthor{C1970ARMODFLSDB} wanted to protect programmers against such errors.
+He models data as a relational view by using tables, that he calls \emph{relations}.
+Each column has a type that defines its permitted values.
+Each row must be distinct.
+One set of columns per table (usually a single column), the \emph{primary key}, is used to uniquely identify the row.
+Rows in one table can references other rows of either the same table or another table.
+Therefore, some column(s) of the table (called \emph{foreign key}) then store the primary key of the row to be reference.
+The data in the \pgls{db} is then a collection of tables.
+He further describes a set of operations that can work on the tables to extract information, which we will discuss later on.
+By the end of the 1970s, over a dozen \pglspl{dbms} had been implemented based on these new concepts~\cite{K1979RDS}.
+\Citeauthor{C1970ARMODFLSDB} won the A.M.~Turing Award for his work.
+
+The next step forward was the SEQUEL language developed by \citeauthor{CB1974SASEQL} in \citeyear{CB1974SASEQL}~\cite{CB1974SASEQL} as part of the IBM System~R project.
+The language was based on \citeauthor{C1970ARMODFLSDB}'s relational algebra, but wrapped it into an easy-to-understand language for data queries.
+Two years later, it was extended by more features, such as methods for inserting, deleting, and updating records~\cite{CAEGLMRB1976S2AUATDDMAC}.
+In 1977, the SEQUEL name was shortened to \acrshort{SQL}, an acronym for \acrfull{SQL}~\cite{C20245YOQ}.
+At the same time where SEQUEL was developed, the Interactive Graphics and Retrieval System~(INGRES) group at UC~Berkeley, too, conducted research on \pglspl{db}~\cite{S1986TIPAOARDS}.
+The open environment of publishing latest research and collaboration between the researchers contributed significantly to their success.
+They jointly received the ACM Software System Award in~1988~\cite{C20245YOQ}.
+
+Oracle \pglspl{db}, the first commercial \pgls{SQL}-based product, was released in 1979~\cite{C20245YOQ} by the SDL~company, which later renamed itself to Oracle.
+It was an immediate success, because it was portable and could run cheaper hardware.
+IBM released its \pgls{SQL} \pglspl{db} DB2 in 1983~\cite{C20245YOQ,HS2013THAGOID}.
+\pgls{SQL} became a US ANSI standard in \citeyear{ANSIX3135} and an international ISO standard in~\citeyear{ISO90751987}~\cite{ANSIX3135,ISO90751987}.
+The standard continues to evolve, with its latest version being released in \citeyear{ISOIEC9707112023E}~\cite{ISOIEC9707112023E}.
+
+In the 1990s, several open source implementations of \pglspl{dbms} became available for free~\cite{C20245YOQ}.
+We will later discuss them in a brief software survey.%
 %
 \endhsection%
 %
