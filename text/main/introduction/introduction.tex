@@ -59,15 +59,24 @@ For example, a record with student information could store the student's name, d
 Records are the basic units of data stored in \pglspl{rdb}.
 A second key element of \pglspl{rdb} are the relationships between records.
 These relationships guard the correctness and integrity of the data.
-Before, we mentioned that a \pgls{db} for our university could store \inQuotes{which student is supervised by which teacher}.
+
+Before, we mentioned that a \pgls{db} for our university could store \inQuotes{which student is supervised by which teacher.}
 This would mean that each student record can be linked to teacher records.
-Does it have to be linked?
+Does it have to be linked to one?
 Maybe not, because when the student enrolls into the university, they may not yet have a supervisor.
 So maybe it is OK if a student record is not linked to any supervisor record.
 But if it is linked to a supervisor record, then it must be ensured that this record exists and is valid.
 Of course, it may also be permissible that a student record is linked to more than one supervisor record.
 Maybe the student has a primary supervisor and a secondary supervisor.
 As you can see, figuring out how the records can be related alone can already be a bit challenging.%
+
+So now we have arrived at the kind of data that we want to talk about.
+We talk about data that comprises entities of different types, say, student records, teacher records, course records, maybe even teaching room records, schedule elements, grade records, and so on.
+Between such records, relations exist that must not be violated.
+There could be arbitrarily many such records.
+Indeed, \pglspl{DB} usually grow over time.
+And there often are many people (or programs) who work with the \pglspl{DB}.
+It is easy to see that we will need some kind of software to manage all of that.%
 %
 \begin{definition}[Database Management System]%
 The \acrfull{DBMS} is a software system for manipulating \pglspl{db}. %
@@ -77,20 +86,30 @@ It also manages and controls the access rights to the \pgls{db}.%
 %
 \Pglspl{dbms} can be arbitrarily complex pieces of software.
 If you think about what things we would like to have when dealing with important data, it becomes immediately clear why.
-First, they provide efficient access to the data.
-Thus, they need efficient and therefore complicated datastructures and access algorithms.
-\pglspl{dbms} also allow us to specify the possible relationships between data.
+
+First, there may be lots and lots of data and we want to access it.
+We want to find, add, remove, or change certain records.
+And we want to do this reasonably quickly.
+So first, a \pgls{DBMS} provides efficient access to the data.
+Thus, it needs to efficient and therefore complicated datastructures and access algorithms.
+If you have learned \python\ programming~\cite{programmingWithPython}, then you will know that finding records in a sequential \pythonil{list} is much slower than finding them in a hash table~(a \pythonil{dict})\dots
+{\dots}but these data structures exist in the RAM of a computer, and \pglspl{DBMS} need to work with files on the disk.
+Therefore, the datastructures they implement become even more complicated.
+
+Second, \pglspl{dbms} also allow us to specify the possible relationships between data.
 And they need enforce that the data never violates the relationships.
 
-Additionally, they also need to offer a user management and access rights management.
+Third, they also need to offer a user management and access rights management.
 In a \pglspl{db} for the \acrfull{HR} in a big organization, for example, not every \pgls{HR} staff member is allowed to access (and much less to modify) all the data.
 The same holds for the applications that access the data and, maybe, present some of it on the website.
 
-The \pglspl{dbms} also must take care to properly manage concurrent access, i.e., in situations where multiple users and multiple programs work on the same \pgls{db} at the same time, it must preserve data integrity and consistency.
+Fourth, a \pglspl{DBMS} also must take care to properly manage concurrent access, i.e., in situations where multiple users and multiple programs work on the same \pgls{db} at the same time, it must preserve data integrity and consistency.
 It also has to offer functionality to create backups, i.e., copies of the \pglspl{db} that are preserved in case of errors, hardware faults, or other situations that could destroy the original~\pglspl{db}.
 In some scenarios, \pglspl{db} can become very huge, too big to be stored on a single computer.
 Today's \pglspl{dbms} often allow us to partition the \pglspl{db} and distribute them over a cluster of computers.
 
+These are just some examples of the features that a \pgls{DBMS} must provide.
+We discuss more of them in \cref{sec:features}.
 From the fact that \pglspl{dbms} need to take care of many complex tasks, it follows that using, configuring, and maintaining them over many years is probably challenging, too.
 Working with and maintaining \pglspl{db} is a job that can require a lot of expertise.
 In many organizations, there are specific positions for \pgls{db} experts:%
