@@ -47,11 +47,13 @@ The book is written using \LaTeX\ and this repository contains all the scripts, 
 \strut\vfill\strut%
 %
 \begin{center}%
-\noindent\begin{tabular}{c@{~~~~~~~~~~~~}c}%
+\noindent\resizebox{\linewidth}{!}{%
+\begin{tabular}{c@{~~~~~~~~}c}%
 \includegraphics[width=7cm]{\currentDir/bookUrl}&\includegraphics[width=7cm]{\currentDir/courseUrl}\\\relax%
-[\expandafter\href{\databasesUrl/databases.pdf}{book pdf}]&[\expandafter\href{\databasesUrl}{course website}]\\%
-\end{tabular}\\[12pt]%
-\noindent\expandafter\url{\databasesUrl/databases.pdf}%
+{\huge{[\expandafter\href{\databasesUrl/databases.pdf}{book pdf}]}}&{\huge{[\expandafter\href{\databasesUrl}{course website}]}}\\%
+\end{tabular}}%
+\\[12pt]\noindent%
+\resizebox{0.85\linewidth}{!}{\expandafter\url{\databasesUrl}}%
 \end{center}%
 %
 \strut\vfill\strut%
