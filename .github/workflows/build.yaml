@@ -9,17 +9,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.2.2
+      - name: check out github repository
+        uses: actions/checkout@v4.2.2
         with:
           submodules: true
-      - uses: xu-cheng/texlive-action@d9f893f837a29f066e3c70080540976b47263721
+      - name: start mysql server
+        run: |
+          sudo systemctl start mysql
+      - name: compile document
+        uses: xu-cheng/texlive-action@d9f893f837a29f066e3c70080540976b47263721
         with:
           scheme: full
           run: |
             apk add cargo gcc linux-headers musl-dev py3-pip python3 python3-dev rust
             ./make.sh
 # deploy to github pages
-      - name: deploy documentation
+      - name: deploy book and website
         uses: JamesIves/github-pages-deploy-action@94f3c658273cf92fb48ef99e5fbc02bd2dc642b2
         with:
           branch: gh-pages
