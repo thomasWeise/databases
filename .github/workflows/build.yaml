@@ -24,6 +24,7 @@ jobs:
           scheme: full
           run: |
             apk add cargo gcc linux-headers musl-dev mysql-client py3-pip python3 python3-dev rust
+            mysql --version || true
             ./make.sh
 # deploy to github pages
       - name: deploy book and website
