@@ -11,25 +11,26 @@ set -o errexit   # set -e : exit the script if any statement returns a non-true 
 
 hasOutput=false  # Do we have some output and need a separator?
 
-# Get the version of mysql
-mysqlVersion="$(mysql --version 2>/dev/null | grep Ver | sed -n 's/.*Ver\s*\([\.0-9a-zA-Z-]*\).*/\1/p')" || true
-mysqlVersion="$(sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' -e 's/[[:space:]][[:space:]][[:space:]]*/ /g' -e 's/\.*$//'<<<"${mysqlVersion}")" || true
-if [ -n "$mysqlVersion" ]; then
-    echo "mysql: $mysqlVersion"
+# Get the version of postgresql
+postgresVersion="$(psql --version 2>/dev/null | grep Postgre | sed -n 's/\psql (PostgreSQL) \([.0-9]*\)/\1/p')" || true
+postgresVersion="$(sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' -e 's/[[:space:]][[:space:]][[:space:]]*/ /g' -e 's/\.*$//'<<<"${postgresVersion}")" || true
+if [ -n "$postgresVersion" ]; then
+    echo "postgres-client: $postgresVersion"
     hasOutput=true
 fi
 
 # Find the Python interpreter.
-if [[ $(declare -p MYSQL_USER 2>/dev/null) == declare\ ?x* ]]; then
-  if [[ $(declare -p MYSQL_PASSWORD 2>/dev/null) == declare\ ?x* ]]; then
-    mysqlServerVersion="$(
-    echo "status
-    exit
-    " | mysql "-u${MYSQL_USER}" "-p${MYSQL_PASSWORD}" 2>/dev/null | grep "Server version:" | sed -n 's/.*version:\s*\([\.0-9a-zA-Z-]*\).*/\1/p')" || true
-    mysqlServerVersion="$(sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' -e 's/[[:space:]][[:space:]][[:space:]]*/ /g' -e 's/\.*$//'<<<"${mysqlServerVersion}")" || true
-    if [ -n "$mysqlServerVersion" ]; then
-        echo "mysql-server: $mysqlServerVersion"
-        hasOutput=true
+if [[ $(declare -p POSTGRES_USER 2>/dev/null) == declare\ ?x* ]]; then
+  if [[ $(declare -p POSTGRES_PASSWORD 2>/dev/null) == declare\ ?x* ]]; then
+    if [[ $(declare -p POSTGRES_HOST 2>/dev/null) == declare\ ?x* ]]; then
+      if [[ $(declare -p POSTGRES_PORT 2>/dev/null) == declare\ ?x* ]]; then
+        postgresServerVersion="$(psql "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}" -c "show server_version;" 2>/dev/null | grep "Ubuntu")" || true
+        postgresServerVersion="$(sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' -e 's/[[:space:]][[:space:]][[:space:]]*/ /g' -e 's/\.*$//'<<<"${postgresServerVersion}")" || true
+        if [ -n "$postgresServerVersion" ]; then
+            echo "postgres-server: $postgresServerVersion"
+            hasOutput=true
+        fi
+      fi
     fi
   fi
 fi
