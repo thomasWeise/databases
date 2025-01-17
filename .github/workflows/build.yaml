@@ -83,9 +83,6 @@ jobs:
             -e "POSTGRES_PORT=${{secrets.POSTGRES_PORT}}" \
             -v "/var/run/docker.sock":"/var/run/docker.sock" \
             -v "$HOME:$HOME" \
-            -v "$GITHUB_ENV:$GITHUB_ENV" \
-            -v "$GITHUB_OUTPUT:$GITHUB_OUTPUT" \
-            -v "$GITHUB_STEP_SUMMARY:$GITHUB_STEP_SUMMARY" \
             -v "$GITHUB_PATH:$GITHUB_PATH" \
             -v "$GITHUB_WORKSPACE:$GITHUB_WORKSPACE" \
             -w "$GITHUB_WORKSPACE" \            
