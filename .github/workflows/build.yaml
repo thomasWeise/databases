@@ -23,6 +23,8 @@ jobs:
         with:
           scheme: full
           run: |
+            sudo systemctl status mysql
+            mysql --version || true
             apk add cargo gcc linux-headers musl-dev py3-pip python3 python3-dev rust
             ./make.sh
 # deploy to github pages
