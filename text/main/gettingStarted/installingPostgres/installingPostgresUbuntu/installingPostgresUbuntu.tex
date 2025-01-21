@@ -9,21 +9,21 @@ Installing \postgresql\ using the \bashil{apt-get install} command in a \pgls{te
 \label{fig:installingPostgresUbuntu01aptGet}%
 ]{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresUbuntu01aptGet}}%
 %
-\\[10pt]
+\floatRowSep
 %
 \subfloat[][%
 This command requires the super user password, which we type in and then press~\keys{\enter}.%
 \label{fig:installingPostgresUbuntu02pass}%
 ]{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresUbuntu02pass}}%
 %
-\\[10pt]
+\floatRowSep
 %
 \subfloat[][%
 We get asked whether we really want to install the required packages.%
 \label{fig:installingPostgresUbuntu03yn}%
 ]{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresUbuntu03yn}}%
 %
-\\[10pt]
+\floatRowSep
 %
 \subfloat[][%
 We answer with~\keys{y+\enter}.%
@@ -46,7 +46,7 @@ The installation proceeds and finishes.%
 \label{fig:installingPostgresUbuntu05install}%
 ]{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresUbuntu05install}}%
 %
-\\[10pt]
+\floatRowSep
 %
 \subfloat[][%
 We want to check the status of the fresh \postgresql\ installation. %
@@ -54,7 +54,7 @@ We can do this by typing in \bashil{systemctl status postgresql} and hit~\keys{\
 \label{fig:installingPostgresUbuntu06systemctlCheckStatus}%
 ]{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresUbuntu06systemctlCheckStatus}}%
 %
-\\[10pt]
+\floatRowSep
 %
 \subfloat[][%
 The output shows us that the \postgresql\ service is now running. %
@@ -78,15 +78,15 @@ We press~\keys{q+\enter} to leave the status output page.%
 \label{fig:installingPostgresUbuntu08systemctlCheckStatusQ}%
 ]{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresUbuntu08systemctlCheckStatusQ}}%
 %
-\\[10pt]
+\floatRowSep
 %
 \subfloat[][%
-\textil{psql} is the client program that can connect to the \postgresql\ server and that gets installed as well. %
+\psql\ is the \pgls{client} program that can connect to the \postgresql\ \pgls{server} and that gets installed as well. %
 We can check its version by typing \bashil{psql --version} and hitting~\keys{\enter}.%
 \label{fig:installingPostgresUbuntu09psqlVersionA}%
 ]{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresUbuntu09psqlVersionA}}%
 %
-\\[10pt]
+\floatRowSep
 %
 \subfloat[][%
 At the time of this writing, I got version~16.6.%
@@ -104,22 +104,22 @@ At the time of this writing, I got version~16.6.%
 \centering%
 %
 \subfloat[][%
-In order to set a proper password for the \postgresql\ main user \textil{postgresql}, we need to log into \textil{psql} using super user privileges, but under the newly created system user \textil{postgres}. %
+In order to set a proper password for the \postgresql\ main user \textil{postgresql}, we need to log into \psql\ using super user privileges, but under the newly created system user \textil{postgres}. %
 We do this by writing \bashil{sudo -u postgresql psql} and hit~\keys{\enter}.%
 \label{fig:installingPostgresUbuntu11sudoPsql}%
 ]{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresUbuntu11sudoPsql}}%
 %
-\\[10pt]
+\floatRowSep
 %
 \subfloat[][%
 We may or may not need to enter our super user password again\dots%
 \label{fig:installingPostgresUbuntu12sudoPsqlPw}%
 ]{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresUbuntu12sudoPsqlPw}}%
 %
-\\[10pt]%
+\floatRowSep%
 %
 \subfloat[][%
-Starting \textil{psql} like this connects us to the local \postgresql\ server%
+Starting \psql\ like this connects us to the local \postgresql\ \pgls{server}%
 \label{fig:installingPostgresUbuntu13PsqlPrompt}%
 ]{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresUbuntu13PsqlPrompt}}%
 %
@@ -141,18 +141,18 @@ In the screenshot, the password is covered by a red rectangle after I replaced i
 \label{fig:installingPostgresUbuntu14PsqlAlterUserPassword}%
 ]{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresUbuntu14PsqlAlterUserPassword}}%
 %
-\\[10pt]
+\floatRowSep
 %
 \subfloat[][%
 After we hit~\keys{\enter}, the system confirms the change by showing the command \sqlil{ALTER ROLE} back to us. %
-From now on, the server main user has a secure password.%
+From now on, the \pgls{server} main user has a secure password.%
 \label{fig:installingPostgresUbuntu15PsqlAlterUserPasswordDone}%
 ]{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresUbuntu15PsqlAlterUserPasswordDone}}%
 %
-\\[10pt]
+\floatRowSep
 %
 \subfloat[][%
-We quit \textil{psql} by typing~\keys{\textbackslash+q+\enter}.%
+We quit \psql\ by typing~\keys{\textbackslash+q+\enter}.%
 \label{fig:installingPostgresUbuntu16PsqlQuit}%
 ]{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresUbuntu16PsqlQuit}}%
 %
@@ -180,7 +180,7 @@ We are finished.%
 %
 The installation \postgresql\ on \ubuntu\ \linux\ is rather simple.
 First, we open a \pgls{bash} \pgls{terminal}, i.e., a window into which we can directly type commands, with \ubuntuTerminal.
-Both the client and server program are installed via \bashil{sudo apt-get install postgresql-16}, as shown in \cref{fig:installingPostgresUbuntu01aptGet}.
+Both the \pgls{client} and \pgls{server} program are installed via \bashil{sudo apt-get install postgresql-16}, as shown in \cref{fig:installingPostgresUbuntu01aptGet}.
 Notice that we chose to install \postgresql\ version~16, denoted by the \textil{-16}~suffix, but you could probably also pick other versions or just install \textil{postgresql} without version specification.
 Either way, this installation method requires super user privileges, which is why we have to start the command with~\pgls{sudo}.
 In \cref{fig:installingPostgresUbuntu02pass}, we therefore need to provide our superuser password.
@@ -193,7 +193,7 @@ Once the download completes, the packages are installed.
 After this completes in \cref{fig:installingPostgresUbuntu05install}, \postgresql\ is installed and running.
 
 We now want to double-check whether everything went well.
-First, we need to investigate whether the \postgresql\ \pgls{DBMS} server is indeed installed and running properly.
+First, we need to investigate whether the \postgresql\ \pgls{DBMS} \pgls{server} is indeed installed and running properly.
 We can do this by invoking \bashil{systemctl status postgresql} in \cref{fig:installingPostgresUbuntu06systemctlCheckStatus}.
 The output on my laptop computer, given in \cref{fig:installingPostgresUbuntu07systemctlCheckStatusRes}, indicates that the service is up and running.
 Notice \textil{active} means that the \pgls{DBMS} is started everytime your computer boots and runs all the time (until you shutdown your computer, that is).
@@ -201,31 +201,31 @@ Running this program opens some sort of paginated mode, which we can leave by hi
 %
 \begin{sloppypar}%
 If you do not want that, then you disable the service by the command \bashil{sudo systemctl disable postgresql} in the \pgls{terminal}, which again requires \pgls{sudo} privileges.
-The \postgresql\ server will then no longer start automatically.
+The \postgresql\ \pgls{server} will then no longer start automatically.
 If you want to access it, you then would start it manually via \bashil{sudo systemctl start postgresql}.
 After you are done with it, you can stop it by typing \bashil{sudo systemctl stop postgresql}.
 If you ever want it to start automatically again, this can be achieved by \bashil{sudo systemctl enable postgresql}.%
 \end{sloppypar}%
 %
-Either way, after a successful installation, the \postgresql\ server service is activated and running.
-We now also want to check whether the client program \bashil{psql} was installed correctly.
-The client can be run in the \pgls{terminal} and allows us to communicate with the \pgls{DBMS} server.
+Either way, after a successful installation, the \postgresql\ \pgls{server} service is activated and running.
+We now also want to check whether the \pgls{client} program \psql\ was installed correctly.
+The \pgls{client} can be run in the \pgls{terminal} and allows us to communicate with the \pgls{DBMS} \pgls{server}.
 We therefore type \bashil{psql --version} in \cref{fig:installingPostgresUbuntu09psqlVersionA}, which will print the version of this program after we hit~\keys{\enter}.
-The result in \cref{fig:installingPostgresUbuntu10psqlVersionB} shows that the \bashil{psql} client version on my system:~16.6.
+The result in \cref{fig:installingPostgresUbuntu10psqlVersionB} shows that the \psql\ \pgls{client} version on my system:~16.6.
 
-Let us now connect to the \postgresql\ server via the client for the first time.
+Let us now connect to the \postgresql\ \pgls{server} via the \pgls{client} for the first time.
 The goal of this exercise will be to set a proper password for the administrative user of our instance the \postgresql\ \pgls{DBMS}.
 The installation process created both a \linux\ system user named \textit{postgres} as well as a user of the same name in the \pgls{DBMS}.
 The \pgls{DBMS} needs to have its own user and rights management implemented, because we need to be able to grant different programs and users different read and write privileges for a \pgls{db}~(remember \cref{sec:featuresDataPrivacyAndSecurity}).
 Thus, we would like the administrative account \textil{postgres} of the \pgls{DBMS} to have some secure password.
 
-We therefore connect the \bashil{psql} client to the \postgresql\ server as superuser impersonating the \bashil{postgres} system user.
+We therefore connect the \psql\ \pgls{client} to the \postgresql\ \pgls{server} as superuser impersonating the \bashil{postgres} system user.
 This sounds very strange.
 I am not even sure whether I explained it correctly.
 Either way, we type \bashil{sudo -u postgres psql} into the \pgls{terminal} and hit~\keys{\enter} in \cref{fig:installingPostgresUbuntu11sudoPsql}.
 We may get asked to provide the superuser password for our computer again in \cref{fig:installingPostgresUbuntu12sudoPsqlPw}, in which case we simply provide it and hit~\keys{\enter}.
 
-For the first time, we are now in the \textil{psql} client and are connected to the \postgresql\ server.
+For the first time, we are now in the \psql\ \pgls{client} and are connected to the \postgresql\ \pgls{server}.
 We see the prompt \expandafter\textil{postgres=\#} in \cref{fig:installingPostgresUbuntu13PsqlPrompt}.%
 %
 \begin{sloppypar}%
@@ -244,8 +244,8 @@ We did alter the role (or user) \textil{postgres}.
 The new password is set.
 You will learn how to use that another time.
 
-For now, we will happily exit the \bashil{psql} client by typing~\keys{\textbackslash + q + \enter}.
-In \cref{fig:installingPostgresUbuntu16PsqlQuit}, we quit the client this way.
+For now, we will happily exit the \psql\ \pgls{client} by typing~\keys{\textbackslash + q + \enter}.
+In \cref{fig:installingPostgresUbuntu16PsqlQuit}, we quit the \pgls{client} this way.
 In \cref{fig:installingPostgresUbuntu17Done}, we then are back in our normal \bash\ \pgls{terminal}.
 We have finished and validated the \postgresql\ installation.
 And we have set a proper password for the administrator account~\textil{postgres}.%

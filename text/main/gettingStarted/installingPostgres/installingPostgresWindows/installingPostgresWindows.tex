@@ -1,0 +1,415 @@
+%
+\hsection{Installing PostgreSQL under Microsoft Windows}%
+%
+\begin{figure}%
+\centering%
+%
+\subfloat[][%
+We visit the website \url{https://www.postgresql.org/download} and click on~\menu{Windows}.%
+\label{fig:installingPostgresWindows01website}%
+]{\tightbox{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresWindows01website}}}%
+%
+\floatRowSep
+%
+\subfloat[][%
+We click on the link \emph{download the installer}, which takes us to~\url{https://www.enterprisedb.com/downloads/postgres-postgresql-downloads}.%
+\label{fig:installingPostgresWindows02downloadWindows}%
+]{\tightbox{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresWindows02downloadWindows}}}%
+%
+\floatRowSep
+%
+\subfloat[][%
+A wide variety of versions for different \pglspl{OS} are available. %
+We choose the newest (top-most) one for \windows, at the time of this writing, this is version~17.2. %
+We click the download icon.%
+\label{fig:installingPostgresWindows03ebdWebsite}%
+]{\tightbox{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresWindows03ebdWebsite}}}%
+%
+\caption{Installing and configuring \postgresql\ under Microsoft \windows.}%
+\label{fig:installingPostgresWindowsA}%
+\end{figure}%
+%
+\begin{figure}%
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+The download begins.%
+\label{fig:installingPostgresWindows04download}%
+]{\tightbox{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresWindows04download}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+After the download completes, we need to find it\dots%
+\label{fig:installingPostgresWindows05downloadsA}%
+]{\tightbox{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresWindows05downloadsA}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+{\dots}and execute it by clicking on~\menu{Open file}.%
+\label{fig:installingPostgresWindows06downloadsB}%
+]{\tightbox{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresWindows06downloadsB}}}%
+%
+\caption{Installing and configuring \postgresql\ under Microsoft \windows.}%
+\label{fig:installingPostgresWindowsB}%
+\end{figure}%
+%
+\begin{figure}%
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+When asked whether we want to allow the downloaded program to make changes on our device, we click~\menu{Yes}.%
+\label{fig:installingPostgresWindows07install}%
+]{\tightbox{\includegraphics[width=0.475\linewidth]{\currentDir/installingPostgresWindows07install}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+Then, the installer begins its work.%
+\label{fig:installingPostgresWindows08installerStarts}%
+]{\tightbox{\includegraphics[width=0.475\linewidth]{\currentDir/installingPostgresWindows08installerStarts}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+In the welcome screen, we simply click~\menu{Next}.%
+\label{fig:installingPostgresWindows09wizardWelcome}%
+]{\tightbox{\includegraphics[width=0.475\linewidth]{\currentDir/installingPostgresWindows09wizardWelcome}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+We can select the directory in which \postgresql\ should be installed. %
+Let's leave it at the default setting and click~\menu{Next}.%
+\label{fig:installingPostgresWindows10wizardDir}%
+]{\tightbox{\includegraphics[width=0.475\linewidth]{\currentDir/installingPostgresWindows10wizardDir}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+We now get to the selection of what to install. %
+Let's leave it at the default setting and click~\menu{Next}.%
+\label{fig:installingPostgresWindows11wizardWhat}%
+]{\tightbox{\includegraphics[width=0.475\linewidth]{\currentDir/installingPostgresWindows11wizardWhat}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+We also leave the directory where the \pglspl{db} will be stored at the default setting and click~\menu{Next}.%
+\label{fig:installingPostgresWindows12wizardDataDir}%
+]{\tightbox{\includegraphics[width=0.475\linewidth]{\currentDir/installingPostgresWindows12wizardDataDir}}}%
+%
+\caption{Installing and configuring \postgresql\ under Microsoft \windows.}%
+\label{fig:installingPostgresWindowsC}%
+\end{figure}%
+%
+\begin{figure}%
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+We need to provide a secure password for the \postgresql\ \pgls{DBMS}. %
+Please carefully choose one, enter it into both form fields, and click~\menu{Next}.%
+\label{fig:installingPostgresWindows13pw}%
+]{\tightbox{\includegraphics[width=0.475\linewidth]{\currentDir/installingPostgresWindows13pw}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+We can select the port at which the \postgresql\ \pgls{server} will listen for incoming connections. %
+We leave it at the default~5432 and click~\menu{Next}.%
+\label{fig:installingPostgresWindows14port}%
+]{\tightbox{\includegraphics[width=0.475\linewidth]{\currentDir/installingPostgresWindows14port}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+The \pgls{locale} allows us to select country- or culture-specific default settings, e.g., for currency or number formatting. %
+We leave it at the system default and click~\menu{Next}.%
+\label{fig:installingPostgresWindows15locale}%
+]{\tightbox{\includegraphics[width=0.475\linewidth]{\currentDir/installingPostgresWindows15locale}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+We get informed about the components that will be installed. %
+We click~\menu{Next}.%
+\label{fig:installingPostgresWindows16preInstall}%
+]{\tightbox{\includegraphics[width=0.475\linewidth]{\currentDir/installingPostgresWindows16preInstall}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+We get asked whether we are ready to install. %
+We are, so we click~\menu{Next}.%
+\label{fig:installingPostgresWindows17ready}%
+]{\tightbox{\includegraphics[width=0.475\linewidth]{\currentDir/installingPostgresWindows17ready}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+The installation begins.%
+\label{fig:installingPostgresWindows18installA}%
+]{\tightbox{\includegraphics[width=0.475\linewidth]{\currentDir/installingPostgresWindows18installA}}}%
+%
+\caption{Installing and configuring \postgresql\ under Microsoft \windows.}%
+\label{fig:installingPostgresWindowsD}%
+\end{figure}%
+%
+\begin{figure}%
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+The installation proceeds.%
+\label{fig:installingPostgresWindows19installB}%
+]{\tightbox{\includegraphics[width=0.475\linewidth]{\currentDir/installingPostgresWindows19installB}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+Once the installation completes, we get asked whether we want to use the \emph{Stack Builder} software to set up additional components. %
+We do not want that, so we make sure that the checkbox is \emph{not} checked. %
+Then we click~\menu{Finish}. %
+\postgresql\ is now installed.%
+\label{fig:installingPostgresWindows20finish}%
+]{\tightbox{\includegraphics[width=0.475\linewidth]{\currentDir/installingPostgresWindows20finish}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+To validate the installation, we need to open a \pgls{terminal}. %
+We therefore press \keys{\OSwin + R}.%
+\label{fig:installingPostgresWindows21windowsR}%
+]{\tightbox{\includegraphics[width=0.475\linewidth]{\currentDir/installingPostgresWindows21windowsR}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+We type in \textil{cmd} and hit~\keys{\enter}.%
+\label{fig:installingPostgresWindows22cmd}%
+]{\tightbox{\includegraphics[width=0.475\linewidth]{\currentDir/installingPostgresWindows22cmd}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+A new \pgls{terminal} window opens up.%
+\label{fig:installingPostgresWindows23terminal}%
+]{\tightbox{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresWindows23terminal}}}%
+%
+%
+\caption{Installing and configuring \postgresql\ under Microsoft \windows.}%
+\label{fig:installingPostgresWindowsE}%
+\end{figure}%
+%
+\begin{figure}%
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+We need to enter the \batil{bin}~folder in the directory into where the \postgresql\ \pgls{DBMS} was installed. %
+If we used the default settings, we can do that by typing~\batil{cd "C:\\Program Files\\PostgreSQL\\bin"} and hitting~\keys{\enter}.%
+\label{fig:installingPostgresWindows24cd}%
+]{\tightbox{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresWindows24cd}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+We are now in that directory.%
+\label{fig:installingPostgresWindows25inDir}%
+]{\tightbox{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresWindows25inDir}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+First, we want to print the version of \psql, the \pgls{client} program of \postgresql. %
+We can do this by typing \batil{psql -V} and pressing~\keys{\enter}.%
+\label{fig:installingPostgresWindows26psqlV}%
+]{\tightbox{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresWindows26psqlV}}}%
+%
+%
+\caption{Installing and configuring \postgresql\ under Microsoft \windows.}%
+\label{fig:installingPostgresWindowsF}%
+\end{figure}%
+%
+\begin{figure}%
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+In my case, the output shows that version~17.2 was installed.%
+\label{fig:installingPostgresWindows27psqlVres}%
+]{\tightbox{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresWindows27psqlVres}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+We now want to also see which version of the \postgresql\ \pgls{server} was installed and, by doing so, also confirm that the server is up and running correctly. %
+We therefore launch \batil{psql -U postgres}, i.e., start \psql\ using the user (or role) \textil{postgres}.%
+\label{fig:installingPostgresWindows28psqlU}%
+]{\tightbox{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresWindows28psqlU}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+When the program starts, it requires us to enter the password for the user \textil{postgres}. %
+This is the password that we specified during the installation in \cref{fig:installingPostgresWindows13pw}. %
+We enter it and press~\keys{\enter}. %
+We are now in the \psql\ console, and see the \textil{postgres=\#} prompt.%
+\label{fig:installingPostgresWindows29pw}%
+]{\tightbox{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresWindows29pw}}}%
+%
+%
+\caption{Installing and configuring \postgresql\ under Microsoft \windows.}%
+\label{fig:installingPostgresWindowsG}%
+\end{figure}%
+%
+\begin{figure}%
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+We enter the \sql\ command \sqlil{SELECT * FROM VERSION();} and press~\keys{\enter}.%
+\label{fig:installingPostgresWindows30selectVer}%
+]{\tightbox{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresWindows30selectVer}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+The result gets printed. %
+In my case, it shows that the \postgresql\ \pgls{server} also has version~17.2.%
+We now type in~\keys{\textbackslash+q+\enter}, which will exits~\psql.%
+\label{fig:installingPostgresWindows31verResQ}%
+]{\tightbox{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresWindows31verResQ}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+Let us now explore how the \postgresql\ \pgls{server} is run on our \windows\ machine: %
+It is executed as a service. %
+We press~\keys{\OSwin}, type in \textil{services}, and click on the \inQuotes{gears} symbol named \emph{Services} that appears.%
+\label{fig:installingPostgresWindows32services}%
+]{\tightbox{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresWindows32services}}}%
+%
+\caption{Installing and configuring \postgresql\ under Microsoft \windows.}%
+\label{fig:installingPostgresWindowsH}%
+\end{figure}%
+%
+\begin{figure}%
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+The \emph{Services} system setup window opens. %
+Search for a service named something like \postgresql, in my case, it is~\textil{postgresql-x64-17}. %
+Right-click on it.%%
+\label{fig:installingPostgresWindows33servicesPostgres}%
+]{\tightbox{\includegraphics[width=0.8\linewidth]{\currentDir/installingPostgresWindows33servicesPostgres}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+In the Pop-up menu that appears, click on~\menu{Properties}.%
+\label{fig:installingPostgresWindows34servicesProperties}%
+]{\tightbox{\includegraphics[width=0.8\linewidth]{\currentDir/installingPostgresWindows34servicesProperties}}}%
+%
+\caption{Installing and configuring \postgresql\ under Microsoft \windows.}%
+\label{fig:installingPostgresWindowsI}%
+\end{figure}%
+%
+\begin{figure}%
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+The service properties dialog appears.%
+\label{fig:installingPostgresWindows35servicesPropertiesPostgres}%
+]{\tightbox{\includegraphics[width=0.475\linewidth]{\currentDir/installingPostgresWindows35servicesPropertiesPostgres}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+Click on the drop-down box for~\menu{Startup type:}. %
+It will be set to~\menu{Automatic}, which means that the \postgresql\ \pgls{DBMS} \pgls{server} will be started automatically whenever your system starts.%
+\label{fig:installingPostgresWindows36servicesStartupType}%
+]{\tightbox{\includegraphics[width=0.475\linewidth]{\currentDir/installingPostgresWindows36servicesStartupType}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+If you do \emph{not} want that, because it may make booting slower and maybe you only need the service studying for this course, you can turn off this automated startuo. %
+You would therefore select~\menu{Manual} as~\menu{Startup type:} and click the \menu{Apply}~button.%
+\label{fig:installingPostgresWindows37servicesManual}%
+]{\tightbox{\includegraphics[width=0.475\linewidth]{\currentDir/installingPostgresWindows37servicesManual}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+The service is still running after that, but it will not automatically start anymore. %
+If you want it to automatically start again, just select~\menu{Automatic} as~\menu{Startup type:}. %
+If you want to stop the currently-running service, click the \menu{Stop}~button.%
+\label{fig:installingPostgresWindows38servicesStop}%
+]{\tightbox{\includegraphics[width=0.475\linewidth]{\currentDir/installingPostgresWindows38servicesStop}}}%
+%
+\caption{Installing and configuring \postgresql\ under Microsoft \windows.}%
+\label{fig:installingPostgresWindowsJ}%
+\end{figure}%
+%
+\begin{figure}%
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+Then, the service will be stopped.%
+\label{fig:installingPostgresWindows39servicesStopping}%
+]{\tightbox{\includegraphics[width=0.475\linewidth]{\currentDir/installingPostgresWindows39servicesStopping}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+It is now no longer running. %
+Let's start it again by clicking the \menu{Start}~button.%
+\label{fig:installingPostgresWindows40servicesStart}%
+]{\tightbox{\includegraphics[width=0.475\linewidth]{\currentDir/installingPostgresWindows40servicesStart}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+The service is now starting again.%
+\label{fig:installingPostgresWindows41servicesStarting}%
+]{\tightbox{\includegraphics[width=0.475\linewidth]{\currentDir/installingPostgresWindows41servicesStarting}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+We click \menu{OK} to leave the dialog.%
+\label{fig:installingPostgresWindows42servicesOK}%
+]{\tightbox{\includegraphics[width=0.475\linewidth]{\currentDir/installingPostgresWindows42servicesOK}}}%
+%
+\caption{Installing and configuring \postgresql\ under Microsoft \windows.}%
+\label{fig:installingPostgresWindowsK}%
+\end{figure}%
+%
+\begin{figure}%
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+We see that the service is \emph{Running} and in mode \emph{Manual}. %
+When you shutdown your system, the \pgls{DBMS} is stopped. %
+It does not start automatically when you boot (unless you set \emph{Automatic} as \emph{Startup type}). %
+So if you need it, you would again enter the \emph{Services} system setup program and manually start it.%
+\label{fig:installingPostgresWindows43services}%
+]{\tightbox{\includegraphics[width=0.8\linewidth]{\currentDir/installingPostgresWindows43services}}}%
+%
+\caption{Installing and configuring \postgresql\ under Microsoft \windows.}%
+\label{fig:installingPostgresWindowsL}%
+\end{figure}%
+%
+%
+\FloatBarrier%
+\endhsection%
+%
