@@ -1,0 +1,15 @@
+%
+\hsection{Cleanup After the Example}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{simple_factory}{cleanup_inside_database.sql}{factory}{boss}{superboss123}{postgres.sh}{simple_factory:cleanup_inside_database}{%
+User \textil{boss} deletes all tables and views inside the database, in the inverse order of their creation.%
+}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{simple_factory}{cleanup_database_and_user.sql}{}{}{}{postgres.sh}{simple_factory:cleanup_database_and_user}{%
+Delete the database \textil{factory} and the user \textil{boss}. %
+This must be executed by the administrator account \textil{postgres}.%
+}%
+%
+\FloatBarrier%
+\endhsection%
+%
