@@ -1,5 +1,6 @@
 %
 \hsection{Installing LibreOffice under Ubuntu Linux}%
+\FloatBarrier%
 %
 \begin{figure}%
 \centering%
@@ -87,7 +88,26 @@ So nothing happens.%
 If you are a user of \ubuntu\ \linux, then \libreoffice\ and, hence, \libreofficeBase, come already pre-installed on your machine.
 You do not actually need to do anything.
 
-To confirm that \libreoffice\ is indeed installed, we open
+To confirm that \libreoffice\ is indeed installed, we open a terminal via with \ubuntuTerminal.
+We type \bashil{libreoffice --version} and hit~\keys{\enter}.
+On my system, the result in \cref{fig:installingLibreOfficeUbuntu1checkVersion} shows that \libreoffice~24.2.7.2 is installed.
+
+We can also start \libreofficeBase\ directly from the terminal by typing \bashil{libreoffice --base} and hitting~\keys{\enter}, as show in \cref{fig:installingLibreOfficeUbuntu2runFromTerminal}.
+Alternatively, we can open the dash by hitting~\keys{\OSwin}, type \textil{libreoffice}, and then clicking on the symbol for \libreofficeBase, as illustrated in \cref{fig:installingLibreOfficeUbuntu4runFromDash}.
+If you do not want to use a hotkey to open the dash, you can also click on the little \ubuntu\ symbol at the bottom-left corner of the screen~(see \cref{fig:installingLibreOfficeUbuntu3openDash}).
+Regardless of whether you opened \libreofficeBase\ via a terminal or the dash, the startup screen given in \cref{fig:installingLibreOfficeUbuntu5startupScreen} will appears.
+Then, the initial form of \libreofficeBase\ is displayed as shown in \cref{fig:installingLibreOfficeUbuntu6startupForm}.
+We are done for now and close the program.%
+%
+\begin{sloppypar}%
+In the unlikely case that \libreoffice\ was not installed on your system, the above will obviously not work.
+However, \cref{fig:installingLibreOfficeUbuntu7aptGet} shows that we can easily install it by typing \bashil{sudo apt-get install libreoffice} into a terminal window that we opened with \ubuntuTerminal\ and hit~\keys{\enter}.
+This requires \pgls{sudo} privileges, so we need to enter the super user password in \cref{fig:installingLibreOfficeUbuntu8pw}.
+Now you would probably be told how much data will need to be downloaded, then asked whether you are OK with that, and then \libreoffice\ would be installed.
+Since it is already installed on my system, nothing happens. as shown in \cref{fig:installingLibreOfficeUbuntu9already}.%
+\end{sloppypar}%
+%
+The gist is that \libreoffice\ is usally already installed on \ubuntu\ \linux\ or if not, can easily be installed.%
 %
 \FloatBarrier%
 \endhsection%
