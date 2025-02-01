@@ -1,15 +1,15 @@
 %
 \hsection{Selections and Views}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{simple_factory}{select_customer_demand.sql}{factory}{boss}{superboss123}{postgres.sh}{select_customer_demand:create_table_product}{%
+\gitSQLAndOutput{\databasesCodeRepo}{factory}{select_customer_demand.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:select_customer_demand}{%
 Get the per-customer demands.%
 }%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{simple_factory}{create_view_sale.sql}{factory}{boss}{superboss123}{postgres.sh}{create_view_sale:insert_into_table_product}{%
+\gitSQLAndOutput{\databasesCodeRepo}{factory}{create_view_sale.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:create_view_sale}{%
 Creating a view, i.e., a stored \sql\ query that can be treated like a table, to list the demands in human-readable form.%
 }%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{simple_factory}{select_sale.sql}{factory}{boss}{superboss123}{postgres.sh}{select_sale:create_table_customer}{%
+\gitSQLAndOutput{\databasesCodeRepo}{factory}{select_sale.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:select_sale}{%
 Compute the per-customer and per-product sales based on the view \textil{sale}.%
 }%
 %
