@@ -14,7 +14,13 @@ The website with up-to-date information about the course is <https://thomasweise
 ### 2.1. The Book
 The book itself can be downloaded as pdf at <https://thomasweise.github.io/databases/databases.pdf>.
 
-### 2.2. LaTeX Sources, Graphics, Bibliography, etc.
+### 2.2. The Examples
+This is a practice-oriented course on databases.
+Therefore, we also provide a set of examples.
+The examples that we provide are all "real" in the sense that they can actually be executed and their results are actually presented in the book.
+All of them are available in the online repository <https://github.com/thomasweise/databasesCode>.
+
+### 2.3. LaTeX Sources, Graphics, Bibliography, etc.
 The book is written in LaTeX.
 You can find its sources in <https://github.com/thomasWeise/databases>.
 You may use these files under the licensing terms provided below.
