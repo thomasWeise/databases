@@ -193,10 +193,10 @@ Once the download completes, the packages are installed.
 After this completes in \cref{fig:installingPostgresUbuntu05install}, \postgresql\ is installed and running.
 
 We now want to double-check whether everything went well.
-First, we need to investigate whether the \postgresql\ \pgls{DBMS} \pgls{server} is indeed installed and running properly.
+First, we need to investigate whether the \postgresql\ \pgls{dbms} \pgls{server} is indeed installed and running properly.
 We can do this by invoking \bashil{systemctl status postgresql} in \cref{fig:installingPostgresUbuntu06systemctlCheckStatus}.
 The output on my laptop computer, given in \cref{fig:installingPostgresUbuntu07systemctlCheckStatusRes}, indicates that the service is up and running.
-Notice \textil{active} means that the \pgls{DBMS} is started everytime your computer boots and runs all the time (until you shutdown your computer, that is).
+Notice \textil{active} means that the \pgls{dbms} is started everytime your computer boots and runs all the time (until you shutdown your computer, that is).
 Running this program opens some sort of paginated mode, which we can leave by hitting~\keys{q+\enter} in \cref{fig:installingPostgresUbuntu08systemctlCheckStatusQ}.%
 %
 \begin{sloppypar}%
@@ -209,15 +209,15 @@ If you ever want it to start automatically again, this can be achieved by \bashi
 %
 Either way, after a successful installation, the \postgresql\ \pgls{server} service is activated and running.
 We now also want to check whether the \pgls{client} program \psql\ was installed correctly.
-The \pgls{client} can be run in the \pgls{terminal} and allows us to communicate with the \pgls{DBMS} \pgls{server}.
+The \pgls{client} can be run in the \pgls{terminal} and allows us to communicate with the \pgls{dbms} \pgls{server}.
 We therefore type \bashil{psql --version} in \cref{fig:installingPostgresUbuntu09psqlVersionA}, which will print the version of this program after we hit~\keys{\enter}.
 The result in \cref{fig:installingPostgresUbuntu10psqlVersionB} shows that the \psql\ \pgls{client} version on my system:~16.6.
 
 Let us now connect to the \postgresql\ \pgls{server} via the \pgls{client} for the first time.
-The goal of this exercise will be to set a proper password for the administrative user of our instance the \postgresql\ \pgls{DBMS}.
-The installation process created both a \linux\ system user named \textit{postgres} as well as a user of the same name in the \pgls{DBMS}.
-The \pgls{DBMS} needs to have its own user and rights management implemented, because we need to be able to grant different programs and users different read and write privileges for a \pgls{db}~(remember \cref{sec:featuresDataPrivacyAndSecurity}).
-Thus, we would like the administrative account \textil{postgres} of the \pgls{DBMS} to have some secure password.
+The goal of this exercise will be to set a proper password for the administrative user of our instance the \postgresql\ \pgls{dbms}.
+The installation process created both a \linux\ system user named \textit{postgres} as well as a user of the same name in the \pgls{dbms}.
+The \pgls{dbms} needs to have its own user and rights management implemented, because we need to be able to grant different programs and users different read and write privileges for a \pgls{db}~(remember \cref{sec:featuresDataPrivacyAndSecurity}).
+Thus, we would like the administrative account \textil{postgres} of the \pgls{dbms} to have some secure password.
 
 We therefore connect the \psql\ \pgls{client} to the \postgresql\ \pgls{server} as superuser impersonating the \bashil{postgres} system user.
 This sounds very strange.

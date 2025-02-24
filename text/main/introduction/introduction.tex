@@ -18,7 +18,7 @@ Once we found the right document, we arrive at the end of what traditional techn
 Nowadays, maybe we can generate an AI summary, but in the end, we still have unstructured information to digest.
 
 Then, there is data that is tightly structured and self-contained.
-For data that can be stored in a single table, simple text formats like \pgls{CSV}~\cite{RFC4180} or Excel tables~\cite{B2023DMWME,G2024ECRFMME} are common.
+For data that can be stored in a single table, simple text formats like \pgls{csv}~\cite{RFC4180} or Excel tables~\cite{B2023DMWME,G2024ECRFMME} are common.
 If the data is more complex, maybe hierarchically structured, formats like \pgls{xml}~\cite{BPSMM2008EMLX1FE,K2019ITXJY,CH2013XFCAMLTMC}, \pgls{json}~\cite{E2017SE4TJDIS,RFC8259}, or \pgls{yaml}~\cite{DNMAASBE2021YAMLYV1,K2019ITXJY,CGTYB2022YFFDCAIE} may be more suitable.
 All of these formats have in common that they store data in singular documents.
 They offer clear and strict rules how the data can be defined, structured, stored, and retrieved.
@@ -40,7 +40,7 @@ Here, we learn about exactly such a way.
 Before we begin to do that, let us clarify some simple definitions:%
 %
 \begin{definition}[Database]%
-A \acrfull{DB} is a computerized collection of interrelated stored data of potentially many types, maybe accessed by many users and applications concurrently.%
+A \acrfull{db} is a computerized collection of interrelated stored data of potentially many types, maybe accessed by many users and applications concurrently.%
 \end{definition}%
 %
 There exist many types of \pglspl{db}.
@@ -74,12 +74,12 @@ So now we have arrived at the kind of data that we want to talk about.
 We talk about data that comprises entities of different types, say, student records, teacher records, course records, maybe even teaching room records, schedule elements, grade records, and so on.
 Between such records, relations exist that must not be violated.
 There could be arbitrarily many such records.
-Indeed, \pglspl{DB} usually grow over time.
-And there often are many people (or programs) who work with the \pglspl{DB}.
+Indeed, \pglspl{db} usually grow over time.
+And there often are many people (or programs) who work with the \pglspl{db}.
 It is easy to see that we will need some kind of software to manage all of that.%
 %
 \begin{definition}[Database Management System]%
-The \acrfull{DBMS} is a software system for manipulating \pglspl{db}. %
+The \acrfull{dbms} is a software system for manipulating \pglspl{db}. %
 It offers the ability to create, modify, and delete \pglspl{db}, tables, and records, to add rows to tables, and so on.
 It also manages and controls the access rights to the \pgls{db}.%
 \end{definition}%
@@ -90,10 +90,10 @@ If you think about what things we would like to have when dealing with important
 First, there may be lots and lots of data and we want to access it.
 We want to find, add, remove, or change certain records.
 And we want to do this reasonably quickly.
-So first, a \pgls{DBMS} provides efficient access to the data.
+So first, a \pgls{dbms} provides efficient access to the data.
 Thus, it needs to efficient and therefore complicated datastructures and access algorithms.
 If you have learned \python\ programming~\cite{programmingWithPython}, then you will know that finding records in a sequential \pythonil{list} is much slower than finding them in a hash table~(a \pythonil{dict})\dots
-{\dots}but these data structures exist in the RAM of a computer, and \pglspl{DBMS} need to work with files on the disk.
+{\dots}but these data structures exist in the RAM of a computer, and \pglspl{dbms} need to work with files on the disk.
 Therefore, the datastructures they implement become even more complicated.
 
 Second, \pglspl{dbms} also allow us to specify the possible relationships between data.
@@ -103,19 +103,19 @@ Third, they also need to offer a user management and access rights management.
 In a \pglspl{db} for the \acrfull{HR} in a big organization, for example, not every \pgls{HR} staff member is allowed to access (and much less to modify) all the data.
 The same holds for the applications that access the data and, maybe, present some of it on the website.
 
-Fourth, a \pglspl{DBMS} also must take care to properly manage concurrent access, i.e., in situations where multiple users and multiple programs work on the same \pgls{db} at the same time, it must preserve data integrity and consistency.
+Fourth, a \pglspl{dbms} also must take care to properly manage concurrent access, i.e., in situations where multiple users and multiple programs work on the same \pgls{db} at the same time, it must preserve data integrity and consistency.
 It also has to offer functionality to create backups, i.e., copies of the \pglspl{db} that are preserved in case of errors, hardware faults, or other situations that could destroy the original~\pglspl{db}.
 In some scenarios, \pglspl{db} can become very huge, too big to be stored on a single computer.
 Today's \pglspl{dbms} often allow us to partition the \pglspl{db} and distribute them over a cluster of computers.
 
-These are just some examples of the features that a \pgls{DBMS} must provide.
+These are just some examples of the features that a \pgls{dbms} must provide.
 We discuss more of them in \cref{sec:features}.
 From the fact that \pglspl{dbms} need to take care of many complex tasks, it follows that using, configuring, and maintaining them over many years is probably challenging, too.
 Working with and maintaining \pglspl{db} is a job that can require a lot of expertise.
 In many organizations, there are specific positions for \pgls{db} experts:%
 %
 \begin{definition}[Database Administrator]
-A \acrfull{DBA} is the person or group responsible for the effective use of \pgls{db} technology in an organization or enterprise.
+A \acrfull{dba} is the person or group responsible for the effective use of \pgls{db} technology in an organization or enterprise.
 \end{definition}%
 %
 And \emph{many organizations} is an understatement.
