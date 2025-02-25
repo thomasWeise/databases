@@ -1,13 +1,90 @@
 %
-\hsection{Creating a User and the Data}%
+\hsection{Creating a User and the Database}%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{factory}{create_user.sql}{}{}{}{postgres.sh}{factory:create_user}{%
 Using \sql\ to create a the user \textil{boss} with password \textil{superboss123}.%
 }%
 %
+The first step to fulfill this request to is to create a new and empty \db.
+We already installed \postgresql\ (see \cref{sec:installingPostgres}).
+It is running on a dedicated \server\ computer in our small \pgls{IT} department / office.
+This \db\ \server\ will host all the \dbs\ of the company, probably ranging from payroll data to fancy business analytics.
+
+Our boss wants to have full access to the new \db.
+They are not \pglspl{dba}, though, so we would only reluctantly give them administrative access to the complete \server.
+In a first step, we would like to create a new role or user account on our \dbms.
+This account should only be able to access the new factory \db.
+If they make a mistake, this mistake will only affect this single \db.
+If some outside attacker can obtain their password, then the impact will only be limited to this \db\ and not affect, e.g., payroll data or other confidential data in other \dbs.
+
+For the sake of simplicity, assume that we are logged in the \db~\server\ computer and that the password to the administrator user \textil{postgres} is set to~\textil{XXX}.
+We start the \client\ program \psql\ with the connection \pgls{URI}~\cite{PGDG:PD}.
+We connect to the \postgresql\ \server\ by providing the connection \pgls{URI} \textil{postgres://postgres:XXX@localhost}.
+The \textil{postgress://} tells \psql\ that this is, indeed, a connection \pgls{URI}.
+The second \textil{postgres} is the user name.
+The colon~\inQuotes{\textil{:}} separates the user name from the password~\textil{XXX}.
+
+Let me stress again:
+Never use something like \textil{XXX} as a password.
+I am also not doing that.
+For the examples in the book, I just replaced the actual password with \textil{XXX}.
+
+Anyway, after the \inQuotes{\textil{@}} comes the network address or host name of the where the \postgresql\ \server\ is running.
+Since it is on the same machine as we are currently working on, we write \textil{localhost}.
+With this information, \psql\ knows that we want to connect to the \postgresql\ \server\ running on our current computer as user \textil{postgres} with password~\textil{XXX}.%
+%
+\begin{sloppypar}%
+Once the \psql\ \pgls{terminal} is open, we can begin typing commands in \sql.
+We want to create a new user for the \psql\ \server.
+As username, we pick \inQuotes{boss}.
+The password shall be \inQuotes{superboss123}.
+Obviously, this is a very unsafe password.
+The boss will have to change it as soon as possible.
+Anyway, in order to create the new user with that password, we write \sqlil{CREATE USER boss WITH ENCRYPTED PASSWORD 'superboss123';}.
+The first part of the command, \sqlIdx{CREATE!USER}\sqlil{CREATE USER xyz}, tells the \server\ to create a new user account under the name \textil{xyz}.
+The second part, \sqlil{WITH ENCRYPTED PASSWORD 'abc'}\sqlIdx{WITH!ENCRYPTED PASSWORD}, tells the \server\ that the password \textil{abc} should be used for this user.
+Passwords are stored in an encrypted way anyway in \postgresql, but it never hurts to specify this clearly.
+Maybe we want to run the same commands later on another \dbms\ where it is necessary to explicitly say that passwords shall be encrypted.
+You can read more about \sql\ commands in the \postgresql\ reference~\cite{PGDG:PD:SC}.%
+\end{sloppypar}%
+%
+How do we know that the user \inQuotes{boss} has successfully been created?
+On one hand, \psql\ did not give us an error message.
+On the other hand, we can simply list all users.
+See, in \postgresql, all users are stored in the table~\sqlilIdx{pg\_catalog.pg\_user}.\footnote{%
+On other \pglspl{dbms}, the users may be stored differently.}
+So, we can just query this table.
+The \sql\sqlIdx{SELECT{\idxdots}FROM} command \sqlil{SELECT usename FROM pg_catalog.pg_user;} will list the value of the column \textil{usename} for all rows in the table \sqlilIdx{pg\_catalog.pg\_user}.
+If we run this command \emph{before} creating the user, on a fresh \postgresql\ installation, it will only list the single user \textil{postgres}, i.e., the administrator of the whole \dbms.
+If we run it again \emph{after} creating the new user, it will also list~\textil{boss}.
+
+The complete steps of querying the existing users, adding the new user \inQuotes{boss}, and then querying the list of users again is shown in \cref{lst:factory:create_user}.
+The output that we will get from running this small script is given in \cref{exec:factory:create_user}.
+Notice that you can download the whole example and run exactly the commands (the {\color{listing-tool-command}{red text}} after the {\color{listing-tool-command}\texttt{\$}}) from our repository \url{\databasesCodeRepo}.
+
 \gitSQLAndOutput{\databasesCodeRepo}{factory}{create_database.sql}{}{}{}{postgres.sh}{factory:create_database}{%
 Using \sql\ to create a database for user \textil{boss}.%
 }%
+%
+\begin{sloppypar}%
+Having created the new user~\inQuotes{boss}, we can now create the \db\ \inQuotes{factory} to be owned and worked on by that user.
+For this, all we have to do is to type the \sql\ command \sqlil{CREATE DATABASE factory OWNER boss;}\sqlIdx{CREATE!DATABASE}\sqlIdx{OWNER}.
+This command pretty much explains itself.
+It will create a new \db\ with the name \textil{factory}.
+The user \textil{boss} will be owner of this \db, i.e., they will have full access to add and manipulate its data.
+Notice that we still need to execute this command under the \pgls{dba} role \textil{postgres}.
+This user has the right to create \dbs\ for other users which can then work with them.%
+\end{sloppypar}%
+%
+How do we know whether the command finished successfully?
+The first hint is, again, the no error message appears.
+Second, we can also list all the \dbs\ in our system.
+For this purpose, we write \sqlil{SELECT datname FROM pg_database;}\sqlIdx{SELECT{\idxdots}FROM}\sqlIdx{pg\_database}.
+See, all the names of all \dbs\ inside the \postgresql\ \dbms\ are stored in the column~\sqlilIdx{datname} of the table~\sqlilIdx{pg\_database}.\footnote{%
+On other \pglspl{dbms}, the \pglspl{db} may be stored differently.}
+If we run this command \emph{before} creating the new \db\ on a fresh \postgresql\ installation, we find that it will list some standard \dbs, which we will ignore here.
+Running the command again \emph{after} creating the new \db\ now lists one more \db:~\textil{factory}.
+The steps of this example are given in \cref{lst:factory:create_database} and the output of the \psql\ \client\ is given in~\cref{exec:factory:create_database}.%
 %
 \FloatBarrier%
 \endhsection%

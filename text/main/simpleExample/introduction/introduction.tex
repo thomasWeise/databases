@@ -1,28 +1,34 @@
-Before we step-by-step learn about the features and intricacies of \pglspl{db}, let us look into a simple example as a teaser.
+Before we step-by-step learn about the features and intricacies of \dbs, let us look into a simple example as a teaser.
 So far, you have learned about the history of databases.
 Many courses that I know then, from here on, focus on three things:
 First, they will tell you how to select, insert, and remove data using~\sql.
-Some will give really practical examples and let you explore how to work with a \pgls{db} via homeworks.
+Some will give really practical examples and let you explore how to work with a \db\ via homeworks.
 Second, you will learn about modeling data, how to draw \pglspl{ERD}.
-Third, you are taught how \pglspl{db} work internally, what datastructures they use, and how they achieve efficient storage and high query performance.
+Third, you are taught how \dbs\ work internally, what datastructures they use, and how they achieve efficient storage and high query performance.
 
-This, however, treats \pglspl{db} as something \inQuotes{single,} something that exists \inQuotes{separately} from other things.
+This, however, treats \dbs\ as something \inQuotes{single,} something that exists \inQuotes{separately} from other things.
 For example, you often have programming classes, where you learn a programming language like \python~\cite{programmingWithPython}.
 What is the connection here?
-You will learn that, yeah, \pglspl{db} are usually accesses from program code, maybe so-called \emph{application servers}, that implement the business logic of an enterprise.
+You will learn that, yeah, \dbs\ are usually accesses from program code, maybe so-called \emph{application servers}, that implement the business logic of an enterprise.
 How does that work?
 Often, you will not learn that.
 
-Then again, \pglspl{db} are also often accessed from \pglspl{GUI}.
+Then again, \dbs\ are also often accessed from \pglspl{GUI}.
 They maybe allow us to enter information via convenient forms.
 Because users like office workers would feel puzzled if asked to enter and retrieve information using \sql\ queries.
-Maybe we can also print reports with information extracted from the data in the \pgls{db}.
+Maybe we can also print reports with information extracted from the data in the \db.
 
-So far, for you, a \pgls{db} is just a nondescript thing to store data.
-But you may have no idea about all the cool things that you could do with a \pgls{db}.
-That you could use a \pgls{db} for your own personal purposes, ranging from keeping track of your finances over managing a bibliography of papers to storing information about your music collection.
+So far, for you, a \db\ is just a nondescript thing to store data.
+But you may have no idea about all the cool things that you could do with a \db.
+That you could use a \db\ for your own personal purposes, ranging from keeping track of your finances over managing a bibliography of papers to storing information about your music collection.
 
 We therefore create a small and self-contained example not to teach you how exactly to do things, but to show you what is possible.
 And that many things are possible without in-depth knowledge and lots of work.
 To make you curious.
 To invite you to explore things out of your own interest and to circle back to this book to combine practical experience with background information when you like.
+It is important that this is a \emph{learning by doing} example.
+When reading the text, please reproduce the example step-by-step on your own computer.
+
+Our example is a \dbs\ for a small company that produces shoes and handbags.
+You were hired to build an \pgls{IT}~department for the company.
+On you first day, your boss enters and tells you \emph{Make a \db\ for storing all our product variants and customer orders.}
