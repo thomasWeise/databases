@@ -18,8 +18,9 @@ If they make a mistake, this mistake will only affect this single \db.
 If some outside attacker can obtain their password, then the impact will only be limited to this \db\ and not affect, e.g., payroll data or other confidential data in other \dbs.
 
 For the sake of simplicity, assume that we are logged in the \db~\server\ computer and that the password to the administrator user \textil{postgres} is set to~\textil{XXX}.
-We start the \client\ program \psql\ with the connection \pgls{URI}~\cite{PGDG:PD}.
-We connect to the \postgresql\ \server\ by providing the connection \pgls{URI} \textil{postgres://postgres:XXX@localhost}.
+We open a \pgls{terminal}, which can be done via \ubuntuTerminal\ under \ubuntu\ \linux; under \windows, \windowsTerminal.
+We wanot to start the \client\ program \psql\ with the proper connection \pgls{URI}~\cite{PGDG:PD} to access our \postgresql\ \server.
+We can connect to the \postgresql\ \server\ on our local machine by providing the connection \pgls{URI} \textil{postgres://postgres:XXX@localhost}.
 The \textil{postgress://} tells \psql\ that this is, indeed, a connection \pgls{URI}.
 The second \textil{postgres} is the user name.
 The colon~\inQuotes{\textil{:}} separates the user name from the password~\textil{XXX}.

@@ -1,13 +1,142 @@
 %
 \hsection{Creating Tables and Filling them with Data}%
 %
+Let us now design the actual \db.
+Normally, you would do this in a fancy process where you would draw \pglspl{ERD} and deeply think about the structure of the data, the performance requirements, and so on.
+Be that as it may, we are here operating on a learning-by-doing level.
+We will just go ahead and build something that looks reasonable, without worrying too much about design principles.
+
+In a \pgls{rdb}, all the data is stored in \emph{tables}.
+You are maybe familiar with spreadsheet software such as Microsoft \pgls{excel}.
+There, data is organized in tables, too.
+In a \pgls{rdb}, however, the columns are strongly typed, i.e., you cannot \inQuotes{write} a text into a field for numbers.
+Also, there can be multiple tables, where a record~(row) in one table can be linked to one or multiple records in other tables.
+This format allows us to nicely divide into our data according to different semantic aspects.%
+%
+\hsection{The Table \inQuotes{product}}%
+%
+Let us begin with storing the the information about the products that our company produces and sells.
+We want to store all information that may be relevant to customers and the delivery department.
+We will give our first new table the name~\sqlil{product}.%
+\bestPractice{tableName}{%
+Table names should be singular nous written in lowercase without any prefix~(i.e., no \inQuotes{tbl\_} in front)~\cite{B2025SBPASG}.%
+}%
+%
+\hsection{Creating the Table}%
 \gitSQLAndOutput{\databasesCodeRepo}{factory}{create_table_product.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:create_table_product}{%
 Creating the table \textil{product} to store the products we produce and sell.%
 }%
 %
+We can create a new table using the command \sql{CREATE TABLE}\sqlIdx{CREATE!TABLE}, followed by the table name, followed by the attributes that we want to store, as shown in \cref{lst:factory:create_table_product}.
+
+First of all, each product must have a name.
+The names could be long or short, but 100~characters per product should suffice.
+\sql\ provides the datatype \sqlilIdx{VARCHAR}, which refers to a variable-length string, whose maximum length is specified in parentheses.
+We could thus choose \sqlil{VARCHAR(100)} for the column \sqlil{name} for our table~\pythonil{product}.
+We thus write~\sqlil{name VARCHAR(100)} for this attribute.
+The names must also be unique.
+We can never have two different products with the same name.
+So we add the keyword~\sqlil{UNIQUE}.
+If, later, someone tries to enter a record into our table whose \sqlil{name} attribute value already exists in another record, then this will fail with an error.
+We also want to enforce that every single record indeed has a \sqlil{name} attribute set.
+There must never be any row in the table without a properly set name.
+Therefore, we add the \sqlilIdx{NOT NULL} specification and write \sqlil{name VARCHAR(100)\ UNIQUE NOT NULL}.
+Nice, we just defined our very first own attribute.
+
+Additionally, we should store the price at which we sell the product.
+The price is clearly a number.
+Computers usually provide two fundamental types of numbers on the hardware level, integer numbers and floating point numbers~(a subset of~\realNumbers).
+These types also exist in many programming languages.
+\python~\cite{programmingWithPython}, for example, offers us the two very basic datatypes \pythonilIdx{int} and \pythonilIdx{float} corresponding to integers and floating point numbers, respectively.
+Which one should we use?
+Now prices naturally are values with fractions, something like \$99.99 or 17.75元, so at first glance, the \sql\ equivalent of \python's \pythonilIdx{float} seems a reasonable choice here.
+However, it is actually not, because in \cite{programmingWithPython}, we write:%
+%
+\bestPractice{floatImprecise}{%
+Always assume that any \pythonilIdx{float} value is imprecise. %
+Never expect it to be exact~\cite{PTVF2007EAAS,BHK2006NS}.%
+}%
+%
+\begin{sloppypar}%
+Indeed, using double precision IEEE~Standard 754 floating point numbers~\cite{IEEE2019ISFFPA,H1997IS7FPN}, the expression~\pythonil{0.1 + 0.1 + 0.1 - 0.3} may yield~\pythonil{5.551115123125783e-17} as result.
+Thus, if we stored~0.3元 as a price in our \db\ using floating point numbers and a customer transferred three times~一毛钱, then the bank may encounter problems if we want to transfer $5.551115123125783*10^{-17}$元 back as change\dots
+\end{sloppypar}%
+%
+\bestPractice{moneyNotFloat}{%
+Never represent monetary data with floating point numbers~\cite{S2010WNUDOFTRC,W2020HSISCVISS}.%
+}%
+%
+We could use integer numbers representing the number of cents instead, but then we would always need to use some arithmetics to properly display prices, which also creates a potential for errors~\cite{W2020HSISCVISS}.
+Actually neither integers nor floating point numbers are the right choice!
+Instead, we will use the datatype~\sqlilIdx{DECIMAL}, which can represent a fractional number with a pre-defined number of digits exactly.
+Writing \sqlil{price DECIMAL(10, 2)} allows us to store values with 10~digits, 2~of these 10~digits are after the comma~\cite{PGDG:PD:NT}.
+This means that we can store values between -99\decSep999\decSep999.99 and~99\decSep999\decSep999.99.
+This should be enough for prices of products in our shoe and handbag factory.
+Of course, each product must have a price, so we add again the \sqlilIdx{NOT NULL} keyword.%
+%
+\bestPractice{moneyDecimal}{%
+Store monetary using the \sqlilIdx{DECIMAL} datatype~\cite{C2024SCVDTCBP,W2020HSISCVISS}.%
+}%
+%
+We will sell each product in a box.
+Therefore, we also want to store the width, height, and depth as well as the weight of the packaged box.
+For the height, width, and depth, we will use millimeter as unit and for the weight grams.
+We can store values using the datatype \sqlilIdx{INT}, which is a shorthand for \sqlilIdx{INTEGER} and can hold values from -2\decSep147\decSep483\decSep648 to +2\decSep147\decSep483\decSep647.
+Each product must have values specified for all four dimensions, so we again mark them as~\sqlilIdx{NOT NULL}.
+
+Tables in a \db\ do not exist in an isolated manner.
+Instead, they will reference each other.
+For example, later we will create a table where we store which customer bought which product.
+For this, we will need at least three tables:
+A table of customers (which we do not yet have), the table of products (that we are creating right now), and a table for the customer orders.
+Each record in that last table will reference one row in the customers table and one row in the products table.
+
+For allowing the latter, we need a unique way to identify each row in our table.
+Now our table already has a column with unique values, namely~\sqlil{name}.
+However, these are of type \sqlilIdx{VARCHAR}, i.e., they are potentially long strings.
+This would mean that each record in the orders table would also need to store the long \sqlil{name} string.
+This would probably be inefficient~\cite{M2014VPKM}.%
+%
+\begin{sloppypar}%
+We therefore add another column that we are going to call~\sqlil{id}, which should hold a unique integer value.
+We define it as \sqlil{id INT GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY}.
+The \sqlil{GENERATED BY DEFAULT AS IDENTITY}\sqlIdx{GENERATED{\idxdots}AS IDENTITY}~\cite{PGDG:PD:IC} means that we do not need to specify values for this column when storing data.
+The system will automatically choose the next integer value that was not yet used.
+Here, \sqlIdx{GENERATED{\idxdots}AS IDENTITY!BY DEFAULT}\sqlil{BY DEFAULT} tell the system that we \emph{can} specify values for \sqlil{id} if we want to, which then take precedence over the generated values.
+This could be useful if we want to keep the values of \sqlil{id} if backup parts of the table elsewhere and then want to reinsert them.
+Alternatively, we could also have written \sqlIdx{GENERATED{\idxdots}AS IDENTITY!ALWAYS}\sqlil{ALWAYS}, in which case the \sqlil{id} values will always be generated automatically.
+We will use this column as the so called \sqlilIdx{PRIMARY KEY}, i.e., as the value that should be used by other tables to reference rows in our \sqlil{product} table.
+The annotation with \sqlilIdx{PRIMARY KEY} also automatically enforces that only unique values can be stored.%
+\end{sloppypar}%
+%
+This completes the \sql\ command for creating our very first table.
+We can now fire up \psql\ again.
+Notice that, since the \db\ belongs to the user \sqlil{boss}, we now log in as \sqlil{boss} using their password \sqlil{superboss123}.
+We also want to work on the \db\ \sqlil{database}.
+The \postgresql\ connection \pgls{URI} for the \db\ \pgls{server} running on our local machine therefore is \textil{postgres://boss:superboss123@localhost/factory}.
+We use it in \cref{exec:factory:create_table_product} to submit the table creation command given in \cref{lst:factory:create_table_product}.%
+%
+\begin{sloppypar}%
+Additionally, we also want to check whether the commands worked correctly.
+Before creating the new table, we thus print the list of tables owned by user \sqlil{boss}.
+All of them are stored in table \sqlilIdx{pg\_catalog.pg\_tables} in the \postgresql\ \pgls{server}.
+We only print the table names, which are in column~\sqlilIdx{tablename}.
+We only want to see those owned by \sqlil{boss}, so we add the statement \sqlil{WHERE tableowner = 'boss'}.
+The name of the user owning each table is stored in column \sqlilIdx{tableowner}, and only if it equals \sqlil{boss}, we print the table name.
+This results in the query \sqlil{SELECT tablename FROM pg_catalog.pg_tables WHERE tableowner = 'boss';}.
+As you can see, before executing the \sqlil{CREATE TABLE}\sqlIdx{CREATE!TABLE} command, this query returns nothing.
+Afterwards, one new table exists, namel~\sqlil{product}.%
+\end{sloppypar}%
+%
+\endhsection%
+%
+\hsection{Inserting some Data}%
 \gitSQLAndOutput{\databasesCodeRepo}{factory}{insert_into_table_product.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:insert_into_table_product}{%
 Storing some products in the table \textil{product}.%
 }%
+\endhsection%
+\FloatBarrier%
+\endhsection%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{factory}{create_table_customer.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:create_table_customer}{%
 Creating the table \textil{customer} to store the information about our factory's customers.%
