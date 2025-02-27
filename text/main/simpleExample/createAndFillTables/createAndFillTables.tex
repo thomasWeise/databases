@@ -95,7 +95,11 @@ For allowing the latter, we need a unique way to identify each row in our table.
 Now our table already has a column with unique values, namely~\sqlil{name}.
 However, these are of type \sqlilIdx{VARCHAR}, i.e., they are potentially long strings.
 This would mean that each record in the orders table would also need to store the long \sqlil{name} string.
-This would probably be inefficient~\cite{M2014VPKM}.%
+This would probably be inefficient~\cite{M2014VPKM}.
+Also, maybe later we have many other records referencing a certain product by its name {\dots} but the marketing department chooses to change the name of the product.
+This could wreak havoc to our \db.
+It is better to use an automatically generated unique value as key that will never change even if we change the name of a product~\cite{B2025SBPASG}.%
+%
 %
 \begin{sloppypar}%
 We therefore add another column that we are going to call~\sqlil{id}, which should hold a unique integer value.
@@ -108,6 +112,15 @@ Alternatively, we could also have written \sqlIdx{GENERATED{\idxdots}AS IDENTITY
 We will use this column as the so called \sqlilIdx{PRIMARY KEY}, i.e., as the value that should be used by other tables to reference rows in our \sqlil{product} table.
 The annotation with \sqlilIdx{PRIMARY KEY} also automatically enforces that only unique values can be stored.%
 \end{sloppypar}%
+%
+\bestPractice{surrogatePrimaryKey}{%
+Prefer using surrogate primary keys based on automatically incremented integers~\cite{B2025SBPASG}.%
+}%
+%
+\bestPractice{primaryKeyId}{%
+Whenever using an automatically incremented integer as primary key for a table, name it~\sqlil{id}. %
+While there is some controversy about this topic~\cite{L2011WINATPKCICBPC}, anybody accessing your \db\ will immediately understand the meaning of the \sqlil{id}~columns and this practice is used in many sources~\cite{B2025SBPASG,PGDG:PD}.%
+}%
 %
 This completes the \sql\ command for creating our very first table.
 We can now fire up \psql\ again.
@@ -132,7 +145,7 @@ Afterwards, one new table exists, namel~\sqlil{product}.%
 %
 \hsection{Inserting some Data}\afterpage{\clearpage}%
 \gitSQLAndOutput{\databasesCodeRepo}{factory}{insert_into_table_product.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:insert_into_table_product}{%
-Storing some products in the table \textil{product}.%
+Storing some products in the table~\sqlil{product}.%
 }%
 %
 Now the table \sqlil{product} exists, but it is empty.
@@ -157,13 +170,18 @@ The complete command for storing all the data is shown in \cref{lst:factory:inse
 There, we first print all the data currently in the table by typing \sqlil{SELECT * FROM product;}\sqlIdx{SELECT{\idxdots}FROM}\sqlIdx{WHERE}\sqlIdx{*}.
 This prints nothing, because the table is empty.
 Then we insert the eleven products via one single \sqlilIdx{INSERT INTO} command.
-Afterwards, we try \sqlil{SELECT * FROM product;}\sqlIdx{SELECT{\idxdots}FROM}\sqlIdx{WHERE}\sqlIdx{*} again -- and now it prints 11~rows.%
+Afterwards, we try \sqlil{SELECT * FROM product;}\sqlIdx{SELECT{\idxdots}FROM}\sqlIdx{WHERE}\sqlIdx{*} again -- and now it prints 11~rows.
+
+Before we continue, let us briefly check what the \sqlilIdx{UNIQUE} constraint that we have defined on column~\sqlil{name} does.
+Basically, it says that there cannot be two records in our table with the same value of~\sqlil{name}.
+Therefore, if we would try to insert another product with name \sqlil{'Shoe, Size 36'} into the table, this should fail.
+Because we already have a row with this value.
+We test this in \cref{lst:factory:insert_into_table_product_error}.
+Indeed, \cref{exec:factory:insert_into_table_product_error} shows that this fails with an error and the data remains unchanged.%
 %
 \endhsection%
 %
 \hsection{Selecting Data}%
-\gitSQLAndOutput{\databasesCodeRepo}{factory}{select_from_table_product.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:select_from_table_product}{%
-Selecting information from the table \textil{product}.}%
 %
 Now we have stored data in the table \sqlil{product}.
 But how can we get it out again?
@@ -206,6 +224,12 @@ Luckily, \sql\ supports mathematical expressions~\cite{PGDG:PD:MFAO}, so it is p
 The query \sqlil{SELECT name, weight / price AS g_per_yuan from product;} would return the product name and the weight-cost ration.
 \sqlil{weight / price AS g_per_yuan}\sqlIdx{AS} means that the ratio of weight and price will be computed and given the name \sqlil{g_per_yuan}.%
 \end{sloppypar}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{factory}{insert_into_table_product_error.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:insert_into_table_product_error}{%
+Showing how the \sqlilIdx{UNIQUE} constraint on column \sqlil{name} prevents us from inserting a product with the same name as an already existing one into table \sqlil{product}.%
+}%
+\gitSQLAndOutput{\databasesCodeRepo}{factory}{select_from_table_product.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:select_from_table_product}{%
+Selecting information from the table \textil{product}.}%
 %
 Suppose that our table \sqlil{product} contains hundreds of entries.
 It would be very hard to spot good deals in that heap of data.
@@ -264,8 +288,8 @@ But having two queries is somehow unsatisfying.
 We want to package both results together, so that we get the two rows as the result of a single \sql\ command.
 
 Nothing easier than that!
-We just have to remove the trailing~\sqlil{;} from the first query and write a \sqlilIdx{UNION} directly in front of the second query~\cite{PGDG:PD:CQUIE}!
-The \sqlilIdx{UNION} statement effectively appends the results of the second query to the results of the first query.
+We just have to remove the trailing~\sqlil{;} from the first query and write a \sqlilIdx{UNION ALL} directly in front of the second query~\cite{PGDG:PD:CQUIE}!
+The \sqlilIdx{UNION ALL} statement effectively appends the results of the second query to the results of the first query.
 The combined statement is shown at the bottom of \cref{lst:factory:select_from_table_product} and its result is given in \cref{exec:factory:select_from_table_product}.
 
 At this point, please notice the beauty of queries:
@@ -276,13 +300,28 @@ But the queries will still work all the same and always give us the up-to-date r
 \FloatBarrier%
 \endhsection%
 %
+\hsection{The Table \inQuotes{customer}}%%
+Next, we design a table for managing customer data.%
+%
+\hsection{Creating the Table}%
 \gitSQLAndOutput{\databasesCodeRepo}{factory}{create_table_customer.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:create_table_customer}{%
 Creating the table \textil{customer} to store the information about our factory's customers.%
 }%
 %
+\begin{sloppypar}%
+We create the table \sqlil{customer} using the \sqlilIdx{CREATE TABLE} command in \cref{lst:factory:create_table_customer}.
+The first attribute again should be the primary key~\sqlil{id}, which we again define as \sqlil{INT GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY}.%
+\end{sloppypar}%
+%
+\endhsection%
+%
+\hsection{Inserting some Data}%
 \gitSQLAndOutput{\databasesCodeRepo}{factory}{insert_into_table_customer.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:insert_into_table_customer}{%
 Storing some customer records in the table \textil{customer}.%
 }%
+\endhsection%
+%
+\endhsection%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{factory}{create_table_demand.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:create_table_demand}{%
 Creating the table \textil{demand} to store the orders of our customers.%
