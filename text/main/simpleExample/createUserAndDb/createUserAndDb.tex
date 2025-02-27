@@ -24,6 +24,7 @@ We can connect to the \postgresql\ \server\ on our local machine by providing th
 The \textil{postgress://} tells \psql\ that this is, indeed, a connection \pgls{URI}.
 The second \textil{postgres} is the user name.
 The colon~\inQuotes{\textil{:}} separates the user name from the password~\textil{XXX}.
+\localhost\ stands for the current machine itself.
 
 Let me stress again:
 Never use something like \textil{XXX} as a password.
@@ -31,7 +32,7 @@ I am also not doing that.
 For the examples in the book, I just replaced the actual password with \textil{XXX}.
 
 Anyway, after the \inQuotes{\textil{@}} comes the network address or host name of the where the \postgresql\ \server\ is running.
-Since it is on the same machine as we are currently working on, we write \textil{localhost}.
+Since it is on the same machine as we are currently working on, we write \localhost.
 With this information, \psql\ knows that we want to connect to the \postgresql\ \server\ running on our current computer as user \textil{postgres} with password~\textil{XXX}.%
 %
 \begin{sloppypar}%
@@ -49,6 +50,14 @@ Maybe we want to run the same commands later on another \dbms\ where it is neces
 You can read more about \sql\ commands in the \postgresql\ reference~\cite{PGDG:PD:SC}.%
 \end{sloppypar}%
 %
+\bestPractice{keywords}{%
+Keywords in \sql\ may always be written completely in uppercase~\cite{DB2019HTTPSSC}. %
+Well, technically, \sql\ keywords are not case sensitive, so \sqlilIdx{WHERE} and \sqlIdx{where} work the same. %
+It is most important to be consistent in your casing, regardless whether you prefer upper- or lowercase~\cite{B2025SBPASG}. %
+Nevertheless, I prefer uppercase and the \postgresql\ documentation does so too~\cite{PGDG:PD}.%
+}%
+%
+Anyway.
 How do we know that the user \inQuotes{boss} has successfully been created?
 On one hand, \psql\ did not give us an error message.
 On the other hand, we can simply list all users.
