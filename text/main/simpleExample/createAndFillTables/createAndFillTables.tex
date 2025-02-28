@@ -530,8 +530,8 @@ For each demand, we must specify an amount~(\sqlilIdx{NOT NULL}) and that amount
 Having learned about constraints a while ago, we want to protect our data a bit better.
 For example, we want to make sure that \sqlil{amount} is always positive, i.e., greater than zero.
 Also, orders for over one million units of any product are unrealistic.
-If we are about to insert a record into our \sqlil{demand} table where someone orders more than a million shoes, chances are that something went wrong.
-So we want to define a constraint enforcing \sqlil{amount} to stay in~\intRange{1}{1\decSep000\decSep000}.
+If we are about to insert a record into our \sqlil{demand} table where someone orders a million shoes, chances are that something went wrong.
+So we want to define a constraint enforcing \sqlil{amount} to stay in~\intRange{1}{999\decSep999}.
 
 We can write \sqlil{CONSTRAINT ordered_amount_ok CHECK (amount > 0)}\sqlIdx{CONSTRAINT!CHECK}.
 This will create the constraint \sqlil{ordered_amount_ok} which will check that \sqlil{amount} is greater than zero.
