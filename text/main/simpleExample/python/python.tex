@@ -3,7 +3,7 @@
 \label{sec:factoryFromPython}%
 %
 \gitPythonAndOutput{\databasesCodeRepo}{factory}{connect_insert_and_select.py}{--args format}{factory:connect_insert_and_select}{%
-A \python\ program connecting to our factory \pgls{db}, using \sqlilIdx{INSERT} to add some records, and executing a \sqlIdx{SELECT{\idxdots}FROM}\sqlil{SELECT} statement.}%
+A \python\ program connecting to our factory \pgls{db}, using \sqlilIdx{INSERT INTO} to add some records, and executing a \sqlIdx{SELECT{\idxdots}FROM}\sqlil{SELECT} statement.}%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{factory}{select_sale_2.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:select_sale_2}{%
 Repeating the query from \cref{lst:factory:select_sale} after inserting the records using our \python\ program from \cref{lst:factory:connect_insert_and_select}.%
