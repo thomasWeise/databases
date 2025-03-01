@@ -37,11 +37,11 @@ We could thus choose \sqlil{VARCHAR(100)}\sqlIdx{VARCHAR} for the column \sqlil{
 We thus write~\sqlil{name VARCHAR(100)}\sqlIdx{VARCHAR} when defining this column.
 The names must also be unique.
 We can never have two different products with the same name.
-So we add the keyword~\sqlil{UNIQUE}.
+So we add the keyword~\sqlil{UNIQUE}~\cite{PGDG:PD:C}.
 If, later, someone tries to enter a record into our table whose \sqlil{name} value already exists in another record, then this will fail with an error.
 We also want to enforce that every single record indeed has a \sqlil{name} value set.
 There must never be any row in the table without a properly set name.
-Therefore, we add the \sqlilIdx{NOT NULL} specification and write \sqlil{name VARCHAR(100)\ UNIQUE NOT NULL}\sqlIdx{VARCHAR}\sqlIdx{NOT NULL}\sqlIdx{UNIQUE}.
+Therefore, we add the \sqlilIdx{NOT NULL} specification and write \sqlil{name VARCHAR(100)\ UNIQUE NOT NULL}\sqlIdx{VARCHAR}\sqlIdx{NOT NULL}\sqlIdx{UNIQUE}~\cite{PGDG:PD:C}.
 Nice, we just defined our very first own column.
 
 Additionally, we should store the price at which we sell the product.
@@ -543,7 +543,8 @@ With this, we prevent any order for less than one or more than~999\decSep999 ite
 
 Of course, we also want to store \emph{when} a customer issued the demand.
 For storing dates, \sql\ offers the \sqlilIdx{DATE} type.
-It allows us to specify dates in the ISO standard format~\inQuotes{\textil{YYYY-MM-DD}}~\cite{ISO860112019}, where \textil{YYYY} is the four-digits of the year, \textil{MM} stands for the number month in two digits, and \textil{DD} is the date specified with two digits as well.
+It allows us to specify dates in the Gregorian calendar~\cite{PGDG:PD:HU,G1582IG}.
+As notation, the ISO standard format~\inQuotes{\textil{YYYY-MM-DD}}~\cite{ISO860112019} is used, where \textil{YYYY} is the four-digits of the year, \textil{MM} stands for the number month in two digits, and \textil{DD} is the day specified with two digits as well.
 We then can compare dates and do all sorts of arithmetics with them.
 Like the type \sqlilIdx{DECIMAL} being the canonical datatype to be used for monetary things, \sqlilIdx{DATE} is the right type for dates.
 It is also a reserved word, so we cannot call our new column \sqlil{date} and we also cannot call it \sqlil{when}, as this is also reserved.
