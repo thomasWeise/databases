@@ -36,9 +36,60 @@ If a customer did not issue any orders, then they should still appear, but only 
 This means that first, we need all the customer names.
 A \sqlil{SELECT name FROM CUSTOMER;} would do this for us.
 Now we need to cross-reference the customer \sqlil{id} values in table \sqlil{customer} with the column \sqlil{customer} in table \sqlil{demand}.
-We also want to list the customers who did not issue any order.
+We also want to list the customers who did not issue any order.%
+%
+\begin{sloppypar}%
+What we want to do is to apply a so-called \sqlilIdx{LEFT JOIN}\sqlIdx{JOIN!LEFT}, also called \sqlilIdx{LEFT OUTER JOIN}\sqlIdx{JOIN!LEFT OUTER}, of the table \sqlil{customer} to the table \sqlil{demand}~\cite{PGDG:PD:JT}.
+The syntax of a left join is basically \sqlil{SELECT <something> FROM table_1 LEFT JOIN table_2 ON (table_1.a = table_2.b)}.
+Here \sqlil{<something>} can be any column from \sqlil{table_1} or \sqlil{table_2}.
+The columns from \sqlil{table_1} that we want need to be prefixed by \sqlil{table_1.}.
+The columns from \sqlil{table_2} that we want need to be prefixed by \sqlil{table_2.}.
+The important part of the \sqlilIdx{LEFT JOIN} is the \sqlilIdx{ON} condition.
+It can be an arbitrarily complex condition, involving \sqlilIdx{AND} and \sqlil{OR} and whatnot.
+However, in the simplest form, it just picks a column from \sqlil{table_1}, here \sqlil{table_1.a} and says that its value must be the same as a column in \sqlil{table_2}, here \sqlil{table_2.b}.%
+\end{sloppypar}%
+%
+We apply this to our situation.
+\sqlil{table_1} is obviously \sqlil{customer} and \sqlil{table_2} is \sqlil{demand}.
+The thing that we want to select is \sqlil{customer.name} and the corresponding values of \sqlil{demand.id}.
+The fields that need to match are \sqlil{customer.id} and \sqlil{demand.customer}.%
+%
+\begin{sloppypar}%
+In \cref{lst:factory:select_customer_demand}, we \sqlil{SELECT customer.name, demand.id} and we do so \sqlil{FROM customer LEFT JOIN demand ON (customer.id = demand.customer)}.
+When executed, this query goes through the table~\sqlil{customer}.
+For each record, it will take the field~\sqlil{id}, i.e., \sqlil{customer.id}.
+It will then search for any row in the table~\sqlil{demand} whose field \sqlil{customer}, i.e., \sqlil{demand.customer} has the same value.
+For any such row, it will write a row to the output with the \sqlil{name} of the customer and the \sqlil{id} of the row in \sqlil{demand}.
+If and only if no such row exists for a customer, i.e., if the customer did not yet make any purchase, it writes a row to the output with the \sqlil{name} of the customer and \sqlilIdx{NULL} as the \sqlil{demand}~id.
+This means that we get the demands associated with each customer name.
+We also see which customer did not make any purchase.%
+\end{sloppypar}%
+%
+To clean up the output, we rename \sqlil{customer.name AS customer_name}\sqlIdx{AS} and \sqlil{demand.id AS demand_id}\sqlIdx{AS} to make it clearer which name and id values will be displayed.
+We also add an \sqlil{ORDER BY customer_name}\sqlIdx{ORDER BY} to sort the output by customer name.
 
-What we want to do is to apply a so-called \sqlilIdx{LEFT JOIN}\sqlIdx{JOIN!LEFT}, also called \sqlilIdx{LEFT OUTER JOINT}\sqlIdx{JOIN!LEFT OUTER}, of the table \sqlil{customer} to the table \sqlil{demand}~\cite{PGDG:PD:JT}.
+The result of this query, shown in \cref{exec:factory:select_customer_demand}, has nine rows.
+We have eight demands, which are associated with customers Bebba, Bebbo, and Bibbo.
+Bobbo did not yet make any purchase, so he appears as a single row with \sqlilIdx{NULL} associated as \sqlil{demand_id}.
+The \psql\ \pgls{client} just leaves \sqlil{demand_id} blank in the output.
+
+We now have cross-referenced two tables!
+Let us take this a step farther and ask \inQuotes{How many orders did each customer make so far?}
+We again answer this question in \cref{lst:factory:select_customer_demand}.
+Doing this is rather easy:
+First, we replace \sqlil{demand.id AS demand_id} in the query with \sqlil{COUNT(demand.id) as demands}\sqlIdx{COUNT}.
+We already learned that \sqlilIdx{COUNT} just counts rows over groups.
+But in order to let it count meaningfully, we need to create these groups.
+All we have to do for this is to add a \sqlil{GROUP BY customer_name}\sqlIdx{GROUP BY} to the query.
+All rows that share a \sqlil{customer_name} go into the same group.
+\sqlilIdx{COUNT} now counts the rows in these groups.
+The output in \cref{exec:factory:select_customer_demand} shows us that Bebba made two orders, Bebbo~four, and Bibbo also two.
+Bobbo so far has zero orders in his name.
+
+With this, we now know how to cross-reference tables.
+We have essentially solved the basic annoyance mentioned before:
+Yes, our data is distributed over different tables and without knowing what product a product~id refers to and which customer corresponds to which customer~id, it is hard to understand anything.
+However, we can just join tables pull all the information together in a query.%
 %
 \FloatBarrier%
 \endhsection%
