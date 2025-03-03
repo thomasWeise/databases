@@ -39,12 +39,12 @@ Now we need to cross-reference the customer \sqlil{id} values in table \sqlil{cu
 We also want to list the customers who did not issue any order.%
 %
 \begin{sloppypar}%
-What we want to do is to apply a so-called \sqlilIdx{LEFT JOIN}\sqlIdx{JOIN!LEFT}, also called \sqlilIdx{LEFT OUTER JOIN}\sqlIdx{JOIN!LEFT OUTER}, of the table \sqlil{customer} to the table \sqlil{demand}~\cite{PGDG:PD:JT}.
+What we want to do is to apply a so-called \sqlil{LEFT JOIN}\sqlIdx{JOIN!LEFT}, also called \sqlIdx{LEFT OUTER JOIN}\sqlIdx{JOIN!LEFT OUTER}, of the table \sqlil{customer} to the table \sqlil{demand}~\cite{PGDG:PD:JT}.
 The syntax of a left join is basically \sqlil{SELECT <something> FROM table_1 LEFT JOIN table_2 ON (table_1.a = table_2.b)}.
 Here \sqlil{<something>} can be any column from \sqlil{table_1} or \sqlil{table_2}.
 The columns from \sqlil{table_1} that we want need to be prefixed by \sqlil{table_1.}.
 The columns from \sqlil{table_2} that we want need to be prefixed by \sqlil{table_2.}.
-The important part of the \sqlilIdx{LEFT JOIN} is the \sqlilIdx{ON} condition.
+The important part of the \sqlil{LEFT JOIN}\sqlIdx{JOIN!LEFT} is the \sqlilIdx{ON} condition.
 It can be an arbitrarily complex condition, involving \sqlilIdx{AND} and \sqlil{OR} and whatnot.
 However, in the simplest form, it just picks a column from \sqlil{table_1}, here \sqlil{table_1.a} and says that its value must be the same as a column in \sqlil{table_2}, here \sqlil{table_2.b}.%
 \end{sloppypar}%
@@ -94,11 +94,112 @@ However, we can just join tables pull all the information together in a query.%
 \FloatBarrier%
 \endhsection%
 %
+\hsection{Views as Virtual Tables}%
 \gitSQLAndOutput{\databasesCodeRepo}{factory}{create_view_sale.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:create_view_sale}{%
 Creating a view, i.e., a stored \sql\ query that can be treated like a table, to list the demands in human-readable form.%
 }%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{factory}{select_sale.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:select_sale}{%
+We are now able to cross-reference different tables and to pull data together.
+What we want to do is to create a query where, for each demand, we see the customer name, the product name, the product price, the ordered amount, and the order date.
+The result of this query would then be a clear and human readable overview of the business transactions of our company.
+Based on the previous example, where we joined the table \sqlil{customer} with the table \sqlil{demand}, we anticipate that we will need two \inQuotes{joins} now.
+We will need to combine the \sqlil{demand} table with the \sqlil{customer} table and with the \sqlil{product} table.
+The query will therefore probably be more complicated.
+
+Moreover, it is likely that we will need this query structure several times.
+For example, we probably want to be able to query all the orders that were made in a specific year.
+This would basically extend the same query with a \sqlilIdx{WHERE} clause where we limit the demand dates.
+Or maybe we want to sum up the cash flow per customer, to see who our most lucrative customers are and to maybe make them some special offers
+Or maybe we want to summarize the total sales per product.
+This would tell us which of our products sell well and which don't.
+
+Every time we would re-write the query, just a bit differently.
+Of course, this is not a good approach.
+On one hand, every time we write a query, there is a chance that we introduce a mistake.
+On the other hand, if we ever decided to change the structure of \db, maybe by allowing multiple items per demand, then we are stuck with a heap of queries that all need to be changed.
+
+Luckily, the \sql\ language and \pglspl{rdb} offer us a tool for this situation:
+We can store the query as so-valled \emph{view}~\cite{PGDG:PD:CV}.
+A view is basically a stored query that we can work with exactly as if it was a table.
+We can apply other \sqlil{SELECT}\sqlIdx{SELECT{\idxdots}FROM} queries on top of it.
+
+Thus, we now will perform two steps:
+First, we design the new query that joins three tables.
+Second, we store this query as view so that we can re-use it whenever it pleases us.
+
+Let us construct the new query.
+We first define what we want in a way more close to \sql.
+\inQuotes{For each row in \sqlil{demand}, we need the corresponding row in \sqlil{customer} and the corresponding row in \sqlil{product}.}
+We know that there always exists exactly one \sqlil{customer} row, because we defined the foreign key \sqlilIdx{REFERENCE} constraint that enforces this.
+We also know that there always exists exactly one \sqlil{product} row, because we defined the foreign key \sqlilIdx{REFERENCE} constraint that enforces this.
+So it cannot be that we have a row \sqlil{demand} but no corresponding row in \sqlil{customer} or \sqlil{product}.
+We already know that it is totally possible the other way around, i.e., that there is a row in \sqlil{customer} without any related row in \sqlil{demand} -- but this is not important here.
+
+Given this information, we \emph{could} use the \sqlil{LEFT JOIN}\sqlIdx{JOIN!LEFT} from before.
+It would generate rows also for rows of \sqlil{demand} that do not match to any \sqlil{customer} or \sqlil{product}.
+But such rows do not exist anyway.
+However, what we actually would like to use here is an \sqlil{INNER JOIN}\sqlIdx{JOIN!INNER}.
+The \sqlil{INNER JOIN} only creates output rows when the rows of all involved tables match each other.%
+%
+\begin{sloppypar}%
+But how do we go about joining \emph{three} tables?
+Well, let's begin by doing basically the same thing as before:
+We \sqlil{SELECT <something> FROM demand} and then \sqlil{INNER JOIN customer ON (customer.id = demand.customer)}.
+For each row in \sqlil{demand}, this gives us the corresponding row in \sqlil{customer}.
+It also would drop each row in \sqlil{demand} for which no row in \sqlil{customer} exists from the output (but that cannot happen anyway).
+Now we simply \emph{chain} the next \sqlil{INNER JOIN} by writing it directly after that!
+We write \sqlil{INNER JOIN product ON (product.id = demand.product)}.
+This will also select the corresponding row from table \sqlil{product}.
+If such a row does not exist, then the whole current combined row from \sqlil{product} and \sqlil{product} would be dropped from the output.
+Thanks to our \sqlilIdx{REFERENCE} constraints in table \sqlil{demand}, this can never happen anyway.%
+\end{sloppypar}%
+%
+\begin{sloppypar}%
+We now have nicely pulled the customer and product data for each demand order.
+We now choose the columns that we want to output and replace the \sqlil{<something>} we first nonchalantly wrote when beginning to design the query.
+First, we want to get the customer name, so we write \sqlil{customer.name AS customer_name}\footnote{%
+As we discussed before, customer names are not necessarily \sqlilIdx{UNIQUE} in our \db\ design. %
+This would be a flaw of this query, as it does not distinguish two different customers with the same name. %
+In real systems, you have customer numbers or unique usernames to avoid this issue. %
+But this here is just a small example\dots}.
+We also want to get the product name, so we write \sqlil{product.name AS product_name}.
+Notice how both the table \sqlil{customer} and the table \sqlil{product} have a column called~\sqlil{name}.
+However, there can never be any confusion here, because we refer to these columns as \sqlil{customer.name} and \sqlil{product.name}, respectively.
+Next we want the list product price and amount associated with an order, i.e., \sqlil{product.price AS price} and \sqlil{demand.amount AS amount}.
+Finally, we also return the order date and therefore add column \sqlil{demand.ordered as ordered}.%
+\end{sloppypar}%
+%
+For good measures, we add an \sqlilIdx{ORDER BY} clause and sort the output by \sqlil{customer_name}.
+If two entries have the same \sqlil{customer_name}, then we sort the one with the earlier order date (\sqlil{ordered}) first.
+If two entries have the same \sqlil{customer_name} \emph{and} \sqlil{ordered} date, then we sort the one with the lexicographically smaller \sqlil{product_name} first.
+We try to resolve further draws by \sqlil{price} and \sqlil{amount}.
+
+The second thing we wanted to do was to save this query into the \db\ as a \emph{view}.
+This way, we can re-use it whenever we want.
+Storing it as a view is very very simple.
+We first need to pick a name for it.
+Let's call it \sqlil{sale}.
+Then, we just need to write \sqlil{CREATE VIEW sale AS}\sqlIdx{CREATE!VIEW}\sqlIdx{AS} right before our new query.
+If we do this, the query is not actually executed.
+It is stored under the name \sqlil{sale} as a view.
+We do this in \cref{lst:factory:create_view_sale}.
+
+What if we want to actually execute the query?
+Well, we treat \sqlil{sale} as if it was a table.
+We write \sqlil{SELECT * FROM sale;}.
+We do this as well in \cref{lst:factory:create_view_sale}.
+
+The result is shown in \cref{exec:factory:create_view_sale}.
+Eight beautiful human readable rows of data.%
+%
+\FloatBarrier%
+\endhsection%
+%
+\hsection{Using our View}%
+\gitSQLAndOutput{\databasesCodeRepo}{factory}{select_from_view_sale_1.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:select_from_view_sale_1}{%
+Compute the per-customer and per-product sales based on the view \textil{sale}.%
+}%
+\gitSQLAndOutput{\databasesCodeRepo}{factory}{select_from_view_sale_2.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:select_from_view_sale_2}{%
 Compute the per-customer and per-product sales based on the view \textil{sale}.%
 }%
 %
