@@ -2,9 +2,93 @@
 \hsection{Connecting from Python}%
 \label{sec:factoryFromPython}%
 %
+When we look at what we have achieved so far, we find that it is all pretty nice.
+However, there is one general problem we did not really consider yet:
+The data is entirely inside the \db.
+At first glance, this is where it belongs.
+Giving this a second thought, a realization strikes us:
+Nobody except us (the \pglspl{dba} and developers) can really work with this.
+Yes, we created the user account \textil{boss} for our boss so that they can log in and work with the data.
+But are we really going to explain to them that they will have to use \sql\ for this?
+Will a sales manager really insert customer orders into our \db\ by firing up the \sql\ \client\ and then typing \sqlil{INSERT INTO demand (...}?
+Probably not.
+
+The data is in the \db, where it belongs.
+The \dbms\ can protect it by enforcing our constraints and via its user and rights management.
+But only cool people like us can really work with that.
+Unsophisticated personnel will gaze at \psql\ puzzled.
+
+We need a way to access and work with the data from the outside.
+For this, several possible choices exist.%
+%
+\begin{enumerate}%
+%
+\item We can write a our own \client\ program, which offers the user comfortable methods to enter and visualize data.
+The program then communicates with the \db.
+The user is never bothered with \sql\ and that alike.%
+%
+\item We can also write the front end in form of a web application, maybe based on the \pgls{flask} \server.
+The user then can access our front end via the web browser.
+Our program again does the heavy lifting in terms of \sql\ and \db\ interaction.%
+%
+\item We use a general interface such as \libreofficeBase\ and connect with it to our \db.
+In such a tool, we can conveniently design forms for entering the data and reports for visualizing it.
+Users can use this front end and still have full access to \sql\ and the entrails of our \db.%
+%
+\end{enumerate}%
+%
+Here, we will look at the first and third choice.
+The second choice involves maybe a bit too much background knowledge for this stage of \inQuotes{playing with a \db} example.
+
+So let us begin by writing a program that accesses a \postgresql\ \db.
+We will use the \python\ programming language~\cite{programmingWithPython}.
+I strongly recommend to read our course book~\citetitle{programmingWithPython}~\cite{programmingWithPython} on this subject either before or in parallel.
+Things like how to install or work with packages are described there, as well as \pythonil{for}~loops and such and such.
+
+For this part of the example, we need the \python\ programming language and the \psycopg~library installed.
+It would probably also be useful to have the \pycharm\ \pgls{ide} ready.
+How these pieces of software can be obtained is discussed in \cref{sec:pythonEtAl} and in~\cite{programmingWithPython}.
+
+\python\ is a programming language.
+It allows us to write almost arbitrary programs using datatypes such as \pythonilIdx{int}, \pythonilIdx{float}, \pythonilIdx{str}.
+We can use control flow statements like~\pythonil{if...then...else}\pythonIdx{if}\pythonIdx{then}\pythonIdx{else}, \pythonilIdx{for}~loops, and \pythonilIdx{while}~loops.
+We can define functions using~\pythonilIdx{def}.
+It supports \pgls{OOP} and we can create classes using the \pythonilIdx{class}~keyword.
+The language does not have any built-in connection with \postgresql.
+
+However, \python\ can use packages, which are libraries that offer additional functionality.
+Some Well-known packages are \numpy~\cite{HMvdWGVCWTBSKPHvKBHFdRWPGMSRWAGO2020APWN,N2025N,DBvR2024ITN,J2018NPSCADSAWNSAM}, \pandas~\cite{PD2025P,B2012DPWP,L2024PW}, \scikitlearn~\cite{PVGMTGBPWDVPCBPD2011SMLIP,RLM2022MLWPAS}, \scipy~\cite{VGOHRCBPWBvdWBWMMNJKLCPFMVLPCHQHARPvMS2020SFAFSCIP,J2018NPSCADSAWNSAM}, \tensorflow~\cite{ABCCDDDGIIKLMMMSTVWWYZ2016TASFLSML,L2023TDDBTADMLMWT}, or \pytorch~\cite{PGMLBCKLGADKYDRTCSFBC2019PAISHPDLL,RLM2022MLWPAS}.
+Such packages are offered in the central \pypi\ repository and can be installed using \pip.
+Usually, we will install them into a \pgls{virtualEnvironment} and then use them with our application.
+More on this can, again, be found in~\cite{programmingWithPython}.
+
+The important thing is that there is also a \python\ package for connecting with the \postgresql\ \dbms.
+This package is called \psycopg~\cite{VDGE2010P}.
+We briefly outline how to install and use this package in~\cref{sec:installPsycopg}.
+
 \gitPythonAndOutput{\databasesCodeRepo}{factory}{connect_insert_and_select.py}{--args format}{factory:connect_insert_and_select}{%
 A \python\ program connecting to our factory \pgls{db}, using \sqlilIdx{INSERT INTO} to add some records, and executing a \sqlIdx{SELECT{\idxdots}FROM}\sqlil{SELECT} statement.}%
-%
+
+From here on, let us assume that \psycopg\ is installed and you have opened \cref{lst:factory:connect_insert_and_select} in the \pycharm\ \pgls{ide}.
+When you read this listing, you notice a lot of interesting or strange things.
+It begins by importing the type \pythonilIdx{LiteralString} from the standard \pythonilIdx{typing} package.
+This type is provided by \python\ for security reasons~\cite{PEP675}:
+It helps preventing \pglspl{SQLi}, especially if used together with static type checking tools such as~\mypy.
+We will not discuss this here any further, but you should really read~\cite{PEP675} to learn more about this issue.
+Moving on, you see that we import two functions from the package \psycopg, which we will use later on, namely \pythonil{connect} and \pythonil{dict_row}.
+
+We now get to the meat of the example.
+One thing that we want to do with this program is to insert some new demand records into our \db.
+Therefore, we will use the \sqlilIdx{INSERT INTO} statement.
+However, we will not start the \psql\ \client\ and type the commands in.
+Instead, we will send them from our \python\ program via \psycopg.
+
+Now the full \sqlilIdx{INSERT INTO} statement is rather long and does not fit on a single line in \cref{lst:factory:connect_insert_and_select}.
+To make using it twice (as we will) a bit less cumbersome, we store it in a variable \pythonil{statement}.
+This variable is annotated with \pgls{typeHint} \pythonilIdx{LiteralString} that we mentioned before, because it represents a string that was typed in as-is, that is not the result of \pgls{strinterpolation}, concatenation, or any other operation.
+Either way, we store our statement in this variable.
+
+
 \gitSQLAndOutput{\databasesCodeRepo}{factory}{select_from_view_sale_3.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:select_from_view_sale_3}{%
 Repeating the query from \cref{lst:factory:select_from_view_sale_1} after inserting the records using our \python\ program from \cref{lst:factory:connect_insert_and_select}.%
 }%
