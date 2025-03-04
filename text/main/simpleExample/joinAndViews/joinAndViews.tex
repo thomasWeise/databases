@@ -150,7 +150,7 @@ It also would drop each row in \sqlil{demand} for which no row in \sqlil{custome
 Now we simply \emph{chain} the next \sqlil{INNER JOIN} by writing it directly after that!
 We write \sqlil{INNER JOIN product ON (product.id = demand.product)}.
 This will also select the corresponding row from table \sqlil{product}.
-If such a row does not exist, then the whole current combined row from \sqlil{product} and \sqlil{product} would be dropped from the output.
+If such a row does not exist, then the whole current combined row from \sqlil{demand} and \sqlil{product} would be dropped from the output.
 Thanks to our \sqlilIdx{REFERENCE} constraints in table \sqlil{demand}, this can never happen anyway.%
 \end{sloppypar}%
 %
@@ -160,8 +160,8 @@ We now choose the columns that we want to output and replace the \sqlil{<somethi
 First, we want to get the customer name, so we write \sqlil{customer.name AS customer_name}\footnote{%
 As we discussed before, customer names are not necessarily \sqlilIdx{UNIQUE} in our \db\ design. %
 This would be a flaw of this query, as it does not distinguish two different customers with the same name. %
-In real systems, you have customer numbers or unique usernames to avoid this issue. %
-But this here is just a small example\dots}.
+In real systems, you have customer numbers, unique usernames, or phone numbers to avoid this issue. %
+We also stored phone numbers, but for the sake of simplicity, in this \emph{simple example}, we just use the names.\dots}.
 We also want to get the product name, so we write \sqlil{product.name AS product_name}.
 Notice how both the table \sqlil{customer} and the table \sqlil{product} have a column called~\sqlil{name}.
 However, there can never be any confusion here, because we refer to these columns as \sqlil{customer.name} and \sqlil{product.name}, respectively.
@@ -202,6 +202,89 @@ Compute the per-customer and per-product sales based on the view \textil{sale}.%
 \gitSQLAndOutput{\databasesCodeRepo}{factory}{select_from_view_sale_2.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:select_from_view_sale_2}{%
 Compute the per-customer and per-product sales based on the view \textil{sale}.%
 }%
+%
+Above, we said that the view \sqlil{sale} can be used like a table.
+\sqlil{SELECT * FROM sale;} looks very much like that.
+But we can do a lot more.
+We now want to answer the questions \inQuotes{Which customer bought products for the most money for us?} and \inQuotes{Which product sold for the most money?}
+
+The data we need to answer these questions is already available in the view \sqlil{sale}.
+For each demand, we have the \sqlil{price} of one unit of the ordered product as well as the \sqlil{amount}, the number of product units purchased, in our table.
+If we multiply them with each other, i.e., compute \sqlil{amount * price} we know how much the customer paid.
+All we need to do is to sum up this quantity per customer and we know how much money each customer sent to us.
+We can also sum \sqlil{amount * price} for each product and we get how much money came in on a per-product basis.%
+%
+\begin{sloppypar}%
+In the former case, we would \sqlil{GROUP BY customer_name} and then \sqlil{SELECT customer_name, SUM(amount * price)}\sqlil{SUM} from \sqlil{sale}.
+We could give the sum the name \sqlil{customer_sale}.
+To directly see who purchased most from us, we could also add a \sqlil{ORDER BY customer_sale DESC}\sqlIdx{ORDER BY!DESC}.
+The \sqlil{DESC} enforces sorting in descending order, i.e., larger values come first.%
+\end{sloppypar}%
+%
+We can do pretty much the same for products, in which case we would \sqlil{GROUP BY product_name}.
+We could compute \sqlil{SUM(amount * price) AS product_sale}\sqlIdx{SUM} and we would know for how much money each product sold.
+On a per-product basis, it makes also sense to look at the total units sold, so we could additionally compute \sqlil{SUM(amount) AS total_amount}\sqlIdx{SUM}.
+Of course, we could sort the data by the product sale in descending order, i.e., write \sqlil{ORDER BY product_sale DESC}\sqlIdx{ORDER BY!DESC}.
+
+The complete queries can be seen in \cref{lst:factory:select_from_view_sale_1}.
+Their result is given in \cref{exec:factory:select_from_view_sale_1}.
+We find that Bebbo is our most valuable customer.
+He purchased products for over 2996元 from us.
+Bebba purchased for over 2570元 and Bibbo sent about 2433元 to us.
+
+The top-selling product, by far, is our famous \inQuotes{Shoe, Size 42.}
+We sold 12 pairs of it for about 1956元.
+Figuratively speaking, \inQuotes{Shoe, Size 42} is the runner up (hehe) with 1590元 for ten pairs sold.
+Many of our customers also liked to by \inQuotes{Large Purse.}
+No wonder that customers love it, as it offers 10g of product per 元 (see \cref{exec:factory:select_from_table_product}).
+
+It is interesting to briefly think about how the above works.
+On the top level, we have an \sql\ query that selects from data from the view \sqlil{sale}.
+Fine, you already have a feeling about how such queries work.
+But remember: \sqlil{sale} is \emph{not} a table.
+It itself is just a query!
+So what happens here is that the query stored as view \sqlil{sale} is executed.
+Its results are taken and then on top of these results, the new query that sums up the customer purchases (or the product purchases) is executed.
+The results of \sqlil{sale} are not stored.
+\sqlil{sale} is not a table.
+Instead, whenever we access it, the query it represents is executed.
+And we can work with its results as if it was a table.
+Isn't that cool?
+
+Assume that your \db\ is now used for several years.
+Queries like the above one would take into consideration the whole history of data.
+Maybe we are only interested in the present year, which, at the time of this writing, is~2025.
+So what we would like to do is to limit our query from \cref{lst:factory:select_from_view_sale_1} to only consider data from~2025.%
+%
+\begin{sloppypar}%
+For this, we simply add the clause \sqlil{WHERE (ordered >= '2025-01-01') AND (ordered < '2026-01-01')}\sqlIdx{WHERE}\sqlIdx{AND} to our queries.
+\sqlil{ordered} is the date when the customer made the order.
+We only want to consider records for which the date is greater then or equal to January~1st, 2025.
+Also, the date must be less than January~1st, 2026.
+So we combine \sqlil{(ordered >= '2025-01-01')} and \sqlil{(ordered < '2026-01-01')} with \sqlilIdx{AND} and put them into a \sqlilIdx{WHERE} clause.
+The updated queries can be found in \cref{lst:factory:select_from_view_sale_2}.%
+\end{sloppypar}%
+%
+Their results in \cref{exec:factory:select_from_view_sale_2} show us that Mr,~Bebbo is still our most valuable customer in 2025, and that Mrs.~Bibba still bought products for more money than Mr.~Bibbo.
+However, in 2025, \inQuotes{Large Purse} is our best-selling product with a margin of about 600元 over the runner up.
+\inQuotes{Shoe, Size 42} did not even make the list in~2025.
+
+At this stage, we have again become more powerful.
+We now have effectively solved the problem that our data is hard to understand.
+We now have tools, namely the \sqlilIdx{JOIN} queries, that allow us to pull together the data from different tables.
+We originally separated the data to enforce cleanliness without redundancy.
+We stored the information about Mr.~Bebbo only once, even though he made four purchases.
+The downside was that, in the purchase records for Mr.~Bebbo, the name \inQuotes{Bebbo} did not appear.
+Instead, it was referenced by pointing to another table via its id~2.
+This made the data hard to read.
+But now we know how we can put the records back together.
+
+Admittedly, the sales query that pulls all the data together (given in \cref{lst:factory:create_view_sale}) is not very easy to read if you are new to \sql.
+On one hand, once you are more familiar with \sql, such queries become a joy to write.
+On the other hand, we also can simply store the query in the \db\ as a so-called \emph{view}.
+We can re-use this view whenever we want.
+We can also plug other queries on top of it.
+So we basically have to do the hard work of designing a good query to pull the data together only once.%
 %
 \FloatBarrier%
 \endhsection%

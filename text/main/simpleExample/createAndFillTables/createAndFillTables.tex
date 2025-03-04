@@ -81,7 +81,7 @@ Store monetary using the \sqlilIdx{DECIMAL} datatype~\cite{C2024SCVDTCBP,W2020HS
 %
 We will sell each product in a box.
 Therefore, we also want to store the width, height, and depth as well as the weight of the packaged box.
-For the height, width, and depth, we will use millimeter as unit and for the weight grams.
+For the height, width, and depth, we will use millimeter as unit and for the weight we use grams.
 We can store values using the datatype \sqlilIdx{INT}, which is a shorthand for \sqlilIdx{INTEGER} and can hold values from -2\decSep147\decSep483\decSep648 to +2\decSep147\decSep483\decSep647.
 Each product must have values specified for all four dimensions, so we again mark them as~\sqlilIdx{NOT NULL}.
 
@@ -237,10 +237,11 @@ It would be very hard to spot good deals in that heap of data.
 Luckily, \sql\ also allows to sort data.
 We would like to see our list sorted based on \sqlil{g_per_yuan} from large to small values.
 This way, the best deals will come first.
-We can do that by simply adding \sqlil{ORDER BY g_per_yuan DESC}\sqlIdx{ORDER BY}\sqlIdx{DESC}.
+We can do that by simply adding \sqlil{ORDER BY g_per_yuan DESC}\sqlIdx{ORDER BY!DESC}.
 \sqlilIdx{ORDER BY} sorts the rows of the query result by the fields listed afterwards.
-By default, it will sort in an ascending order, i.e., with small values coming first.
-We want a descending order, so we also write~\sqlilIdx{DESC}.
+If just write \sqlilIdx{ORDER BY} or, optionally, add \sqlil{ASC}\sqlIdx{ORDER BY!ASC}, then it sorts the data in ascending order.
+This means that small values coming first.
+We want a descending order, so we also write~\sqlil{DESC}\sqlIdx{ORDER BY!DESC}.
 
 Finally, we may realize that there are still way to many entries returned.
 We only care about the best five or so deals, the rest does not matter anyway.
