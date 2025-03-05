@@ -10,6 +10,47 @@ Delete the database \textil{factory} and the user \textil{boss}. %
 This must be executed by the administrator account \textil{postgres}.%
 }%
 %
+We are now approaching the end of this brief journey crisscrossing the domain of \pglspl{rdb} to get a rough impression what they are.
+To finish it, let us delete all the things we created.
+Of course, we have to do that in the opposite order in which we created them.
+
+In \cref{lst:factory:cleanup_database_and_user}, we first delete the view~\sqlil{sale}.
+We can do this by the command \sqlil{DROP VIEW sale;}\sqlIdx{DROP!VIEW}~\cite{PGDG:PD:DV}.
+The \sqlil{DROP} is the \sql\ command for deleting things.
+The \sqlil{VIEW} is specified to make clear what type of object we want to delete, to prevent us from accidentally deleting something else.
+Then we give the name of the view to delete, in our case, that is \sqlil{sale}.
+However, we make this command a bit more handy:
+We insert an \sqlilIdx{IF EXISTS} inbetween the object type and the view's name.
+This condition is self-explanatory:
+If a view of the provided name exists, then it is deleted.
+If not, then nothing happens.
+Without the \sqlilIdx{IF EXISTS}, this would cause an error.
+
+Well, we do know that the view exists, so why are we mentioning this condition here?
+Because it has some interesting use cases.
+If we wanted to create a backup copy of our entire \db, then one thing we could do is to export the whole \db\ as a single large \sql~script~\cite{PGDG:PD:SD}.
+This script could, basically, be the concatenation of all of our listings.
+Running this script would re-create the \db\ in exactly its present state.
+
+Except that it won't.
+If the \db\ already exists, it will fail.
+Or maybe if we had a crash or a user issued some faulty \sql\ commands wreaking havoc, then the \db\ maybe now exists only partially.
+Maybe some tables or views have disappeared, maybe some rows in some tables are missing.
+One method to make the \inQuotes{backup \sql~script} robust to deal with such issues is to add \sqlil{DROP ... IF EXISTS} clauses \emph{before} the commands for re-creating each table or view.
+Then we can even restore the \db\ while the \db\ still exists.%
+%
+\begin{sloppypar}%
+Anyway, we use the same method to delete the three tables.
+We issue the commands \sqlil{DROP TABLE IF EXISTS demand;}\sqlIdx{DROP!TABLE}\sqlIdx{IF EXISTS}, \sqlil{DROP TABLE IF EXISTS product;}, and \sqlil{DROP TABLE IF EXISTS customer;}\sqlIdx{DROP!TABLE}\sqlIdx{IF EXISTS}~\cite{PGDG:PD:DT}.
+Notice that we delete \sqlil{demand} before we delete \sqlil{customer} and \sqlil{product} because of the \sqlilIdx{REFERENCES} constraints.%
+\end{sloppypar}%
+%
+All of these deletion steps are done by using the user \textil{boss} and their password \textil{superboss123}.
+Let us finally also get rid of the entire \db\ and of that user as well in \cref{lst:factory:cleanup_database_and_user}.
+First, we delete the \db\ by executing \sqlil{DROP DATABASE IF EXISTS factory;}\sqlIdx{DROP!DATABASE}\sqlIdx{IF EXISTS}~\cite{PGDG:PD:DD}.
+Then we remove the user via \sqlil{DROP USER IF EXISTS boss;}\sqlIdx{DROP!USER}\sqlIdx{IF EXISTS}~\cite{PGDG:PD:DU}.
+Notice that we log in as the \pgls{dba} user \textil{postgres} to do that.%
+%
 \FloatBarrier%
 \endhsection%
 %
