@@ -73,7 +73,7 @@ From here on, let us assume that \psycopg\ is installed and you have opened \cre
 When you read this listing, you notice a lot of interesting or strange things.
 It begins by importing the type \pythonilIdx{LiteralString} from the standard \pythonilIdx{typing} package.
 This type is provided by \python\ for security reasons~\cite{PEP675}:
-It helps preventing \pglspl{SQLi}, especially if used together with static type checking tools such as~\mypy.
+It helps preventing \pglspl{SQLi}, especially if used together with static type checking tools.
 We will not discuss this here any further, but you should really read~\cite{PEP675,VDGE2022PPDAFP:ST} to learn more about this issue.
 Moving on, you see that we import two functions from the package \psycopg, which we will use later on, namely \pythonil{connect} and \pythonil{dict_row}.
 
