@@ -2,6 +2,15 @@
 \hsection{Connect to the Database}%
 \FloatBarrier%
 %
+%
+We first need to connect from \libreofficeBase\ to the \postgresql\ \server\ and our \sqlil{factory}~\db.
+We therefore open \libreofficeBase\ as discussed back in \cref{sec:installLibreOffice}.
+In the opening screen, we choose \inQuotes{Connect to existing database} as shown in \cref{fig:factoryLibreOfficeBaseConnect01selectDatabase}, because that is what we want to do.
+We need to select the \postgresql\ connector.
+So we click on the driver drop-down box in \cref{fig:factoryLibreOfficeBaseConnect02connectToExisting}.
+We select \postgresql\ as \db\ connection driver in \cref{fig:factoryLibreOfficeBaseConnect03postgres}.
+Now that \postgresql\ is selected, we can click~\menu{Next} as shown in \cref{fig:factoryLibreOfficeBaseConnect04postgres}.
+
 \begin{figure}%
 \centering%
 %
@@ -115,16 +124,7 @@ If we scroll down to the \menu{public} node, we can find our three tables and th
 \caption{Connecting to our example \emph{factory} \db\ using \libreofficeBase.}%
 \label{fig:factoryLibreOfficeBaseConnectC}%
 %
-\end{figure}%
-%
-%
-We first need to connect from \libreofficeBase\ to the \postgresql\ \server\ and our \sqlil{factory}~\db.
-We therefore open \libreofficeBase\ as discussed back in \cref{sec:installLibreOffice}.
-In the opening screen, we choose \inQuotes{Connect to existing database} as shown in \cref{fig:factoryLibreOfficeBaseConnect01selectDatabase}, because that is what we want to do.
-We need to select the \postgresql\ connector.
-So we click on the driver drop-down box in \cref{fig:factoryLibreOfficeBaseConnect02connectToExisting}.
-We select \postgresql\ as \db\ connection driver in \cref{fig:factoryLibreOfficeBaseConnect03postgres}.
-Now that \postgresql\ is selected, we can click~\menu{Next} as shown in \cref{fig:factoryLibreOfficeBaseConnect04postgres}.
+\end{figure}
 
 In the next screen, we need to enter the information about the \dbms\ and \db\ we want to connect to.
 The name of the \db\ is \textil{factory}.
