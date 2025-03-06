@@ -30,6 +30,15 @@ The things that the \dbms\ can do should go into the \db.
 The things that it cannot, like displaying forms, processing data from some source like sensors or files, or training \pgls{ML} models on the data would go into the \python\ program code.
 The two parts of our application would communicate via a library like \psycopg.
 
+Then again, maybe we are a small-scale business where only three or four people have to actually work with the \db.
+In such a situation, we probably still want the power of \postgresql.
+But making a whole separate program to work with the data may just not be worth the effort.
+Plugging a \pgls{GUI} like \libreofficeBase\ in front of the \db\ may then be fully sufficient.
+At least entering, viewing, and changing the data will be much much easier compared to using the \psql\ \client.
+It also does no longer require any understanding of \sql\ to work with the data.
+While we, the \pglspl{dba}, can still use the full features of \postgresql, the secretary in the sales office can now enter new customer data and orders in a way much more natural to them.
+And we can still develop a program for accessing the data later if the situation changes.
+
 At this stage, I hope that your curiosity is tickled.
 Maybe you even have some problems or application ideas for which you might want to design your own \db.
 Maybe to catalog your books or music collection, maybe to construct your ancestry tree, maybe to store your bibliographic references.
