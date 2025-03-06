@@ -11,7 +11,7 @@ For example, we can use datatypes that strictly enforce their domains.
 We can also define constraints, ranging from ensuring that all columns are entered~(\sqlilIdx{NOT NULL}) over preventing name clashes~(\sqlilIdx{UNIQUE}) to sanity checks~(via \sqlilIdx{CHECK} \sqlIdx{CONSTRAINT}constraints)~\cite{PGDG:PD:C}.
 We also learned that we can even ensure the consistency of the data in our \db\ across different tables via the \sqlilIdx{REFERENCES} constraint~\cite{PGDG:PD:FK}.
 So we cannot just have tables, they can have strongly-typed columns and the data integrity can be enforced throughout the complete \db.
-This puts \pglspl{rdb} well ahead the spread sheets produced by the likes of \pgls{excel} or \pgls{libreofficeCalc}.
+This puts \pglspl{rdb} well ahead the spread sheets produced by the likes of \microsoftExcel\ or \libreofficeCalc.
 
 However, on the negative side, we have to admit that using \dbs\ is more complicated.
 And we are certainly losing in terms of readability of our data.
@@ -257,7 +257,7 @@ Maybe we are only interested in the present year, which, at the time of this wri
 So what we would like to do is to limit our query from \cref{lst:factory:select_from_view_sale_1} to only consider data from~2025.%
 %
 \begin{sloppypar}%
-For this, we simply add the clause \sqlil{WHERE (ordered >= '2025-01-01') AND (ordered < '2026-01-01')}\sqlIdx{WHERE}\sqlIdx{AND} to our queries.
+For this, we add the clause \sqlil{WHERE (ordered >= '2025-01-01') AND (ordered < '2026-01-01')}\sqlIdx{WHERE}\sqlIdx{AND} to our queries.
 \sqlil{ordered} is the date when the customer made the order.
 We only want to consider records for which the date is greater then or equal to January~1st, 2025.
 Also, the date must be less than January~1st, 2026.
