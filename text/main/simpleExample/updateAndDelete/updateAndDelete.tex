@@ -1,0 +1,60 @@
+%
+\hsection{Updating and Deleting Records}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{factory}{update_table_product.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:update_table_product}{%
+Modifying some records in the table \sqlil{product}.%
+}%
+%
+\hsection{Updating Records}%
+%
+We have seen how new data can be inserted into a \db\ row-by-row in \cref{sec:factoryCreatingTableAndInsertingData}.
+Often, we also want to modify or delete data.
+This can be done similarly easily.
+
+Assume that our factory found another producer for shoe boxes.
+The new boxes are 5mm less higher and therefore cheaper.
+In \cref{lst:factory:update_table_product} we want to change the package size for all products in shoe boxes accordingly.
+We do this with an \sqlil{UPDATE <table> SET <fields>}\sqlIdx{UPDATE{\idxdots}SET} statement~\cite{PGDG:PD:U}.
+The table is clearly \sqlil{product}.
+There is only a single field that we want to change, namely \sqlil{height}.
+
+The shoe box that we used so far were 350mm $\times$ 250mm $\times$ 130mm in size.
+For each product that ships in such a box, we want to change the height as \sqlil{height = height - 5}, i.e., we set the \inQuotes{new} height to be the \inQuotes{old} height minus 5mm.
+We could write \sqlil{height = 245} just as well, but in the example I wanted to show that we can use arbitrary expressions when updating column.
+
+However, we do not want to change all the rows in the table.
+Only those that used the shoe boxes of the aforementioned dimensions.
+So we use an \sqlilIdx{WHERE} condition the selects only the rows for which\sqlIdx{AND} \sqlil{width = 350}, \sqlil{height = 250}, and \sqlil{depth = 130} hold.
+
+Finally, we want to see the result of our update query.
+The \sqlil{UPDATE} statement allows us to supply, basically, a \sqlil{SELECT} query that chooses data only from the \emph{changed} rows.
+This query is written at the end of the statement as \sqlilIdx{RETURNING}.
+We return all the data from the changed rows.
+
+As you can see \cref{exec:factory:update_table_product}, nine rows are affected.
+Their \sqlil{height} indeed changed to~\sqlil{245}.
+\endhsection%
+%
+\hsection{Deleting Records}%
+\gitSQLAndOutput{\databasesCodeRepo}{factory}{delete_from_table_product.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:delete_from_table_product}{%
+Deleting a row from the table \sqlil{product}.%
+}%
+%
+After running our company for some time, we realized that our stock of \inQuotes{Shoe, Size 36} is never declining.
+Indeed, nobody ever purchased these smallest-size shoes.
+Brokenheartedly, we decide to discontinue this product.
+This means that we somehow need to remove it from the table \sqlil{product}, as it will no longer be sold.
+
+In \cref{lst:factory:delete_from_table_product}, we do this with the command \sqlil{DELETE FROM product WHERE id = 1;}\sqlIdx{DELETE FROM}\sqlIdx{WHERE}~\cite{PGDG:PD:D}.
+This command is pretty self-explanatory.
+It deletes all the rows from table \sqlil{product} where the field~\sqlil{id} has value~\sqlil{1}.
+Only one such row exists, namely the one with \inQuotes{Shoe, Size 36}.
+It is deleted.
+
+To see whether this really worked, we print \sqlil{SELECT COUNT(*) as number_of_products from product;} before and after the \sqlilIdx{DELETE FROM} query.
+Indeed, \cref{exec:factory:delete_from_table_product} shows that we originally had 11~products in our palette.
+After deleting the smallest-sized shoes, only ten products are left.%
+%
+\endhsection%
+\endhsection%
+%
