@@ -445,7 +445,7 @@ Notice that we this time wrote \sqlilIdx{ILIKE} instead of \sqlilIdx{LIKE}.
 \sqlilIdx{ILIKE} works basically the same as \sqlilIdx{LIKE}, with the exception that it compares text case-insensitive.
 For \sqlilIdx{LIKE}, \textil{China} and \textil{china} are two different strings.
 For \sqlilIdx{ILIKE}, they are the same.
-By writing \sqlil{SELECT address ILIKE '\%china\%' as domestic from customer;}, we would get a one-column result which contains the value \sqlilIdx{TRUE} for every customer from China and \sqlilIdx{False} for every customer from abroad.%
+By writing \sqlil{SELECT address ILIKE '\%china\%' as domestic from customer;}, we would get a one-column result which contains the value \sqlilIdx{TRUE} for every customer from China and \sqlilIdx{FALSE} for every customer from abroad.%
 %
 \begin{sloppypar}%
 We can now divide the customers into groups based on this column \sqlil{domestic} by adding \sqlil{GROUP BY domestic}\sqlIdx{GROUP BY} to the query.

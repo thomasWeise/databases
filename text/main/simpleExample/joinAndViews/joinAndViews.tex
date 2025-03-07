@@ -130,8 +130,8 @@ Second, we store this query as view so that we can re-use it whenever it pleases
 Let us construct the new query.
 We first define what we want in a way more close to \sql.
 \inQuotes{For each row in \sqlil{demand}, we need the corresponding row in \sqlil{customer} and the corresponding row in \sqlil{product}.}
-We know that there always exists exactly one \sqlil{customer} row, because we defined the foreign key \sqlilIdx{REFERENCE} constraint that enforces this.
-We also know that there always exists exactly one \sqlil{product} row, because we defined the foreign key \sqlilIdx{REFERENCE} constraint that enforces this.
+We know that there always exists exactly one \sqlil{customer} row, because we defined the foreign key \sqlilIdx{REFERENCES} constraint that enforces this.
+We also know that there always exists exactly one \sqlil{product} row, because we defined the foreign key \sqlilIdx{REFERENCES} constraint that enforces this.
 So it cannot be that we have a row \sqlil{demand} but no corresponding row in \sqlil{customer} or \sqlil{product}.
 We already know that it is totally possible the other way around, i.e., that there is a row in \sqlil{customer} without any related row in \sqlil{demand} -- but this is not important here.
 
@@ -151,7 +151,7 @@ Now we simply \emph{chain} the next \sqlil{INNER JOIN} by writing it directly af
 We write \sqlil{INNER JOIN product ON (product.id = demand.product)}.
 This will also select the corresponding row from table \sqlil{product}.
 If such a row does not exist, then the whole current combined row from \sqlil{demand} and \sqlil{product} would be dropped from the output.
-Thanks to our \sqlilIdx{REFERENCE} constraints in table \sqlil{demand}, this can never happen anyway.%
+Thanks to our \sqlilIdx{REFERENCES} constraints in table \sqlil{demand}, this can never happen anyway.%
 \end{sloppypar}%
 %
 \begin{sloppypar}%
