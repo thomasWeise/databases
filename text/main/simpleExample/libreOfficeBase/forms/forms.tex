@@ -1,0 +1,480 @@
+%
+\hsection{Forms}%
+\FloatBarrier%
+%
+\begin{figure}%
+\centering%
+%
+\subfloat[][%
+In order to create a new form, we click on \inQuotes{Create Form in Design View\dots}%
+\label{fig:factoryLibreOfficeBaseForms01createInDesignView}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms01createInDesignView}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+A new and empty form opens in the design view. %
+We want to insert a tabular structure. %
+The corresponding option is most likely hidden behind double-angle button near the bottom on the pane on the left side.%
+\label{fig:factoryLibreOfficeBaseForms02designView}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms02designView}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+Click on the \menu{Tabular Control} control.%
+\label{fig:factoryLibreOfficeBaseForms03insertTable}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms03insertTable}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+We click into the empty form body and drag the mouse to draw the table area. %
+The we release the mouse.%
+\label{fig:factoryLibreOfficeBaseForms04insertTable}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms04insertTable}}}%
+%
+%
+\floatRowSep%
+%
+\subfloat[][%
+A dialog opens. %
+It asks about the date we want to use in the table. %
+We scroll down all the way in the view on the right side and select \inQuotes{public.demand.}%
+\label{fig:factoryLibreOfficeBaseForms05selectSource}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms05selectSource}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+In the next dialog we can select columns to insert. %
+We choose \sqlil{amount} and \sqlil{ordered}.%
+\label{fig:factoryLibreOfficeBaseForms06tableElements}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms06tableElements}}}%
+%
+%
+\caption{Creating a form for entering demand orders into our \db\ in \libreofficeBase.}%
+\label{fig:factoryLibreOfficeBaseFormsA}%
+%
+\end{figure}%
+%
+\begin{figure}%
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+The table is now inserted in draft form. %
+We want to add more columns. %
+Right click at the left corner of the \sqlil{amount} column.%
+\label{fig:factoryLibreOfficeBaseForms07table}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms07table}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+In the menu that opens, click \menu{Insert Column} and then \menu{List Box}.%
+\label{fig:factoryLibreOfficeBaseForms08addListColumn}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms08addListColumn}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+A new column \inQuotes{List Box 1} has been added. %
+We right-click on it.%
+\label{fig:factoryLibreOfficeBaseForms09listColumnAdded}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms09listColumnAdded}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+In the menu that opens, click \menu{Column...}.%
+\label{fig:factoryLibreOfficeBaseForms10editListColumn}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms10editListColumn}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+First, we select the \menu{General} tab in the dialog that opens. %
+We want to change the name and label of the new column.%
+\label{fig:factoryLibreOfficeBaseForms11generalOld}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms11generalOld}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+We change the label and the name of the column to \inQuotes{customer}. %
+Then we click on the \menu{Data} pane.%
+\label{fig:factoryLibreOfficeBaseForms12generalNew}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms12generalNew}}}%
+%
+%
+\caption{Creating a form for entering demand orders into our \db\ in \libreofficeBase~(Continued).}%
+\label{fig:factoryLibreOfficeBaseFormsB}%
+%
+\end{figure}%
+%
+\begin{figure}%
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+We first need to choose the data field of our \sqlil{demand} table that should be set via this form field.%
+\label{fig:factoryLibreOfficeBaseForms13dataOld}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms13dataOld}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+Next we want to change the \emph{Type of list contents} and \emph{Input Required}\dots%
+\label{fig:factoryLibreOfficeBaseForms14dataCustomer}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms14dataCustomer}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+We change \emph{Input Required} to \menu{Yes}. %
+We set \emph{Type of list contents} to \menu{Sql [Native]}. %
+We click on the small wedge next to \emph{List content}.%
+\label{fig:factoryLibreOfficeBaseForms15contentsSql}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms15contentsSql}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+We need to enter a \sql\ \sqlil{SELECT}\sqlIdx{SELECT{\idxdots}FROM} query that returns two values. %
+We select both from table \sqlil{customer}, as follows: %
+(1)~the one that should be displayed. %
+We choose \sqlil{name || ', ' || phone}, i.e., a concatenation of the name and phone number string, separated by a comma. %
+(2)~the one to be stored in the \sqlil{customer} field of the \sqlil{demand} table. %
+We choose the customer \sqlil{id}.%
+\label{fig:factoryLibreOfficeBaseForms16contentsQuery}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms16contentsQuery}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+After we clicked \menu{OK} and closed the dialog, a new column \sqlil{customer} has appeared. %
+It appears to be a bit small for the information that it will contain, so we right-click on it\dots%
+\label{fig:factoryLibreOfficeBaseForms17customerColAdded}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms17customerColAdded}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+{\dots}and select \emph{Column width\dots} in the menu that pops up.%
+\label{fig:factoryLibreOfficeBaseForms18customerSetColWidth}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms18customerSetColWidth}}}%
+%
+%
+\caption{Creating a form for entering demand orders into our \db\ in \libreofficeBase~(Continued).}%
+\label{fig:factoryLibreOfficeBaseFormsC}%
+%
+\end{figure}%
+%
+\begin{figure}%
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+We write 4cm as \menu{Width} and click \menu{OK}.%
+\label{fig:factoryLibreOfficeBaseForms19customerSetColWidth}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms19customerSetColWidth}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+The column is wider now. %
+We right-click between it and the \sqlil{amount} column.%
+\label{fig:factoryLibreOfficeBaseForms20customerColConfigured}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms20customerColConfigured}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+In the menu that opens, we again click \menu{Insert Column} and then \menu{List Box}.%
+\label{fig:factoryLibreOfficeBaseForms21insertColumn}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms21insertColumn}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+A new \inQuotes{List Box 1} column appears. %
+We right-click on it.%
+\label{fig:factoryLibreOfficeBaseForms22columnInserted}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms22columnInserted}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+In the menu that opens, we click on \menu{Column\dots}.%
+\label{fig:factoryLibreOfficeBaseForms23columnEdit}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms23columnEdit}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+In the \menu{General} properties pane, %
+we set both the name and label to \emph{product} %
+and the width to 1.57~inch.%
+\label{fig:factoryLibreOfficeBaseForms24columnGeneralProperties}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms24columnGeneralProperties}}}%
+%
+%
+\caption{Creating a form for entering demand orders into our \db\ in \libreofficeBase~(Continued).}%
+\label{fig:factoryLibreOfficeBaseFormsD}%
+%
+\end{figure}%
+%
+\begin{figure}%
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+In the \menu{Data} pane, we again enter a \sql\ query. %
+This time, we select from table \sqlil{product}. %
+The \sqlil{name} column should be displayed to the user, %
+while the \sqlil{id} column should be stored in the form.%
+\label{fig:factoryLibreOfficeBaseForms25columnSQL}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms25columnSQL}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+The \sqlil{id} from the selected \sqlil{product} should be stored in the \sqlil{product} field of the \sqlil{demand} record. %
+Therefore, we select \sqlil{product} as \emph{Data field\dots}%
+\label{fig:factoryLibreOfficeBaseForms26columnData}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms26columnData}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+We close the dialog. %
+The form design is now finished. %
+We unselect the pencil symbol in the bottom bar.%
+\label{fig:factoryLibreOfficeBaseForms27formDesigned}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms27formDesigned}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+This opens our form. %
+It now displays the data to us in a form similar to the \sqlil{sale} view.%
+\label{fig:factoryLibreOfficeBaseForms28formOpen}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms28formOpen}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+However, it is a \emph{form}, not a \emph{view}. %
+We can edit the data and insert new data. %
+We scroll down to the empty row at the very bottom. %
+We click on the small wedge symbol in the \sqlil{customer} column.%
+\label{fig:factoryLibreOfficeBaseForms29formUse}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms29formUse}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+A drop-down list opens from which we can select the customer in \emph{clearly readable form.} %
+We choose Mr.~Bibbo.%
+\label{fig:factoryLibreOfficeBaseForms30formUseCustomer}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms30formUseCustomer}}}%
+%
+%
+\caption{Creating a form for entering demand orders into our \db\ in \libreofficeBase~(Continued).}%
+\label{fig:factoryLibreOfficeBaseFormsE}%
+%
+\end{figure}%
+%
+\begin{figure}%
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+We now click on the small wedge in the \sqlil{product} column.%
+\label{fig:factoryLibreOfficeBaseForms31formUseCustomerDone}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms31formUseCustomerDone}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+In the drop-down list that opens, we select \inQuotes{Shoe, Size 39}.%
+\label{fig:factoryLibreOfficeBaseForms32formUseProduct}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms32formUseProduct}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+We can now enter the amount.%
+\label{fig:factoryLibreOfficeBaseForms33formUseProductDone}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms33formUseProductDone}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+We enter the number~7 as amount. %
+We move on to the \sqlil{ordered} date field.%
+\label{fig:factoryLibreOfficeBaseForms34formUseAmount}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms34formUseAmount}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+As order date, we type \sqlil{05/07/25}, corresponding to May~7th, 2025. %
+We press~\keys{\tab}. %
+The cursor jumps to a new row as our record is inserted into the \sqlil{demand} table.%
+\label{fig:factoryLibreOfficeBaseForms35formUseDate}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms35formUseDate}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+We are unhappy with the way amounts and dates are displayed. %
+We want to edit the form and thus click on the pencil symbol in the bottom bar.%
+\label{fig:factoryLibreOfficeBaseForms36formUseDone}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms36formUseDone}}}%
+%
+%
+\caption{Creating a form for entering demand orders into our \db\ in \libreofficeBase~(Continued).}%
+\label{fig:factoryLibreOfficeBaseFormsF}%
+%
+\end{figure}%
+%
+\begin{figure}%
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%edit
+The design view of the form opens again. %
+We right-click on the \sqlil{amount} column.%
+\label{fig:factoryLibreOfficeBaseForms37formFurtherEdit}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms37formFurtherEdit}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+We click \menu{Column\dots} in the drop-down menu that opens.%
+\label{fig:factoryLibreOfficeBaseForms38amountEdit}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms38amountEdit}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+In the \menu{General} tab, we want to change the minimal value, the decimal accuracy, and the thousand separator setting.%
+\label{fig:factoryLibreOfficeBaseForms39amountSettings}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms39amountSettings}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+The minimum gets set to~0. %
+We do not allow fractions, so the decimal accuracy becomes~0. %
+For the case that someone orders thousands of shoes, we would display a thousand separator. %
+We close this dialog.%
+\label{fig:factoryLibreOfficeBaseForms40amountFixed}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms40amountFixed}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+We now right-click on the \sqlil{ordered} column.%
+\label{fig:factoryLibreOfficeBaseForms41editOrdered}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms41editOrdered}}}%
+%
+\floatSep%%
+%
+\subfloat[][%
+In the drop-down menu that opens, we click \menu{Column\dots}.%
+\label{fig:factoryLibreOfficeBaseForms42orderedEdit}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms42orderedEdit}}}%
+%
+%
+\caption{Creating a form for entering demand orders into our \db\ in \libreofficeBase~(Continued).}%
+\label{fig:factoryLibreOfficeBaseFormsG}%
+%
+\end{figure}%
+%
+\begin{figure}%
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+In the \menu{General} pane, we want to change the \emph{Date format} and not use this awful short US~format.%
+\label{fig:factoryLibreOfficeBaseForms43orderedSettings}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms43orderedSettings}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+We set the date format to \inQuotes{YYYY-MM-DD}, which is the same format used in our \sql\ queries. %
+We close the dialog.%
+\label{fig:factoryLibreOfficeBaseForms44orderedFixed}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms44orderedFixed}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+We also want to make the form a bit wider. %
+We click on the green handle in the middle of the right side of the table area and drag it outwards. %
+After releasing it, we again click on the pencil symbol to leave the design view.%
+\label{fig:factoryLibreOfficeBaseForms45wider}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms45wider}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+The form is again displayed \inQuotes{in action.} %
+It looks very nice now. %
+We are done with our work.%
+\label{fig:factoryLibreOfficeBaseForms46editDone}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms46editDone}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+We close the form. %
+We get asked whether want to save it. %
+We of course click on \menu{Save}.%
+\label{fig:factoryLibreOfficeBaseForms47closingSave}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms47closingSave}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+We choose the name \sqlil{demand} for our form and type into into the \emph{File name:}~box. %
+We click \menu{Save}.%
+\label{fig:factoryLibreOfficeBaseForms48saveAsDemand}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms48saveAsDemand}}}%
+%
+%
+\caption{Creating a form for entering demand orders into our \db\ in \libreofficeBase~(Continued).}%
+\label{fig:factoryLibreOfficeBaseFormsH}%
+%
+\end{figure}%
+%
+\begin{figure}%
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+We are back in the main window of \libreofficeBase. %
+Let's click again on our new \sqlil{demand} form to see whether it is still there and whether it still works.%
+\label{fig:factoryLibreOfficeBaseForms49forms}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms49forms}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+The form opens in all of its beauty.%
+\label{fig:factoryLibreOfficeBaseForms50reopened}%
+]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms50reopened}}}%
+%
+%
+\caption{Creating a form for entering demand orders into our \db\ in \libreofficeBase~(Continued).}%
+\label{fig:factoryLibreOfficeBaseFormsI}%
+%
+\end{figure}%
+%
+\FloatBarrier%
+\endhsection%
+%
