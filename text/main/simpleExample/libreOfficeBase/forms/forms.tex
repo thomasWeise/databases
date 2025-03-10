@@ -15,14 +15,14 @@ In order to create a new form, we click on \inQuotes{Create Form in Design View\
 \subfloat[][%
 A new and empty form opens in the design view. %
 We want to insert a tabular structure. %
-The corresponding option is most likely hidden behind double-angle button near the bottom on the pane on the left side.%
+The corresponding option is most likely hidden behind double-angle button~\libreOfficeBaseMore\ near the bottom on the pane on the left side.%
 \label{fig:factoryLibreOfficeBaseForms02designView}%
 ]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms02designView}}}%
 %
 \floatRowSep%
 %
 \subfloat[][%
-Click on the \menu{Tabular Control} control.%
+Click on the \menu{Table Control} control~\libreOfficeBaseTable.%
 \label{fig:factoryLibreOfficeBaseForms03insertTable}%
 ]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms03insertTable}}}%
 %
@@ -250,7 +250,7 @@ Therefore, we select \sqlil{product} as \emph{Data field\dots}%
 \subfloat[][%
 We close the dialog. %
 The form design is now finished. %
-We unselect the pencil symbol in the bottom bar.%
+We unselect the pencil symbol~\libreOfficeBaseDesignMode\ in the bottom bar.%
 \label{fig:factoryLibreOfficeBaseForms27formDesigned}%
 ]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms27formDesigned}}}%
 %
@@ -330,7 +330,7 @@ The cursor jumps to a new row as our record is inserted into the \sqlil{demand} 
 %
 \subfloat[][%
 We are unhappy with the way amounts and dates are displayed. %
-We want to edit the form and thus click on the pencil symbol in the bottom bar.%
+We want to edit the form and thus click on the pencil symbol~\libreOfficeBaseDesignMode\ in the bottom bar.%
 \label{fig:factoryLibreOfficeBaseForms36formUseDone}%
 ]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms36formUseDone}}}%
 %
@@ -416,7 +416,7 @@ We close the dialog.%
 \subfloat[][%
 We also want to make the form a bit wider. %
 We click on the green handle in the middle of the right side of the table area and drag it outwards. %
-After releasing it, we again click on the pencil symbol to leave the design view.%
+After releasing it, we again click on the pencil symbol~\libreOfficeBaseDesignMode\ to leave the design view.%
 \label{fig:factoryLibreOfficeBaseForms45wider}%
 ]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms45wider}}}%
 %
@@ -474,6 +474,31 @@ The form opens in all of its beauty.%
 \label{fig:factoryLibreOfficeBaseFormsI}%
 %
 \end{figure}%
+%
+%
+At some point in this example, we realized that entering data into a \db\ via a \sql\ \client\ like \psql\ is maybe not a very convenient way.
+In \cref{sec:factory:tableAndView}, we found that we can also enter data into tables in a much more convenient way by typing it in a table-based \pgls{GUI}.
+This is a big step forward, because it does not require any understanding of \sql.
+We, as the \pglspl{dba}, can create and manage a \db\ using \sql.
+Then we can connect a frontend like \libreofficeBase\ to it and give this as \client\ to a secretary.
+They can then enter the data in a form that is more natural to them, while our \db\ will stay consistent and the data integrity is preserved by its constraints.
+This is much better than an \microsoftExcel\ sheet or that alike, because multiple people can work with \db\ concurrently using the \pglspl{client} on multiple computers \emph{and} it is impossible to create invalid data.
+
+However, entering demand records into the \sqlil{demand} table this way is still a total buzzkill.
+The user needs to keep the tables \sqlil{product} and \sqlil{customer} open, too.
+They need to look up customer~ids and product~ids and use them manually.
+And there is no protection against entering the id of the wrong customer or product.
+While we can pull the data together nicely in the view \sqlil{sale} once it is entered{\dots}
+{\dots}we do not have a way to enter it comfortably.
+Not yet.
+
+Because now we learn an easy way to do so.
+Via \emph{forms}.
+Both \microsoftAccess\ and \libreofficeBase\ allow us to develop so-called forms.
+Forms are entry masks that can be designed in different ways.
+We can place different controls onto forms, and the controls may take their data from different tables in the \db.
+This is what we are after.
+So we will now design a form for entering customer demands into our \db\ from \libreofficeBase.%
 %
 \FloatBarrier%
 \endhsection%
