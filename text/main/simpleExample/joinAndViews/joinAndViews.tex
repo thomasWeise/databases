@@ -146,7 +146,7 @@ But how do we go about joining \emph{three} tables?
 Well, let's begin by doing basically the same thing as before:
 We \sqlil{SELECT <something> FROM demand} and then \sqlil{INNER JOIN customer ON (customer.id = demand.customer)}.
 For each row in \sqlil{demand}, this gives us the corresponding row in \sqlil{customer}.
-It also would drop each row in \sqlil{demand} for which no row in \sqlil{customer} exists from the output (but that cannot happen anyway).
+It also would drop each row in \sqlil{demand} for which no row in \sqlil{customer} exists from the output, but that cannot happen anyway.
 Now we simply \emph{chain} the next \sqlil{INNER JOIN} by writing it directly after that!
 We write \sqlil{INNER JOIN product ON (product.id = demand.product)}.
 This will also select the corresponding row from table \sqlil{product}.
@@ -154,21 +154,42 @@ If such a row does not exist, then the whole current combined row from \sqlil{de
 Thanks to our \sqlilIdx{REFERENCES} constraints in table \sqlil{demand}, this can never happen anyway.%
 \end{sloppypar}%
 %
-\begin{sloppypar}%
 We now have nicely pulled the customer and product data for each demand order.
 We now choose the columns that we want to output and replace the \sqlil{<something>} we first nonchalantly wrote when beginning to design the query.
-First, we want to get the customer name, so we write \sqlil{customer.name AS customer_name}\footnote{%
-As we discussed before, customer names are not necessarily \sqlilIdx{UNIQUE} in our \db\ design. %
-This would be a flaw of this query, as it does not distinguish two different customers with the same name. %
-In real systems, you have customer numbers, unique usernames, or phone numbers to avoid this issue. %
-We also stored phone numbers, but for the sake of simplicity, in this \emph{simple example}, we just use the names.\dots}.
+First, we want to get the customer name, so we write \sqlil{customer.name AS customer_name}.
+Like we did in the the last query we designed.
+
+However, this time, suddenly a problem occurs to us:
+As we discussed before, customer names are not necessarily \sqlilIdx{UNIQUE} in our \db\ design.
+This would be a flaw of this query, as it does not distinguish two different customers with the same name.
+In real systems, you have customer numbers, unique usernames, or phone numbers to avoid this issue.
+Actually, we \emph{do} have phone numbers here, too, and they \emph{are} \sqlilIdx{UNIQUE}.
+Then again, just displaying the phone number is probably confusing to whoever reads the result of the view.
+
+So what are we going to do?
+Shall we display the customer names, which are not unique?
+Then, if we add up sales per customer \emph{name}, people with the same name will be grouped together and the result may be wrong.
+Or should we display phone numbers?
+This would render the output close to unreadable for human operators.
+
+Let's go all the way:
+We simply concatenate the customer name and their phone number.
+We do \sqlil{SELECT customer.name || ', ' || customer.phone as customer_name ...}.
+The \sqlil{a || b}\sqlIdx{\textbar\textbar} operator concatenates two strings \sqlil{a} and \sqlil{b}.
+Thus \sqlil{'Hello ' || 'Word!'} will result in the string \sqlil{'Hello World!'}.
+Our third customer, Mrs.~Bebba, would be displayed as \sqlil{'Bebba, 33333333333'}.
+Since the phone numbers are \sqlilIdx{UNIQUE} in our \db, names plus phone numbers must also necessarily be unique.
+As the result, the data is readable, because the operator can see the names.
+And if ever another Mrs.~Bebba would become our customer, maybe she has phone number 77777777777, then it would be impossible to mix up the two Bebbas.
+One would show up as \sqlil{'Bebba, 33333333333'} and the other one as \sqlil{'Bebba, 77777777777'}.
+
 We also want to get the product name, so we write \sqlil{product.name AS product_name}.
+Product names are \sqlilIdx{UNIQUE}, so we can use them as-is.
 Notice how both the table \sqlil{customer} and the table \sqlil{product} have a column called~\sqlil{name}.
 However, there can never be any confusion here, because we refer to these columns as \sqlil{customer.name} and \sqlil{product.name}, respectively.
 Next we want the list product price and amount associated with an order, i.e., \sqlil{product.price AS price} and \sqlil{demand.amount AS amount}.
-Finally, we also return the order date and therefore add column \sqlil{demand.ordered as ordered}.%
-\end{sloppypar}%
-%
+Finally, we also return the order date and therefore add column \sqlil{demand.ordered as ordered}.
+
 For good measures, we add an \sqlilIdx{ORDER BY} clause and sort the output by \sqlil{customer_name}.
 If two entries have the same \sqlil{customer_name}, then we sort the one with the earlier order date (\sqlil{ordered}) first.
 If two entries have the same \sqlil{customer_name} \emph{and} \sqlil{ordered} date, then we sort the one with the lexicographically smaller \sqlil{product_name} first.

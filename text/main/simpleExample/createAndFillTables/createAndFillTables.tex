@@ -362,9 +362,9 @@ This means that we demand that names consist of at least two word characters.
 We could refine this to also allow single-character names, to prevent characters such as \inQuotes{@} from occurring, etc., but let's keep it at this for now.%
 %
 \begin{sloppypar}%
-Having a reasonable limitation for the name, we now define the rule \sqlil{customer_name_ok} as \sqlil{CONSTRAINT customer_name_ok CHECK (name \~ '^\\w.*\\w\$')}\sqlIdx{{\textbackslash}w}\sqlIdx{\$}\sqlIdx{\^}\sqlIdx{.}\sqlIdx{\textasciitilde}.
+Having a reasonable limitation for the name, we now define the rule \sqlil{customer_name_ok} as \sqlil{CONSTRAINT customer_name_ok CHECK (name \~ '^\\w.*\\w\$')}\sqlIdx{{\textbackslash}w}\sqlIdx{\$}\sqlIdx{\textasciicircum}\sqlIdx{.}\sqlIdx{\textasciitilde}.
 The \sqlilIdx{CONSTRAINT} marks the beginning of a constraint, \sqlil{customer_name_ok} is the name, and \sqlil{CHECK}\sqlIdx{CONSTRAINT!CHECK} tell us that we will next define an expression (as opposed to simply \sqlilIdx{NOT NULL}).
-\sqlil{(name \~ '^\w.*\w\$')}\sqlIdx{{\textbackslash}w}\sqlIdx{\$}\sqlIdx{\^}\sqlIdx{.}\sqlIdx{\textasciitilde} says that the field \sqlil{name} must match the \pgls{regex} \sqlil{'^\\w.*\\w\$'}.
+\sqlil{(name \~ '^\w.*\w\$')}\sqlIdx{{\textbackslash}w}\sqlIdx{\$}\sqlIdx{\textasciicircum}\sqlIdx{.}\sqlIdx{\textasciitilde} says that the field \sqlil{name} must match the \pgls{regex} \sqlil{'^\\w.*\\w\$'}.
 Here, \sqlil{\~}\sqlIdx{\textasciitilde} stands for \pgls{regex}-based pattern matching.
 With this, the names \inQuotes{S} and \inQuotes{  schwipschawp } are prohibited, but \inQuotes{Thomas Weise} and \inQuotes{熊猫先生} are OK.%
 \end{sloppypar}%
@@ -387,8 +387,8 @@ We write \sqlil{CONSTRAINT customer_phone_ok CHECK (phone ~ '^\d\{10,11\}\$')}\s
 The name of the constraint will be \sqlil{customer_phone_ok}.
 We again match a \pgls{regex} via \sqlIdx{\textasciitilde}\sqlil{\~}, but this time we match the value of~\sqlil{phone}.
 
-The \pgls{regex} \sqlil{'\^\\d\{10,11\}\$'}\sqlIdx{{\textbackslash}d}\sqlIdx{\$}\sqlIdx{\^} reads as follows:
-At the start of the text~(denoted by~\textil{\^}), there is a sequence of 10 to~11 digits, and then comes the end of the text~(denoted by~\textil{\$}\sqlIdx{\$}).
+The \pgls{regex} \sqlil{'\^\\d\{10,11\}\$'}\sqlIdx{{\textbackslash}d}\sqlIdx{\$}\sqlIdx{\textasciicircum} reads as follows:
+At the start of the text~(denoted by~\textil{\^}\sqlIdx{\textasciicircum}), there is a sequence of 10 to~11 digits, and then comes the end of the text~(denoted by~\textil{\$}\sqlIdx{\$}).
 Here, \textil{\\d}\sqlIdx{{\textbackslash}d}\ stands for a single character that is a digit.
 The \textil{\{10,11\}} specfies between 10 and 11 repetitions of this pattern.
 Therefore, our constraint requires that any value of \sqlil{phone} to be stored consists of ten to eleven digits (and only digits).

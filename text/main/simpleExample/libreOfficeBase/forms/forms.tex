@@ -563,13 +563,11 @@ However, the values that our form would actually store would be the correspondin
 We can make the whole thing a bit nicer by adding an \sqlil{ORDER BY name} clause.
 Then, if a user would click on the customer field of our view, they could select the customer from an alphabetically ordered list.
 
-At this point, we remember that customer names are \emph{not} \sqlilIdx{UNIQUE} in the table \sqlil{customer}.
+At this point, we again remember that customer names are \emph{not} \sqlilIdx{UNIQUE} in the table \sqlil{customer}.
 The \sqlil{phone} fields are.
 Thus, a user could easily confuse two customers who happen to have the same name.
-In our \sqlil{sale} view, we simply accepted this.
-This time, we do not accept this.
-
-How about this:
+In our \sqlil{sale} view, we solved this by concatenating the customer name with the customer phone numbers.
+We can simply do the same thing again.
 We design the query to return data in the form \inQuotes{name, phone}.
 Then, the user can comfortably work with names and sees the phone numbers, too, making each row unique.
 So we choose \sqlil{name || ', ' || phone}\sqlIdx{\textbar\textbar}, i.e., a concatenation of the name and phone number string, separated by a comma, as the first column of our query.
