@@ -37,8 +37,22 @@ Plugging a \pgls{GUI} like \libreofficeBase\ in front of the \db\ may then be fu
 At least entering, viewing, and changing the data will be much much easier compared to using the \psql\ \client.
 It also does no longer require any understanding of \sql\ to work with the data.
 While we, the \pglspl{dba}, can still use the full features of \postgresql, the secretary in the sales office can now enter new customer data and orders in a way much more natural to them.
-And we can still develop a program for accessing the data later if the situation changes.
 
+For entering data into tables that have complex relationships with other tables, we learned about \emph{forms}.
+Forms allow us to deal with the problem of fields that reference rows in other tables via their primary keys.
+A customer, for example, is represented only by their \sqlil{id}~value in our \sqlil{demand} table.
+Such value is basically meaningless to a salesperson and they would need to look it up in the \sqlil{customer} table to enter the right value.
+We can, however, make forms where this looking-up is automated:
+The secretary entering the data sees the real customer name but what is stored is the customer~\sqlil{id}.
+
+The second abstract tool we learned about are \emph{reports}.
+While it is nice to read and process data in either the table view of \libreofficeBase\ (or \microsoftAccess\ for that matter), this is not the kind of format we would use when printing the data.
+A form is also not suitable for this purpose, because forms are designed for entering data.
+Reports are the tool exactly designed for this use case:
+They allow us to create nicely formatted documents that are automatically filled with data whenever we execute them.
+
+After reading this part of our book, you now have seen several of standard tools and abstractions when working with \dbs\ in action.
+You do not have any in-depth or theoretical foundation {\dots} but probably a good hunch of what is what and what tool may be suitable for which kind of question.
 At this stage, I hope that your curiosity is tickled.
 Maybe you even have some problems or application ideas for which you might want to design your own \db.
 Maybe to catalog your books or music collection, maybe to construct your ancestry tree, maybe to store your bibliographic references.
