@@ -1,0 +1,81 @@
+\hsection{Requirements Analysis}%
+%
+The requirements analysis is one of the most important steps of the \db\ development lifecycle.
+It is this point where we gain the understanding of the project.
+On one hand, we need to build a clear understanding of the purpose, goals, and limits of the project.
+On the other hand, we also need to learn about the organizational data and processes that should be embodied by our \db\ and the applications on top of it.
+Indeed, studies show that for many companies, more than half of the problems of systems~\cite{Z2003RDARS} and costs of software development~\cite{IC2009BAB2TPTS} are based on poor requirements definition.
+Inefficient requirements management is considered a top-cause for project failure~\cite{EDN2005RUIFACI}.
+Good requirements engineering can increase the developer productivity and lead to improved project planning~\cite{DCVP2005READSDFFAC}.
+Fixing errors in the requirement cost 10 to 200 times as much to fix once the application is deployed compared to discovering during the requirements analysis~\cite{BP1988UACSC,M2001FTEAOOP,RGJ2023EASARBFSAR}.%
+%
+\hsection{Types of Requirements}
+Requirements can roughly be divided into business requirements, functional requirements, non-functional requirements, and constraints~\cite{I2018SAH}.
+
+First, the business requirements are the high-level goals, objectives, and sought outcomes of the project.
+An organization usually has some overall initiative or plan to improve some of its metrics.
+The project is initiated to support this initiative.
+These requirements are more general and abstract.
+
+Second, the functional requirements are more concrete and define what the system should do.
+They concern the features and the behavior that the system must offer to fulfill the business requirements.
+They may be defined as the input given to the system, the expected operation to be performed by the system on that input, and the expected output to be produced.
+
+Third, the non-functional requirements define how the system should perform.
+They define the service quality that the system should offer, the performance, usability, scalability, reliability, etc.
+This includes the computational environment in which it must be possible to execute the system.
+
+Fourth and finally, the constraints are the factors that limit which solutions are viable.
+They define the boundaries in which we operate.
+While requirements define properties that our system should have, the constraints rule out methods to get there.
+They can appear in form of budget or time limits.
+They may appear in the form of \inQuotes{your system must work with version~XYZ of software~ABC.}%
+\endhsection%
+%
+\hsection{Requirements Gathering}%
+%
+Several different methods exist that can be used to collect requirements~\cite{Z2003RDARS}.
+
+The first method, interviewing stakeholders to gather information about the system that we will design, is considered one of the most efficient requirements gathering techniques~\cite{DTHJM2006EORETERDFASR,Z2003RDARS}.
+For each interview, careful preparation is needed, which includes making an appropriate appointment.
+While stakeholders may spontaneously share information on some topics, they may not discuss others unless explicitly prompted with questions~\cite{BJF2014WSWOWNSATAESOTIIREEI}.
+Each interview meeting should therefore have a proper agenda, pre-prepared questions, and follow a checklist~\cite{WSEG2016ETIOAKOSTCORQQ}.
+If possible and if the interview partner(s) consent, then the meeting should be recorded.
+The recordings and notes should be evaluated within two days after the interview.
+The interviews should neutral, not push the interviewee into any direction.
+The goal is to collect diverse views on the project.
+
+A second, more standardized method to collect information are questionnaires~\cite{TAE2008ISRTDQTSTDQSSAE,Z2003RDARS}.
+This way, we can collect much data from many stakeholders within a brief time.
+Questionnaires are easy to evaluate and process, but designing them properly is important.
+Different types of stakeholders will use different parts of our system.
+Therefore, it may be necessary to design several different questionnaires, one for each group of future users.
+The questions should be clear an unambiguous.
+For some aspects, multiple-choice questions or range-based ratings are good, while others may require open-ended questions where the users can fill in their opinions.
+
+The third method is to directly observe users doing their work~\cite{SGGM2007TMSPATFISRDWS,Z2003RDARS}.
+Stakeholders may not always be able to accurately describe their function and how they fulfill it.
+Observing them performing their day-to-day processes can thus provide helpful additional information.
+It is also possible to record such real-world examples instead of personally observing them~\cite{HPW1998REAVWRWS}.
+Of course, under observation, people may behave somewhat differently from normal, so such information is to be taken with a grain of salt.
+
+Fourth, we can also analyze both organization-internal and external regulations, as well as published procedures, processes, and other documents~\cite{RGJ2023EASARBFSAR,Z2003RDARS}.
+Usually, an organization will have their own written regulations, announcements, and otherwise standardized procedures.
+Additionally, there are regulations and laws imposed upon an organization and the processes within.
+Gathering such information can be crucial and complements our understanding of what the system is supposed to do, and why current systems work the way they do.
+Sometimes, the official documentation of organization-internal methods and the practical realization of processes may differ, though.
+
+A fifth method are group meetings and workshops~\cite{Z2003RDARS}.
+Here, under the guidance of a session leader, stakeholders at all levels meet, from management to end user, from system analyst to data entry personnel.
+The group then jointly discusses the current situation and the planned system, which can be a highly efficient way to gather requirements.
+Different variants of this method exist since the 1970s, under names such as \glsreset{JAD}\pgls{JAD}~\cite{CWG1993PAJADATC,M1996RTWSS} and \glsreset{participatoryDesign}\pgls{participatoryDesign}~\cite{CWG1993PAJADATC,FMRSW1989OOSAATSDASD}.
+
+Several of these techniques can be combined, often with other approaches such as brainstorming sessions, surveys, reverse engineering of existing systems, or prototyping~\cite{I2018SAH,Z2003RDARS}.
+In the context of \dbs, it is particularly important to properly define the data structures and entities when analysing the requirements and, later, when developing the conceptual schema~\cite{M1987DFADSMFDRACS}.%
+%
+\endhsection%
+%
+%
+%
+\endhsection%
+%

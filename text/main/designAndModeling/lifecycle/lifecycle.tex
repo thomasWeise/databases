@@ -4,7 +4,7 @@ Instead, designing good \dbs\ involves several steps.
 We need to clearly understand the requirements for the \db.
 We should create a rough sketch of what things will be included.
 We need to decide what tables and relations should exist.
-This conceptual schema must then be mapped to a physical schema.
+This conceptual schema~(information about the types of data and their relationships) must then be mapped to a physical schema (concrete implementation instructions for a selected~\dbms).
 There should be some sort of prototype, where we and the users can enter a subset of the data to test whether everything works as predicted.
 At this stage, we may uncover some problems and may need to improve our design.
 The actual application must then be tested.
@@ -13,8 +13,9 @@ They need to be maintained and backed up regularly.
 Due to the longevity of \dbs, eventually, new features and changes may become necessary, at which point we may need to revise our design.
 There exist several general approaches on how to manage or conduct the \db\ design process, how to bring this process into some structure~\cite{GMTM2011DDLC}.
 
-Now, \dbs\ are special technological objects.
-However, they are objects with a comparatively long lifetime~\cite{SS2005EIDDDFDB:I}.
+\Pglspl{db} are software artifacts, so we could use one of the many available \pglspl{SDLC}~\cite{I2018SAH,N2024SEFDS}.
+Yet, \dbs\ are also special.
+They are objects with a comparatively long lifetime~\cite{SS2005EIDDDFDB:I}.
 The hardware in your computer stays the same maybe for three to five years.
 Software programs often change every five to ten years.
 Every two years, a new long term support~(LTS) version of the \ubuntu\ operating system comes out~\cite{C2024TULARC}.
@@ -82,11 +83,11 @@ At the same time, it should avoid scope creep, i.e., a situation where progressi
 \begin{figure}%
 \centering%
 \includegraphics[width=0.8\linewidth]{\currentDir/waterfall}%
-\caption{The waterfall model~\cite{PM2020SEAPA,GMTM2011DDLC}.}%
+\caption{The waterfall model~\cite{PM2020SEAPA,GMTM2011DDLC,I2018SAH,N2024SEFDS}.}%
 \label{fig:model:waterfall}%
 \end{figure}%
 %
-Several different design methods have been proposed in the field of software engineering.
+Several different design methods, i.e., \pglspl{SDLC}, have been proposed in the field of software engineering.
 The simplest is the waterfall model~\cite{PM2020SEAPA,GMTM2011DDLC} illustrated in \cref{fig:model:waterfall}.
 The waterfall model is a sequential process of project planning, requirements definition, design, development, testing, and installation and project acceptance.
 Each step produces deliverables as output which become the input for the next phase.
@@ -141,11 +142,11 @@ Also, the risk analysis steps can be quite complex and so is the overall structu
 \begin{figure}%
 \centering%
 \includegraphics[width=0.8\linewidth]{\currentDir/rapid}%
-\caption{The \pgls{RAD} model~\cite{S2007OOSE,GMTM2011DDLC}.}%
+\caption{The \pgls{RAD} model~\cite{S2007OOSE,GMTM2011DDLC,I2018SAH,N2024SEFDS}.}%
 \label{fig:model:rad}%
 \end{figure}%
 %
-\glsreset{RAD}\Pgls{RAD}, as illustrated in \cref{fig:model:rad}, lets the user try the application before it is delivered~\cite{S2007OOSE,GMTM2011DDLC}.
+\glsreset{RAD}\Pgls{RAD}, as illustrated in \cref{fig:model:rad}, lets the user try the application before it is delivered~\cite{S2007OOSE,GMTM2011DDLC,M1996RTWSS}.
 If stakeholders can play around with a live system, then they can probably give much better feedback compared to a situation where they only work with specification documents.
 Thus, a prototype is created and installed as soon as possible and made available to the user.
 RAD-based projects tend to have a lower level of rejection when the application is placed into production.
@@ -169,7 +170,7 @@ But all of these applications would access the same \db\ backend.
 Additionally, \dbs\ are long-living artifacts, which must be managed, maintained, and improved over many years.
 
 As a result, a wide variety of design processes and life cycle management structures for \dbs\ have been developed.
-They often are adaptations of different software lifecycle models and can offer different levels of detail to the project managers.
+They often are adaptations of different \pgls{SDLC} models and can offer different levels of detail to the project managers.
 
 \begin{figure}%
 \centering%
@@ -258,20 +259,39 @@ The stakeholders can try the applications and judge its functionality and perfor
 After the system has been accepted and enters the productive stage, the maintenance phase is entered.
 The system is continuous upgraded, improved, and extended until it eventually reaches its end of life.
 
+The method by \citeauthor{GMTM2011DDLC}~\cite{GMTM2011DDLC} sketched in \cref{fig:model:gupta} is a comprehensive approach for \db\ and software co-design in a large-scale project.
+The main goal is to make \db\ projects more projectable.
+
+Most lectures on \dbs\ focus more on the core of the development process, labeled \emph{Database Design} in \cref{fig:model:gupta} and often combine several of the framework activities such as installation and maintenance into one activity.
+
 \begin{figure}%
 \centering%
-\includegraphics[width=0.8\linewidth]{\currentDir/schweppe}%
-\caption{The lifecycle model by~\citeauthor{SS2005EIDDDFDB:I}~\cite{SS2005EIDDDFDB:I,SS2005EIDDDFDB:CDD}.}%
-\label{fig:model:schweppe}%
+\includegraphics[width=0.96\linewidth]{\currentDir/ddlc}%
+\caption{A simpler \db\ lifecycle model.}%
+\label{fig:model:ddlc}%
 \end{figure}%
-%
-As stated before, we now want to explore the design of \db\ by working our way along a \db\ lifecycle and development process.
-However, the method discussed above and sketched in \cref{fig:model:gupta} may be a bit too comprehensive for such an example.
-The most important core of such a process is condensed in the design model defined by \citeauthor{SS2005EIDDDFDB:I} in~\cite{SS2005EIDDDFDB:I,SS2005EIDDDFDB:CDD} and illustrated in \cref{fig:model:schweppe}.
-It is more focused on the immediate \db\ design, omitting several of the framework activities.
-While I very much like the comprehensive \db\ development lifecycle by~\citeauthor{GMTM2011DDLC}~\cite{GMTM2011DDLC}, at this stage, let us agree that project management, planning, and maybe systems security are a bit on the fringes of the topic of this book.
-They can probably be elaborated better in other courses.
-Let us work our way along the more concentrated process in \cref{fig:model:schweppe} as a second, more comprehensive example of \db\ technology.%
+
+In the context of this book, we, too, use a model with fewer steps.
+It is illustrated in \cref{fig:model:ddlc} and combines ideas from several sources~\cite{SS2005EIDDDFDB:I,SS2005EIDDDFDB:CDD,D2022DN:DRA}.
+Indeed, we will hinge the more comprehensive \db\ design example project discussed in this part of our book on this process.
+
+This approach to the \db\ development life cycle begins with a phase of requirements gathering and analysis.
+Then, the conceptual schema is designed:
+The entities and their relationships are sketched with \pglspl{ERD}.
+It makes sense to discuss this model with the stakeholders and, if any inconsistencies are discovered, to adapt the requirements specification.
+In this step, we also choose the proper data model.
+
+The entities in the conceptual model are then translated to fit to the data model in the logical schema design process.
+In case of a relational data model (as used here), this means to create tables, define keys, attributes, and relations, and to normalize the data.
+The physical schema is then the mapping of a logical schema to a concrete \dbms, including optimizations and efficient storage design.
+
+Now a prototype can be developed and verified with the stakeholders.
+Finally, the \db\ enters the production stage.
+From here on, the focus is on maintenance, regular backups, fine-tuning, and the addition of features and adaptations to changed situations.
+The last two stages can create feedback to the earlier stages, i.e., lead to changes in the physical or logical schemas as well as the requirements.
+
+In the following, we will work our way step-by-step through this lifecycle.
+By doing so, we will not just explore the different steps in more detail, but also discuss several important topics, such as \pglspl{ERD}, normalization, and $\sigma$\nobreakdashes-algebra based on a (more or less) realistic scenario.%
 %
 \FloatBarrier%
 \endhsection%
