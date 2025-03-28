@@ -2,7 +2,10 @@
 %
 The requirements analysis is one of the most important steps of the \db\ development lifecycle.
 It is this point where we gain the understanding of the project.
-On one hand, we need to build a clear understanding of the purpose, goals, and limits of the project.
+Requirements engineering mediates between the users and customers of a project on one side and the developers and suppliers on the other~\cite{ISOIECIEEE2018SASELCPRE}.
+The results of the requirements analysis are \pgls{SRS} documents enable an agreed understanding of all stakeholders (acquirers, users, customers, operators, developers, and suppliers), have been validated against the real-world needs, can be implemented, and provide a reference for verifying designs and solutions~\cite{ISOIECIEEE2018SASELCPRE}.
+
+On one hand, during the requirements analysis, we build a clear understanding of the purpose, goals, and limits of the project.
 On the other hand, we also need to learn about the organizational data and processes that should be embodied by our \db\ and the applications on top of it.
 Indeed, studies show that for many companies, more than half of the problems of systems~\cite{Z2003RDARS} and costs of software development~\cite{IC2009BAB2TPTS} are based on poor requirements definition.
 Inefficient requirements management is considered a top-cause for project failure~\cite{EDN2005RUIFACI}.
@@ -13,6 +16,7 @@ Fixing errors in the requirement cost 10 to 200 times as much to fix once the ap
 Requirements can roughly be divided into business requirements, functional requirements, non-functional requirements, and constraints~\cite{I2018SAH}.
 
 First, the business requirements are the high-level goals, objectives, and sought outcomes of the project.
+They define the motivation of the organization for why the system is being developed~\cite{ISOIECIEEE2018SASELCPRE}.
 An organization usually has some overall initiative or plan to improve some of its metrics.
 The project is initiated to support this initiative.
 These requirements are more general and abstract.
@@ -78,8 +82,204 @@ In the context of \dbs, it is particularly important to properly define the data
 \hsection{Requirements Specification Document}%
 After the requirements have been collected, they are stored in a formal specification document, the so-called \glsreset{SRS}\pgls{SRS} document~\cite{S2010DSRSAR,W2004ASOTMFMTQOTRSD}.
 The \pgls{SRS} is the most important document in the software development process.
-The document structure should follow the IEEE~830\nobreakdashes-1998~\cite{IEEE1998IRPFSRS} standard or the newer ISO/IEC/IEEE~29148\nobreakdashes-2018~\cite{ISOIECIEEE2018SASELCPRE} standard.%
+The document structure should follow the IEEE~830\nobreakdashes-1998~\cite{IEEE1998IRPFSRS} standard or the newer ISO/IEC/IEEE~29148\nobreakdashes-2018~\cite{ISOIECIEEE2018SASELCPRE} standard.
+While the lifecycle of software or systems in general can be managed by ISO/IEC/IEEE~15288~\cite{ISOIECIEEE2023SASESLCP} and ISO/IEC/IEEE~12207~\cite{ISOIECIEEE2017SASESLCP}, respectively, ISO/IEC/IEEE~29148~\cite{ISOIECIEEE2018SASELCPRE} provides the guidelines for their requirements-related processes.
+Generally, it would be a good idea to simply follow these standards when gathering and analyzing requirements for software or \db\ projects.%
 \endhsection%
 %
+\hsection{Example: Teaching Management Platform}%
+%
+We will now analyze the requirements for our example project:~a teaching management platform for a university.
+Sadly, doing this at a realistic level would go far beyond what we can do as a reasonable example in the context of a course book.
+We cannot really implement complete outline of ISO/IEC/IEEE~29148\nobreakdashes-2018~\cite{ISOIECIEEE2018SASELCPRE}.
+We cannot even specify the complete and exact requirements of any realistic system without exceeding reasonable time and length limits.
+Therefore, we will try to discuss the requirements partially, picking some more or less interesting issues while leaving others to the imagination of the reader.%
+%
+\hsection{Business Requirements}%
+%
+Our imaginary university has several goals that it wants to achieve by introducing a new teaching management platform.
+Imagine that, at the start of our project, we had several meetings with the university during which we gathered and understood the business purpose as well as a rough idea about the roles of the stakeholders involved in the project.
+%
+\hsection{Business Purpose}%
+First, by migrating processes into a \db\ and designing applications to access them via the web, all stakeholders will benefit:
+The students can more easily access their courses, obtain transcripts, register for classes, etc.
+The professors can manage their classes more efficiently.
+The workload of the management can significantly be reduced and simplified.
+
+Second, the administrative personnel so far does all the management of its students and courses using \microsoftExcel\ sheets and pen and paper.
+This has several drawbacks, such as the lack of centrally controlled backups, the possibility of errors, the lack of traceability of processes, problems when this duty is eventually handed over from one teacher to another, and so on.
+By developing a centralized system, the imaginary university wants increase the control over as well the accountability, traceability, and documentation of its processes.
+This could be seen as a tool for supporting quality management, maybe along the lines of ISO~9001~\cite{ISO180912019,ISO90012015}.
+
+Third, the long term goal is the digital transformation of our whole imaginary university.
+All processes inside the imaginary university would be managed by online platforms.
+This would significantly reduce administrative efforts and costs.
+All processes would automatically be documented and backed up.
+The quality of the services rendered to students would improve.
+Auditing becomes easier.
+The teaching management platform is the first building block of this digital transformation.
+It will allow the university to gather experience with systems that are not handled just by a few administrative personnel (such as the \pgls{HR} or financial accounting system), but accessed by thousands of users in different roles.%
+%
+\endhsection%
+%
+\hsection{Major Stakeholders}%
+%
+There are five main groups of stakeholders on the university side of our imaginary university management system.
+
+First, there are the students.
+The students need to register for modules (courses and exercises).
+They want to print their schedule, which includes which courses they will attend at which days and times and in which rooms.
+They want to view their scores and progress.
+
+Second, there are the faculty members, i.e., the professors and teachers.
+A professor can chair a module, meaning that they will teach a certain class.
+Other faculty members, say lecturers or assistant professors, may teach lab classes or practice classes.
+They have access to the list of students in their respective modules.
+
+Third, the university administration can create new curricula.
+The university administration also manages the professors, teachers, and students.
+
+Fourth, there is the administration of the different schools of the university.
+They school administration assigns professors to modules, lecturers to practice classes.
+They are allowed to create and schedule exams and major deliverables.
+They manage their rooms.
+They manage the students belonging to their school.
+
+Fifth and finally, there are system administrators, the \pglspl{dba}.
+Their most important task is to keep the system running.
+This means that they will run regular backups.
+They also need to update all the involved components, such as the operating system, the \dbms, the web servers, and so on.%
+\endhsection%
+%
+\endhsection%
+%
+\hsection{Functional Requirements}%
+After the stakeholders and motivation of the project have been reasonably clarified, we begin by interviewing several involved personnel.
+We visit the education department of the university.
+We interview the deans, vice deans for teaching, and secretaries of three different schools.
+We discuss with five professors.
+We also meet with the students union and several students at different academic performance levels.
+Our goal is to understand the academic processes from the points of view of different sides.
+What is the basic functionality that we need to provide?
+What features could we offer that, currently, are unavailable?
+Based on our findings, we create different questionnaires and distribute them more widely among the above peer groups.
+Finally, we collect all the information and present them in workshops where, again, members of all the above groups take part.
+It is our goal to build a view on the requirements that can be agreed to by all stakeholders.
+We then continue writing our \pgls{SRS} document as follows.
+
+The system has to be available through one or multiple websites.
+Several processes must be supported, for example:%
+%
+\hsection{Person Management}%
+Only the university administration can create a student record in the system.
+Such a record must store information such as name, ID, mobile phone number, gender, highest academic degree, academic rank, role~(student, staff, \dots)etc.
+The university administration must be able to change these information.
+They can assign the people to schools.
+The administration of a school can access (only) the people assigned to them.%
+\endhsection%
+%
+\hsection{Date Management}%
+The university administration sets dates such as semester begin and end, begin and end of the exam period, holidays, etc.
+The university administration provides ranges for special dates such as the start of a graduation project presentations~(开题), the graduation project midterm evaluations~(中期), or the graduation project defenses~(毕业).
+\endhsection%
+%
+\hsection{Curriculum Management}%
+The university administration can create and change curricula.
+Each curriculum contains different modules at different semesters.
+Modules can be compulsory or optional.
+Modules can consist of only lectures, of lectures and practical training, only practical training, or deliverables~(such as BSc and MSc theses).
+The university administration then assigns curricula to schools.
+The school administration can enroll their students to curricula.%
+\endhsection%
+%
+\hsection{Module Management}%
+The school administration can, in each semester, create implementations of the modules.
+An implementation assigns a teacher to course and has an upper limit for student enrollment.
+Teachers are notified about their assigned courses.
+Teachers can print their teaching schedule.%
+\endhsection%
+%
+\hsection{Room Management}%
+The university administration manages, creates, changes, or deletes records for lecture rooms.
+Rooms have locations in buildings, a capacity for students, and features such as equipment~(overhead projectors, blackboards, lab equipment for computer science, chemistry, biology, \dots).
+The university administration can assign rooms to schools for a semester.
+The school administration can assign courses to rooms and timeslots.%
+\endhsection%
+%
+\hsection{Course Enrollment}%
+Students can enroll to the modules in their respective curricula.
+For compulsory modules that are not offered by different teachers, they are automatically assigned.
+Otherwise, the school administration can manually assign them.
+For any module in their curriculum for which they are not assigned by the school, they can choose by themselves.
+Students are notified automatically about enrollment options.
+Students can print their schedule.%
+\endhsection%
+%
+\hsection{Exams and Deliverables}%
+The school administration can create exams for each module.
+A final exam has an assigned room and time in the exam period.
+
+Professors can also request the school to schedule midterm exams, if they want.
+A midterm exam has an assigned room and time outside the exam period.
+Special dates like 开题, 中期, or~毕业 are also managed like this.
+
+For each module they teach, professors can also create deliverable records, for example for homework.
+They can then assign scores for the students for the exams and deliverables.
+
+Students are automatically notified about exam dates and locations for their courses.
+Students can print their current transcripts as well as the scores of all deliverables for each course they take at any time.
+\endhsection%
+%
+\hsection{Communication}%
+The system offers a facility for communication between students, teachers, and their school.
+The communication records are preserved.
+While this channel is likely not used often, it may be useful for things such as reminders, notifications, but also warnings or objections.%
+\endhsection%
+%
+\hsection{Administration and Backup}%
+The \pglspl{dba} of the university can create backups of the platform.
+They can update the platform.
+They can install the platform on a new computer and load the backups.%
+\endhsection%
+%
+\endhsection%
+%
+\hsection{Non-Functional Requirements}%
+The websites must render correctly and be usable both on desktop computers as well as mobile phones.
+They must work under the out-of-the-box default web browsers provided by \microsoftWindows, \linux, \macOS, \appleIOS, \iPadOS, and \android.
+
+The system must handle 50\decSep000~student records, 2000~staff records, 200~curricula, 4000~courses, and 1\decSep000\decSep000~exam/deliverable results per year.
+It must be able to handle this load over 10~years, i.e., ten times the above.
+After ten years, we assume that either the hardware is upgraded or that old records are removed from the system and backed up elsewhere.
+For each of the applications, the response time must never exceed 2~seconds.
+
+Communication should be secured over \pgls{HTTPS}.
+Proper data protection must be offered, i.e., people can only access data relevant to them and this access is secured.%
+\endhsection%
+%
+\hsection{Constraints}%
+%
+The system must be set up as a set of \docker\ containers in the computational center of the university.
+The system should be composed entirely of open source software, in order to increase reliability, availability, and to reduce costs.
+The computational center of the university will provide three computational nodes, each with a 32~core processor and 64~GiB of RAM, as well as 10~TiB of storage space.
+A first prototype must be developed within six months, the system must enter thorough test and validation within one year.
+The project budget is limited to 500\decSep000~RMB.%
+\endhsection%
+%
+\hsection{Summary}%
+From this requirements analysis, we learned a lot.
+We understand that this is actually quite a complicated system.
+We also see that it involves a lot of different aspects.
+
+There is not just the \db.
+There also are web-based \glsreset{GUI}\pglspl{GUI}.
+Our course and book, however, are not about user interface design.
+We will just assume that we are part of a team here, and somebody else will take care of the \pgls{GUI}.
+We also do not really care about the \docker\ software environment structure either.
+We also just assume that the budget, the other constraints, and the non-functional requirements are OK.
+In the following, we will focus entirely on the \db\ part of this project.%
+\endhsection%
+%
+\endhsection%
 \endhsection%
 %
