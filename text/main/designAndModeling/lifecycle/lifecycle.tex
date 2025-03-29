@@ -225,7 +225,7 @@ This decision may be based on aspects such as costs, maintenance aspects, licens
 In our course, we chose \postgresql, simply because it is a free (open source) and very mature \sql\ \dbms.
 
 In the next step, the conceptual design is converted into a logical design.
-This can mean to map the entity types from the \pglspl{ERD} in the conceptual models to tables and the relationships between them~\cite{SS2005EIDDDFDB:I,SS2005EIDDDFDB:CDD}.
+This can mean to map the entity types from the \pglspl{ERD} in the conceptual models to tables and the relationships between them~\cite{SS2005EIDDDFDB:I,SS2005EIDDDFDB:CDDRAAML}.
 Here, we may sometimes split one entity type from the \pglspl{ERD} into multiple tables or use different primary keys (e.g., sequential integers instead of a multi-part key constructed of strings\dots).
 In other words, we map the conceptual model to the internal structures provided by the \dbms.
 At this stage, we basically have an unoptimized design of the \db.
@@ -235,7 +235,7 @@ This stage emphasizes the internal aspects of the database, e.g., the creation o
 At this stage, we have a complete \db\ design, optimized for the planned operations.
 
 The division in conceptual, logical, and physical design is not always defined like this.
-Some approaches only distinguish the conceptual and the physical schema~\cite{G2011EW2ITDS:ITRD,V1999C5DMS:L1CI}.
+Some approaches only distinguish the conceptual and the physical schema~\cite{G2011EW2ITDS:ITRD,V1999C5DMS:CI}.
 In this case, the conceptual schema is also called logical schema and focuses on the specifications of the entity types and relations of the data.
 The physical schema then comprises the two aspects that called physical and logical design above, i.e., the definition of tables, relations, and access paths.
 From my perspective, which of the two approaches are chosen does not really matter.
@@ -272,7 +272,7 @@ Most lectures on \dbs\ focus more on the core of the development process, labele
 \end{figure}%
 
 In the context of this book, we, too, use a model with fewer steps.
-It is illustrated in \cref{fig:model:ddlc} and combines ideas from several sources~\cite{SS2005EIDDDFDB:I,SS2005EIDDDFDB:CDD,D2022DN:DRA}.
+It is illustrated in \cref{fig:model:ddlc} and combines ideas from several sources~\cite{SS2005EIDDDFDB:I,SS2005EIDDDFDB:CDDRAAML,D2022DN:DRA}.
 Indeed, we will hinge the more comprehensive \db\ design example project discussed in this part of our book on this process.
 
 This approach to the \db\ development life cycle begins with a phase of requirements gathering and analysis.

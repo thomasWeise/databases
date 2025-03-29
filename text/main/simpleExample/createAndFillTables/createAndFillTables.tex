@@ -21,7 +21,7 @@ We want to store all information that may be relevant to customers and the deliv
 We will give our first new table the name~\sqlil{product}.%
 %
 \bestPractice{tableName}{%
-Table names should be singular nous written in lowercase without any prefix~(i.e., no \inQuotes{tbl\_} in front)~\cite{B2025SBPASG}.%
+Table names should be singular nous written in lowercase without any prefix~(i.e., no \inQuotes{tbl\_} in front)~\cite{B2025DS:SBPASG}.%
 }%
 %
 \hsection{Creating the Table}%
@@ -100,7 +100,7 @@ This would mean that each record in the orders table would also need to store th
 This would probably be inefficient~\cite{M2014VPKM}.
 Also, maybe later we have many other records referencing a certain product by its name {\dots} but the marketing department chooses to change the name of the product.
 This could wreak havoc to our \db.
-It is better to use an automatically generated unique value as key that will never change even if we change the name of a product~\cite{B2025SBPASG}.%
+It is better to use an automatically generated unique value as key that will never change even if we change the name of a product~\cite{B2025DS:SBPASG}.%
 %
 %
 \begin{sloppypar}%
@@ -116,12 +116,12 @@ The annotation with \sqlilIdx{PRIMARY KEY} also automatically enforces that only
 \end{sloppypar}%
 %
 \bestPractice{surrogatePrimaryKey}{%
-Prefer using surrogate primary keys based on automatically incremented integers~\cite{B2025SBPASG}.%
+Prefer using surrogate primary keys based on automatically incremented integers~\cite{B2025DS:SBPASG}.%
 }%
 %
 \bestPractice{primaryKeyId}{%
 Whenever using an automatically incremented integer as primary key for a table, name it~\sqlil{id}. %
-While there is some controversy about this topic~\cite{L2011WINATPKCICBPC}, anybody accessing your \db\ will immediately understand the meaning of the \sqlil{id}~columns and this practice is used in many sources~\cite{B2025SBPASG,PGDG:PD}.%
+While there is some controversy about this topic~\cite{L2011WINATPKCICBPC}, anybody accessing your \db\ will immediately understand the meaning of the \sqlil{id}~columns and this practice is used in many sources~\cite{B2025DS:SBPASG,PGDG:PD}.%
 }%
 %
 This completes the \sql\ command for creating our very first table.
@@ -487,7 +487,7 @@ Naturally, we would like to call this table, which stores orders, something like
 Unfortunately, we already learned that \sqlil{ORDER}\sqlIdx{ORDER BY} is a reserved keyword in \sql.%
 %
 \bestPractice{neverUseKeywordsAsNames}{%
-Never use \sql\ keywords or reserved words as names, e.g., for columns or tables~\cite{B2025SBPASG}.%
+Never use \sql\ keywords or reserved words as names, e.g., for columns or tables~\cite{B2025DS:SBPASG}.%
 }%
 %
 OK, fine, so we go with a synonym and call the table~\sqlil{demand} in \cref{lst:factory:create_table_demand}.
