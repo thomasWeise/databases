@@ -383,7 +383,7 @@ Now we want to limit the phone number text to represent valid phone numbers.
 We want to only permit numbers consisting of ten to eleven digits.
 We can do this in exactly the same way in which guarded our \sqlil{name} field:
 by defining a constraint.
-We write \sqlil{CONSTRAINT customer_phone_ok CHECK (phone ~ '^\d\{10,11\}\$')}\sqlIdx{CONSTRAINT!CHECK}\sqlIdx{{\textbackslash}d}\sqlIdx{\$}\sqlIdx{\^}\sqlIdx{\textasciitilde}.
+We write \sqlil{CONSTRAINT customer_phone_ok CHECK (phone ~ '^\d\{10,11\}\$')}\sqlIdx{CONSTRAINT!CHECK}\sqlIdx{{\textbackslash}d}\sqlIdx{\$}\sqlIdx{\textasciicircum}\sqlIdx{\textasciitilde}.
 The name of the constraint will be \sqlil{customer_phone_ok}.
 We again match a \pgls{regex} via \sqlIdx{\textasciitilde}\sqlil{\~}, but this time we match the value of~\sqlil{phone}.
 
