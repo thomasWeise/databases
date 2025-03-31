@@ -49,6 +49,9 @@ fi
 
 libreOfficeVersion="$(libreoffice --version 2>/dev/null | grep "LibreOffice" | sed -n 's/LibreOffice \([.0-9]*\)/\1/p')" || true
 libreOfficeVersion="$(sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' -e 's/[[:space:]][[:space:]][[:space:]]*/ /g' -e 's/\.*$//'<<<"${libreOfficeVersion}")" || true
+if [ -z "$libreOfficeVersion" ]; then
+  libreOfficeVersion="24.2.7.2 420(Build:2)"  # the version on my computer
+fi
 if [ -n "$libreOfficeVersion" ]; then
     echo "LibreOffice: $libreOfficeVersion"
     hasOutput=true
@@ -60,18 +63,33 @@ for pack in "psycopg"; do
   if [ -z "$version" ]; then
     # pytest or the plugin is not installed, so we install it now.
     # We do this silently, without printing any information...
-    python3 -m pip install --require-virtualenv "$pack" 1>/dev/null 2>&1
-    version="$(python3 -m pip show "$pack" 2>/dev/null)"
+    python3 -m pip install --require-virtualenv "$pack" 1>/dev/null 2>&1 || true
+    version="$(python3 -m pip show "$pack" 2>/dev/null)" || true
   fi
 
   # For each tool or plugin, we get the version separately.
-  version="$(grep Version: <<< "$version")"
+  version="$(grep Version: <<< "$version")" || true
   version="$(sed -n 's/.*Version:\s*\([.0-9]*\)/\1/p' <<< "$version")"
   if [ -n "$version" ]; then  # ... and we concatenate them
     echo "$pack: $version"
     hasOutput=true
   fi
 done
+
+# There is no practical way to get the yEd version.
+# So I just set it as constant for now.
+yedVersion="3.25.1"
+if [ -n "$yedVersion" ]; then
+    echo "yEd: $yedVersion"
+    hasOutput=true
+fi
+
+javaVersion="$(java --version 2>/dev/null | head -n 1)" || true
+javaVersion="$(sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' -e 's/[[:space:]][[:space:]][[:space:]]*/ /g' -e 's/\.*$//'<<<"${javaVersion}")" || true
+if [ -n "$javaVersion" ]; then
+    echo "java: $javaVersion"
+    hasOutput=true
+fi
 
 # separator if we have anything
 if [ "$hasOutput" = true ]; then

@@ -3,7 +3,7 @@
 %
 The goal of this course is to introduce databases.
 However, this is a practical course.
-So we will work on practical examples and create \inQuotes{real} \pglspl{db} on real \pglspl{dbms}.
+So we will work on practical examples and create (more or less) \inQuotes{realistic} \pglspl{db} on real \pglspl{dbms}.
 This means that we will look into several interesting topics:%
 %
 \begin{itemize}%
@@ -14,7 +14,7 @@ We choose \postgresql~\cite{TA2024DDAMWPAM,FP2023LP,OH2017PUAR,B2024PELUYDW}.%
 %
 \item \pglspl{dbms} are usually just servers to which you can send \sql\ commands via a \pgls{client} \pgls{terminal}. %
 However, there exist also nicer tools that offer rich \pglspl{GUI} that allow you to design forms and reports. %
-We need such a tool as well. %
+We will try using such a tool as well. %
 We choose \libreofficeBase~\cite{FNFHWSKLSSGLFRSRPLJG2022BG7R1BOL7C,S2022L7PFEUU}.%
 %
 \item The \pgls{dbms} is usually just the backend of a rich landscape of tools in an enterprise or organization. %
@@ -24,10 +24,18 @@ Since we will also take a look at how that works, we need to install a programmi
 We chose the \python\ programming language~\cite{K2018EIPFEUU,A2002PC,H2023ABGTP3P,LH2015DSAAWP}, because we also provide a free book on it in~\cite{programmingWithPython}. %
 As library to connect to the \postgresql\ \pgls{dbms}, we pick \psycopg~\cite{VDGE2010P}.%
 %
+\item Designing a \db\ following professional approaches involves drawing graphical diagrams of the datatypes.
+Such conceptual schemata should be independent from any specific \dbms\ technology.
+As tool for drawing such diagrams, we will use \yEd~\cite{SG2015MDAWY,Y2011YGEM}.%
+%
 \end{itemize}%
 %
-As you can see, we only consider free open source software.
+As you can see, we only consider free and, ideally, open source, software.
 Learning about \pglspl{db} with this book should be free.
+
+In this part of the book, we have collected installation instructions for the tools that we use in thos book.
+\textbf{You do not need to install all of them right away.}
+But when we eventually need them at some time later on, we will refer back to this part.
 
 Before we get into the necessary installation and setup steps for the software that we need to really learn about \pglspl{db}, we face a small problem:
 Today, devices with many different \pgls{OS} are available.
@@ -40,6 +48,7 @@ Either way, in the following, I will try to provide examples and instructions fo
 \hinput{installingPostgres}{installingPostgres.tex}%
 \hinput{installingLibreOffice}{installingLibreOffice.tex}%
 \hinput{installingPythonEtc}{installingPythonEtc.tex}%
+\hinput{installingYed}{installingYed.tex}%
 %
 \endhsection%
 %
