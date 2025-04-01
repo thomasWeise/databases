@@ -184,7 +184,7 @@ We leave all settings as-is and click \menu{OK}.%
 \subfloat[][%
 This produces this beautiful \pgls{ERD}.%
 \label{fig:yedErdEntitiesA21erd}%
-]{\includegraphics[width=0.6\linewidth]{\currentDir/yedErdEntitiesA21erd}}%
+]{\includegraphics[scale=0.6]{\currentDir/yedErdEntitiesA21erd}}%
 %
 %
 \caption{Drawing an \pgls{ERD} for the \emph{Student} entity using \yEd~(Continued).}%
@@ -287,6 +287,57 @@ It is useful for the conceptual modeling stage in \db\ design as discussed in \c
 Installation instructions are provided in \cref{sec:installingYed} and a small hands-on tutorial is given in \cref{sec:entitisAttrsErd}.%
 }%
 %
+Anyway, let us continue our modeling adventure.
+We take our \pgls{ERD} from \cref{fig:yedErdEntitiesA21erd} to our partners in the university, say, an administrator of one of the schools.
+We want to discuss whether this model for students is appropriate.
+During our discussion with the administrators, a few issues come up.
+
+\begin{figure}%
+\centering%
+\includegraphics[scale=0.6]{\currentDir/erdStudent2}%
+\caption{A new version of the \emph{Student} \pgls{ERD} from \cref{fig:yedErdEntitiesA21erd}, this time with \emph{Name} as composite attribute.}%
+\label{fig:erdStudent2}%
+\end{figure}%
+%
+First, the \emph{Name} attribute should not be a single attribute.
+Students have a given name, a family name, and a salutation.
+For example, the name of Mr.~Bebbo would actually be Mr.~Fred Bebbo, where \inQuotes{Bebbo} is the family name, \inQuotes{Fred} is the given name.
+When thinking about this, we encounter a problem:
+In Western culture, the full name is composed by first writing the given name and then the family name.
+This is why the full name of Mr.~Bebbo is Fred Bebbo.
+In Eastern cultures, it is the other way around:
+The name of the famous Chinese mathematician 刘徽 is transcribed as LIU Hui in the Latin alphabet.
+LIU~(刘) here is the family name and it comes first.
+Hui~(徽) is the given name and it comes second.
+Depending on the cultural background, the system would need to decide how to compose the name correctly.
+This sounds a like an awful problem that would probably become the source of many interesting errors.
+
+We decide to not compose the name of given name and family name.
+Instead, we provide two values as part of the \emph{Name} attribute:
+The \emph{Full Name} will be the complete and official name, as written on the ID card.
+This would be something like 刘徽 for a Chinese person and Fred Bebbo for the Westerner Mr.~Bebbo.
+As second component, we store the \emph{Salutation}.
+For 刘徽, this could be 刘教授 and for Fred Bebbo, it could be Mr.~Bebbo.
+If our system would ever sent an automated message to Mr.~Bebbo, it will use the salutation.
+If we print the name on a certificate, we will use the full name.
+
+A composite attribute in the \pgls{ERD} is simply drawn as ellipse with the components connected to the attribute.
+We update our \pgls{ERD} in \cref{fig:erdStudent2}.
+The \pgls{dbs} could now decide whether to fully spell out the name, e.g., in graduation certificates, or whether to just print the salutation and family name, e.g., when sending messages addressed to the students.
+
+\begin{figure}%
+\centering%
+\includegraphics[scale=0.6]{\currentDir/erdStudent3}%
+\caption{A new version of the \emph{Student} \pgls{ERD} from \cref{fig:erdStudent2}, this time with \emph{Address} as multi-valued \emph{and} composite attribute.}%
+\label{fig:erdStudent3}%
+\end{figure}%
+%
+While we are at this, we realize that \emph{Address} should also be a composite attribute.
+An address is not just a line of text, but consists of components such as country, province, city, district, postal code, street and street number, quarter, building, and flat number.
+Modeling that would be cumbersome.
+We propose that everything after the postal code could simply be merged into one string named \emph{street address}, because an automated system probably cannot really handle information at a finer granularity than postal code in any meaningful way.
+While discussing the subject with our partners, we also realize that \emph{Address} should be a multi-valued attribute, i.e., a student can have multiple addresses.
+Multi-valued attributes can be modeled by ellipses with small ellipses inside.%
 \FloatBarrier%
 \endhsection%
 %
