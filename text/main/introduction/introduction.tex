@@ -18,18 +18,18 @@ Once we found the right document, we arrive at the end of what traditional techn
 Nowadays, maybe we can generate an AI summary, but in the end, we still have unstructured information to digest.
 
 Then, there is data that is tightly structured and self-contained.
-For data that can be stored in a single table, simple text formats like \pgls{csv}~\cite{RFC4180} or \microsoftExcel\ tables~\cite{B2023DMWME,G2024ECRFMME} are common.
-If the data is more complex, maybe hierarchically structured, formats like \pgls{xml}~\cite{BPSMM2008EMLX1FE,K2019ITXJY,CH2013XFCAMLTMC}, \pgls{json}~\cite{E2017SE4TJDIS,RFC8259}, or \pgls{yaml}~\cite{DNMAASBE2021YAMLYV1,K2019ITXJY,CGTYB2022YFFDCAIE} may be more suitable.
+For data that can be stored in a single table, simple text formats like \pgls{CSV}~\cite{RFC4180} or \microsoftExcel\ tables~\cite{B2023DMWME,G2024ECRFMME} are common.
+If the data is more complex, maybe hierarchically structured, formats like \pgls{XML}~\cite{BPSMM2008EMLX1FE,K2019ITXJY,CH2013XFCAMLTMC}, \pgls{JSON}~\cite{E2017SE4TJDIS,RFC8259}, or \pgls{YAML}~\cite{DNMAASBE2021YAMLYV1,K2019ITXJY,CGTYB2022YFFDCAIE} may be more suitable.
 All of these formats have in common that they store data in singular documents.
 They offer clear and strict rules how the data can be defined, structured, stored, and retrieved.
 They are open standards and vendor-independent.
 With the exception of \microsoftExcel\ tables, they are also text-based formats.\footnote{%
-Today, \microsoftExcel\ tables are stored as compressed collections of \pgls{xml} documents.%
+Today, \microsoftExcel\ tables are stored as compressed collections of \pgls{XML} documents.%
 } %
 However, they are mainly suitable for data that, well, can be stored in single files efficiently.
 They are not suitable for manipulating huge datasets.
 They are also not suitable for modelling more complex relationships between different datasets.
-For example, if we want to represent all the personnel, schools, students, and assets of our university, we could try to do that in a single \pgls{xml}~document.
+For example, if we want to represent all the personnel, schools, students, and assets of our university, we could try to do that in a single \pgls{XML}~document.
 This document would need to store which teacher belongs to which school, which student belongs to which school, which student is supervised by which teacher, and so on.
 Maybe a single person could write such a document.
 But as soon as multiple people need to work on such a document together, everything will collapse.

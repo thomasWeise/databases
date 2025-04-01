@@ -167,7 +167,7 @@ With \psql, we can execute \sql\ commands, but that's basically it.
 With \python, we can write arbitrarily complex programs.
 
 We could have a user interface with windows and buttons for entering data.
-Or we could read data from \pgls{csv} or \pgls{xml} files and send them to the \dbms.
+Or we could read data from \pgls{CSV} or \pgls{XML} files and send them to the \dbms.
 In the other direction, we can also do lots of sophisticated stuff with data that we pull from the \db.
 We could statistically evaluate, or use it to train a \pgls{ML} or \pgls{AI} model that predicts which customer will order which product and when.
 We thus now have a new and infinitely powerful tool in our hand to both generate and analyze data.
@@ -175,6 +175,11 @@ We thus now have a new and infinitely powerful tool in our hand to both generate
 And \python\ is not the only programming language.
 Connectors similar to \psycopg\ exist for \pgls{Java}~\cite{PGDG:PJD} and \pgls{C}~\cite{PGDG:PD:LCL} as well, and probably for many other programming languages, too.
 The power to efficiently store and retrieve data and to maintain the data integrity of a \dbms\ can therefore be used from arbitrary programs.%
+%
+\usefulTool{psycopg}{%
+\psycopg~\cite{VDGE2010P} is a library that allows us to connect to the \postgresql\ \dbms\ from \python\ code. %
+This way, we can design complex applications in \python\ that interact with a \postgresql\ \db.%
+}%
 %
 \FloatBarrier%
 \endhsection%

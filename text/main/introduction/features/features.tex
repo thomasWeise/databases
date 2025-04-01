@@ -152,10 +152,10 @@ This is required to pass certain government, financial, or ISO certification aud
 %
 \hsection{Summary}%
 It is quite obvious that the basic filesystem only offers very few of the properties discussed above.
-Using simple data formats like \pgls{csv} or even \microsoftExcel\ tables will not be a good choice either.
+Using simple data formats like \pgls{CSV} or even \microsoftExcel\ tables will not be a good choice either.
 While one might realize concurrency by placing multiple interrelated such documents on a shared folder, there certainly would not be any \emph{ACID} guarantees.
 Multiple people editing them at the same time will wreak havoc.
-Structured formats like \pgls{json}, \pgls{xml}, or \pgls{yaml} would allow us to represent complex data in single documents, but this would make the multi-user access situation even worse.
+Structured formats like \pgls{JSON}, \pgls{XML}, or \pgls{YAML} would allow us to represent complex data in single documents, but this would make the multi-user access situation even worse.
 And none of these solutions could provide any means to protect data integrity, let alone access control.
 
 Instead, we require a software layer between the \pgls{db} and the user processes.

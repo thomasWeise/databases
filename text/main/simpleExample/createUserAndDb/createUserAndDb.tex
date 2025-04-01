@@ -19,7 +19,13 @@ If some outside attacker can obtain their password, then the impact will only be
 
 For the sake of simplicity, assume that we are logged in the \db~\server\ computer and that the password to the administrator user \textil{postgres} is set to~\textil{XXX}.
 We open a \pgls{terminal}, which can be done via \ubuntuTerminal\ under \ubuntu\ \linux; under \microsoftWindows, \windowsTerminal.
-We wanot to start the \client\ program \psql\ with the proper connection \pgls{URI}~\cite{PGDG:PD} to access our \postgresql\ \server.
+We want to start the \client\ program \psql\ with the proper connection \pgls{URI}~\cite{PGDG:PD} to access our \postgresql\ \server.%
+%
+\usefulTool{psql}{%
+\psql\ is a text-based console program that can be used to connect to a \postgresql\ \pgls{server}. %
+From the \psql\ console, we can send \sql\ commands to the \postgresql\ \pgls{server} and receive its answers.%
+}%
+%
 We can connect to the \postgresql\ \server\ on our local machine by providing the connection \pgls{URI} \textil{postgres://postgres:XXX@localhost}.
 The \textil{postgress://} tells \psql\ that this is, indeed, a connection \pgls{URI}.
 The second \textil{postgres} is the user name.
