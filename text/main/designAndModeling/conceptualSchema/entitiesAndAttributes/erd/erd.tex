@@ -190,7 +190,6 @@ This produces this beautiful \pgls{ERD}.%
 \caption{Drawing an \pgls{ERD} for the \emph{Student} entity using \yEd~(Continued).}%
 \label{fig:yedErdEntitiesA:D}%
 \end{figure}%
-%
 
 In the following sections, we will look at several different \pglspl{ERD}.
 The goal of this course is to teach you \emph{actionable} knowledge.
@@ -218,7 +217,7 @@ In other words, the meaning of the term \emph{entity} is shifted.
 But let this not bother us too much.
 
 The very first thing that we want to model is the entity (type) \emph{Student}.
-From our requirements analysis, we know that students have names, they have an ID (issued by the government), they have a student ID (issued by our university), they have a mobile phone number, they have an address, and they have a date of birth.
+From our requirements analysis, we know that students have names, they have an ID (issued by the government), they have a student ID (issued by our university), they have a mobile phone number, they have an address, and they have a \pgls{dateOfBirth}.
 So let us model this.
 
 After installing \yEd\ as discussed in \cref{sec:installingYed}, we open it.
@@ -254,7 +253,7 @@ We click into the entity rectangle to connect the attribute \emph{Name} to the \
 The \emph{Name} attribute is now connected to the \emph{Student} entity in \cref{fig:yedErdEntitiesA13connectedToStudent}.
 
 We add an attribute \emph{ID} in exactly the same way in \cref{fig:yedErdEntitiesA14addedID}.
-We then go on and add several more attributes, \emph{Student-ID}, \emph{Address}, \emph{Mobile Phone}, \emph{Date of Birth}, in \cref{fig:yedErdEntitiesA15addedAddrMobDoB}.
+We then go on and add several more attributes, \emph{Student-ID}, \emph{Address}, \emph{Mobile Phone}, \emph{\pgls{dateOfBirth}}, in \cref{fig:yedErdEntitiesA15addedAddrMobDoB}.
 Notice that these are names that contain dashes and spaces, i.e., things that we would normally avoid when working with \sql.
 But we are not working with \sql.
 We are making a conceptual model.
@@ -295,13 +294,26 @@ During our discussion with the administrators, a few issues come up.
 \begin{figure}%
 \centering%
 \includegraphics[scale=0.6]{\currentDir/erdStudent2}%
-\caption{A new version of the \emph{Student} \pgls{ERD} from \cref{fig:yedErdEntitiesA21erd}, this time with \emph{Name} as composite attribute.}%
+\caption{A new version of the \emph{Student} \pgls{ERD} from \cref{fig:yedErdEntitiesA21erd}, this time with \emph{Name} as composite attribute and \emph{Mobile Phone} as multi-valued attribute.}%
 \label{fig:erdStudent2}%
 \end{figure}%
 %
-First, the \emph{Name} attribute should not be a single attribute.
+First, \emph{Name}s are more complicated than we thought.
 Students have a given name, a family name, and a salutation.
 For example, the name of Mr.~Bebbo would actually be Mr.~Fred Bebbo, where \inQuotes{Bebbo} is the family name, \inQuotes{Fred} is the given name.
+To accommodate this, \emph{Name} attribute should not be a single attribute.
+We could turn it into a \emph{composite attribute}, consisting of given name, family name, and a salutation.
+The system then could combine these components appropriately when addressing the student or when issuing documents.%
+%
+\begin{definition}[Composite Attribute]%
+A \emph{composite attribute} is an attribute which consists of several parts with their own names and domains.%
+\end{definition}%
+\begin{definition}[Simple Attribute]%
+A \emph{simple attribute} is an attribute that only has a single name and domain. %
+Simple attributes do not have any components.%
+\end{definition}%
+%
+%
 When thinking about this, we encounter a problem:
 In Western culture, the full name is composed by first writing the given name and then the family name.
 This is why the full name of Mr.~Bebbo is Fred Bebbo.
@@ -310,7 +322,7 @@ The name of the famous Chinese mathematician 刘徽 is transcribed as LIU Hui in
 LIU~(刘) here is the family name and it comes first.
 Hui~(徽) is the given name and it comes second.
 Depending on the cultural background, the system would need to decide how to compose the name correctly.
-This sounds a like an awful problem that would probably become the source of many interesting errors.
+This sounds a like an awful problem that would probably become the source of many interesting errors or, at least, complaints.
 
 We decide to not compose the name of given name and family name.
 Instead, we provide two values as part of the \emph{Name} attribute:
@@ -318,12 +330,45 @@ The \emph{Full Name} will be the complete and official name, as written on the I
 This would be something like 刘徽 for a Chinese person and Fred Bebbo for the Westerner Mr.~Bebbo.
 As second component, we store the \emph{Salutation}.
 For 刘徽, this could be 刘教授 and for Fred Bebbo, it could be Mr.~Bebbo.
+Maybe we could later permit the students to change their salutation in the system to whatever they feel comfortable with.
+The full name, however, would be entered by an administrator exactly as it is spelled on the student's ID document.
 If our system would ever sent an automated message to Mr.~Bebbo, it will use the salutation.
 If we print the name on a certificate, we will use the full name.
+A composite attribute in the \pgls{ERD} is simply drawn with the components as attributes connected to the attribute.
 
-A composite attribute in the \pgls{ERD} is simply drawn as ellipse with the components connected to the attribute.
+We also notice that a student may have multiple mobile phone numbers.
+Such multi-valued attributes can be modeled by ellipses with small ellipses inside.%
+%
+\begin{definition}[Multi-Valued Attribute]%
+An entity may have multiple values for a \emph{multi-valued attribute}.%
+\end{definition}%
+\begin{definition}[Single-Valued Attribute]%
+An entity has (at most) one value for a \emph{single-valued} attribute.%
+\end{definition}%
+\begin{definition}[Optional Attribute]%
+An entity may or may not have a value for an \emph{optional attribute}. %
+If an attribute has no value, this is often represented as \sqlilIdx{NULL}.%
+\end{definition}%
+%
+A single-valued optional attribute has either one value or no value.
+A single-valued non-optional attribute has exactly one value.
+A multi-value optional value has either no value, one value, or multiple values.
+A multi-valued non-optional attribute has one value or multiple values.
+
+Upon closer inspection, we notice that the mobile phone number attribute should probably be modeled as optional multi-valued attribute.
+While it seems very unlikely nowadays, there may be students who do not have a mobile phone number.
+Well, maybe a foreign exchange student, i.e., a 留学生, who enters China does not yet have a mobile phone number when enrolling into our university.
+So making this attribute optional is reasonable.
+
+While we are on the subject of foreign exchange students:
+They probably do not have a Chinese ID.
+So we turn ID into an optional single-valued attribute.
+Optional attributes can be signified by small empty bubbles at the end of the lines connecting them to the entity types.
+
 We update our \pgls{ERD} in \cref{fig:erdStudent2}.
 The \pgls{dbs} could now decide whether to fully spell out the name, e.g., in graduation certificates, or whether to just print the salutation and family name, e.g., when sending messages addressed to the students.
+Now we also are able to represent that fact that a student can have no or multiple mobile phone numbers.
+They also can have no or one ID.
 
 \begin{figure}%
 \centering%
@@ -337,7 +382,23 @@ An address is not just a line of text, but consists of components such as countr
 Modeling that would be cumbersome.
 We propose that everything after the postal code could simply be merged into one string named \emph{street address}, because an automated system probably cannot really handle information at a finer granularity than postal code in any meaningful way.
 While discussing the subject with our partners, we also realize that \emph{Address} should be a multi-valued attribute, i.e., a student can have multiple addresses.
-Multi-valued attributes can be modeled by ellipses with small ellipses inside.%
+This is illustrated in \cref{fig:erdStudent3}.
+
+\begin{figure}%
+\centering%
+\includegraphics[scale=0.6]{\currentDir/erdStudent4}%
+\caption{A new version of the \emph{Student} \pgls{ERD} from \cref{fig:erdStudent3}, where we added the derived attribute \emph{Age}.}%
+\label{fig:erdStudent4}%
+\end{figure}%
+
+Finally, there are also so-called derived attributes.
+A derived attribute is calculated based on the values of other attributes.
+It does not need to be stored in the \db.
+A typical example is the age of person.
+If we know the \pgls{dateOfBirth} and the current date, the age can directly be calculated.
+This can be done very quickly.
+There is no reason to store the age in the \db.
+Derived attributes are illustrated by ellipses with dashed lines around thei perimeter, as shown in \cref{fig:erdStudent4}.%
 \FloatBarrier%
 \endhsection%
 %

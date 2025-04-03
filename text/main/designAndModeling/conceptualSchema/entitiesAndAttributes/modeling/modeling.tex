@@ -4,6 +4,7 @@
 The most basic elements for conceptual modeling are entities, attributes, and entity types.%
 %
 \begin{definition}[Entity]%
+\label{def:entity}%
 An \emph{entity} is an object or thing with an independent existence in the world. %
 It can be distinguished from all other objects.%
 \end{definition}%
@@ -17,7 +18,7 @@ An \emph{attribute} is a feature or characteristic of an entity.%
 \end{definition}%
 %
 Entities in our model are represented by the values of their attributes.
-A student could be defined by their name, ID, student~ID, mobile phone number, email address, home address, date of birth, etc.
+A student could be defined by their name, ID, student~ID, mobile phone number, home address, date of birth, etc.
 A module could be described by its title, syllabus, and abstract.
 Additionally to such features, \emph{adjectives} in the requirements text often can be interpreted as attribute values, e.g., red, young, successful, heavy, fast.%
 %
@@ -27,7 +28,7 @@ The \emph{domain} of an attribute is the set of possible values that it can take
 %
 The name of a student is a text string.
 The mobile phone numbers and IDs may be a text strings, too, but of a fixed length and limited to certain character ranges at certain positions.
-The date of birth, on the other hand, is a date.
+The \pgls{dateOfBirth}, on the other hand, is a date.
 The score in an exam may be an integer number between~0 and~100.%
 %
 \begin{definition}[Entity Type]%
@@ -40,9 +41,11 @@ While the module~\citetitle{programmingWithPython}~\cite{programmingWithPython} 
 Mrs.~Bebba~教授 is a single entity, but the set of all possible professors represents an entity type.
 Entity types are \emph{common nouns} that stand for groups or types of things~\cite{S2024D:CDMERDE} and that are usually written with lowercase letters~\cite{EOWM2025MWAMTD:CAPNWTDLWOGC}.
 
-Also notice the plural \emph{attributes} in \cref{def:entityType}.
-Entity types in a \db\ are usually characterized by multiple attributes.
-It makes little sense, for example, to consider \emph{year} as an entity type, because it does not have multiple attributes.%
+Also notice the plural \emph{attributes} in \cref{def:entityType}:%
+\bestPractice{entityTypesHaveMultipleAttributes}{%
+Only things with multiple attributes should become entity types.%
+}%
+Indeed, it makes little sense, for example, to consider \emph{year} as an entity type, because it does not have multiple attributes.%
 %
 \begin{definition}[Entity Set]%
 An \emph{entity set} is a subset of an entity type. %

@@ -1,0 +1,15 @@
+%
+\hsection{Relationships}%
+%
+If we only had a single entity type in our \db, the using a \db\ makes no sense.
+In that case, we would be better of using simple documents, like \pgls{CSV} or \pgls{XML} files.
+However, clearly, in our teaching management platform application, we are going to have many different entity types.
+And again, if these entity types were unrelated, say \inQuotes{Student,} \inQuotes{Weather,} \inQuotes{Product,} then we were still better off storing them in a bunch of such files.
+But they are related.
+So how do we model these relationships?%
+%
+\hinput{modeling}{modeling.tex}%
+\hinput{erd}{erd.tex}%
+%
+\endhsection%
+%

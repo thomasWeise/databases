@@ -161,9 +161,9 @@ The final goal of having a fully operational product may drift out of focus and 
 %
 \Pgls{db} systems differ from normal software applications.
 On one hand, they usually are the foundation for \emph{several} software projects.
-A student management \db\ for a university, for example, may offer the students to log in and join courses or view their grades.
-It may also allow the administrative staff to create new courses and even manage the module structure of curricula.
-It may furthermore handle the room planning for courses.
+A student management \db\ for a university, for example, may offer the students to log in and join modules or view their grades.
+It may also allow the administrative staff to create new modules and even manage the module structure of curricula.
+It may furthermore handle the room planning for classes.
 And it may even help to manage the important dates in the semester, such as times for exams, the schedule for students.
 These things may be handled by different applications with different user interfaces.
 But all of these applications would access the same \db\ backend.
@@ -215,14 +215,14 @@ It is common to \emph{not} just draw one single huge \pgls{ERD}, which would be 
 Instead, often, several smaller and easily readable \pglspl{ERD} are drawn with no more than ten or so entity types~\cite{WF1995DHQDM}.
 
 Then, the \db\ model is chosen.
-In the context of this course, our focus is on \pglspl{rdb}, where data is store in tables that can reference each other.
+In the context of this book, our focus is on \pglspl{rdb}, where data is store in tables that can reference each other.
 This may not always be the right choice.
 For example, maybe we have to deal with images or video data, maybe we have to deal with results of simulations or computational experiments.
 Then, other formats or \db\ paradigms may be more suitable.
 Nevertheless, let us assume that \pglspl{rdb} are what we decide to use.
 At this stage, we may also decide which \dbms\ to use.
 This decision may be based on aspects such as costs, maintenance aspects, licenses, and available training.
-In our course, we chose \postgresql, simply because it is a free (open source) and very mature \sql\ \dbms.
+In our book, we chose \postgresql, simply because it is a free (open source) and very mature \sql\ \dbms.
 
 In the next step, the conceptual design is converted into a logical design.
 This can mean to map the entity types from the \pglspl{ERD} in the conceptual models to tables and the relationships between them~\cite{SS2005EIDDDFDB:I,SS2005EIDDDFDB:CDDRAAML}.

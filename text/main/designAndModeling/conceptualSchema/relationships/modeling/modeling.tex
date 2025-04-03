@@ -1,0 +1,43 @@
+%
+\hsection{Modeling}%
+%
+Let us begin the modeling of relationships between data with some basic definitions~\cite{G2011EW2ITDS:CMUTERM}.%
+%
+\begin{definition}[Relationship]%
+A \emph{relationship} (instance) is an association of two or more entities.%
+\end{definition}%
+%
+An example for a relationship would be \emph{Mr.~Bibbo enrolls into the module \citetitle{programmingWithPython}.}
+%
+\begin{definition}[Relationship Type]%
+A \emph{relationship type} is the set of all relationships possible between two or more sets of entities.%
+\end{definition}%
+%
+The \emph{Enrolls} relationship type could be defined between the \emph{Student} entity type and the \emph{Module} entity type.%
+%
+\begin{definition}[Degree of Relationship]%
+The degree of a relationship (instance or type) refers to the number of participating entities.%
+\end{definition}%
+%
+There can be binary relationships, i.e., relationships where two entities participate.
+For example, we could model the student-module relationship in a binary fashion: \emph{Student enrolls into Module.}
+We could just as well use a ternary relationship with three participating entities instead, e.g., \emph{Student enrolls into Module taught by Professor.}
+%
+\begin{definition}[Roles in a Relationship]%
+Each entity participating in relationship may have a role, which defines the way in which the entity participates in the relationship.%
+\end{definition}%
+%
+If we imagine the ternary \emph{Student enrolls into Module taught by Professor} relationship, then the student could have the role \emph{enrolls} and the professor could have the role \emph{teaches}.%
+%
+\begin{definition}[Relationship Attribute]%
+A relationship type can have attributes describing properties of the relationship.%
+\end{definition}%
+%
+For example, we could write something like \emph{Mr.~Bebbo enrolls into module \citetitle{databases} in summer semester 2025.}
+The attribute \emph{Semester} of this relation only makes sense in this context.
+It neither belongs to the student \emph{Mr.~Bebbo} nor does it belong to the module~\citetitle{databases}.
+Different from entities, relationship types do not have key attributes.
+The single relationships are identified by the primary keys of the participating entities~\cite{G2011EW2ITDS:CMUTERM}.
+%
+\endhsection%
+%
