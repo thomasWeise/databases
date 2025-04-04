@@ -36,8 +36,9 @@ A weak entity is only identifiable by its values \emph{and} the primary key(s) o
 \end{definition}%
 %
 A \emph{weak entity} cannot exist on its own.
-Its existence depends on at least one other entity.
+Its existence depends on at least one other entity, which is called its \emph{owner}.
 It does not have an own primary key.
+It has a partial key, i.e., a set of attributes that, combined with the primary keys of its owner(s), can be used to identify it in its entity set.%
 %
 \begin{definition}[Identifying Relationship]%
 An \emph{identifying relationship} links a strong entity to a weak entity.%
@@ -63,7 +64,7 @@ It would be a weak entity depending on two strong entities.
 The new weak entity is called \emph{Personal ID}.
 It has the same attributes as the relationship in \cref{fig:erdPerson2}.
 It is linked with identifying relationships to both the \emph{Person} and the \emph{ID Type} entities.
-Each instance of \emph{Personal ID} is uniquely identified by its attributes \emph{Value}, \emph{Valid From}, and \emph{Valid To} together with the primary keys \emph{Surrogate Key} of the \emph{Person} entity and \emph{Name} of the \emph{ID Type} entity.
+Each instance of \emph{Personal ID} is uniquely identified by its attributes \emph{Value}, \emph{Valid From}, and \emph{Valid To} (which form the partial key) together with the primary keys \emph{Surrogate Key} of the \emph{Person} entity and \emph{Name} of the \emph{ID Type} entity.
 Now a person can have multiple phone numbers, provided that they are different (or valid at different time ranges).
 A person can have different visa, because they will usually have different visa numbers or, at least, different time frames.
 Now we indeed have unified communication-based IDs such as mobile phone numbers, email addresses, WeChat IDs together with document-based IDs such as, well, actual government issued IDs, visas, work permits, driver's licenses, etc.
