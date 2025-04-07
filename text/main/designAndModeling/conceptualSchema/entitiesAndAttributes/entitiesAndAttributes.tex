@@ -14,7 +14,7 @@ It can be distinguished from all other objects.%
 %
 Examples of entities are maybe the student Mr.~Bibbo, the module~\citetitle{programmingWithPython}~\cite{programmingWithPython}, the professor Mrs.~Bebba~教授, room~\#36~305, or the curriculum \emph{Computer Science and Technology}.
 Entities can be spotted easily in the requirement specification or when viewing the meeting or interview notes:
-They correspond to \emph{proper nouns}~\cite{S2024D:CDMERDE}, i.e., nouns that actually name one specific thing and that are usually capitalized~\cite{EOWM2025MWAMTD:CAPNWTDLWOGC}.%
+They correspond to \emph{proper nouns}~\cite{C1997ECAED}, i.e., nouns that actually name one specific thing and that are usually capitalized~\cite{EOWM2025MWAMTD:CAPNWTDLWOGC}.%
 %
 \begin{definition}[Attribute]%
 An \emph{attribute} is a feature or characteristic of an entity.%
@@ -23,7 +23,7 @@ An \emph{attribute} is a feature or characteristic of an entity.%
 Entities in our model are represented by the values of their attributes.
 A student could be defined by their name, ID, student~ID, mobile phone number, home address, date of birth, etc.
 A module could be described by its title, syllabus, and abstract.
-Additionally to such features, \emph{adjectives} in the requirements text often can be interpreted as attribute values, e.g., red, young, successful, heavy, fast.%
+Additionally to such features, \emph{adjectives} in the requirements text often can be interpreted as attribute values~\cite{C1997ECAED}, e.g., red, young, successful, heavy, fast.%
 %
 \begin{definition}[Domain]%
 The \emph{domain} of an attribute is the set of possible values that it can take on.%
@@ -42,7 +42,7 @@ The set of all entities that have the same attributes is called an \emph{entity 
 So while the entity Mr.~Bebbo is a single student, the set of all possible students would form an entity type.
 While the module~\citetitle{programmingWithPython}~\cite{programmingWithPython} is a single entity, the set of all possible modules would form an entity type.
 Mrs.~Bebba~教授 is a single entity, but the set of all possible professors represents an entity type.
-Entity types are \emph{common nouns} that stand for groups or types of things~\cite{S2024D:CDMERDE} and that are usually written with lowercase letters~\cite{EOWM2025MWAMTD:CAPNWTDLWOGC}.
+Entity types are \emph{common nouns} that stand for groups or types of things~\cite{C1997ECAED} and that are usually written with lowercase letters~\cite{EOWM2025MWAMTD:CAPNWTDLWOGC}.
 
 Also notice the plural \emph{attributes} in \cref{def:entityType}:%
 \bestPractice{entityTypesHaveMultipleAttributes}{%
@@ -269,7 +269,7 @@ This produces this beautiful \pgls{ERD}.%
 In the following sections, we will look at several different \pglspl{ERD}.
 The goal of this course is to teach you \emph{actionable} knowledge.
 So, while we will look at \pglspl{ERD}, we will also \emph{draw} them.
-That, again, is fairly easy:
+That is fairly easy:
 Once you understand the basic syntax, you can draw them with almost arbitrary drawing software.
 Then again, this can also become tedious.
 You could, for example, use the \softwareStyle{Draw} program which is part of \libreoffice, or a vector graphics program like \inkscape.
@@ -277,6 +277,8 @@ This would mean that you have to draw all the shapes of the diagrams independent
 Then there are programs like \pgmodeler\ or \mysqlWorkbench\ which offer much better capabilities to draw \pglspl{ERD},
 These tools, however, are bound to certain technologies, such as \postgresql\ and \mysql, respectively.
 They would be useful for the development of logical models, but it feels awkward to apply them at a conceptual level, which should be technology agnostic.
+There exists many possible tools that we could use.
+\Citeauthor{B2025DS:7DMTC} lists over 70 in~\cite{B2025DS:7DMTC}.
 
 After searching for a while, I have settled for \yEd~\cite{SG2015MDAWY,Y2011YGEM}.
 \yEd\ is a free graph editor that offers a convenient ability to draw and layout \pglspl{ERD} while being entirely independent from any data model.
