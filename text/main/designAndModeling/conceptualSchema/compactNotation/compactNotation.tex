@@ -228,30 +228,49 @@ This model is still not very advanced.
 But it has already several good features.
 We can imagine that it will be at least somewhat usable.
 
-We did not explicitly state this before, but model follows a simple principle:%
+We did not explicitly state this before, our model for the teaching platform partially follows the principle of an \emph{Insert-Only Database}~\cite{P2014ACIIMDMTIMOIMD:IO}:%
 %
 \bestPractice{immutableData}{%
-If a situation changes, existing data should not be changed, but new data should be added that represents the change.}%
+In many application scenarios where historical information needs to be preserved, data in a \db\ should never be changed or deleted. %
+Changes in the real world should instead be reflected by adding data to the \db.}%
 %
+In other words, viewing this from the \sql\ perspective, \sqlil{UPDATE} and \sqlil{DELETE} operations should not be used if we need to remember the past state of data.
+Instead, only new records should be added via \sqlil{INSERT INTO}.
+And in our situation, we do want to preserve the history of the data.
+
 For example, a curriculum consists of modules.
-Now we could assign each module to a teacher.
+Now we could have modeled that each module is assigned to a teacher.
 Once the teacher changes their workstation and another teacher takes over, we could just change the assignment.
-This would have a big drawback:
+This would be much simpler than our current conceptual model.
+It would have a big drawback, though:
 It would be impossible to tell which teacher taught a module in the past.
 
-We chose a different path:
+Therefore, we chose a different path:
 Each instantiation of a module is a class and each class is assigned to a teacher.
 This assignment never changes.
 Each semester, new class records are added.
 We always know who taught which course in which semester.
 Our \db\ will grow incrementally an changes are reflected by new records and not the modification of existing records.
+If a module is taken over by another professor, then this will yield a new class instance.
+We can see who taught which class (module) in which semester.
 
-Our system may also have some shortcomings.
+For this reason, we also added the \emph{Valid From} and \emph{Valid To} attributes to the \emph{Address} entity type.
+If the address of a student or faculty member changes, we create a new address record and mark it as valid starting today, while leaving the \emph{Valid To} attribute at \sqlil{NULL}.
+We then enter yesterday as \emph{Valid To} value of the old address as no longer in use.
+The same also holds for our \emph{Personal ID} and \emph{Person Name} entity types.
+The administrators can therefore immediately see which address, ID, or name a person had in use when some action was taken in the past.
+
+Our system also has some shortcomings.
 For example, there may be some more levels of structural indirection in a university.
 A school may be subdivided into different departments.
 We should be able to add timestamps and notes to most of the data items, which we did not really model here.
 We also did not model rights management.
-But all in all, the system looks more or less reasonable.%
+We would probably need a table assigning which person is permitted to enroll students into a class or curriculum, which person in a school can create new modules, classes, curricula, and so on.
+Additionally, we may want to create a table creating an audit trail~\cite{K2010ATTDCID}.
+Such a table would store which user added/changed which record in which table at which point in time.
+For now, we omit all of this.
+Such features could probably be added later.
+The system looks more or less reasonable, so our goal is to move on to create a logical model and then a prototype.%
 %
 \FloatBarrier%
 \endhsection%
