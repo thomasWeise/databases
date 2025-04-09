@@ -8,14 +8,14 @@ Using \sql\ to create a the user \textil{boss} with password \textil{superboss12
 The first step to fulfill this request to is to create a new and empty \db.
 We already installed \postgresql\ (see \cref{sec:installingPostgres}).
 It is running on a dedicated \server\ computer in our small \pgls{IT} department / office.
-This \db\ \server\ will host all the \dbs\ of the company, probably ranging from payroll data to fancy business analytics.
+This \db\ \server\ will host all the \pglspl{db} of the company, probably ranging from payroll data to fancy business analytics.
 
 Our boss wants to have full access to the new \db.
 They are not \pglspl{dba}, though, so we would only reluctantly give them administrative access to the complete \server.
 In a first step, we would like to create a new role or user account on our \dbms.
 This account should only be able to access the new factory \db.
 If they make a mistake, this mistake will only affect this single \db.
-If some outside attacker can obtain their password, then the impact will only be limited to this \db\ and not affect, e.g., payroll data or other confidential data in other \dbs.
+If some outside attacker can obtain their password, then the impact will only be limited to this \db\ and not affect, e.g., payroll data or other confidential data in other \pglspl{db}.
 
 For the sake of simplicity, assume that we are logged in the \db~\server\ computer and that the password to the administrator user \textil{postgres} is set to~\textil{XXX}.
 We open a \pgls{terminal}, which can be done via \ubuntuTerminal\ under \ubuntu\ \linux; under \microsoftWindows, \windowsTerminal.
@@ -89,16 +89,16 @@ This command pretty much explains itself.
 It will create a new \db\ with the name \textil{factory}.
 The user \textil{boss} will be owner of this \db, i.e., they will have full access to add and manipulate its data.
 Notice that we still need to execute this command under the \pgls{dba} role \textil{postgres}.
-This user has the right to create \dbs\ for other users which can then work with them.%
+This user has the right to create \pglspl{db} for other users which can then work with them.%
 \end{sloppypar}%
 %
 How do we know whether the command finished successfully?
 The first hint is, again, the no error message appears.
-Second, we can also list all the \dbs\ in our system.
+Second, we can also list all the \pglspl{db} in our system.
 For this purpose, we write \sqlil{SELECT datname FROM pg_database;}\sqlIdx{SELECT{\idxdots}FROM}\sqlIdx{pg\_database}.
-See, all the names of all \dbs\ inside the \postgresql\ \dbms\ are stored in the column~\sqlilIdx{datname} of the table~\sqlilIdx{pg\_database}.\footnote{%
+See, all the names of all \pglspl{db} inside the \postgresql\ \dbms\ are stored in the column~\sqlilIdx{datname} of the table~\sqlilIdx{pg\_database}.\footnote{%
 On other \pglspl{dbms}, the \pglspl{db} may be stored differently.}
-If we run this command \emph{before} creating the new \db\ on a fresh \postgresql\ installation, we find that it will list some standard \dbs, which we will ignore here.
+If we run this command \emph{before} creating the new \db\ on a fresh \postgresql\ installation, we find that it will list some standard \pglspl{db}, which we will ignore here.
 Running the command again \emph{after} creating the new \db\ now lists one more \db:~\textil{factory}.
 The steps of this example are given in \cref{lst:factory:create_database} and the output of the \psql\ \client\ is given in~\cref{exec:factory:create_database}.%
 %

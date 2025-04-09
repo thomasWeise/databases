@@ -1,6 +1,6 @@
 \hsection{The Database Lifecycle}%
-The design of \dbs\ is not a straightforward process of \inQuotes{idea $\rightarrow$ design $\rightarrow$ finished.}
-Instead, designing good \dbs\ involves several steps.
+The design of \pglspl{db} is not a straightforward process of \inQuotes{idea $\rightarrow$ design $\rightarrow$ finished.}
+Instead, designing good \pglspl{db} involves several steps.
 We need to clearly understand the requirements for the \db.
 We should create a rough sketch of what things will be included.
 We need to decide what tables and relations should exist.
@@ -10,11 +10,11 @@ At this stage, we may uncover some problems and may need to improve our design.
 The actual application must then be tested.
 Then, once we are happy with everything, the application and \db\ enter the productive environment.
 They need to be maintained and backed up regularly.
-Due to the longevity of \dbs, eventually, new features and changes may become necessary, at which point we may need to revise our design.
+Due to the longevity of \pglspl{db}, eventually, new features and changes may become necessary, at which point we may need to revise our design.
 There exist several general approaches on how to manage or conduct the \db\ design process, how to bring this process into some structure~\cite{GMTM2011DDLC}.
 
 \Pglspl{db} are software artifacts, so we could use one of the many available \pglspl{SDLC}~\cite{I2018SAH,N2024SEFDS}.
-Yet, \dbs\ are also special.
+Yet, \pglspl{db} are also special.
 They are objects with a comparatively long lifetime~\cite{SS2005EIDDDFDB:I}.
 The hardware in your computer stays the same maybe for three to five years.
 Software programs often change every five to ten years.
@@ -25,7 +25,7 @@ Once new major versions of such important software appear, the old versions usua
 
 \Pglspl{db}, however, may stay in use for several decades.
 Indeed, a long time ago, I designed a \db\ that was used by a branch office of a midsized company for well over a decade.
-Therefore, \dbs\ and the applications built on top of them are important assets of en organization.
+Therefore, \pglspl{db} and the applications built on top of them are important assets of en organization.
 They contain valuable information, both historical data as well as the data required by the current operation.
 
 \Pglspl{db} are not just used to store data, the data they store mirrors real-world entities and processes.
@@ -40,8 +40,8 @@ All of the above together lead to several demands on the \db\ development lifecy
 This lifecycle is very similar to the software development lifecycle.
 It often even is either the backend or the foundation of software development.
 However, there are two aspects that make the \db\ development special:
-First, the longevity of \dbs.
-Second, there is the \inQuotes{low-levelness} of \dbs.
+First, the longevity of \pglspl{db}.
+Second, there is the \inQuotes{low-levelness} of \pglspl{db}.
 Since the \db\ is the very foundation upon which other applications like reports, forms, and websites are developed, they are the first point of contact between project stakeholders and developers.
 The \db\ development process is where the basic understanding of the data and processes in an organization is built.
 This is where the situation is most uncertain, where most of the misunderstandings will happen.
@@ -167,9 +167,9 @@ It may furthermore handle the room planning for classes.
 And it may even help to manage the important dates in the semester, such as times for exams, the schedule for students.
 These things may be handled by different applications with different user interfaces.
 But all of these applications would access the same \db\ backend.
-Additionally, \dbs\ are long-living artifacts, which must be managed, maintained, and improved over many years.
+Additionally, \pglspl{db} are long-living artifacts, which must be managed, maintained, and improved over many years.
 
-As a result, a wide variety of design processes and life cycle management structures for \dbs\ have been developed.
+As a result, a wide variety of design processes and life cycle management structures for \pglspl{db} have been developed.
 They often are adaptations of different \pgls{SDLC} models and can offer different levels of detail to the project managers.
 
 \begin{figure}%
@@ -262,7 +262,7 @@ The system is continuous upgraded, improved, and extended until it eventually re
 The method by \citeauthor{GMTM2011DDLC}~\cite{GMTM2011DDLC} sketched in \cref{fig:model:gupta} is a comprehensive approach for \db\ and software co-design in a large-scale project.
 The main goal is to make \db\ projects more projectable.
 
-Most lectures on \dbs\ focus more on the core of the development process, labeled \emph{Database Design} in \cref{fig:model:gupta} and often combine several of the framework activities such as installation and maintenance into one activity.
+Most lectures on \pglspl{db} focus more on the core of the development process, labeled \emph{Database Design} in \cref{fig:model:gupta} and often combine several of the framework activities such as installation and maintenance into one activity.
 
 \begin{figure}%
 \centering%
