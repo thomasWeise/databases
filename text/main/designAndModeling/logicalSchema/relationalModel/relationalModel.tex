@@ -1,0 +1,144 @@
+\hsection{The Relational Data Model}%
+\label{sec:relationalModel}%
+%
+In the \pglspl{ERD} that we painted \emph{before} \cref{sec:compactCrowsFootNotation}, there were three visual components:
+entity types~(rectangles), attributes~(ellipses), and relationship types~(diamonds).
+When we moved to the more compact visualization style in \cref{sec:compactCrowsFootNotation}, the relationship diamonds disappeared.
+Instead, they were represented just by straight lines.
+This has two reasons:
+First, the relationship diamonds waste space.
+Second, in the relational data model, relationships do not exist as independent objects.
+In this model, we only have entity types~(embodied by tables) and attributes~(the columns of the tables).
+Relationships are realized as foreign keys, i.e., as special attributes.
+
+In the context of \pglspl{rdb}, the same definitions for attributes and domains~(\cref{def:attribute,def:attributeDomain}) that we already discussed back in \cref{sec:entitisAttrsErd} are used.
+The following additional definitions are commonly considered~\cite{C1970ARMODFLSDB}:%
+%
+\begin{definition}[Relation Schema]%
+\sloppy%
+A \emph{relation schema} is the ordered sequences of $n$~attributes~$(a_1, a_2, \dots, a_n)$, i.e., is a sequence of attribute names and domains.%
+\end{definition}%
+\fussy%
+%
+\begin{definition}[Relation]%
+\label{def:rdb:relation}%
+A \emph{relation}~$R$ is a set of $n$\nobreakdashes-tuples $R\subseteq\attrDomainb{a_1}\times\attrDomainb{a_2}\times\dots\times\attrDomainb{a_n}$ which is associated to a relation schema.%
+\end{definition}%
+%
+The definition of relations in the relational model is therefore somewhat equivalent to the definition of entity types in the entity model~(see \cref{def:entityType}).
+The difference is that we will use relations to implement both entity types and relationship types.
+
+At first glance, one may think that \inQuotes{Relations = Tables} in a \db.
+In other words, one may think that relations are implemented as tables.
+But this is only partially true:
+Relations can also be the result from a \sqlil{SELECT}\sqlIdx{SELECT{\idxdots}FROM} statement in \sql.
+Relations can also be the parameter of an \sqlilIdx{INSERT INTO} statement.
+Thus, relations are a quite versatile concept to represent our data.
+
+Notice that a relation is a \emph{set} of tuples.
+Since a set cannot contain the same element twice, this means that duplicate tuples (rows, records) are not permitted in relations by definition~\cite{C20245YOQ}.
+As a deviation from the pure formalism, the \sql\ language does permit duplicate tuples in tables and query results~\cite{C20245YOQ}.
+Sets are also not ordered, so there is no default order of the tuples in relations either.
+
+The degree of a relation is defined as follows (please to not mix this up with the degree of a \emph{relationship} discussed in \cref{def:degreeOfRelationship}):%
+%
+\begin{definition}[Degree of a Relation]%
+The \emph{degree} of a relation is the number~$n$ of its attributes.%
+\end{definition}%
+%
+Relations are at the core of \pglspl{rdb}.%
+%
+\cquotation{C1970ARMODFLSDB}{%
+The totality of data in a data bank may be viewed as a collection of time-varying relations. %
+These relations are of assorted degrees. %
+As time progresses, each $n$\nobreakdashes-ary relation may be subject to insertion of additional $n$\nobreakdashes-tuples, deletion of existing ones, and alteration of components of any of its existing $n$\nobreakdashes-tuples.}
+%
+In the 1980s, many vendors of \pgls{dbms} did not completely implement the relational data model as developed by \citeauthor{C1985IYDRR}.
+Instead, they added mechanics that circumvent the relational characteristics, either because of laziness, to allow backwards compatibility to older systems, or in order to improve performance.
+In a response, \citeauthor{C1985IYDRR} defined thirteen rules that govern a relational~\pgls{dbms}~\cite{C1985IYDRR,C1986AESFDBMSTACTBR}.
+Since the first rule is called \emph{Rule~0}, the thirteen rules are referred to as \emph{the twelve rules}.%
+%
+\begin{enumerate}%
+\setcounter{enumi}{-1}%
+%
+\item Foundation Rule:~A relational \pgls{dbms} must be able to manage \pglspl{db} entirely through its relational capabilities.%
+%
+\item Information Rule:~All information in a relational database is represented explicitly at the logical level and in exactly one way -- by values in tables.
+This includes even table names, column names, and column types, which, too, must be stored in a table.
+Such special tables that store the structure of a \db\ are usually part of the built-in system catalog.
+This system catalog holds the metadata of the system and is (or is part of) a relational \db\ itself.
+
+Remember back when we first began working with \postgresql\ in our very first, very simple example?
+In \cref{sec:simpleExample:createUser}, we started by creating a new user for the \pglspl{dbms} called \sqlil{boss}.
+We checked the list of existing users by writing \sqlil{SELECT usename FROM pg_catalog.pg_user}.
+\sqlil{pg_catalog.pg_user} is the name of a table, which belongs to the system catalog.
+When we connected to our \db\ using \libreofficeBase, we saw lots of strange tables in \cref{fig:factoryLibreOfficeBaseConnect12openingScreen}.
+These belong to the system catalog.%
+%
+\item Guaranteed Access Rule:~Each and every datum (atomic value) in a relational \db\ is guaranteed to be accessible via a combination of table name, primary key value, and column name.%
+%
+\item Systematic Treatment of Missing Values Rule:~\sqlilIdx{NULL} values (distinct from the empty character string or a string of blank characters, and distinct from zero or any other number) are supported in fully relational \pgls{dbms} for representing missing information and inapplicable information in a systematic way (independent of data type).
+
+This rule has been a point of arguments over meany years~\cite{C20245YOQ}:
+Real data does include unspecified elements.
+There may be street addresses without house number, there may be people without phone number.
+So there is a need to represent such situations.
+However, having unspecified or missing values also violates the definition of tuples in relations.
+We could imagine that the domain of each attributes contains the additional value~\sqlilIdx{NULL}, too, though.%
+%
+\item Dynamic Online Catalog based on the Relational Model:~The \db\ description is represented at the logical level just like ordinary data, so that authorized users can apply the same relational language to its interrogation as they apply to the regular data.%
+%
+\item Comprehensive Data Sublanguage Rule:~A relational system must support at least one language whose statements are expressible per some well-defined syntax as character strings; and which supportings all of the following items:%
+\begin{enumerate}%
+\item data definition (e.g., creating tables),%
+\item view definition (creating views),%
+\item data manipulation (e.g., adding and deleting of data),%
+\item integrity constraints (e.g., limits on data range, foreign keys, \dots),%
+\item authorization (e.g., user managenment), and%
+\item transaction boundaries (begin, commit, and rollback).%
+\end{enumerate}
+In the case of our book, this language is \sql.
+Of course, one could conceive and support also other languages.%
+%
+\item View Updating Rule:~All views that are theoretically updatable are also updatable by the system.%
+%
+\item Insert, Update, and Delete Rule:~The capability of handling a base relation or a derived relation as a single operand applies not only to the retrieval of data but also to the insertion, update, and deletion of data.
+In other words, the operations do not just apply to single records~(rows) but can concern multiple rows at once, because their inputs can be relations~(whole tables, results of \sqlil{SELECT}, \dots).%
+%
+\item Physical Data Independence Rule:~Application programs and terminal activities remain logically unimpaired whenever any
+changes are made in either storage representations or access methods.
+In other words, the way the \pgls{dbms} actually stores the data has no impact on how an application accesses data via the text-based language.%
+%
+\item Logical Data Independence Rule:~Application programs and terminal activities remain logically unimpaired when information-preserving changes of any kind that theoretically permit unimpairment are made to the base tables.
+Let's say we split a table into two tables and distribute the rows into either part, leaving columns and primary keys intact.
+We can then design a view that merges the two tables~(using \sqlilIdx{UNION}).
+An application sitting on top of that will not see any change.%
+%
+\item Integrity Independence Rule:~Integrity constraints specific to a particular relational database must be definable in the relational data sublanguage and storable in the catalog (not in the application programs).
+We did this several times, for example with the \sqlilIdx{PRIMARY KEY} constraint, the \sqlilIdx{REFERENCES} constraint, and the \sqlil{CHECK}\sqlIdx{CONSTRAINT!CHECK} constraint back in \cref{sec:factoryCreatingTableAndInsertingData}.
+All of them were defined in \sql.
+%
+\item Distribution Independence Rule:~A relational \pgls{dbms} has distribution independence.
+This means that a \pgls{dbms} \emph{may} store data distributed over several different computers~(nodes) or a cluster.
+\emph{If} the \pgls{dbms} supports such distribution, then this should not affect the \sql\ programs sent to it.
+In this case, the \pgls{dbms} must take care of dividing the queries to the corresponding nodes and re-assemble the results.
+If a \pgls{dbms} does not support distribution of data over a network, then it automatically fulfills this rule.%
+%
+\item Non-Subversion Rule:~If a relational system has a low level (single-record-at-a-time) language, that low level cannot be used to subvert or bypass the integrity rules and constraints expressed in the higher level relational language (multiple-records-at-a-time).
+In other words, a \pgls{dbms} must support at least one relational language~(Rule~5), but it may support any other access languages or programming interfaces as well, some of which may work on single records, some may not be relational and so on.
+However, none of these access methods must be allowed to violate the integrity of the relational data.%
+%
+\end{enumerate}%
+%
+Relational
+
+
+It is now our task to implement the conceptual model of our teaching management platform on top of a relational \pgls{dbms}, which is governed by these rules.
+This requires us to map entities and relationships to tables and constraints.
+We further will need to design views, queries, as well as insertion rules for our data.
+
+Naturally, we choose \postgresql\ as the \pgls{dbms}.
+\postgresql\ supports \sql, so most of the functionality we will use can be provided 1:1 by other systems, such as \mysql, \mariadb, or \sqlite.%
+%
+\endhsection%
+%

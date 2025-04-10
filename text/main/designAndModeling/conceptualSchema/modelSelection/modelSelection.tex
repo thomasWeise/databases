@@ -37,10 +37,14 @@ On the other hand, there just exists infinitely more and well-maintained open so
 
 Another data model are key-value stores, which are basically schema-less and appropriate if your data has a key-value structure.
 
-The main focus of this book, however, is on the relational data model by \citeauthor{C1970ARMODFLSDB}~\cite{C1970ARMODFLSDB} and \sql.
-Here, each entity set is represented as relation and stored in a table inside the \db.
+The main focus of this book, however, is on the relational data model invented by \citeauthor{C1970ARMODFLSDB}~\cite{C1970ARMODFLSDB} and the \sql\ language.
+Here, entity sets are represented as relation and stored in a table inside the \db.
 As we already practically explored, the tables can also be related and constraints can ensure that the relationships between them remain in a consistent state.
-This is what we decide to use for our teaching management platform as well.%
+We find that most of our entity types will probably nicely map two-dimensional tabular structure.
+Most of our attributes are simple.
+The relationships in the diagrams can probably be represented directly as foreign keys or in additional tables that relate foreign keys to each other other.
+Therefore, the relational model is what we decide to use for our teaching management platform.
+In \cref{sec:relationalModel}, we will introduce this model in more detail.%
 %
 \endhsection%
 %
