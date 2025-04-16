@@ -32,10 +32,14 @@ Additionally to such features, \emph{adjectives} in the requirements text often 
 The \emph{domain}~\attrDomainb{a} of an attribute~$a$ is the set of possible values that it can take on.%
 \end{definition}%
 %
-The name of a student is a text string.
-The mobile phone numbers and IDs may be a text strings, too, but of a fixed length and limited to certain character ranges at certain positions.
+It is important to distinguish the concepts of domain and datatype in the context of conceptual models~\cite{S2024D:LDMRMRA}.
+A datatype is a mathematical concept whereas a domain is a logical concept.
+For example, \sqlil{VARCHAR(100)}, \sqlilIdx{SMALLINT}, and \sqlilIdx{REAL} are datatypes.
+The name of a student, while being represented as a text string, is a logical concept.
+The mobile phone numbers and IDs are maybe also represented as text strings, but probably are of a fixed length and limited to certain character ranges at certain positions.
 The \pgls{dateOfBirth}, on the other hand, is a date.
-The score in an exam may be an integer number between~0 and~100.%
+The score in an exam may be an integer number between~0 and~100.
+The attribute domain therefore can be considered as the combination of a datatype with semantics limiting its valid range.%
 %
 \begin{definition}[Entity Type]%
 \label{def:entityType}%

@@ -4,11 +4,11 @@
 With the software we installed so far, we have two options to work with \pglspl{db}:
 We can use a command line \pgls{client}~(like \psql) or we can use a convenient \pgls{GUI}~(like \libreofficeBase).
 Nevertheless, the maybe most likely method to work with a \pgls{db} is programmatically.
-Very often, high-level functionality and logic is implemented in program code instead of \sql.
+Very often, high-level functionality and logic is implemented in program code on top of the \sql\ queries that drive the \pglspl{db}.
 Applications can form a middle tier or top tier of an enterprise software architecture.
 
 Therefore, in this book, we will also learn how to access and work with a \pgls{db} from normal program code.
-If you are reading this book as part of the \citetitle{databases} course~\cite{databases} at our Hefei University~合肥大学, then you may be aware that I am also teaching a course \citetitle{programmingWithPython}~\cite{programmingWithPython}.
+If you are reading this book as part of the \citetitle{databases} course~\cite{databases} at our Hefei University~(合肥大学), then you may be aware that I am also teaching a course \citetitle{programmingWithPython}~\cite{programmingWithPython}.
 Then it will not be a surprise that we will use \python~\cite{H2023ABGTP3P,LH2015DSAAWP,programmingWithPython} as the programming language of choice for accessing a \pgls{db}.
 The book~\cite{programmingWithPython} that accompanies the \citetitle{programmingWithPython} course is \emph{also} free and open source.
 It too comes with examples available in a \github\ repository.
@@ -25,7 +25,8 @@ We even describe how to install the required packages to run this code!%
 Our example codes for accessing \postgresql\ \pglspl{db} from \python\ do require one package:~\psycopg~\cite{VDGE2010P}.
 This library provides a bridge between the \python\ programming language and \postgresql.
 It implements the \python~\acrshort{db}~\acrshort{API}~2.0 specification~\cite{PEP249}, which means that code written using \psycopg\ for accessing \postgresql\ may be reusable with another library and \pgls{dbms}, given a few necessary changes.
-Either way, if you follow the instructions in \citetitle{programmingWithPython}~\cite{programmingWithPython} in the chapter on cloning \git~repositories using \pycharm, you will directly learn how to install this library.%
+Either way, if you follow the instructions in \citetitle{programmingWithPython}~\cite{programmingWithPython} in the chapter on cloning \git~repositories using \pycharm, you will directly learn how to install this library.
+We will use \python\ and \psycopg\ in \cref{sec:factoryFromPython}.%
 \end{sloppypar}%
 %
 \hinput{installPsycopg}{installPsycopg.tex}%

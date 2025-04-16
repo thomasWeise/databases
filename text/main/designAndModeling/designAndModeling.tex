@@ -7,8 +7,50 @@ There are not just three tables.
 The interactions between objects, processes, and people are much more complex.
 While we now do have some rough idea about what kind of technological tools we have available to work with \pglspl{db}, we have very little understanding of the practical process of \db\ design.
 
-Let us now do a second example on \db\ design.
-This time, we will look a bit more closely at the process and the steps involved in creating a reasonably elaborate \db\ application.
+The process of designing a \db\ will, at its core, involve the creation of three models~(also called schemas)~\cite{EN2015FODS}:%
+%
+\begin{definition}[Conceptual Model]%
+The \emph{conceptual model}~(or \emph{conceptual schema}) of a \db\ is a model of the real-world entities with which the system will interact and/or about which we store data as well as the relationships between them.%
+\end{definition}%
+%
+The conceptual model is the high-level view on our application scenario.
+The purpose of this model is to provide a clear concept of the application that is understandable by project stakeholders.
+Such a model can be seen as a formalization of the the data-related part of the requirements as well as a vital part of the project documentation.
+It is independent from any concrete data model or \db\ technology.
+It represents entities, the attributes of entities, as well as the relationships among them.
+%
+\begin{definition}[Logical Model]%
+The \emph{logical model}~(or \emph{logical schema}) of a \db\ is a model of the data grounded to a specific type of technology (e.g., \pglspl{rdb}, hierarchical \db, NoSQL~\db, \dots). %
+It represents the entities, their attributes, and relationships as well as constraints using concrete datatypes and a structured, formal format.%
+\end{definition}%
+%
+The logical model is the level on which the users and applications interact with the \db.
+Here, the conceptual model is translated to a technical specification.
+This model is often specified in a common \db\ language like \sql.
+It may be grounded to a specific \dbms\ or type of \dbms.%
+%
+\begin{definition}[Physical Model]%
+The \emph{physical model}~(or \emph{physical schema} or \emph{internal schema}) is the specification of the concrete technological realization of the logical model. %
+It is bound to a concrete \dbms\ and specifies exactly how the data is stored and accessed. %
+The physical model impacts performance and system requirements, but not the way users and applications access the \db.%
+\end{definition}%
+%
+In many trivial \db\ applications, the logical model can be used as physical model.
+The logical model may specified in a language like \sql, in which case we have a clear definition how tables are created and accessed via queries and views.
+However, to achieve high performance, the physical model can add further specifications:
+How should large records be stored?
+Should the data be sorted in any particular way?
+Or should there be indexes, i.e., additional data structure for speeding up certain queries?
+These specifications are invisible to the applications and users that access our \db.
+The users access the \db\ by using, for example, \sql.
+Their queries do not change in any way if the physical model changes.
+However, the physical model has an impact on the query performance and the storage requirements of the data.
+For larger \pglspl{db}, this can make a huge difference.
+
+The design of \pglspl{db} is large concerned with getting these models correct.
+There are different challenges at each step, from discussing with the future users to fine-tuning a \dbms.
+We will explore these steps on a second example.
+We will look a bit more closely at the process and the steps involved in creating a reasonably elaborate \db\ application.
 We want to design a \db\ for managing students, teachers, and courses in a university.%
 %
 %

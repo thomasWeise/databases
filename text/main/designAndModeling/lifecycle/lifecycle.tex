@@ -207,6 +207,7 @@ After the requirements collection and analyses are completed, a timeline for the
 \Pglspl{db} and the applications working on the data cannot be entirely separated.
 The \db\ and the application(s) are therefore designed as two parallel strands of a project.
 Both process update each other.
+The internal \db\ design block then follows the steps also given in~\cite{EN2015FODS}.
 The first step of the \db\ design is to create a conceptual design, i.e., a high-level and technology-independent overview of the the \db.
 The goal is to outline the big picture at an abstract level.
 The model is based on the worldview and processes of the stakeholders.
@@ -276,14 +277,20 @@ It is illustrated in \cref{fig:model:ddlc} and combines ideas from several sourc
 Indeed, we will hinge the more comprehensive \db\ design example project discussed in this part of our book on this process.
 
 This approach to the \db\ development life cycle begins with a phase of requirements gathering and analysis.
-Then, the conceptual schema is designed:
+Then, the three models (conceptual, logical, and physical) are designed one after the other~\cite{EN2015FODS}.
+We start with the conceptual schema:
 The entities and their relationships are sketched with \pglspl{ERD}.
 It makes sense to discuss this model with the stakeholders and, if any inconsistencies are discovered, to adapt the requirements specification.
 In this step, we also choose the proper data model.
 
 The entities in the conceptual model are then translated to fit to the data model in the logical schema design process.
 In case of a relational data model (as used here), this means to create tables, define keys, attributes, and relations, and to normalize the data.
-The physical schema is then the mapping of a logical schema to a concrete \dbms, including optimizations and efficient storage design.
+This model can be defined either in \sql\ or using any other suitable formal mechanism.
+It could be bound to a specific \dbms\ or to a group of similar \pglspl{dbms}.
+Finally, the logical model, i.e., the perspective of the users on the data, is mapped to a physical schema.
+The physical schema is the internal representation of the data as provided by the \dbms.
+The logical schema defines \emph{how} the data is accessed.
+The physical schema defines how the access is made \emph{efficient} and can contain information about the physical layout of the data as well as the use of indexes and other performance tweaks.
 
 Now a prototype can be developed and verified with the stakeholders.
 Finally, the \db\ enters the production stage.

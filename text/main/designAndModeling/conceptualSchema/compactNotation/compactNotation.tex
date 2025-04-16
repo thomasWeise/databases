@@ -75,6 +75,39 @@ Each room has a capacity limit for students.
 They are connected to the building entities via identifying relationships:
 A room must be in exactly one building, whereas a building should consist of one or many rooms (otherwise, we do not need to store it in our \db).
 
+The last sentence is interesting, as it poses a somewhat philosophical problem.
+We said that \inQuotes{each room is inside one building and each building is composed of one or multiple rooms.}
+This is what we wrote in our \pgls{ERD} in \cref{fig:erdRoom1} and this is what makes sense.
+On a technical level, this causes me to scratch my head.
+Regardless of what data model I use, I will be forced to instantiate the data structure for \emph{Room} to, well, represent a room in my \db.
+Following the formal definition of the above rule, I would need to have an existing entity of type \emph{Building} at this point in time.
+Because I must link each room to one building.
+So I must first instantiate \emph{Building} and then I can instantiate \emph{Room}.
+However, if I interpret my \pgls{ERD} strictly, I face the problem that each building must also be connected to at least one room.
+So this means that I would first need an instance of \emph{Room} before I can instantiate the \emph{Building} entity type.
+
+This philosophical dilemma, resulting from nitpicking, can be solved in three ways:
+First, we could say:
+\emph{\inQuotes{Well, the conceptual model represents the real world. %
+In the real world, each room is inside a building and a building has at least one room. %
+That is true and that is what we model here.
+Whether or not this can be realized technically is not relevant at this stage of development.}}
+Second, we could say, maybe even as a corollary of the above, that:
+\emph{\inQuotes{On a technical level, we simply do not enforce that buildings must contain rooms. %
+We know that the user will add rooms to buildings eventually. %
+We just accept that there may be a temporary state of the \db\ where one of the mutual dependency constraints is violated. %
+Just for a short time, between the moment when the user has created a building and right before she adds a room. %
+It doesn't matter.}}
+
+Third, we could even solve this technically:
+Most \pglspl{dbms} support \emph{transactions}, i.e., groups of instructions to the \db\ that are executed as one atomic unit and either fail together or succeed together.
+There is no intermediate state, as transactions are indivisible, atomically executed units.
+Thus, we could require that every time a new building is added to the \db, the first room is specified as well.
+The creation of the building and room record could be executed together as atomic transaction.
+If we do this, the conceptual constraints would perfectly map to a technical constraints, at the expense of slightly more complex update operations~(because we now need to use transactions).
+\postgresql\ permits us to defer the constraints checking to the end of a transaction via the \sqlil{SET CONSTRAINTS ALL DEFERRED}\sqlIdx{SET CONSTRAINTS} command~\cite{PGDG:PD:SC:SC,N2016SSFA:DC}.
+
+Anyway.
 Rooms are also connected with non-identifying relationships to schools:
 One school may be permitted to use zero or more rooms for teaching.
 Each room must be usable by at least one school (because otherwise, we simply don't need to store it in the \db).
@@ -263,11 +296,20 @@ The administrators can therefore immediately see which address, ID, or name a pe
 Our system also has some shortcomings.
 For example, there may be some more levels of structural indirection in a university.
 A school may be subdivided into different departments.
-We should be able to add timestamps and notes to most of the data items, which we did not really model here.
-We also did not model rights management.
+
+Furthermore, we should be able to add timestamps and notes to most of the data items, which we did not really model here.
+Also, we did not model rights management.
 We would probably need a table assigning which person is permitted to enroll students into a class or curriculum, which person in a school can create new modules, classes, curricula, and so on.
+Or we could also handle this via the position submodule that we already designed.
+This would probably a good idea.
+
 Additionally, we may want to create a table creating an audit trail~\cite{K2010ATTDCID}.
 Such a table would store which user added/changed which record in which table at which point in time.
+
+Finally, in our \emph{Address} entity, countries and provinces are simple attributes.
+We could probably have another entity type to represent countries and country subdivisions (such as provinces) based on the ISO~3166 standard~\cite{ISO3166}, maybe with additional information such as the phone number prefix.
+Each address could be linked to at least one such entity via a relationship.
+
 For now, we omit all of this.
 Such features could probably be added later.
 The system looks more or less reasonable, so our goal is to move on to create a logical model and then a prototype.%

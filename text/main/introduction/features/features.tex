@@ -12,13 +12,14 @@ Our goal will be to compile some sort of wishlist of features.%
 \hsection{Data Modelling and Representation}%
 First of all, the \pgls{dbms} must give us the tools into our hands to create and implement a model for our data.
 Matter of fact, we can distinguish several facets of modeling and representing data.
-We here focus on the \emph{relational} data model, based on tables on the relations between them.
-There can also be \pglspl{db} using other models, such as graphs, hierarchies, objects, and such and such~(see \cref{sec:history,sec:dbModelSelection}).
+We here focus on the \emph{relational} data model, which is discussed in \cref{sec:relationalModel}.
+This data model is based on tables and the relations between them.
+There also are \pglspl{db} using other models, such as graphs, hierarchies, objects, and such and such~(see \cref{sec:history,sec:dbModelSelection}), but we focus on the relational approach.
 
-Based on the data model, we must be able to define a conceptual or logical schema for our \pgls{db}.
+Based on the data model, we must be able to define a logical schema for our \pgls{db}.
 For example, we want to specify which kind of tables exist, e.g., a table with customer information, a table with bank employee information, a table for the accounts that exist, and a table with all the transactions.
 We can define which information we want to store about customers, say their name, ID number, mobile phone number, etc.
-This includes some basic validity constraints, e.g., names cannot be empty, ID numbers must follow the standard Chinese ID number scheme, and so on.
+This includes some basic validity constraints, e.g., names cannot be empty, ID~numbers must follow the standard Chinese~ID number~(中国公民身份号码) scheme~\cite{GB116431999CIN}, and so on.
 We must also be able to specify the relationships between these tables.
 For example, each bank account must be associated with exactly one customer, but one customer may have multiple accounts.
 Ideally, this can be done using a simple programming language.
@@ -29,7 +30,7 @@ The \pglspl{dbms} should allow the \pgls{db} designers to, for instance, define 
 Nevertheless, the concept of \emph{Data Independence} is important:
 There are different levels of abstraction.
 The application programs that access the data based on the logical schema should be independent from the physical organization of the data.
-It should not really matter to them whether records are stored in a hash, a B-tree, or as simple sequences in a file.
+It should not really matter to them whether records are stored in a hash, a B\nobreakdashes-tree, or as simple sequences in a file.
 If we create an easy-to-use application as interface for our banking \pgls{db}, this interface would interact with the logical view of the data via the \pgls{dbms}.
 How the data is actually stored does not matter to our application.
 This is called \emph{physical data independence}.

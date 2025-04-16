@@ -1,0 +1,12 @@
+\hsection{Entities to Tables}%
+\label{sec:mappingEntitiesToTables}%
+%
+Each entity type in the conceptual model becomes one table in the logical model.
+Each simple single-valued attribute becomes one column of that table.
+Each component of a composite attribute becomes one column of that table.
+Multi-valued attributes come separate tables, where each row references the primary key of entity's table as foreign key.
+Derived attributes are not included in the table.%
+%
+\FloatBarrier%
+\endhsection%
+%

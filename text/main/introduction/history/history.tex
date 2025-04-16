@@ -61,7 +61,7 @@ This system, too, had a set of disadvantages~\cite{KC2024DS:ITD}:
 If your data is not structured hierarchically, some records may need to be duplicated.
 For example, if we have a database that assigns students to courses, then a student would appear in each of the records of the courses that she attends.
 The programming language is also relatively low-level and, for example, the search strategy has to be implemented.
-Finally, if changes to the logical schema will require us to perform cascading changes in the code accessing them.
+Finally, changes to the logical schema will require us to perform cascading changes in the code accessing them.
 
 Both IDS and IMS offered a strikingly new concept:
 The application code and the code for physical data storage and retrieval were separated.
@@ -97,7 +97,8 @@ He further describes a set of operations that can work on the tables to extract 
 By the end of the 1970s, over a dozen \pglspl{dbms} had been implemented based on these new concepts~\cite{K1979RDS}.
 \Citeauthor{C1970ARMODFLSDB} won the A.M.~Turing Award for his work.
 
-The \emph{semantic} division between the storage representation of data and the conceptual layout and access was a very important step in the development of \pglspl{db}, the separation was also a \emph{physical} one.
+The \emph{semantic} division between the physical storage representation of data and the logical layout and access was a very important step in the development of \pglspl{db}.
+This separation also became a \emph{physical} one:
 Computer networks as distributed systems began to emerge in the 1960s~\cite{KR2020CNATDA}.
 \Citeauthor{B1960OADCACSC} had the idea of routing messages over multiple network switches in~\citeyear{B1960OADCACSC}~\cite{B1964ODCIITDCN,B1964ODCVHAAAC,B1965ABOTDAMBN,B1960OADCACSC,B1962ODCN}.
 In \citeyear{K1961IFILCNPTP}, \citeauthor{K1961IFILCNPTP} proposed packet switched networks, where messages are split into multiple packages that each individually travel their corresponding optimal paths~\cite{K1961IFILCNPTP}.

@@ -22,13 +22,14 @@ A \emph{relation schema} is the ordered sequences of $n$~attributes~$(a_1, a_2, 
 %
 \begin{definition}[Relation]%
 \label{def:rdb:relation}%
-A \emph{relation}~$R$ is a set of $n$\nobreakdashes-tuples $R\subseteq\attrDomainb{a_1}\times\attrDomainb{a_2}\times\dots\times\attrDomainb{a_n}$ which is associated to a relation schema.%
+A \emph{relation}~$R$ is a set of $n$\nobreakdashes-tuples $R\subseteq\attrDomainb{a_1}\times\attrDomainb{a_2}\times\dots\times\attrDomainb{a_n}$ which is associated to a relation schema that specifies the attributes~$(a_1, a_2, \dots, a_n)$.%
 \end{definition}%
 %
-The definition of relations in the relational model is therefore somewhat equivalent to the definition of entity types in the entity model~(see \cref{def:entityType}).
-The difference is that we will use relations to implement both entity types and relationship types.
+The definition of relation schemas in the relational model is therefore somewhat equivalent to the definition of entity types in the entity model~(see \cref{def:entityType}).
+When translating our conceptual model to a logical relational model, an entity type will become a relation schema.
+The difference between conceptual and logical model is that we will use relations to implement both entities and relationships.
 
-At first glance, one may think that \inQuotes{Relations = Tables} in a \db.
+Also, at first glance, one may think that \inQuotes{Relations = Tables} in a \db.
 In other words, one may think that relations are implemented as tables.
 But this is only partially true:
 Relations can also be the result from a \sqlil{SELECT}\sqlIdx{SELECT{\idxdots}FROM} statement in \sql.
@@ -39,6 +40,12 @@ Notice that a relation is a \emph{set} of tuples.
 Since a set cannot contain the same element twice, this means that duplicate tuples (rows, records) are not permitted in relations by definition~\cite{C20245YOQ}.
 As a deviation from the pure formalism, the \sql\ language does permit duplicate tuples in tables and query results~\cite{C20245YOQ}.
 Sets are also not ordered, so there is no default order of the tuples in relations either.
+
+All attributes~(columns) must have names, i.e., there are no anonymous attributes~\cite{S2024D:LDMRMRA}.
+In the original works on \pglspl{rdb}~\cite{C1970ARMODFLSDB}, the order of the attributes~(columns) in a relation mattered and it was permitted that two column have the same name.
+This idea was later abandoned.
+Today, the order of columns are unimportant and the columns of a table must have unique names~\cite{S2024D:LDMRMRA}.
+The values of attributes are atomic, i.e., there are no multi-valued attributes and no composite attributes~\cite{S2024D:LDMRMRA,SS2005EIDDDFDB:SDLDUTRDM}.
 
 The degree of a relation is defined as follows (please to not mix this up with the degree of a \emph{relationship} discussed in \cref{def:degreeOfRelationship}):%
 %
@@ -55,7 +62,7 @@ As time progresses, each $n$\nobreakdashes-ary relation may be subject to insert
 %
 In the 1980s, many vendors of \pgls{dbms} did not completely implement the relational data model as developed by \citeauthor{C1985IYDRR}.
 Instead, they added mechanics that circumvent the relational characteristics, either because of laziness, to allow backwards compatibility to older systems, or in order to improve performance.
-In a response, \citeauthor{C1985IYDRR} defined thirteen rules that govern a relational~\pgls{dbms}~\cite{C1985IYDRR,C1986AESFDBMSTACTBR}.
+In a response, \citeauthor{C1985IYDRR} defined thirteen rules that govern a relational~\pgls{dbms}~\cite{C1985IYDRR,C1986AESFDBMSTACTBR,S2024D:LDMRMRA,SP2002STYSI2D,SPMP1998SI2TDDASVEI12T}.
 Since the first rule is called \emph{Rule~0}, the thirteen rules are referred to as \emph{the twelve rules}.%
 %
 \begin{enumerate}%
@@ -130,15 +137,8 @@ However, none of these access methods must be allowed to violate the integrity o
 %
 \end{enumerate}%
 %
-Relational
-
-
-It is now our task to implement the conceptual model of our teaching management platform on top of a relational \pgls{dbms}, which is governed by these rules.
-This requires us to map entities and relationships to tables and constraints.
-We further will need to design views, queries, as well as insertion rules for our data.
-
-Naturally, we choose \postgresql\ as the \pgls{dbms}.
-\postgresql\ supports \sql, so most of the functionality we will use can be provided 1:1 by other systems, such as \mysql, \mariadb, or \sqlite.%
+These rules are implemented to a large degree by modern \pglspl{dbms}.
+They also tell us relatively exactly what to expect, with what kind of features we can work.%
 %
 \endhsection%
 %
