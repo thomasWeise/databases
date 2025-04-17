@@ -8,7 +8,7 @@ We also learned that we can ensure the integrity of the data inside a single tab
 For example, we can use datatypes that strictly enforce their domains.
 \sqlilIdx{DECIMAL}, for example, makes sure that numbers are represented exactly without loss of precision to a fixed number of decimals~\cite{PGDG:PD:NT}.
 \sqlilIdx{DATE} ensures that valid dates based on the Gregorian calendar are entered~\cite{PGDG:PD:HU,G1582IG}.
-We can also define constraints, ranging from ensuring that all columns are entered~(\sqlilIdx{NOT NULL}) over preventing name clashes~(\sqlilIdx{UNIQUE}) to sanity checks~(via \sqlilIdx{CHECK} \sqlIdx{CONSTRAINT}constraints)~\cite{PGDG:PD:C}.
+We can also define constraints, ranging from ensuring that all columns are entered~(\sqlilIdx{NOT NULL}) over preventing name clashes~(\sqlilIdx{UNIQUE}) to sanity checks~(via \sqlil{CHECK} constraints\sqlIdx{CONSTRAINT!CHECK})~\cite{PGDG:PD:C}.
 We also learned that we can even ensure the consistency of the data in our \db\ across different tables via the \sqlilIdx{REFERENCES} constraint~\cite{PGDG:PD:FK}.
 So we cannot just have tables, they can have strongly-typed columns and the data integrity can be enforced throughout the complete \db.
 This puts \pglspl{rdb} well ahead the spread sheets produced by the likes of \microsoftExcel\ or \libreofficeCalc.

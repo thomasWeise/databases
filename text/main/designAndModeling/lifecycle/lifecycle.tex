@@ -4,7 +4,7 @@ Instead, designing good \pglspl{db} involves several steps.
 We need to clearly understand the requirements for the \db.
 We should create a rough sketch of what things will be included.
 We need to decide what tables and relations should exist.
-This conceptual schema~(information about the types of data and their relationships) must then be mapped to a physical schema (concrete implementation instructions for a selected~\dbms).
+This conceptual model~(information about the types of data and their relationships) must then be mapped to a physical model (concrete implementation instructions for a selected~\dbms).
 There should be some sort of prototype, where we and the users can enter a subset of the data to test whether everything works as predicted.
 At this stage, we may uncover some problems and may need to improve our design.
 The actual application must then be tested.
@@ -236,9 +236,9 @@ This stage emphasizes the internal aspects of the database, e.g., the creation o
 At this stage, we have a complete \db\ design, optimized for the planned operations.
 
 The division in conceptual, logical, and physical design is not always defined like this.
-Some approaches only distinguish the conceptual and the physical schema~\cite{G2011EW2ITDS:ITRD,V1999C5DMS:CI}.
-In this case, the conceptual schema is also called logical schema and focuses on the specifications of the entity types and relations of the data.
-The physical schema then comprises the two aspects that called physical and logical design above, i.e., the definition of tables, relations, and access paths.
+Some approaches only distinguish the conceptual and the physical model~\cite{G2011EW2ITDS:ITRD,V1999C5DMS:CI}.
+In this case, the conceptual model is also called logical model and focuses on the specifications of the entity types and relations of the data.
+The physical model then comprises the two aspects that called physical and logical design above, i.e., the definition of tables, relations, and access paths.
 From my perspective, which of the two approaches are chosen does not really matter.
 Whether we have three-step or a two-step design method -- the important point is that we first model the data in an technological-independent and abstract way and later map this abstract model to a concrete design.
 
@@ -278,24 +278,24 @@ Indeed, we will hinge the more comprehensive \db\ design example project discuss
 
 This approach to the \db\ development life cycle begins with a phase of requirements gathering and analysis.
 Then, the three models (conceptual, logical, and physical) are designed one after the other~\cite{EN2015FODS}.
-We start with the conceptual schema:
+We start with the conceptual model:
 The entities and their relationships are sketched with \pglspl{ERD}.
 It makes sense to discuss this model with the stakeholders and, if any inconsistencies are discovered, to adapt the requirements specification.
 In this step, we also choose the proper data model.
 
-The entities in the conceptual model are then translated to fit to the data model in the logical schema design process.
+The entities in the conceptual model are then translated to fit to the data model in the logical model design process.
 In case of a relational data model (as used here), this means to create tables, define keys, attributes, and relations, and to normalize the data.
 This model can be defined either in \sql\ or using any other suitable formal mechanism.
 It could be bound to a specific \dbms\ or to a group of similar \pglspl{dbms}.
-Finally, the logical model, i.e., the perspective of the users on the data, is mapped to a physical schema.
-The physical schema is the internal representation of the data as provided by the \dbms.
-The logical schema defines \emph{how} the data is accessed.
-The physical schema defines how the access is made \emph{efficient} and can contain information about the physical layout of the data as well as the use of indexes and other performance tweaks.
+Finally, the logical model, i.e., the perspective of the users on the data, is mapped to a physical model.
+The physical model is the internal representation of the data as provided by the \dbms.
+The logical model defines \emph{how} the data is accessed.
+The physical model defines how the access is made \emph{efficient} and can contain information about the physical layout of the data as well as the use of indexes and other performance tweaks.
 
 Now a prototype can be developed and verified with the stakeholders.
 Finally, the \db\ enters the production stage.
 From here on, the focus is on maintenance, regular backups, fine-tuning, and the addition of features and adaptations to changed situations.
-The last two stages can create feedback to the earlier stages, i.e., lead to changes in the physical or logical schemas as well as the requirements.
+The last two stages can create feedback to the earlier stages, i.e., lead to changes in the physical or logical models as well as the requirements.
 
 In the following, we will work our way step-by-step through this lifecycle.
 By doing so, we will not just explore the different steps in more detail, but also discuss several important topics, such as \pglspl{ERD}, normalization, and $\sigma$\nobreakdashes-algebra based on a (more or less) realistic scenario.%

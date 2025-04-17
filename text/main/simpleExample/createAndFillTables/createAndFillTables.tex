@@ -374,7 +374,7 @@ With this, the names \inQuotes{S} and \inQuotes{  schwipschawp } are prohibited,
 Each customer also needs to have a phone number, so we add a column~\sqlil{phone}.
 While phone numbers may appear to be integer numbers, they could have leading zeros.
 Therefore, we will store them as text strings.
-In China, landlines have 10~digits and mobile numbers have 11~digits.
+In China, landlines have 10~digits and mobile numbers have 11~digits~\cite{BD2006BDBK:MPNANSBTTMDFMP}.
 Therefore, we choose~\sqlil{VARCHAR(11)}\sqlIdx{VARCHAR} as the datatype.
 The phone numbers must be~\sqlilIdx{NOT NULL} and this time, we also insist on them to be~\sqlilIdx{UNIQUE}.
 While there might be two different customers with the same name, we do not permit two different customers having the same phone number.

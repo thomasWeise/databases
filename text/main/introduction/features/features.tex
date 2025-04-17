@@ -24,7 +24,7 @@ We must also be able to specify the relationships between these tables.
 For example, each bank account must be associated with exactly one customer, but one customer may have multiple accounts.
 Ideally, this can be done using a simple programming language.
 
-This logical schema can be separate from the physical schema of the \pgls{db}, namely how the data is actually organized on the disk.
+This logical model can be separate from the physical model of the \pgls{db}, namely how the data is actually organized on the disk.
 The \pglspl{dbms} should allow the \pgls{db} designers to, for instance, define indexes for tables to speed up the access.
 
 Nevertheless, the concept of \emph{Data Independence} is important:
@@ -137,7 +137,7 @@ All of this can be done by assigning roles to users and processes and access rig
 Another aspect of this is the so-called Three-Schema Architecture~\cite{AXSSGDMS1978FRODMS,TK1978TAXSDFROTSGODMS,BFJKMRGRT1985RMFDSDAFTGDOTAXSDSSG,SS2005EIDDDFDB:I} illustrated in \cref{fig:threeSchemas}:
 It should be possible to provide different views on the data for different users and applications.
 As already mentioned before, the application for bank employees should be able to \inQuotes{see} other data than an application for customers.
-In other words, at the bottom layer of the \pgls{db} is the physical schema managing how data is stored.
+In other words, at the bottom layer of the \pgls{db} is the physical model managing how data is stored.
 On top of that sits the conceptual (or logical) layer, where the structure of the tables and the relationships between them are defined.
 On the highest level, different views on the data can be provided for different applications.
 This way, users can only see the data that they need to be able to see and nothing more.

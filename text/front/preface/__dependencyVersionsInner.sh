@@ -91,6 +91,20 @@ if [ -n "$javaVersion" ]; then
     hasOutput=true
 fi
 
+# Get the version of the pgModeler
+pgmodelerVersion="$(pgmodeler-cli 2>/dev/null | grep Version | sed -n 's/Version \([.0-9a-zA-Z-]*\)/\1/p')" || true
+if grep " - " <<< "$pgmodelerVersion" 1>/dev/null 2>&1; then
+pgmodelerVersion="$(sed -n 's/.*- \(.*\)/\1/p' <<< "$pgmodelerVersion")" || true
+fi
+pgmodelerVersion="$(sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' -e 's/[[:space:]][[:space:]][[:space:]]*/ /g' -e 's/\.*$//'<<<"${pgmodelerVersion}")" || true
+if [ -z "$pgmodelerVersion" ]; then
+  pgmodelerVersion="1.1.0~beta1-1build2.Debian Qt 6.4.2"  # the version on my computer
+fi
+if [ -n "$pgmodelerVersion" ]; then
+    echo "pgModeler: $pgmodelerVersion"
+    hasOutput=true
+fi
+
 # separator if we have anything
 if [ "$hasOutput" = true ]; then
   echo ""
