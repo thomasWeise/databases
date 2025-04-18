@@ -119,13 +119,23 @@ The program has started.%
 %
 In order to draw technology-independent \pglspl{ERD}, we want to install \yEd\ on our \ubuntu\ \linux\ machine.
 \yEd\ is written in \pgls{Java}.
-We therefore need a \pgls{Java} installation on our machine and we need to download the \yEd\ application.
+We will download the \pgls{Java} \textil{jar}~archive with the \yEd\ application together with the dependencies.
+This archive can then be executed on any system that has \pgls{Java} installed and it does not require any installation.
+We therefore need a \pgls{Java} installation on our machine and we then we can download the \yEd\ application.
 
-For the former, there exist many tutorials, so we will not cover this in detail.
-Actually, installing \pgls{Java} under \ubuntu\ is fairly easy.
+For installing \pgls{Java}, there exist many tutorials, so we will not cover this in detail.
+Installing \pgls{Java} under \ubuntu\ is fairly easy.
 You would open a console \pgls{terminal} by pressing~\ubuntuTerminal.
-Then you would type \bashil{sudo apt-get install openjdk-xx-jre}, where \textil{xx} is to be replaced with the version that you wish to install.
-On my \ubuntu\ version, I can choose between \textil{8}, \textil{11}, \textil{17}, and \textil{21}.
+First, you type in \bashil{java --version} to see if you already have \pgls{Java} installed.
+If this command is found and produces some output, then you are done here and can directly continue with downloading \yEd.
+
+If not, then you would type \bashil{sudo apt-get install openjdk-xx-jre}, where \textil{xx} is to be replaced with the version that you wish to install.
+On my \ubuntu\ version, I can choose between \textil{8}, \textil{11}, \textil{17}, and~\textil{21}.
+To see which options are available on your system, type \bashil{sudo apt-get install openjdk-} into your terminal and then press~\keys{\tab}.
+This shows you a list of available installation options.
+You always will want to use one that ends with~\textil{-jre}, i.e., a runtime environment~(you do not need a~\textil{-jdk}, i.e., developer kit, unless you want to write programs in \pgls{Java}, too -- which is fairly cool, so maybe you want to try this as well\dots).
+I suggest to always going with the newest \textil{-jre}~version, so~\textil{21} it is in my case.
+You install the newest \pgls{Java}~\bashil{jre} version on your machine.
 Either way, I will assume that you have \pgls{Java} installed.
 
 So now all we have to do is to download \yEd.
@@ -163,5 +173,6 @@ We start the program by typing \bashil{java -jar yed.jar} in \cref{fig:installYe
 A splash screen appears when the program loads in \cref{fig:installYedUbuntu12splash}.
 Finally, \cref{fig:installYedUbuntu13yEd}, the program has started.%
 %
+\FloatBarrier%
 \endhsection%
 %

@@ -30,9 +30,12 @@ This involves drawing graphical diagrams, so-called \glsreset{ERD}\pglspl{ERD}, 
 The conceptual schema should be independent from any specific \dbms\ technology.
 As tool for drawing such diagrams, we will use \yEd~\cite{SG2015MDAWY,Y2011YGEM}.%
 %
-\item Conceptual models need to eventually be mapped to logical models that are based on certain data models and \db\ technologies.
-Interestingly, technology-specific conceptual models can also be drawn as \pglspl{ERD}, which, due to their technology-bound nature, can be translated to commands for a \dbms.
-In my opinion, the best open source and free tool for drawing logical models for \postgresql\ \pglspl{db} is \pgmodeler~\cite{AES2006PPDM}.%
+\item Conceptual models need to eventually be mapped to logical schemas that are based on certain data models and \db\ technologies.
+The logical model is how users and applications see the data.
+They may be implemented directly using a language like~\sql.
+Interestingly, technology-specific conceptual models can also be designed using visual tools very similar to \pglspl{ERD}, which, this time, are bound to specific technologies and can be translated to commands for a \dbms.
+In my opinion, the best open source and free tool for drawing logical models for the \postgresql\ \dbms\ is \pgmodeler~\cite{AES2006PPDM}. %
+So we will use it here as well.%
 %
 \end{itemize}%
 %
@@ -42,16 +45,40 @@ A computer science professional should know dozens of different software tools f
 A software engineer is a craftsperson and their knowledge of software is their tool belt.%
 }%
 %
-All the tools that we consider here are free and, ideally, open source, software.
+We will use some specific \dbms, some specific visualization tools, some specific programming library to access the specific \dbms, and so on.
+One may wonder whether this is a good idea.
+If you would ever work professionally with \pglspl{db}, most likely you will use entirely different software.
+Will the knowledge we learn be useless then?
+
+No.
+First of all, we will discuss the fundamentals of \pglspl{db} and just use the concrete technologies as examples of how they play out in practice.
+So the knowledge about the fundamental concepts stays valuable, regardless of which tool you use.
+
+Second, theoretical knowledge is not very useful in a professional setting if you cannot actually apply it.
+It does not help you if you have tried writing \sql\ code on paper but never actually executed it on a real \dbms.
+You do not know how to connect to a \dbms, how to input commands, how to understand error message.
+You would also never have searched for specific commands and documentation in the internet.
+You maybe would never have dealt with installing software and get it to run properly.
+This means that any practical application would still require you to learn lots of things and, most likely, under time pressure.
+However, if you \emph{know} how to install \postgresql, how to connect to it using the \psql\ client, if you actually have executed \sql\ commands, if you made mistakes and learned how to figure out how to fix them {\dots} then most likely you can relatively quickly learn how to do that for \mysql, \mariadb, or any other \dbms.
+
+If you have \emph{seen} \pglspl{ERD} and can read them, this does not mean that you can \emph{efficiently} draw some if you are asked to do so.
+However, if you have drawn some using \yEd\ or \pgmodeler, then at least you know that such tools exists and how they are used.
+You can probably either adapt to a new tool or find and install them if need be.
+
+All the struggle of installing software, using command line arguments, connecting \pglspl{client} to \pglspl{server}, failing, and finding solutions will help you when you need to do similar things for entirely other software.
+Usage paradigms and even fixes for errors are often similar over different tools, so the more tools you use, the faster you become learning how to use other tools.
+Therefore, I strongly advocate not just learning the fundamentals of \pglspl{db}, but to actually try them out, exercise them, use tools.
+
+Finally, all the tools that we consider here are free and, ideally, open source, software.
+We do not use tools that cost money.
 Learning about \pglspl{db} with this book should be free.%
 %
 \noviceHint{%
 In this part of the book, we have collected installation instructions for all the tools that we use in those book.
 {\color{red}{\textbf{You do not need to install all of them right away.}}}
-While it makes sense to install the \postgresql\ \dbms, \libreoffice, \python, and \psycopg\ right away, because we are going to need them in the next part of the book, \yEd\ and \pgmodeler\ can wait.
-Then again, maybe you want to skip over the rest of this book part and first learn something about \pglspl{db} before putting some hours of time into installing software.
 Just be aware that we provide installation instructions for the tools that we need here.
-Also, when we eventually need the specific software tools at some time later on, we will refer back to this part.%
+When we eventually need the specific software tools at some time later on, we will refer back to this part.%
 }%
 %
 Either way, before we get into the necessary installation and setup steps for the software that we eventually need to really learn about \pglspl{db}, we face a small problem:
