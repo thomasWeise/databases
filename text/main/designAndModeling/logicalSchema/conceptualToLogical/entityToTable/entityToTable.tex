@@ -391,7 +391,7 @@ Heck, why not, we click on~\menu{Validate}.%
 %
 \subfloat[][%
 We can now select a file name and directory where the model should be stored. %
-We choose the name \sqlil{student_database} and click~\menu{Save}.%
+We choose the name \sqlil{student_database_1} and click~\menu{Save}.%
 \label{fig:makeStudentTable37saveAsWhere}%
 ]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/makeStudentTable37saveAsWhere}}}%
 %
@@ -444,7 +444,7 @@ We then click into the \menu{File}~bar.
 \centering%
 %
 \subfloat[][%
-We again get to select a file name and stick with \sqlil{student_database}. %
+We again get to select a file name and stick with \sqlil{student_database_1}. %
 We click on~\menu{Save}.%
 \label{fig:makeStudentTable42fileName}%
 ]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/makeStudentTable42fileName}}}%
@@ -483,46 +483,77 @@ If we had done a bigger model with many tables, it would probably look quite exc
 \subfloat[][%
 We open the \menu{Export} dialog again. %
 This time, we want to export our model to~\sql. %
-So we click on~\menu{SQL file} and then on the file bar.%
+We click on~\menu{SQL file}. %
+\textcolor{red}{Important:~Mark the output as \emph{Split}.} %
+Then on the file bar.%
 \label{fig:makeStudentTable46exportToSql}%
 ]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/makeStudentTable46exportToSql}}}%
 %
 \floatSep%
 %
 \subfloat[][%
-As file name, we choose~\sqlil{student_database}. %
-We click on~\menu{Save}.%
-\label{fig:makeStudentTable47filename}%
-]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/makeStudentTable47filename}}}%
+Because we want to output the model using the \emph{split} method, this will create multiple \sql~files. %
+Instead of a file name, we need to choose a folder name. %
+We therefore create a new folder and choose~\sqlil{generated_sql} as its name. %
+\label{fig:makeStudentTable47folderName}%
+]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/makeStudentTable47folderName}}}%
 %
 \floatRowSep%
 %
 \subfloat[][%
-This takes us back to the dialog where we click on~\menu{Export}.%
-\label{fig:makeStudentTable48exportToSqlExport}%
-]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/makeStudentTable48exportToSqlExport}}}%
+The folder is created, we click on~\menu{Open}.%
+\label{fig:makeStudentTable48folderOpen}%
+]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/makeStudentTable48folderOpen}}}%
 %
 \floatSep%
 %
 \subfloat[][%
-The model is exported and we close the dialog. %
-We can now connect to the \postgresql\ \pgls{server} using \psql\ and execute the \sql\ commands that were exported. %
-The exported commands are shown in \cref{lst:logical:teachingManagment:student_database}. %
-If they are submitted to \psql, the output in \cref{exec:logical:teachingManagment:student_database} is created.%
-\label{fig:makeStudentTable49exportToSqlExported}%
-]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/makeStudentTable49exportToSqlExported}}}%
+This takes us back to the \emph{Export model} dialog, where we click on~\menu{Export}.%
+\label{fig:makeStudentTable49export}%
+]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/makeStudentTable49export}}}%
 %
 \label{fig:makeStudentTable:L}%
 \caption{Developing logical models using \pgmodeler~(continued).}%
 \end{figure}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{teachingManagement/logical}{student_database.sql}{}{}{}{postgres.sh}{logical:teachingManagment:student_database}{%
-Executing the \sql\ script generated in \cref{fig:makeStudentTable48exportToSqlExport} on the \postgresql\ server. %
-The \sqlil{student_database}, consisting of only a single table name~\sqlil{student}, is created.%
+\begin{figure}%
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+The logical model is exported to \sql. %
+We can close the dialog by clicking on~\menu{Close}.%
+\label{fig:makeStudentTable50exported}%
+]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/makeStudentTable50exported}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+We can browse to the folder using whatever file browser the \pgls{OS} offers. %
+We find that it contains several files, whose contents are shown in \cref{lst:logical:teachingManagment:student_database_1:01_student_database_database_2001,lst:logical:teachingManagment:student_database_1:03_public_student_table_5071}. %
+We can execute them on the \postgresql\ \pgls{server} using \psql. %
+We do this in \cref{exec:logical:teachingManagment:student_database_1:01_student_database_database_2001,exec:logical:teachingManagment:student_database_1:03_public_student_table_5071}.%
+\label{fig:makeStudentTable51explorer}%
+]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/makeStudentTable51explorer}}}%
+%
+\label{fig:makeStudentTable:M}%
+\caption{Developing logical models using \pgmodeler~(continued).}%
+\end{figure}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{teachingManagement/logical/student_database_1/generated_sql}{01_student_database_database_2001.sql}{}{}{}{postgres.sh}{logical:teachingManagment:student_database_1:01_student_database_database_2001}{%
+This auto-generated \sql\ script creates the \db~\sqlil{student_database}.%
 }%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{teachingManagement/logical}{cleanup_student_database.sql}{}{}{}{postgres.sh}{logical:teachingManagement:student_database:cleanup}{%
-Cleaning up after the student database example.%
+\gitSQLAndOutput{\databasesCodeRepo}{teachingManagement/logical/student_database_1/generated_sql}{03_public_student_table_5071.sql}{student_database}{}{}{postgres.sh}{logical:teachingManagment:student_database_1:03_public_student_table_5071}{%
+This auto-generated \sql\ script creates the table~\sqlil{student} inside the \db~\sqlil{student_database}.%
+}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{teachingManagement/logical/student_database_1}{insert_records.sql}{student_database}{}{}{postgres.sh}{logical:teachingManagment:student_database_1:insert_records}{%
+We can insert some records into the table~\sqlil{student}.%
+}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{teachingManagement/logical/student_database_1}{cleanup.sql}{}{}{}{postgres.sh}{logical:teachingManagement:student_database_1:cleanup}{%
+Cleaning up after the student \db\ example.%
 }%
 %
 %
@@ -717,7 +748,7 @@ We click on~\menu{\pgmodelerMainMenu>File>Save as} in \cref{fig:makeStudentTable
 Since our model is new and unchecked (or changed), we get asked to validate it.
 This seems to be a reasonable request and we click on~\menu{Validate} in \cref{fig:makeStudentTable36shouldValidate}.
 Next we can select a file name and directory where the model should be stored.
-We choose the name \sqlil{student_database} and click~\menu{Save} in \cref{fig:makeStudentTable37saveAsWhere}.
+We choose the name \sqlil{student_database_1} and click~\menu{Save} in \cref{fig:makeStudentTable37saveAsWhere}.
 
 This takes us back to the main window.
 We notice a bar with new buttons, including one called~\menu{Validate}.
@@ -735,7 +766,7 @@ We therefore click on~\menu{Export} in \cref{fig:makeStudentTable40export}.
 We want to store the model as \pgls{SVG} graphic.
 Therefore, we click on \menu{Graphics file} and select \menu{Vectorial~(SVG)}.
 We then click into the \menu{File}~bar in \cref{fig:makeStudentTable41exportAsSvg}.
-We again get to select a file name and again stick with \sqlil{student_database}.
+We again get to select a file name and again stick with \sqlil{student_database_1}.
 In \cref{fig:makeStudentTable42fileName}, we click on~\menu{Save}.
 This takes us back to the export dialog in \cref{fig:makeStudentTable43exportToSvgExport}.
 Here we can now click on~\menu{Export}.
@@ -757,20 +788,53 @@ However, sticking to \sql\ (or, more precisely, the \postgresql\ flavor of it), 
 We can actually create a \db\ from our model!
 
 We therefore open the \menu{Export} dialog again.
-This time, we want to export our model to~\sql.
-So we click on~\menu{SQL file} and then on the file bar in \cref{fig:makeStudentTable46exportToSql}.
-As file name, we choose~\sqlil{student_database}.
-In \cref{fig:makeStudentTable47filename}, we click on~\menu{Save}.
-This takes us back to the export dialog where we click on~\menu{Export} in \cref{fig:makeStudentTable48exportToSqlExport}.
+This time, we want to export our model to~\sql\ and we therefore select \menu{SQL file} option in the \menu{Export} dialog.
+It is very important to export the model to multiple files, i.e., to select the \inQuotes{Split} option.
+If we export everything into one file, then the commands to create of the \sqlil{student_database} \db\ and the creation of the \sqlil{student} table will in the same file.
+If we submit the contents of this file to \psql, then the \sqlil{student} table will not be created inside the \sqlil{student_database}~\db.
+Instead, the script will first create the \sqlil{student_database}~\db\ and then, in the public schema of the \postgresql\ \pgls{server}, also create the \sqlil{student}~table alongside it.
+The \sqlil{student}~table will not be inside the \sqlil{student_database}~\db, but in the public schema of the \dbms.
+It is therefore vital to click~\menu{SQL file}.
+After that is done, we click into the \menu{Output} bar to select a target directory in \cref{fig:makeStudentTable46exportToSql}.
 
-The model is exported and we close the dialog in~\cref{fig:makeStudentTable49exportToSqlExported}.
-\Cref{lst:logical:teachingManagment:student_database} shows the file \textil{student_database.sql} which was created from our logical model.
-This, indeed, is \sql\ -- not different from what we produced manually in the context of our simple factory example in \cref{sec:factoryCreatingTableAndInsertingData}.
+We now need to create a new directory where the \sql\ files should be stored.
+We click on the folder creation symbol, choose \textil{generated_sql} as directory name in \cref{fig:makeStudentTable47folderName} and then click on~\menu{Create}.
+We then click \menu{Open} back in the directory selection dialog as shown in \cref{fig:makeStudentTable48folderOpen}.
+This takes us back to the \menu{Export} dialog where click on~\menu{Export}, as shown in \cref{fig:makeStudentTable49export}.
 
-We can now connect to the \postgresql\ \pgls{server} using \psql\ and execute the \sql\ commands that were exported.
-If \cref{lst:logical:teachingManagment:student_database} is submitted to \psql, the output in \cref{exec:logical:teachingManagment:student_database} is produced.
-It works!
-The \db\ and the table are created exactly as expected.
+The model is exported and we close the dialog in~\cref{fig:makeStudentTable50exported}.
+In \cref{fig:makeStudentTable51explorer}, we enter the folder into which we exported the files.
+We find three new files.
+The first one, named something like~\textil{01_student_database_database...sql}, is the \sql\ script for creating the \db.
+We list its contents in \cref{lst:logical:teachingManagment:student_database_1:01_student_database_database_2001}.
+Besides some comments, we only find the \sqlil{CREATE DATABASE student_database;}\sqlIdx{CREATE!DATABASE} statement.
+This what we expect and we submit to to \sql\ using the \sqlil{postgres} administrative account in \cref{exec:logical:teachingManagment:student_database_1:01_student_database_database_2001}.%
+%
+\begin{sloppypar}%
+The second file is empty, so we can ignore it.
+The third file is named something like \textil{03_public_student_table_...sql}.
+This file contains the commands for creating the table \sqlil{student}.
+Its contents are shown in \cref{lst:logical:teachingManagment:student_database_1:03_public_student_table_5071}.
+There is not really anything there that goes beyond what we discussed in our initial example back in \cref{sec:factoryCreatingTableAndInsertingData}.
+We see the \sqlil{CREATE TABLE}\sqlIdx{CREATE!TABLE} command together with statements for creating the constraints\sqlIdx{CONSTRAINT}.%
+\end{sloppypar}%
+%
+When we pass the contents of this file to \psql, we must make sure to send them to the \db\ \sqlil{student_database}.
+We do so in \cref{exec:logical:teachingManagment:student_database_1:03_public_student_table_5071} and the execution completes successful.
+
+We thus have created a \db\ from our logical model.
+In \cref{lst:logical:teachingManagment:student_database_1:insert_records}, we test this new \db\ by inserting some records.
+The first two are OK, the third one violates the constraints on \pglspl{dateOfBirth} and on the \sqlil{national_id}.
+The first two insertions succeed in \cref{exec:logical:teachingManagment:student_database_1:insert_records}, but the third one fails, as expected.
+When the third request fails, we get a very clear and understandable output.
+The \sqlil{student_date_of_birth_check} constraint was violated.
+Because we chose a clear name for our constraint, we can easy find out what went wrong and where and why.
+
+Finally, in \cref{lst:logical:teachingManagement:student_database_1:cleanup}, we provide the \sql\ code for deleting the \db\ again.
+After executing it in \cref{exec:logical:teachingManagement:student_database_1:cleanup}, we can continue our work on a clean \postgresql\ server.
+
+In summary, we can conclude that this approach works.
+The \db\ and the table were created exactly as expected.
 What does this mean?
 It means the following:%
 %
@@ -787,7 +851,7 @@ But it is quite nice, open source, and free.
 It is suitable for \postgresql, while other programs have been developed for other \pglspl{dbms}.
 As said in \cref{bp:manyTools}, good software engineers are both able and keen to learn new tools.
 
-To depart from this example with a clean slate, we execute the \sql\ script given in \cref{lst:logical:teachingManagement:student_database:cleanup} to delete the table and \db\ again.%
+To depart from this example with a clean slate, we execute the \sql\ script given in \cref{lst:logical:teachingManagement:student_database_1:cleanup} to delete the table and \db\ again.%
 %
 \FloatBarrier%
 \endhsection%
