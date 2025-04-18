@@ -57,11 +57,11 @@ Since the installation of the programming language \python\ and the \pgls{ide} \
 The download of our examples and the setup of the required \psycopg\ library in a \pgls{virtualEnvironment} in \pycharm\ is \emph{also} covered in~\cite{programmingWithPython}.
 For the sake of completeness, we will therefore only briefly iterate over the installation of \psycopg\ using \pip\ at this stage.
 It is assumed, however, that you have read~\cite{programmingWithPython} at least to a point where you know what \pip\ is and what \pglspl{virtualEnvironment} are.
-We also cover the installation only under \ubuntu\ \linux, as the installation steps under \microsoftWindows\ will be analogous (see again~\cite{programmingWithPython}).
+We also cover the installation only under \ubuntu\ \linux, as the installation steps under \microsoftWindows\ will be analogous~(see again~\cite{programmingWithPython}).
 
 The most common way to use external packages in \python\ is to install them into \pglspl{virtualEnvironment}.
 A \pgls{virtualEnvironment} is essentially something like a directory hosting a stand-alone \python\ installation separate from the \python\ setup of the computer.
-This allows you to have different versions of different libraries installed (in different \pglspl{virtualEnvironment}).
+This allows you to have different versions of different libraries installed~(in different \pglspl{virtualEnvironment}).
 
 Imagine that you have one program that requires the \python\ package \numpy\ in version~2.0 or above to run.
 You also need to use another application, which can only run with \numpy\ \emph{below} version~2.0.
@@ -89,7 +89,7 @@ Once a \pgls{virtualEnvironment} is active, all package installations will go in
 Also, if we run a \python\ program, it will search for installed packages in this environment.
 And our \pgls{virtualEnvironment} \textil{.venv} is now active, which we can see by the changed prompt in \cref{fig:pipInstallPyscopgVenv4activated}.
 Notice that the environment is only active in the current \pgls{terminal}.
-If you open another \pgls{terminal} using \ubuntuTerminal, our \pgls{virtualEnvironment} is not active in it (but we can activate it exactly as shown in \cref{fig:pipInstallPyscopgVenv3activate}).
+If you open another \pgls{terminal} using \ubuntuTerminal, our \pgls{virtualEnvironment} is not active in it~(but we can activate it exactly as shown in \cref{fig:pipInstallPyscopgVenv3activate}).
 
 We install \psycopg\ into this environment by writing \bashil{pip install psycopg} and hitting~\keys{\enter}.
 This invokes the \pip\ installer, which looks the package up in \pypi\ and downloads it.

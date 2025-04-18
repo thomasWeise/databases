@@ -42,7 +42,7 @@ The first application may offer much more information to the bank employees.
 Customers have do not have access to the accounts of other customers, for example.
 The web application for customers can also not access information about the bank employee who is managing their accounts.
 Therefore, it should work independently from such information.
-If the structure of these information (that it cannot see) is changed later, then this should have no impact on that program.
+If the structure of these information~(that it cannot see) is changed later, then this should have no impact on that program.
 This is called \emph{logical data independence}.
 \endhsection%
 %
@@ -138,7 +138,7 @@ Another aspect of this is the so-called Three-Schema Architecture~\cite{AXSSGDMS
 It should be possible to provide different views on the data for different users and applications.
 As already mentioned before, the application for bank employees should be able to \inQuotes{see} other data than an application for customers.
 In other words, at the bottom layer of the \pgls{db} is the physical model managing how data is stored.
-On top of that sits the conceptual (or logical) layer, where the structure of the tables and the relationships between them are defined.
+On top of that sits the conceptual~(or logical) layer, where the structure of the tables and the relationships between them are defined.
 On the highest level, different views on the data can be provided for different applications.
 This way, users can only see the data that they need to be able to see and nothing more.
 

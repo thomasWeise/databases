@@ -1,6 +1,7 @@
 %
 \hsection{Entities and Attributes}%
 \label{sec:entitisAttrsErd}%
+\xdef\conceptualSchemaEntitiesAndAttributesDir{\currentDir}%
 %
 The first major component to model are the datastructures to be stored inside the \db.
 For this purpose, the following modeling primitives have emerged.
@@ -300,18 +301,18 @@ In the context of \pglspl{ERD}, an \emph{entity type} are often called a \emph{e
 In other words, the meaning of the term \emph{entity} is shifted.
 But let this not bother us too much.
 
-The very first thing that we want to model is the entity (type) \emph{Student}.
-From our requirements analysis, we know that students have names, they have an ID (issued by the government), they have a student ID (issued by our university), they have a mobile phone number, they have an address, and they have a \pgls{dateOfBirth}.
+The very first thing that we want to model is the entity~(type) \emph{Student}.
+From our requirements analysis, we know that students have names, they have an ID~(issued by the government), they have a student ID (issued by our university), they have a mobile phone number, they have an address, and they have a \pgls{dateOfBirth}.
 So let us model this.
 
 After installing \yEd\ as discussed in \cref{sec:installingYed}, we open it.
 We scroll down the \menu{Palette} pane on the right-hand side until we find the \menu{Entity Relationship} tab.
 We click on the tab and it opens in \cref{fig:yedErdEntitiesA01scrollToErd}, offering us all the symbols and connectors commonly used in \pglspl{ERD}.
-Entity (types) in \pglspl{ERD} are represented by rectangles.
+Entity~(types) in \pglspl{ERD} are represented by rectangles.
 We can now click on the \menu{Entity} symbol and drag it into the empty document in \cref{fig:yedErdEntitiesA02entity}.
 We dragged the entity symbol into the diagram document in \cref{fig:yedErdEntitiesA03dragEntity}.
 
-Inside the rectangle, the name of the entity (type) is written.
+Inside the rectangle, the name of the entity~(type) is written.
 Let's change it to \inQuotes{Student}.
 We therefore double-click into the new entity symbol in order to edit its name in \cref{fig:yedErdEntitiesA04doubleClickName}.
 The text inside is marked.
@@ -427,7 +428,7 @@ Such multi-valued attributes can be modeled by ellipses with small ellipses insi
 An entity may have multiple values for a \emph{multi-valued attribute}.%
 \end{definition}%
 \begin{definition}[Single-Valued Attribute]%
-An entity has (at most) one value for a \emph{single-valued} attribute.%
+An entity has~(at most) one value for a \emph{single-valued} attribute.%
 \end{definition}%
 \begin{definition}[Optional Attribute]%
 An entity may or may not have a value for an \emph{optional attribute}. %

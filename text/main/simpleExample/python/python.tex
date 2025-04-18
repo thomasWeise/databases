@@ -7,7 +7,7 @@ However, there is one general problem we did not really consider yet:
 The data is entirely inside the \db.
 At first glance, this is where it belongs.
 Giving this a second thought, a realization strikes us:
-Nobody except us (the \pglspl{dba} and developers) can really work with this.
+Nobody except us~(the \pglspl{dba} and developers) can really work with this.
 Yes, we created the user account \textil{boss} for our boss so that they can log in and work with the data.
 But are we really going to explain to them that they will have to use \sql\ for this?
 Will a sales manager really insert customer orders into our \db\ by firing up the \sql\ \client\ and then typing \sqlil{INSERT INTO demand (...}?
@@ -84,7 +84,7 @@ However, we will not start the \psql\ \client\ and type the commands in.
 Instead, we will send them from our \python\ program via \psycopg.
 
 Now the full \sqlilIdx{INSERT INTO} statement is rather long and does not fit on a single line in \cref{lst:factory:connect_insert_and_select}.
-To make using it twice (as we will) a bit less cumbersome, we store it in a variable \pythonil{statement}.
+To make using it twice~(as we will) a bit less cumbersome, we store it in a variable \pythonil{statement}.
 This variable is annotated with \pgls{typeHint} \pythonilIdx{LiteralString} that we mentioned before, because it represents a string that was typed in as-is, that is not the result of \pgls{strinterpolation}, concatenation, or any other operation.
 Either way, we store our statement in this variable.
 A bit later we will discuss the meaning and structure of this statement.
@@ -112,7 +112,7 @@ Now let us circle back to our statement string constant.
 We wrote \pythonil{"INSERT INTO demand (customer, product, amount, ordered) VALUES (\%s,\%s,\%s,\%s)"}.
 The first part of this statement is pretty clear:
 We will insert a new row into the table~\sqlil{demand} by using the \sqlilIdx{INSERT INTO} command.
-We specify the name of the table (\sqlil{demand}) and the names of the columns that we will set, i.e., \sqlil{customer}, \sqlil{product}, \sqlil{demand}, and sqlil{ordered}.
+We specify the name of the table~(\sqlil{demand}) and the names of the columns that we will set, i.e., \sqlil{customer}, \sqlil{product}, \sqlil{demand}, and sqlil{ordered}.
 So far, the command is the same as used in \cref{lst:factory:insert_into_table_demand}.
 The difference is in the second part.
 After specifying the fields to be set, the original \sql\ command in \cref{lst:factory:insert_into_table_demand} gave the rows to be stored in parentheses with field values separated by commas after the \sqlilIdx{VALUES} keyword.

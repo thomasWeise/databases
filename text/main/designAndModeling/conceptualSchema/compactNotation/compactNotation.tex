@@ -1,13 +1,13 @@
 \hsection{Compact Crow's Foot Notation}%
 \label{sec:compactCrowsFootNotation}%
 %
-From \cref{fig:erdPersonStudentFaculty2}, we can draw two very general conclusions about the notation we used (entities as rectangles, attributes as ellipses, and relationships as diamonds, combined with the Crow's Foot method for expression cardinalities):
+From \cref{fig:erdPersonStudentFaculty2}, we can draw two very general conclusions about the notation we used~(entities as rectangles, attributes as ellipses, and relationships as diamonds, combined with the Crow's Foot method for expression cardinalities):
 First, it indeed allows us to model real-world situations as datastructures and their relationships.
 Second, it is also a bit verbose.
 Especially if we have many attributes, the ellipses get many and hard to read.
 The diamonds to expression relationships are also space consuming.
 
-There also is a more compact method to express (almost) the same information:
+There also is a more compact method to express~(almost) the same information:
 We can combine \pgls{UML} class diagrams with the Crow's Foot notation as well.
 This is a very commonly used method in several tools.
 Let us investigate it here and use it to further explore our example application, the teaching management platform.
@@ -33,14 +33,14 @@ Each message has exactly one person as sender.
 Each person can be the sender of arbitrarily many messages.
 Each message has at least one, but potentially many persons as receiver.
 Each person can receive zero or arbitrarily many messages.
-Additionally, a message can be the answer to no or exactly one (previous) message.
+Additionally, a message can be the answer to no or exactly one~(previous) message.
 There can be arbitrarily many answers to each message.
 
 Before, we signified strong and weak entities by using normal or double-lined rectangles.
 Now, instead, relationships can be weak or strong~\cite{P2024C6DS:EM}.%
 %
 \begin{definition}[Identifying Relationship]%
-A \emph{identifying} (strong) relationship is connected to at least one weak entity and is required for identifying the weak entity. %
+A \emph{identifying}~(strong) relationship is connected to at least one weak entity and is required for identifying the weak entity. %
 \end{definition}%
 %
 Usually, a strong relationship connects a strong entity to a weak entity.
@@ -49,7 +49,7 @@ The primary key of the strong entity is then part of the key of weak entity.
 Strong relationships are signified by solid lines.%
 %
 \begin{definition}[Non-Identifying Relationship]%
-A \emph{non-identifying} (weak) relationship is not needed to identify an entity.%
+A \emph{non-identifying}~(weak) relationship is not needed to identify an entity.%
 \end{definition}%
 Examples for this are, e.g., two connected strong entities.
 But also weak entities can be connected, as long as the connection is not required for identifying purposes.
@@ -73,7 +73,7 @@ Rooms exist within buildings, so they are weak entities.
 They have a number and maybe a name.
 Each room has a capacity limit for students.
 They are connected to the building entities via identifying relationships:
-A room must be in exactly one building, whereas a building should consist of one or many rooms (otherwise, we do not need to store it in our \db).
+A room must be in exactly one building, whereas a building should consist of one or many rooms~(otherwise, we do not need to store it in our \db).
 
 The last sentence is interesting, as it poses a somewhat philosophical problem.
 We said that \inQuotes{each room is inside one building and each building is composed of one or multiple rooms.}
@@ -110,7 +110,7 @@ If we do this, the conceptual constraints would perfectly map to a technical con
 Anyway.
 Rooms are also connected with non-identifying relationships to schools:
 One school may be permitted to use zero or more rooms for teaching.
-Each room must be usable by at least one school (because otherwise, we simply don't need to store it in the \db).
+Each room must be usable by at least one school~(because otherwise, we simply don't need to store it in the \db).
 
 We can easily expect that different teaching modules may have different requirements regarding the rooms.
 For normal teaching, it may be sufficient that an overhead projector is present.
@@ -142,7 +142,7 @@ Basically, we would have two sets of interactions governed by two different form
 
 We have the idea to unify them both in \cref{fig:erdModules1}.
 It is clear that not all teachers can chair all types of modules.
-Maybe our university will only permit full professors to chair core modules of a curriculum, while younger lecturers can propose and chair elective (voluntary) courses.
+Maybe our university will only permit full professors to chair core modules of a curriculum, while younger lecturers can propose and chair elective~(voluntary) courses.
 This can easily be covered by relating position types to module types.
 Then again, some modules may require special certifications, such as chemistry safety certification or something.
 This does not fit well to the position type-module type approach, because \inQuotes{chemistry safety certified} is not a position.
@@ -168,13 +168,13 @@ However, there are two different problems:
 First, sometimes we have elective modules, i.e., situations where a student needs to pick maybe two out of a set of three or four possible modules.
 Second, for a curriculum, there may be different specialization directions.
 A Master in Computer Science could offer the specializations \pgls{AI}, \pglspl{dbms}, and Computer Security, for example.
-Each such specialization may (recursively) come with different compulsive and elective modules.
+Each such specialization may~(recursively) come with different compulsive and elective modules.
 
 We will try to model this by introducing the \emph{Component} entity.
 A curriculum consists of at least one component and each component belongs to exactly on curriculum.
 A component can also be a sub-component of at most one other component.
 A component may also contain an arbitrary number of sub-components.
-Each component has a name, a set of semester indices in which it is offered (such as \inQuotes{7th and 8th semester}).
+Each component has a name, a set of semester indices in which it is offered~(such as \inQuotes{7th and 8th semester}).
 A module can now be offered in one or multiple such components.
 Each component may offer zero or multiple modules.
 A component can also contain a number defining how many of the offered modules must be taken.
@@ -190,7 +190,7 @@ The \inQuotes{Electives} component offers the modules \inQuotes{\postgresql,} \i
 
 This does not look very pretty, but at least it allows us to model even complicated situations within our \db.
 Either way, this brings us to the \emph{Module} entity type.
-Modules must be offered by at least one component (otherwise they are useless).
+Modules must be offered by at least one component~(otherwise they are useless).
 They also belong to a module type, which links them back to the position-based credential system for teachers discussed earlier.
 Each module has a name, a number of credits, and a number of teaching hours.
 Some modules, like internships or external practical training classes, may have weeks as duration.
@@ -285,7 +285,7 @@ Each semester, new class records are added.
 We always know who taught which course in which semester.
 Our \db\ will grow incrementally an changes are reflected by new records and not the modification of existing records.
 If a module is taken over by another professor, then this will yield a new class instance.
-We can see who taught which class (module) in which semester.
+We can see who taught which class~(module) in which semester.
 
 For this reason, we also added the \emph{Valid From} and \emph{Valid To} attributes to the \emph{Address} entity type.
 If the address of a student or faculty member changes, we create a new address record and mark it as valid starting today, while leaving the \emph{Valid To} attribute at \sqlil{NULL}.
@@ -307,7 +307,7 @@ Additionally, we may want to create a table creating an audit trail~\cite{K2010A
 Such a table would store which user added/changed which record in which table at which point in time.
 
 Finally, in our \emph{Address} entity, countries and provinces are simple attributes.
-We could probably have another entity type to represent countries and country subdivisions (such as provinces) based on the ISO~3166 standard~\cite{ISO3166}, maybe with additional information such as the phone number prefix.
+We could probably have another entity type to represent countries and country subdivisions~(such as provinces) based on the ISO~3166 standard~\cite{ISO3166}, maybe with additional information such as the phone number prefix.
 Each address could be linked to at least one such entity via a relationship.
 
 For now, we omit all of this.

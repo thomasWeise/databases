@@ -4,7 +4,7 @@ Instead, designing good \pglspl{db} involves several steps.
 We need to clearly understand the requirements for the \db.
 We should create a rough sketch of what things will be included.
 We need to decide what tables and relations should exist.
-This conceptual model~(information about the types of data and their relationships) must then be mapped to a physical model (concrete implementation instructions for a selected~\dbms).
+This conceptual model~(information about the types of data and their relationships) must then be mapped to a physical model~(concrete implementation instructions for a selected~\dbms).
 There should be some sort of prototype, where we and the users can enter a subset of the data to test whether everything works as predicted.
 At this stage, we may uncover some problems and may need to improve our design.
 The actual application must then be tested.
@@ -134,7 +134,7 @@ In each iteration, a risk analysis is performed before the prototype is develope
 Each new prototype thus helps to reduce the risks.
 One idea of the spiral model is that requirements are of hierarchical nature.
 In each iteration, additional requirements are built on top of the first set of requirements implemented.
-This is not very suitable when we design a \db, where different functions can be more or less independent from each other while using the same data (e.g., keeping track of stock in a warehouse and booking customer orders).
+This is not very suitable when we design a \db, where different functions can be more or less independent from each other while using the same data~(e.g., keeping track of stock in a warehouse and booking customer orders).
 The problem to be solved is defined at the project start and therefore the project scope is limited.
 However, since the requirements are finalized early, the model does not encourage progressive enhancement of the design.
 Also, the risk analysis steps can be quite complex and so is the overall structure of the spiral model, which are downsides of the method~\cite{S2007OOSE,GMTM2011DDLC}.
@@ -198,7 +198,7 @@ A software requirement specification is produced.
 
 In the requirements analysis, we can now analyze the collected data to find out whether the project is feasible and to approximate the costs.
 The goals of the project and the objectives of all proposed systems are specified.
-The scope and boundaries (budget, equipment, available software) of the project are defined, as well as requirements regarding performance, security, portability, and maintenance.
+The scope and boundaries~(budget, equipment, available software) of the project are defined, as well as requirements regarding performance, security, portability, and maintenance.
 All of these issues are very important for both the short term and long term success of the project.
 
 As the result, potential problems and constraints that could arise later will be identified.
@@ -223,11 +223,11 @@ Then, other formats or \db\ paradigms may be more suitable.
 Nevertheless, let us assume that \pglspl{rdb} are what we decide to use.
 At this stage, we may also decide which \dbms\ to use.
 This decision may be based on aspects such as costs, maintenance aspects, licenses, and available training.
-In our book, we chose \postgresql, simply because it is a free (open source) and very mature \sql\ \dbms.
+In our book, we chose \postgresql, simply because it is a free~(open source) and very mature \sql\ \dbms.
 
 In the next step, the conceptual design is converted into a logical design.
 This can mean to map the entity types from the \pglspl{ERD} in the conceptual models to tables and the relationships between them~\cite{SS2005EIDDDFDB:I,SS2005EIDDDFDB:CDDRAAML}.
-Here, we may sometimes split one entity type from the \pglspl{ERD} into multiple tables or use different primary keys (e.g., sequential integers instead of a multi-part key constructed of strings\dots).
+Here, we may sometimes split one entity type from the \pglspl{ERD} into multiple tables or use different primary keys~(e.g., sequential integers instead of a multi-part key constructed of strings\dots).
 In other words, we map the conceptual model to the internal structures provided by the \dbms.
 At this stage, we basically have an unoptimized design of the \db.
 
@@ -277,14 +277,14 @@ It is illustrated in \cref{fig:model:ddlc} and combines ideas from several sourc
 Indeed, we will hinge the more comprehensive \db\ design example project discussed in this part of our book on this process.
 
 This approach to the \db\ development life cycle begins with a phase of requirements gathering and analysis.
-Then, the three models (conceptual, logical, and physical) are designed one after the other~\cite{EN2015FODS}.
+Then, the three models~(conceptual, logical, and physical) are designed one after the other~\cite{EN2015FODS}.
 We start with the conceptual model:
 The entities and their relationships are sketched with \pglspl{ERD}.
 It makes sense to discuss this model with the stakeholders and, if any inconsistencies are discovered, to adapt the requirements specification.
 In this step, we also choose the proper data model.
 
 The entities in the conceptual model are then translated to fit to the data model in the logical model design process.
-In case of a relational data model (as used here), this means to create tables, define keys, attributes, and relations, and to normalize the data.
+In case of a relational data model~(as used here), this means to create tables, define keys, attributes, and relations, and to normalize the data.
 This model can be defined either in \sql\ or using any other suitable formal mechanism.
 It could be bound to a specific \dbms\ or to a group of similar \pglspl{dbms}.
 Finally, the logical model, i.e., the perspective of the users on the data, is mapped to a physical model.
@@ -298,7 +298,7 @@ From here on, the focus is on maintenance, regular backups, fine-tuning, and the
 The last two stages can create feedback to the earlier stages, i.e., lead to changes in the physical or logical models as well as the requirements.
 
 In the following, we will work our way step-by-step through this lifecycle.
-By doing so, we will not just explore the different steps in more detail, but also discuss several important topics, such as \pglspl{ERD}, normalization, and $\sigma$\nobreakdashes-algebra based on a (more or less) realistic scenario.%
+By doing so, we will not just explore the different steps in more detail, but also discuss several important topics, such as \pglspl{ERD}, normalization, and $\sigma$\nobreakdashes-algebra based on a~(more or less) realistic scenario.%
 %
 \FloatBarrier%
 \endhsection%

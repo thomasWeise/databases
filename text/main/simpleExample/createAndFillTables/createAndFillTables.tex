@@ -91,7 +91,7 @@ Tables in a \db\ do not exist in an isolated manner.
 Instead, they will reference each other.
 For example, later we will create a table where we store which customer bought which product.
 For this, we will need at least three tables:
-A table of customers (which we do not yet have), the table of products (that we are creating right now), and a table for the customer orders.
+A table of customers~(which we do not yet have), the table of products (that we are creating right now), and a table for the customer orders.
 Each record in that last table will reference one row in the customers table and one row in the products table.
 
 For allowing the latter, we need a unique way to identify each row in our table.
@@ -129,7 +129,7 @@ This completes the \sql\ command for creating our very first table.
 We can now fire up \psql\ again.
 Notice that, since the \db\ belongs to the user \sqlil{boss}, we now log in as \sqlil{boss} using their password \sqlil{superboss123}.
 We also want to work on the \db\ \sqlil{database}.
-The \postgresql\ connection \pgls{URI} for the \db\ \pgls{server} running on our current computer (identified by \localhost) and therefore is \textil{postgres://boss:superboss123@localhost/factory}.
+The \postgresql\ connection \pgls{URI} for the \db\ \pgls{server} running on our current computer~(identified by \localhost) and therefore is \textil{postgres://boss:superboss123@localhost/factory}.
 We use it in \cref{exec:factory:create_table_product} to submit the table creation command given in \cref{lst:factory:create_table_product}.%
 %
 \begin{sloppypar}%
@@ -163,7 +163,7 @@ They weight 500g, 750g, and 1500g, respectively.
 The smallest purse fits into a shoebox, but the bigger ones require bigger boxes.
 
 We store this data into the table \sqlil{product} by an \sqlilIdx{INSERT INTO} statement.
-Here, we first need to provide the table name (\sqlil{product}) and the attributes that we want to store in parentheses, i.e., \inQuotes{\sqlil{(...)}}.
+Here, we first need to provide the table name~(\sqlil{product}) and the attributes that we want to store in parentheses, i.e., \inQuotes{\sqlil{(...)}}.
 We will store values for the fields \sqlil{name}, \sqlil{price}, \sqlil{weight}, \sqlil{width}, \sqlil{height}, and~\sqlil{depth}.
 We do not need to store values for~\sqlil{id}, because they will be automatically generated for us.
 After saying what we want to store, we specify the \sqlilIdx{VALUES} to store.
@@ -194,7 +194,7 @@ You have seen it its output at the bottom of \cref{exec:factory:insert_into_tabl
 
 Yet, most often, we do not want to retrieve \emph{all} of the data in a table.
 Usually, we only want some part of the data.
-Maybe we only want to see the rows (records) that match certain criteria.
+Maybe we only want to see the rows~(records) that match certain criteria.
 Maybe we only want to see a subset of the columns.
 Maybe we even want to compute some statistics.
 How can we do that?
@@ -267,7 +267,7 @@ That value would be \sqlil{148.5381818181818182} if you want to try it by yourse
 
 Let's give the value a better name.
 Let's try \sqlil{SELECT AVG(price) AS mean_price FROM product;}\sqlIdx{AVG}
-The result would still be pretty much the same, but now the returned column is named~\sqlil{mean_price} (and there still only a single row).%
+The result would still be pretty much the same, but now the returned column is named~\sqlil{mean_price}~(and there still only a single row).%
 %
 \begin{sloppypar}%
 As the next step, let's compute the average price for purses.
@@ -350,7 +350,7 @@ This means that we have to figure out how we can define \inQuotes{\sqlil{name} m
 This is a bit beyond what we can do with \sqlilIdx{LIKE}.
 Luckily, \pglspl{regex} come to the rescue.
 \Pglspl{regex} are text patterns that can be matched against text strings.
-They are supported by many tools and programming languages (such as \python~\cite{programmingWithPython}), and also by \sql\ and, hence, \postgresql~\cite{PGDG:PD:PRE}.
+They are supported by many tools and programming languages~(such as \python~\cite{programmingWithPython}), and also by \sql\ and, hence, \postgresql~\cite{PGDG:PD:PRE}.
 \Pglspl{regex} are a whole different kind of subject that you can read about in~\cite{PGDG:PD:PRE}.
 Here we will just briefly introduce and directly use them.
 
@@ -365,7 +365,7 @@ We could refine this to also allow single-character names, to prevent characters
 %
 \begin{sloppypar}%
 Having a reasonable limitation for the name, we now define the rule \sqlil{customer_name_ok} as \sqlil{CONSTRAINT customer_name_ok CHECK (name \~ '^\\w.*\\w\$')}\sqlIdx{{\textbackslash}w}\sqlIdx{\$}\sqlIdx{\textasciicircum}\sqlIdx{.}\sqlIdx{\textasciitilde}.
-The \sqlilIdx{CONSTRAINT} marks the beginning of a constraint, \sqlil{customer_name_ok} is the name, and \sqlil{CHECK}\sqlIdx{CONSTRAINT!CHECK} tell us that we will next define an expression (as opposed to simply \sqlilIdx{NOT NULL}).
+The \sqlilIdx{CONSTRAINT} marks the beginning of a constraint, \sqlil{customer_name_ok} is the name, and \sqlil{CHECK}\sqlIdx{CONSTRAINT!CHECK} tell us that we will next define an expression~(as opposed to simply \sqlilIdx{NOT NULL}).
 \sqlil{(name \~ '^\w.*\w\$')}\sqlIdx{{\textbackslash}w}\sqlIdx{\$}\sqlIdx{\textasciicircum}\sqlIdx{.}\sqlIdx{\textasciitilde} says that the field \sqlil{name} must match the \pgls{regex} \sqlil{'^\\w.*\\w\$'}.
 Here, \sqlil{\~}\sqlIdx{\textasciitilde} stands for \pgls{regex}-based pattern matching.
 With this, the names \inQuotes{S} and \inQuotes{  schwipschawp } are prohibited, but \inQuotes{Thomas Weise} and \inQuotes{熊猫先生} are OK.%
@@ -393,7 +393,7 @@ The \pgls{regex} \sqlil{'\^\\d\{10,11\}\$'}\sqlIdx{{\textbackslash}d}\sqlIdx{\$}
 At the start of the text~(denoted by~\textil{\^}\sqlIdx{\textasciicircum}), there is a sequence of 10 to~11 digits, and then comes the end of the text~(denoted by~\textil{\$}\sqlIdx{\$}).
 Here, \textil{\\d}\sqlIdx{{\textbackslash}d}\ stands for a single character that is a digit.
 The \textil{\{10,11\}} specfies between 10 and 11 repetitions of this pattern.
-Therefore, our constraint requires that any value of \sqlil{phone} to be stored consists of ten to eleven digits (and only digits).
+Therefore, our constraint requires that any value of \sqlil{phone} to be stored consists of ten to eleven digits~(and only digits).
 This rules out phone numbers containing other characters, as well as customers registering under number~110.
 
 Finally, each customer should have a shipping address.
@@ -486,7 +486,7 @@ A customer can buy a certain amount of one product.%
 Creating the table \textil{demand} to store the orders of our customers.%
 }%
 %
-Naturally, we would like to call this table, which stores orders, something like~\sqlil{order} (as we always use singular table names as stated in \cref{bp:tableName}).
+Naturally, we would like to call this table, which stores orders, something like~\sqlil{order}~(as we always use singular table names as stated in \cref{bp:tableName}).
 Unfortunately, we already learned that \sqlil{ORDER}\sqlIdx{ORDER BY} is a reserved keyword in \sql.%
 %
 \bestPractice{neverUseKeywordsAsNames}{%
@@ -584,7 +584,7 @@ He did this on November~21, 2024.
 The second row is \sqlil{(2, 3, 2, '2024-12-09')}, meaning that customer~2, i.e., Mr.~Bebbo, ordered 2~units of product~3, namely \inQuotes{Shoe, Size 38.}
 This happened on December~9, 2024.
 We insert several rows like this.
-For instance, row \sqlil{(3, 11, 10, '2025-01-16')} identifies Mrs.~Bebba (customer~3) as the purchaser of ten large purses (product~11) on January~16, 2025.
+For instance, row \sqlil{(3, 11, 10, '2025-01-16')} identifies Mrs.~Bebba~(customer~3) as the purchaser of ten large purses~(product~11) on January~16, 2025.
 
 \Cref{lst:factory:insert_into_table_demand} shows the effect of this command.
 Querying \sqlil{SELECT * FROM demand;}\sqlIdx{SELECT{\idxdots}FROM} will show us all the rows of this table.

@@ -10,7 +10,7 @@ So how do we model these relationships?
 Let us begin with some basic definitions~\cite{G2011EW2ITDS:CMUTERM}.%
 %
 \begin{definition}[Relationship]%
-A \emph{relationship} (instance) is an association of two or more entities.%
+A \emph{relationship}~(instance) is an association of two or more entities.%
 \end{definition}%
 %
 An example for a relationship would be \emph{Mr.~Bibbo enrolls into the module \citetitle{programmingWithPython}.}
@@ -20,11 +20,11 @@ A \emph{relationship type} is the set of all relationships possible between two 
 \end{definition}%
 %
 The \emph{Enrolls} relationship type could be defined between the \emph{Student} entity type and the \emph{Module} entity type.
-We notice that (transitive) verbs~\cite{EOWM2025MWAMTD:TA} in the requirements definition often represent relationship types~\cite{C1997ECAED}.%
+We notice that~(transitive) verbs~\cite{EOWM2025MWAMTD:TA} in the requirements definition often represent relationship types~\cite{C1997ECAED}.%
 %
 \begin{definition}[Degree of Relationship]%
 \label{def:degreeOfRelationship}%
-The degree of a relationship (instance or type) refers to the number of participating entities.%
+The degree of a relationship~(instance or type) refers to the number of participating entities.%
 \end{definition}%
 %
 There can be binary relationships, i.e., relationships where two entities participate.
@@ -220,7 +220,7 @@ An application could enforce that each person has either a passport or a governm
 However, it would still feel awkward to somehow create a Frankensteinesque primary key out of this.
 The easiest solution here is to use a surrogate key.
 In our model, we actually call it \emph{Surrogate Key,} to avoid any form of misunderstanding.
-We will assumet that whatever \dbms\ we will eventually use, it will be able to somehow generate unique values (like back in \cref{sec:factory:table:product}).
+We will assumet that whatever \dbms\ we will eventually use, it will be able to somehow generate unique values~(like back in \cref{sec:factory:table:product}).
 Our \emph{Person} in \cref{fig:erdPerson1} now looks fairly reasonable.
 
 Having solved this problem, we now want to clean up the issue of IDs and ID documents.
@@ -234,7 +234,7 @@ While Chinese~ID numbers stay the same, the passport number is usually a number 
 A passport booklet usually stays valid for ten years and then a new passport is issued to the person, usually having a new passport number.
 When a foreigner enters China, they need a visa, which, in turn, also has a unique identification number and a time window of duration~\cite{CMOFA2019ITCV}.
 There are many different types of visa that have permit different activities, for example X1 and X2 for studying and Z~for working.
-Foreigners who work in China (e.g., as professors) furthermore need work permits~\cite{BD2006BDBK:WOFFITOROC}, which also have a unique numbers.
+Foreigners who work in China~(e.g., as professors) furthermore need work permits~\cite{BD2006BDBK:WOFFITOROC}, which also have a unique numbers.
 Of courses, visas and work permits eventually expire and need to be renewed.
 This allows for an arbitrarily complex and ugly model.
 

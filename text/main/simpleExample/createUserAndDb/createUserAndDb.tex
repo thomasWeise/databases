@@ -7,7 +7,7 @@ Using \sql\ to create a the user \textil{boss} with password \textil{superboss12
 }%
 %
 The first step to fulfill this request to is to create a new and empty \db.
-We already installed \postgresql\ (see \cref{sec:installingPostgres}).
+We already installed \postgresql~(see \cref{sec:installingPostgres}).
 It is running on a dedicated \server\ computer in our small \pgls{IT} department / office.
 This \db\ \server\ will host all the \pglspl{db} of the company, probably ranging from payroll data to fancy business analytics.
 
@@ -77,7 +77,7 @@ If we run it again \emph{after} creating the new user, it will also list~\textil
 
 The complete steps of querying the existing users, adding the new user \inQuotes{boss}, and then querying the list of users again is shown in \cref{lst:factory:create_user}.
 The output that we will get from running this small script is given in \cref{exec:factory:create_user}.
-Notice that you can download the whole example and run exactly the commands (the {\color{listing-tool-command}{red text}} after the {\color{listing-tool-command}\texttt{\$}}) from our repository \url{\databasesCodeRepo}.
+Notice that you can download the whole example and run exactly the commands~(the {\color{listing-tool-command}{red text}} after the {\color{listing-tool-command}\texttt{\$}}) from our repository \url{\databasesCodeRepo}.
 
 \gitSQLAndOutput{\databasesCodeRepo}{factory}{create_database.sql}{}{}{}{postgres.sh}{factory:create_database}{%
 Using \sql\ to create a database for user \textil{boss}.%

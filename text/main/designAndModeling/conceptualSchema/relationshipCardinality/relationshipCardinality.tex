@@ -39,8 +39,8 @@ In notation by \citeauthor{B1969DSD}~\cite{B1969DSD} from back in \citeyear{B196
 The entity to which the arrow points may occur N times, then one from which the arrow line originates once.
 
 When creating an entity-relationship model, we often want a finer granularity.
-We want to express whether relationships are optional or mandatory (required) on either end of the relationship.
-Therefore, usually, an end of relationships can be annotated with its modality (is it optional or mandatory) and with its cardinality~(the number of participating entities)~\cite{R2024CDS:E}.
+We want to express whether relationships are optional or mandatory~(required) on either end of the relationship.
+Therefore, usually, an end of relationships can be annotated with its modality~(is it optional or mandatory) and with its cardinality~(the number of participating entities)~\cite{R2024CDS:E}.
 %
 \begin{definition}[Relationship Modality]
 The \emph{modality} of a relationship end defines whether participation is optional or mandatory. %
@@ -79,7 +79,7 @@ The second method has the advantage of permitting much more diverse ranges of ca
 The drawback is that it is slightly harder to draw, because we need to add labels to the relationship ends.
 In \libreofficeBase, \pglspl{ERD} can be drawn that are directly linked to the underlying \db\ in the 1:1/1:N notation, but lowercase~n represent \inQuotes{many}.
 \microsoftAccess\ offers a similar functionality, but the relationship ends are annotated with~1 or~$\infty$.
-For the remainder of this text, we will stick to the Crow's Foot Notation to signify the relationship modalities and cardinalities (while keeping \citeauthor{C1976TERMTAUVOD}'s notation for the symbols), simply because we can paint this more easily with \yEd\ without needing to add labels to relationship ends.
+For the remainder of this text, we will stick to the Crow's Foot Notation to signify the relationship modalities and cardinalities~(while keeping \citeauthor{C1976TERMTAUVOD}'s notation for the symbols), simply because we can paint this more easily with \yEd\ without needing to add labels to relationship ends.
 
 Notice that original Crow's Foot method by \citeauthor{E1976BDSMEWACE}~\cite{E1976BDSMEWACE}, also sketched in \cref{fig:erdCardinalities1}, which did not yet have the mandatory/optional symbolism.
 This method can be used when the modality is not important during modeling, or when we want to leave it open and settle it during a later discussion.
@@ -138,14 +138,14 @@ A school must have exactly one dean.~\cite{R2024CDS:E}%
 %
 \item \crowsFoot{E}{O1}{F:}{OM} Each~E may be linked to zero, one, or many~F. Each~F may be linked to at most one~E.~\cite{MA2006MAC:DMERDED}\\%
 \emph{Example:}~Assume that for bank accounts, two addresses may be associated:
-A home address is required (not relevant for this example).
+A home address is required~(not relevant for this example).
 Additionally, a bank account may be linked to zero or one postal address.
 Each address may be the postal address of zero, one, or many bank accounts.~\cite{MA2006MAC:DMERDED}%
 %
 \item \crowsFoot{G}{O1}{H:}{MM} Each~G is related at least one, but maybe many~H. Each~H may or may not be linked to a~G, but never to more than one~G.%
 %
 \item \crowsFoot{I}{M1}{J:}{M1} Each~I must be associated with exactly one~J. Each~J must be associated with exactly one~I.\\%
-\emph{Example:}~In a company, one salesperson must be the backup for each (other) salesperson.
+\emph{Example:}~In a company, one salesperson must be the backup for each~(other) salesperson.
 Each salesperson is the backup of one salesperson.~\cite{T2025CDBMS:ERM}%
 %
 \item \crowsFoot{K}{M1}{L:}{OM} Each~K may be linked to zero or many~L. Each~L must be linked to exactly one~K.~\cite{MA2006MAC:DMERDED,BS2023G:CFNIERD}\\%
@@ -157,7 +157,7 @@ However, each bank transfer must have exactly one source bank account.~\cite{MA2
 A salesperson may not have any customers, one customer, or many customers.~\cite{T2025CDBMS:ERM}%
 %
 \item \crowsFoot{M}{M1}{N:}{MM} Each~M is related to at least one and possibly multiple~N. Each~N is related to exactly one~M.~\cite{BS2023G:EDFAHMSCFN}\\%
-\emph{Example:}~A patient can make several appointments (to visit doctors).
+\emph{Example:}~A patient can make several appointments~(to visit doctors).
 Each appointment is linked to exactly one patient.~\cite{BS2023G:EDFAHMSCFN}\\%
 \emph{Example:}~A school of a university must consist of at least one, but possibly many departments.
 Each department must belong to exactly one school.~\cite{R2024CDS:E}%
@@ -165,7 +165,7 @@ Each department must belong to exactly one school.~\cite{R2024CDS:E}%
 \item \crowsFoot{O}{OM}{P:}{OM} Each~O may be related to zero, one, or multiple~P. Each~P may be related to zero, one, or multiple~Q.\\%
 \emph{Example:}~A pizza shop sells pizza to customers.
 A pizza may be ordered by zero, one, or many customers.
-A customer may not order pizza (maybe the want to eat something else), or order one pizza, or order multiple pizzas.~\cite{FCC2016D:CFNRSAHTRD}%
+A customer may not order pizza~(maybe the want to eat something else), or order one pizza, or order multiple pizzas.~\cite{FCC2016D:CFNRSAHTRD}%
 %
 \item \crowsFoot{Q}{OM}{R:}{MM} Each~Q must be linked to at least one~R, i.e, one or many~R. Each~R may be related to zero or many~Q.~\cite{BS2023G:CFNIERD}\\%
 \emph{Example:}~When placing an order for products online, the order must be for at least one product.
@@ -208,7 +208,7 @@ The new diagram also introduces curricula, schools, and positions.}%
 
 In \cref{fig:erdPersonStudentFaculty2}, we now expand our \pgls{ERD} regarding the two different types of persons, namely students and professors.
 We know that each student record must be associated with exactly one person record, because each student is a person and only one person.
-Then again, a person record may be associated with zero student roles (if they are not a student) or one student role~(e.g., they enrolled as compute science Bachelor student).
+Then again, a person record may be associated with zero student roles~(if they are not a student) or one student role~(e.g., they enrolled as compute science Bachelor student).
 However, a person may also have \emph{multiple} student roles.
 Maybe they enrolled as computer science Bachelor student, completed this curriculum and then graduated.
 Then they enrolled in the Master's program for computer science.
@@ -221,7 +221,7 @@ What is a curriculum instance?
 Well, we said that a student is maybe enrolled in the Bachelor program for computer science.
 When they do so, they enroll in a particular semester of the program, say, the Bachelor program computer science starting in the Winter semester of~2024.
 From the perspective of entity relationship modeling, we could say:
-A curriculum may be executed by the university zero (unlikely), one, or many times as curriculum instance.
+A curriculum may be executed by the university zero~(unlikely), one, or many times as curriculum instance.
 Each curriculum instance is associated with exactly one curriculum.
 Also, it is associated with exactly one semester.
 Since curricula instances do not have any other identifying characteristics and cannot exist by themselves, they are weak entities.
@@ -263,7 +263,7 @@ Each module type may be chaired by faculty members belonging to an arbitrary num
 Either way, we introduce the weak entity position that we use to link faculty members to position types.
 Every instance of this weak entity belongs to exactly one faculty member and to exactly one position type.
 Each faculty member does have at least one position.
-Usually they have only one position at a time (which is why each position has a starting date and an optional end date).
+Usually they have only one position at a time~(which is why each position has a starting date and an optional end date).
 Faculty members may have multiple different positions over time, for example, they may start as lecturer in 2022, then be promoted to associate professor in 2025.
 For each position type, there may be arbitrarily many corresponding position records.
 

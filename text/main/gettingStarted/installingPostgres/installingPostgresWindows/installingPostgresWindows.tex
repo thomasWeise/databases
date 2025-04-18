@@ -20,7 +20,7 @@ We click on the link \emph{download the installer}, which takes us to~\url{https
 %
 \subfloat[][%
 A wide variety of versions for different \pglspl{OS} are available. %
-We choose the newest (top-most) one for \microsoftWindows, at the time of this writing, this is version~17.2. %
+We choose the newest~(top-most) one for \microsoftWindows, at the time of this writing, this is version~17.2. %
 We click the download icon.%
 \label{fig:installingPostgresWindows03ebdWebsite}%
 ]{\tightbox{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresWindows03ebdWebsite}}}%
@@ -248,7 +248,7 @@ In my case, the output shows that version~17.2 was installed.%
 %
 \subfloat[][%
 We now want to also see which version of the \postgresql\ \pgls{server} was installed and, by doing so, also confirm that the server is up and running correctly. %
-We therefore launch \batil{psql -U postgres}, i.e., start \psql\ using the user (or role) \textil{postgres}.%
+We therefore launch \batil{psql -U postgres}, i.e., start \psql\ using the user~(or role) \textil{postgres}.%
 \label{fig:installingPostgresWindows28psqlU}%
 ]{\tightbox{\includegraphics[width=0.7\linewidth]{\currentDir/installingPostgresWindows28psqlU}}}%
 %
@@ -400,9 +400,9 @@ We click \menu{OK} to leave the dialog.%
 \centering%
 %
 \subfloat[][%
-We see that the service is \emph{Running} and in mode \emph{Manual} (if we changed it to that mode). %
+We see that the service is \emph{Running} and in mode \emph{Manual}~(if we changed it to that mode). %
 When you shutdown your system, the \pgls{dbms} is stopped. %
-It does not start automatically when you boot (unless you set \emph{Automatic} as \emph{Startup type}). %
+It does not start automatically when you boot~(unless you set \emph{Automatic} as \emph{Startup type}). %
 So if you need it, you would again enter the \emph{Services} system setup program and manually start it.%
 \label{fig:installingPostgresWindows43services}%
 ]{\tightbox{\includegraphics[width=0.8\linewidth]{\currentDir/installingPostgresWindows43services}}}%
@@ -494,7 +494,7 @@ In my case, the output shows that version~17.2 was installed, as illustrated in 
 
 We now want to also see which version of the \postgresql\ \pgls{server} was installed.
 By getting this information, we will also confirm that the server is up and running correctly.
-We therefore launch \batil{psql -U postgres}, i.e., start \psql\ using the user (or role) \textil{postgres} in \cref{fig:installingPostgresWindows28psqlU}.
+We therefore launch \batil{psql -U postgres}, i.e., start \psql\ using the user~(or role) \textil{postgres} in \cref{fig:installingPostgresWindows28psqlU}.
 \textil{postgres} is the username for the administrative account of our \pgls{dbms}.
 
 When the program starts with these parameters, it requires us to enter the password for this user~(\textil{postgres}).
@@ -551,7 +551,7 @@ After that, it is no longer running
 Let's start it again by clicking the \menu{Start}~button in \cref{fig:installingPostgresWindows40servicesStart}.
 The service is now starting again, as illustrated in \cref{fig:installingPostgresWindows41servicesStarting}.
 We click the \menu{OK}~button to leave the dialog in \cref{fig:installingPostgresWindows42servicesOK}.
-We see that the service is \emph{Running} and in mode \emph{Manual} (if we changed it to that mode) in \cref{fig:installingPostgresWindows43services}.
+We see that the service is \emph{Running} and in mode \emph{Manual}~(if we changed it to that mode) in \cref{fig:installingPostgresWindows43services}.
 When you shutdown your system, the \pgls{dbms} is stopped.
 If it is in \emph{Manual} mode, the \pgls{dbms} does not start automatically when you boot.
 It you set it back to \emph{Automatic} as \emph{Startup type}, then it will start automatically again.

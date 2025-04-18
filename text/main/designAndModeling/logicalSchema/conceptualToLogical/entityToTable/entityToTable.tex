@@ -1,13 +1,14 @@
-\hsection{Entities to Tables}%
+\hsection{Entity Types to Tables}%
 \label{sec:mappingEntitiesToTables}%
 %
+Translating entity types from the conceptual model to the logical model is fairly simple.
 Each entity type in the conceptual model becomes one table in the logical model.
 Each simple single-valued attribute becomes one column of that table.
 Each component of a composite attribute becomes one column of that table.
 Multi-valued attributes come separate tables, where each row references the primary key of entity's table as foreign key.
 Derived attributes are not included in the table.
 
-OK, so our goal here would be to either transform the conceptual model of a \db\ to a logical model (or to directly design the logical model).
+OK, so our goal here would be to either transform the conceptual model of a \db\ to a logical model~(or to directly design the logical model).
 But what is a logical model?
 In \cref{def:logicalModel}, we basically stated that the logical model is the collective view that users and applications have on the \db.
 In the relational model, this means that it defines all the tables, their attributes and constraints, as well as the queries.
@@ -42,7 +43,7 @@ the \emph{Student} entity type from \cref{fig:yedErdEntitiesA21erd}.%
 A reproduction of the Student \pgls{ERD} from \cref{fig:yedErdEntitiesA21erd}. %
 We want to translate this \pgls{ERD} into a logical model for a \db\ that only contains this single table.%
 \label{fig:yedErdEntitiesA21erd2}%
-]{\includegraphics[width=0.45\linewidth]{\currentDir/../../../conceptualSchema/entitiesAndAttributes/yedErdEntitiesA21erd}}%
+]{\includegraphics[width=0.45\linewidth]{\conceptualSchemaEntitiesAndAttributesDir/yedErdEntitiesA21erd}}%
 %
 \floatSep%
 %
@@ -81,7 +82,7 @@ We choose \sqlil{student_database} and then click on~\menu{Apply}.%
 \floatSep%
 %
 \subfloat[][%
-Back in the \pgls{ERD} view, we again right-click into the (empty) diagram. %
+Back in the \pgls{ERD} view, we again right-click into the~(empty) diagram. %
 In the popup-menu, we click on~\menu{New>Schema Object>Table}.%
 \label{fig:makeStudentTable05newTable}%
 ]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/makeStudentTable05newTable}}}%
@@ -120,7 +121,7 @@ As type, we choose~\sqlil{character}\sqlIdx{CHARACTER}, i.e., the \sql\ datatype
 \floatSep%
 %
 \subfloat[][%
-As (fixed) length, we enter~11 in the \menu{L:}~field. %
+As~(fixed) length, we enter~11 in the \menu{L:}~field. %
 We also mark the column as \sqlilIdx{NOT NULL}, meaning that there cannot be a student record without student~ID. %
 We click~\menu{Apply}.%
 \label{fig:makeStudentTable09studentIdLenNotNullApply}%
@@ -328,7 +329,7 @@ The new constraint appears and we click on~\menu{Add Item}~\pgmodelerAddItem.%
 %
 \subfloat[][%
 We specify the \sqlil{CHECK}\sqlIdx{CONSTRAINT!CHECK} constraint for the \pgls{dateOfBirth} and call it~\sqlil{student_date_of_birth_check}. %
-We combine the condition \sqlil{date_of_birth > '1900-01-01'} (demanding that students may not be born before the year~1900) and \sqlil{date_of_birth < '2100-01-01'}~(which prevents students born in the 22nd century) with~\sqlilIdx{AND}. %
+We combine the condition \sqlil{date_of_birth > '1900-01-01'}~(demanding that students may not be born before the year~1900) and \sqlil{date_of_birth < '2100-01-01'}~(which prevents students born in the 22nd century) with~\sqlilIdx{AND}. %
 We click~\menu{Apply}.%
 \label{fig:makeStudentTable30dateOfBirthCheck}%
 ]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/makeStudentTable30dateOfBirthCheck}}}%
@@ -382,7 +383,7 @@ We click on~\menu{\pgmodelerMainMenu>File>Save as}.
 \floatRowSep%
 %
 \subfloat[][%
-Since our model is new and unchecked (or changed), we get asked to validate it. %
+Since our model is new and unchecked~(or changed), we get asked to validate it. %
 Heck, why not, we click on~\menu{Validate}.%
 \label{fig:makeStudentTable36shouldValidate}%
 ]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/makeStudentTable36shouldValidate}}}%
@@ -548,7 +549,7 @@ This auto-generated \sql\ script creates the \db~\sqlil{student_database}.%
 This auto-generated \sql\ script creates the table~\sqlil{student} inside the \db~\sqlil{student_database}.%
 }%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{teachingManagement/logical/student_database_1}{insert_records.sql}{student_database}{}{}{postgres.sh}{logical:teachingManagment:student_database_1:insert_records}{%
+\gitSQLAndOutput{\databasesCodeRepo}{teachingManagement/logical/student_database_1}{insert.sql}{student_database}{}{}{postgres.sh}{logical:teachingManagment:student_database_1:insert}{%
 We can insert some records into the table~\sqlil{student}.%
 }%
 %
@@ -717,7 +718,7 @@ We click on~\menu{Apply}.
 
 The new constraint appears and we click on~\menu{Add Item}~\pgmodelerAddItem\ again in \cref{fig:makeStudentTable29mobileAddedNewConstraint}.
 We want to specify the \sqlil{CHECK}\sqlIdx{CONSTRAINT!CHECK} constraint for the \pgls{dateOfBirth} and call it~\sqlil{student_date_of_birth_check}.
-We combine the condition \sqlil{date_of_birth > '1900-01-01'} (demanding that students may not be born before the year~1900) and \sqlil{date_of_birth < '2100-01-01'}~(which prevents students born in the 22nd century) with~\sqlilIdx{AND}.
+We combine the condition \sqlil{date_of_birth > '1900-01-01'}~(demanding that students may not be born before the year~1900) and \sqlil{date_of_birth < '2100-01-01'}~(which prevents students born in the 22nd century) with~\sqlilIdx{AND}.
 We click~\menu{Apply} in \cref{fig:makeStudentTable30dateOfBirthCheck}.
 
 In \cref{fig:makeStudentTable31dateOfBirthAddedNewConstraint}, the new constraint appears and we click on~\menu{Add Item}~\pgmodelerAddItem.
@@ -726,7 +727,7 @@ We create a \sqlil{CHECK}\sqlIdx{CONSTRAINT!CHECK}~constraint for the column~\sq
 We specify the expression~\expandafter\sqlil{name ~ '^\\S+.*\\S+\$'}.
 The \textil{\\S} matches a single character that is not whitespace, i.e., a character that is neither space nor a line break nor a tabulator.
 The \textil{+} means \inQuotes{one or multiple repetitions of the previous}, so \textil{\\S+} means \inQuotes{one or multiple non-space characters}.
-We want the name to start (and end) with a letter or Chinese character or maybe Indian character or whatever, but no reasonable name starts with a space.
+We want the name to start~(and end) with a letter or Chinese character or maybe Indian character or whatever, but no reasonable name starts with a space.
 We force such a non-space character to be at the beginning~(\textil{^\\S+}) and at the end~(\textil{\\S+\$}) of the string~\sqlil{name}\footnote{%
 On second thought, we could have left the \textil{+}s away.%
 }. %
@@ -745,7 +746,7 @@ We now create the table model by clicking on~\menu{Apply} in \cref{fig:makeStude
 The new table appears in our \pgls{ERD}, with a syntax similar to what we had in \cref{sec:compactCrowsFootNotation}.
 It is now time to save this logical model to a file.
 We click on~\menu{\pgmodelerMainMenu>File>Save as} in \cref{fig:makeStudentTable35saveAs}.
-Since our model is new and unchecked (or changed), we get asked to validate it.
+Since our model is new and unchecked~(or changed), we get asked to validate it.
 This seems to be a reasonable request and we click on~\menu{Validate} in \cref{fig:makeStudentTable36shouldValidate}.
 Next we can select a file name and directory where the model should be stored.
 We choose the name \sqlil{student_database_1} and click~\menu{Save} in \cref{fig:makeStudentTable37saveAsWhere}.
@@ -784,7 +785,7 @@ We used specific \sql\ datatypes, \sql\ constraints, and could do nothing that c
 In stark contrast, \yEd\ allows us to paint almost arbitrary graphics.
 We could have drawn stars and clouds into our \pgls{ERD} if we wanted to.
 
-However, sticking to \sql\ (or, more precisely, the \postgresql\ flavor of it), has another advantage:
+However, sticking to \sql~(or, more precisely, the \postgresql\ flavor of it), has another advantage:
 We can actually create a \db\ from our model!
 
 We therefore open the \menu{Export} dialog again.
@@ -823,15 +824,17 @@ When we pass the contents of this file to \psql, we must make sure to send them 
 We do so in \cref{exec:logical:teachingManagment:student_database_1:03_public_student_table_5071} and the execution completes successful.
 
 We thus have created a \db\ from our logical model.
-In \cref{lst:logical:teachingManagment:student_database_1:insert_records}, we test this new \db\ by inserting some records.
+In \cref{lst:logical:teachingManagment:student_database_1:insert}, we test this new \db\ by inserting some records.
 The first two are OK, the third one violates the constraints on \pglspl{dateOfBirth} and on the \sqlil{national_id}.
-The first two insertions succeed in \cref{exec:logical:teachingManagment:student_database_1:insert_records}, but the third one fails, as expected.
+The first two insertions succeed in \cref{exec:logical:teachingManagment:student_database_1:insert}, but the third one fails, as expected.
 When the third request fails, we get a very clear and understandable output.
 The \sqlil{student_date_of_birth_check} constraint was violated.
 Because we chose a clear name for our constraint, we can easy find out what went wrong and where and why.
 
 Finally, in \cref{lst:logical:teachingManagement:student_database_1:cleanup}, we provide the \sql\ code for deleting the \db\ again.
 After executing it in \cref{exec:logical:teachingManagement:student_database_1:cleanup}, we can continue our work on a clean \postgresql\ server.
+Notice that this script, like the \db\ creation script, is executed with a connection \pgls{URI} the does \emph{not} specify a \db\ to work on.
+Otherwise, if we would connect to the \db\ \sqlil{student_database} and then attempt to delete while being connected to it, this would fail with the error message~\inQuotes{cannot drop the currently open database.}
 
 In summary, we can conclude that this approach works.
 The \db\ and the table were created exactly as expected.
@@ -850,9 +853,343 @@ Of course, \pgmodeler\ is not the only such software.
 But it is quite nice, open source, and free.
 It is suitable for \postgresql, while other programs have been developed for other \pglspl{dbms}.
 As said in \cref{bp:manyTools}, good software engineers are both able and keen to learn new tools.
-
 To depart from this example with a clean slate, we execute the \sql\ script given in \cref{lst:logical:teachingManagement:student_database_1:cleanup} to delete the table and \db\ again.%
 %
+\FloatBarrier%
+%
+\begin{figure}%
+\centering%
+%
+\subfloat[][%
+We want to design a model where composite and multi-valued attributes are represented. %
+We therefore reprint the \pgls{ERD} from \cref{fig:erdStudent2} here.%
+\label{fig:erdStudent22}%
+]{\includegraphics[width=0.48\linewidth]{\conceptualSchemaEntitiesAndAttributesDir/erdStudent2}}%
+%
+\floatSep%
+%
+\subfloat[][%
+In \pgmodeler, we start with the same model as in \cref{fig:makeStudentTable:M}, however without the columns~\sqlil{name} and~\sqlil{mobile} and without their corresponding constraints in the \sqlil{student}~table. %
+We double-click on the table~\sqlil{student} to edit it.%
+\label{fig:newStudentDb01openProperties}%
+]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/newStudentDb01openProperties}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+We want tp add the columns~\sqlil{full_name} and~\sqlil{saltulation} to represent the flattened composite attribute~\sqlil{name}.%
+\label{fig:newStudentDb02addColumns}%
+]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/newStudentDb02addColumns}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+We add a column~\sqlil{full_name}, which is a variable-length string with maximum length~255 that must be~\sqlil{NOT NULL}. %
+We add a column~\sqlil{saltulation}, which is a variable-length string with maximum length~255. %
+We click~\menu{Apply}.%
+\label{fig:newStudentDb03columnsAdded}%
+]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/newStudentDb03columnsAdded}}}%
+%
+\caption{Creating a logical model represent students with a composite name attribute and multiple mobile phone numbers.}%
+\label{fig:newStudentDb}%
+\end{figure}%
+%
+\begin{figure}
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+Multi-valued attributes should go into their own table. %
+So we create a new table by right-clicking into our model and then selecting \menu{New>Schema object>Table}.%
+\label{fig:newStudentDb04newTable}%
+]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/newStudentDb04newTable}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+We will call the table~\sqlil{mobile} and click on \menu{Columns}, because we will now add several columns.%
+\label{fig:newStudentDb05newTableMobile}%
+]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/newStudentDb05newTableMobile}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+We will store the mobile phone and a reference to the student in this table. %
+Neither are necessarily unique (since the same person may enroll multiple times). %
+Thus, we need a surrogate key. %
+We create the column \sqlil{id} of type \sqlil{integer} and mark it as \menu{Identiy} which is (generated)~\menu{BY DEFAULT}. %
+This will be roughly equivalent to how we generated IDs in our factory example. %
+We click~\menu{Apply}.%
+\label{fig:newStudentDb06idGenerated}%
+]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/newStudentDb06idGenerated}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+We create a \sqlil{phone} number column in the same style we did in the first student~\db.%
+\label{fig:newStudentDb07phone}%
+]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/newStudentDb07phone}}}%
+%
+\caption{Creating a logical model represent students with a composite name attribute and multiple mobile phone numbers~(continued).}%
+\label{fig:newStudentDb:B}%
+\end{figure}%
+%
+\begin{figure}
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+We create a column~\sqlil{student}, which must have the same datatype as the \sqlil{student_id} column that holds the primary key of the table~\sqlil{student}.%
+\label{fig:newStudentDb08student}%
+]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/newStudentDb08student}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+We have created three columns and move on to create~\menu{Constraints}.%
+\label{fig:newStudentDb09columns}%
+]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/newStudentDb09columns}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+First we create a primary key constraint for the column~\sqlil{id}.%
+\label{fig:newStudentDb10idPk}%
+]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/newStudentDb10idPk}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+Then we re-create the mobile phone number checking constraint.%
+\label{fig:newStudentDb11phoneCheck}%
+]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/newStudentDb11phoneCheck}}}%
+%
+\caption{Creating a logical model represent students with a composite name attribute and multiple mobile phone numbers~(continued).}%
+\label{fig:newStudentDb:C}%
+\end{figure}%
+%
+\begin{figure}
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+Now we want to link the rows in this table to those in the table~\sqlil{student}. %
+We create a \sqlilIdx{FOREIGN KEY} constraint and call it \sqlil{mobile_student_id_fk}. %
+We select \sqlilIdx{FOREIGN KEY} as \menu{Type:}. %
+We then add the column~\sqlil{student} under \menu{Columns} and then click on \menu{Referenced Columns}.%
+\label{fig:newStudentDb12studentIdFk1}%
+]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/newStudentDb12studentIdFk1}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+There, we click on \menu{Table} and select the table~\sqlil{student} in the dialog that pops up.%
+\label{fig:newStudentDb13studentIdFkSelectTable}%
+]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/newStudentDb13studentIdFkSelectTable}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+We then click on \menu{Column:}, select \sqlil{student_id}, and add it via~\pgmodelerAddItem.%
+\label{fig:newStudentDb14studentIdFkSelectCol}%
+]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/newStudentDb14studentIdFkSelectCol}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+It appears in the columns list. %
+We are done and click~\menu{Apply}.%
+\label{fig:newStudentDb15studentIdFk2}%
+]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/newStudentDb15studentIdFk2}}}%
+%
+\caption{Creating a logical model represent students with a composite name attribute and multiple mobile phone numbers~(continued).}%
+\label{fig:newStudentDb:D}%
+\end{figure}%
+%
+\begin{figure}
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+We have created three columns and three constraints. %
+We click~\menu{Apply} to finally create our new table.%
+\label{fig:newStudentDb16mobileConstraints}%
+]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/newStudentDb16mobileConstraints}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+The model appears in crow's foot notation. %
+We can see both tables. %
+We see that each row in the table \sqlil{mobile} must be linked to exactly one row in the table~\sqlil{student}. %
+We see that each row in the table \sqlil{student} may be linked to arbitrarily many rows in the table~\sqlil{mobile}.%
+\label{fig:newStudentDb17model}%
+]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/newStudentDb17model}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+This is the model if exported as \pgls{SVG} graphic.%
+\label{fig:newStudentDb18model}%
+]{\includegraphics[width=0.65\linewidth]{\currentDir/newStudentDb18model}}%
+%
+%
+\caption{Creating a logical model represent students with a composite name attribute and multiple mobile phone numbers~(continued).}%
+\label{fig:newStudentDb:E}%
+\end{figure}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{teachingManagement/logical/student_database_2/generated_sql}{01_student_database_database_2001.sql}{}{}{}{postgres.sh}{logical:teachingManagment:student_database_2:01_student_database_database_2001}{%
+This auto-generated \sql\ script creates the \db~\sqlil{student_database}.%
+}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{teachingManagement/logical/student_database_2/generated_sql}{03_public_student_table_5071.sql}{student_database}{}{}{postgres.sh}{logical:teachingManagment:student_database_2:03_public_student_table_5071}{%
+This auto-generated \sql\ script creates the table~\sqlil{student}.%
+}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{teachingManagement/logical/student_database_2/generated_sql}{04_public_mobile_table_5081.sql}{student_database}{}{}{postgres.sh}{logical:teachingManagment:student_database_2:04_public_mobile_table_5081}{%
+This auto-generated \sql\ script creates the table~\sqlil{mobile}.%
+}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{teachingManagement/logical/student_database_2/generated_sql}{05_public_mobile_mobile_student_id_fk_constraint_5087.sql}{student_database}{}{}{postgres.sh}{logical:teachingManagment:student_database_2:05_public_mobile_mobile_student_id_fk_constraint_5087}{%
+This auto-generated \sql\ script adds the foreign key constraint to the table~\sqlil{mobile}.%
+}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{teachingManagement/logical/student_database_2}{insert_and_select.sql}{student_database}{}{}{postgres.sh}{logical:teachingManagment:student_database_2:insert_and_select}{%
+We now insert some data into the \sqlil{student} and \sqlil{mobile} tables and use a \sqlilIdx{JOIN} to select data from both.%
+}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{teachingManagement/logical/student_database_2}{cleanup.sql}{}{}{}{postgres.sh}{logical:teachingManagment:student_database_2:cleanup}{%
+We delete the \db\ again, so we can start with a clean slate in the next experiment.%
+}%
+%
+%
+We currently are in the business of translating entity types to the relational data model, i.e., to tables.
+When entity types have composite attributes, these get recursively divided into their components.
+Each component of the composite attribute that cannot further be divided becomes an column in the table for the entity type.
+Multi-valued attributes, i.e., attributes that can take on several values for each entity, instead need to go into their own, separate tables.
+Back when designing conceptual models, we had one variant of the \emph{Student} entity type design that had both a composite and a multi-valued attribute -- see \cref{fig:erdStudent2}.
+
+We will now use this example to also exercise these steps of the conceptual-to-logical model mapping step.
+We therefore reprint the \pgls{ERD} from \cref{fig:erdStudent2} here as \cref{fig:erdStudent22}.
+We already created a logical model for the \emph{Student} entity type just now in \cref{fig:makeStudentTable:M}.
+In that model, we had a simple attribute~\sqlil{name} and a single-valued attribute~\sqlil{mobile}.
+If we leave these two columns and the corresponding constraints away, then this model is a good starting point for translating \cref{fig:erdStudent2}.
+
+We either can create the exactly same model (without these columns and constraints) again in the \pgmodeler\ or we load the previous model and delete them.
+That's up to you.
+Either way, in \cref{fig:newStudentDb01openProperties} we begin with this modified model variant.
+The model has the \sqlil{student} table.
+We will first add the two new name-related columns.
+Therefore, we double-click on the table~\sqlil{student} to edit it.
+
+We want tp add the columns~\sqlil{full_name} and~\sqlil{saltulation} to represent the flattened composite attribute~\sqlil{name} in \cref{fig:newStudentDb02addColumns}.
+First, we add a column~\sqlil{full_name}, which is a variable-length string with maximum length~255 that must be~\sqlil{NOT NULL}.
+We insist that full names must always be provided for students.
+Then, we add the column~\sqlil{saltulation}, which is a variable-length string with maximum length~255.
+For this one, we do not require the \sqlil{NOT NULL} feature.
+If no salutation is provided, we simply assume that the full name can be used to addressed a student.
+After doing this \cref{fig:newStudentDb03columnsAdded}, we click~\menu{Apply}.
+
+Multi-valued attributes should go into their own table.
+We therefore need to create a second table in our logical model.
+We create a new table by right-clicking somewhere into our model~(but \emph{not} on the \sqlil{student} table) and then selecting \menu{New>Schema object>Table} in \cref{fig:newStudentDb04newTable}.
+A suitable name for this new table is \sqlil{mobile}.
+So we enter it as name.
+We then click on \menu{Columns}, because we will now add several columns in \cref{fig:newStudentDb05newTableMobile}.
+
+Our goal with this table is to store the mobile phone and a reference to the student in this table.
+Neither of them  are necessarily unique:
+The same person may enroll first as Bachelor's and then, after graduation, as Master's student.
+This means that their mobile phone number may occur multiple times.
+Since each student can have multiple mobile phone numbers, the primary key \sqlil{student_id} that we will need as foreign key is also not unique.
+
+This means that we need a surrogate key.
+We already used surrogate keys in our factory example back in \cref{sec:factoryCreatingTableAndInsertingData}.
+We will do exactly the same here.
+However, for the sake of convenience, we will do so in the \pgmodeler.
+We create the column \sqlil{id} of type \sqlil{integer}.
+We mark it as \menu{Identiy} which is (generated)~\menu{BY DEFAULT}.
+This will be roughly equivalent to how we generated IDs in \cref{sec:factoryCreatingTableAndInsertingData}.
+We do this in \cref{fig:newStudentDb06idGenerated} and then click~\menu{Apply}.
+
+The next column we create is for the mobile phone numbers.
+To avoid calling it \sqlil{mobile} as well, we here choose to call it \sqlil{phone}.
+This column must have the same features as the same column in the previous example:
+It is a fixed-length string of eleven characters and it must be~\sqlil{NOT NULL}.
+We create the column by clicking \menu{Apply} in \cref{fig:newStudentDb07phone}.
+
+Finally, we need a column to hold a the foreign key \sqlil{student_id} pointing to rows in the \sqlil{student} table.
+We therefore create a column~\sqlil{student}.
+Obviously, it must have the same datatype as our \sqlil{student_id} column in the \sqlil{student} table.
+This, too, happens to be a fixed-length string of eleven characters.
+Also obviously, it must be \sqlil{NOT NULL}, because each mobile phone entry must be related to one student record.
+We create this column in \cref{fig:newStudentDb08student}.
+
+We have created the three columns in \cref{fig:newStudentDb09columns} and move on to create~\menu{Constraints}.
+First we create a primary key constraint for the column~\sqlil{id} in \cref{fig:newStudentDb10idPk}.
+There is nothing new about that.
+Then we re-create the mobile phone number checking constraint in \cref{fig:newStudentDb11phoneCheck}, which is the same as in the previous example as well.
+
+Finally, we want to link the rows in the table \sqlil{mobile} to those in the table~\sqlil{student}.
+We create a \sqlilIdx{FOREIGN KEY} constraint and call it \sqlil{mobile_student_id_fk}.
+We select \sqlilIdx{FOREIGN KEY} as \menu{Type:}.
+We then add the column~\sqlil{student} under \menu{Columns} and then click on \menu{Referenced Columns} in \cref{fig:newStudentDb12studentIdFk1}.
+In the \menu{Reference Columns} view, we click on the \menu{Table} bar.
+In the dialog that pops up in \cref{fig:newStudentDb13studentIdFkSelectTable}, we navigate to the \sqlil{public} schema, open the \menu{Table} list, and select the table~\sqlil{student}.
+We then click on \menu{Column:}, select \sqlil{student_id}, and add it via by pressing the
+\menu{Add Items}~\pgmodelerAddItem button in \cref{fig:newStudentDb14studentIdFkSelectCol}.
+The \sqlil{student_id} column appears in the columns list.
+We are done and click~\menu{Apply} in \cref{fig:newStudentDb15studentIdFk2}.
+
+\Cref{fig:newStudentDb16mobileConstraints} shows the three constraints that we have created.
+We click~\menu{Apply} to finally create our new table.
+The model appears in crow's foot notation in \cref{fig:newStudentDb17model}.
+We can see both tables.
+We see that each row in the table \sqlil{mobile} must be linked to exactly one row in the table~\sqlil{student}.
+We see that each row in the table \sqlil{student} may be linked to arbitrarily many rows in the table~\sqlil{mobile}.
+This is a bit different from before, as now students are permitted to exist that do not have a mobile phone number associated with themselves.
+But this is also OK, so let's not fuss about it too much.
+
+We can again export the model as \pgls{SVG} graphic.
+\Cref{fig:newStudentDb18model} shows how nice it looks {\dots} just compare how much better a vector graphic looks compared to a pixel graphic~(\cref{fig:newStudentDb17model}).
+
+We can also export this model to \sql, as we did before.
+This time, we get four scripts.
+The first one, \cref{lst:logical:teachingManagment:student_database_2:01_student_database_database_2001}, again creates the \sqlil{student_database}~\db.
+The second one, \cref{lst:logical:teachingManagment:student_database_2:03_public_student_table_5071}, creates the \sqlil{student} table.
+
+The third script, here given as \cref{lst:logical:teachingManagment:student_database_2:04_public_mobile_table_5081}, creates the \sqlil{mobile} table.
+We notice that the primary key is created as \sqlil{id integer NOT NULL GENERATED BY DEFAULT AS IDENTITY}.
+This is almost exactly the same way in which we created the primary key for the \sqlil{product} table back in \cref{lst:factory:create_table_product}.
+The only difference is that \pgmodeler\ likes to express the integer type as \sqlil{integer} and there we used~\sqlilIdx{INT}.
+Both types are synonymous.
+
+The foreign key constraint is not included in \cref{lst:logical:teachingManagment:student_database_2:04_public_mobile_table_5081}.
+Instead, it went into its own script, here reproduced as \cref{lst:logical:teachingManagment:student_database_2:05_public_mobile_mobile_student_id_fk_constraint_5087}.
+Instead of directly including it when the table is created, the table is later changed~(\sqlilIdx{ALTER TABLE}).
+The constraint is added via \sqlilIdx{ADD CONSTRAINT}.
+Apart from this and some additional behavior specifications that we will ignore here, it looks not much different from the \sqlilIdx{REFERENCES} statement we used when creating our factory's \sqlil{demand} table back in \cref{lst:factory:create_table_demand}.
+Well, it looks different, because now it is explicitly defined as constraint instead of being declared inline.
+But it clearly is the same.
+
+We execute all four scripts.
+Their output in \cref{exec:logical:teachingManagment:student_database_2:01_student_database_database_2001,exec:logical:teachingManagment:student_database_2:04_public_mobile_table_5081,exec:logical:teachingManagment:student_database_2:04_public_mobile_table_5081,exec:logical:teachingManagment:student_database_2:05_public_mobile_mobile_student_id_fk_constraint_5087} shows that everything went successfully.
+
+Let us now also use the \db\ a bit.
+For this, we again manually write another \sql~script.
+In \cref{lst:logical:teachingManagment:student_database_2:insert_and_select}, we first insert some rows into the \sqlil{student} table.
+Mr.~Bibbo and Mr.~Bebbo enroll into our university.
+We also store three mobile phone numbers, two for Mr.~Bibbo and one for Mr.~Bebbo.
+The rows in the \sqlil{mobile} table reference the rows in the \sqlil{student} table via the \sqlil{student} column referencing the foreign key~\sqlil{student_id}.
+We do not need to specify values for the \sqlil{id} column of the \sqlil{mobile} table, as this one will automatically be filled with sequential values.
+Then, we \sqlil{SELECT}\sqlIdx{SELECT FROM} the full names of the students associated with each mobile phone via an \sqlilIdx{INNER JOIN}.
+The output for this script, given in \cref{lst:logical:teachingManagment:student_database_2:insert_and_select}, shows that both \sqlilIdx{INSERT INTO} commands were successful and that \sqlil{SELECT} gives us the expected result.
+
+Finally, we delete the \db\ again in \cref{lst:logical:teachingManagment:student_database_2:cleanup}.
+With this, we are able to translate single entity types to the relational data model.
+We are then also able to create the corresponding logical model in a comfortable editor~(\pgmodeler), that offers us an \pgls{ERD}-like visual syntax.
+We can export these models to~\sql.
+And we can then push these \sql~scripts to the \postgresql\ server.
 \FloatBarrier%
 \endhsection%
 %

@@ -196,7 +196,7 @@ We now want to double-check whether everything went well.
 First, we need to investigate whether the \postgresql\ \pgls{dbms} \pgls{server} is indeed installed and running properly.
 We can do this by invoking \bashil{systemctl status postgresql} in \cref{fig:installingPostgresUbuntu06systemctlCheckStatus}.
 The output on my laptop computer, given in \cref{fig:installingPostgresUbuntu07systemctlCheckStatusRes}, indicates that the service is up and running.
-Notice \textil{active} means that the \pgls{dbms} is started everytime your computer boots and runs all the time (until you shutdown your computer, that is).
+Notice \textil{active} means that the \pgls{dbms} is started everytime your computer boots and runs all the time~(until you shutdown your computer, that is).
 Running this program opens some sort of paginated mode, which we can leave by hitting~\keys{q+\enter} in \cref{fig:installingPostgresUbuntu08systemctlCheckStatusQ}.%
 %
 \begin{sloppypar}%
@@ -229,9 +229,9 @@ For the first time, we are now in the \psql\ \pgls{client} and are connected to 
 We see the prompt \expandafter\textil{postgres=\#} in \cref{fig:installingPostgresUbuntu13PsqlPrompt}.%
 %
 \begin{sloppypar}%
-To set the password for the user (or role) \sqlil{postgres}, we type in \sqlil{ALTER USER postgres PASSWORD 'XXX';}\sqlIdx{ALTER!USER} in \cref{fig:installingPostgresUbuntu14PsqlAlterUserPassword}.
+To set the password for the user~(or role) \sqlil{postgres}, we type in \sqlil{ALTER USER postgres PASSWORD 'XXX';}\sqlIdx{ALTER!USER} in \cref{fig:installingPostgresUbuntu14PsqlAlterUserPassword}.
 (This is equivalent to \sqlIdx{ALTER!ROLE}\sqlil{ALTER ROLE postgres PASSWORD 'XXX';} in \postgresql.)
-This is actually an \sql\ command and we may (or may not) learn later what this exactly means (once and if I get to write such a chapter).
+This is actually an \sql\ command and we may~(or may not) learn later what this exactly means~(once and if I get to write such a chapter).
 This would set the password to \textil{XXX}.
 Obviously, this is not the secure password that we are going to use.
 Instead, you will not type \textil{XXX} but a secure password of your choosing.
@@ -241,7 +241,7 @@ We hit~\keys{\enter}.%
 %
 In \cref{fig:installingPostgresUbuntu15PsqlAlterUserPasswordDone}, we see that this prints \sqlil{ALTER ROLE}\sqlIdx{ALTER!USER}\sqlIdx{ALTER!ROLE} back to us.
 It shows us the command that was performed.
-We did alter the role (or user) \textil{postgres}.
+We did alter the role~(or user) \textil{postgres}.
 The new password is set.
 You will learn how to use that another time.
 

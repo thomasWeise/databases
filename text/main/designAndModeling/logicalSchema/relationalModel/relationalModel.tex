@@ -37,7 +37,7 @@ Relations can also be the parameter of an \sqlilIdx{INSERT INTO} statement.
 Thus, relations are a quite versatile concept to represent our data.
 
 Notice that a relation is a \emph{set} of tuples.
-Since a set cannot contain the same element twice, this means that duplicate tuples (rows, records) are not permitted in relations by definition~\cite{C20245YOQ}.
+Since a set cannot contain the same element twice, this means that duplicate tuples~(rows, records) are not permitted in relations by definition~\cite{C20245YOQ}.
 As a deviation from the pure formalism, the \sql\ language does permit duplicate tuples in tables and query results~\cite{C20245YOQ}.
 Sets are also not ordered, so there is no default order of the tuples in relations either.
 
@@ -47,7 +47,7 @@ This idea was later abandoned.
 Today, the order of columns are unimportant and the columns of a table must have unique names~\cite{S2024D:LDMRMRA}.
 The values of attributes are atomic, i.e., there are no multi-valued attributes and no composite attributes~\cite{S2024D:LDMRMRA,SS2005EIDDDFDB:SDLDUTRDM}.
 
-The degree of a relation is defined as follows (please to not mix this up with the degree of a \emph{relationship} discussed in \cref{def:degreeOfRelationship}):%
+The degree of a relation is defined as follows~(please to not mix this up with the degree of a \emph{relationship} discussed in \cref{def:degreeOfRelationship}):%
 %
 \begin{definition}[Degree of a Relation]%
 The \emph{degree} of a relation is the number~$n$ of its attributes.%
@@ -73,7 +73,7 @@ Since the first rule is called \emph{Rule~0}, the thirteen rules are referred to
 \item Information Rule:~All information in a relational database is represented explicitly at the logical level and in exactly one way -- by values in tables.
 This includes even table names, column names, and column types, which, too, must be stored in a table.
 Such special tables that store the structure of a \db\ are usually part of the built-in system catalog.
-This system catalog holds the metadata of the system and is (or is part of) a relational \db\ itself.
+This system catalog holds the metadata of the system and is~(or is part of) a relational \db\ itself.
 
 Remember back when we first began working with \postgresql\ in our very first, very simple example?
 In \cref{sec:simpleExample:createUser}, we started by creating a new user for the \pglspl{dbms} called \sqlil{boss}.
@@ -82,9 +82,9 @@ We checked the list of existing users by writing \sqlil{SELECT usename FROM pg_c
 When we connected to our \db\ using \libreofficeBase, we saw lots of strange tables in \cref{fig:factoryLibreOfficeBaseConnect12openingScreen}.
 These belong to the system catalog.%
 %
-\item Guaranteed Access Rule:~Each and every datum (atomic value) in a relational \db\ is guaranteed to be accessible via a combination of table name, primary key value, and column name.%
+\item Guaranteed Access Rule:~Each and every datum~(atomic value) in a relational \db\ is guaranteed to be accessible via a combination of table name, primary key value, and column name.%
 %
-\item Systematic Treatment of Missing Values Rule:~\sqlilIdx{NULL} values (distinct from the empty character string or a string of blank characters, and distinct from zero or any other number) are supported in fully relational \pgls{dbms} for representing missing information and inapplicable information in a systematic way (independent of data type).
+\item Systematic Treatment of Missing Values Rule:~\sqlilIdx{NULL} values~(distinct from the empty character string or a string of blank characters, and distinct from zero or any other number) are supported in fully relational \pgls{dbms} for representing missing information and inapplicable information in a systematic way (independent of data type).
 
 This rule has been a point of arguments over meany years~\cite{C20245YOQ}:
 Real data does include unspecified elements.
@@ -97,12 +97,12 @@ We could imagine that the domain of each attributes contains the additional valu
 %
 \item Comprehensive Data Sublanguage Rule:~A relational system must support at least one language whose statements are expressible per some well-defined syntax as character strings; and which supportings all of the following items:%
 \begin{enumerate}%
-\item data definition (e.g., creating tables),%
-\item view definition (creating views),%
-\item data manipulation (e.g., adding and deleting of data),%
-\item integrity constraints (e.g., limits on data range, foreign keys, \dots),%
-\item authorization (e.g., user managenment), and%
-\item transaction boundaries (begin, commit, and rollback).%
+\item data definition~(e.g., creating tables),%
+\item view definition~(creating views),%
+\item data manipulation~(e.g., adding and deleting of data),%
+\item integrity constraints~(e.g., limits on data range, foreign keys, \dots),%
+\item authorization~(e.g., user managenment), and%
+\item transaction boundaries~(begin, commit, and rollback).%
 \end{enumerate}
 In the case of our book, this language is \sql.
 Of course, one could conceive and support also other languages.%
@@ -121,7 +121,7 @@ Let's say we split a table into two tables and distribute the rows into either p
 We can then design a view that merges the two tables~(using \sqlilIdx{UNION}).
 An application sitting on top of that will not see any change.%
 %
-\item Integrity Independence Rule:~Integrity constraints specific to a particular relational database must be definable in the relational data sublanguage and storable in the catalog (not in the application programs).
+\item Integrity Independence Rule:~Integrity constraints specific to a particular relational database must be definable in the relational data sublanguage and storable in the catalog~(not in the application programs).
 We did this several times, for example with the \sqlilIdx{PRIMARY KEY} constraint, the \sqlilIdx{REFERENCES} constraint, and the \sqlil{CHECK}\sqlIdx{CONSTRAINT!CHECK} constraint back in \cref{sec:factoryCreatingTableAndInsertingData}.
 All of them were defined in \sql.
 %
@@ -131,7 +131,7 @@ This means that a \pgls{dbms} \emph{may} store data distributed over several dif
 In this case, the \pgls{dbms} must take care of dividing the queries to the corresponding nodes and re-assemble the results.
 If a \pgls{dbms} does not support distribution of data over a network, then it automatically fulfills this rule.%
 %
-\item Non-Subversion Rule:~If a relational system has a low level (single-record-at-a-time) language, that low level cannot be used to subvert or bypass the integrity rules and constraints expressed in the higher level relational language (multiple-records-at-a-time).
+\item Non-Subversion Rule:~If a relational system has a low level~(single-record-at-a-time) language, that low level cannot be used to subvert or bypass the integrity rules and constraints expressed in the higher level relational language~(multiple-records-at-a-time).
 In other words, a \pgls{dbms} must support at least one relational language~(Rule~5), but it may support any other access languages or programming interfaces as well, some of which may work on single records, some may not be relational and so on.
 However, none of these access methods must be allowed to violate the integrity of the relational data.%
 %

@@ -23,7 +23,7 @@ Now we will see that we can also \emph{use} these contents of other tables direc
 Get the per-customer demands.%
 }%
 %
-We now want to have a list of all of our customers, and for each customer we want to see the \sqlil{id} values of all of the demands (orders) they have issued.
+We now want to have a list of all of our customers, and for each customer we want to see the \sqlil{id} values of all of the demands~(orders) they have issued.
 We now step-by-step build the query used in \cref{lst:factory:select_customer_demand}.
 So the result of our query should have two columns.
 The first column should hold the customer names.
@@ -255,9 +255,9 @@ Bebba purchased for over 2570元 and Bibbo sent about 2433元 to us.
 
 The top-selling product, by far, is our famous \inQuotes{Shoe, Size 42.}
 We sold 12 pairs of it for about 1956元.
-Figuratively speaking, \inQuotes{Shoe, Size 42} is the runner up (hehe) with 1590元 for ten pairs sold.
+Figuratively speaking, \inQuotes{Shoe, Size 42} is the runner up~(hehe) with 1590元 for ten pairs sold.
 Many of our customers also liked to by \inQuotes{Large Purse.}
-No wonder that customers love it, as it offers 10g of product per 元 (see \cref{exec:factory:select_from_table_product}).
+No wonder that customers love it, as it offers 10g of product per~元~(see \cref{exec:factory:select_from_table_product}).
 
 It is interesting to briefly think about how the above works.
 On the top level, we have an \sql\ query that selects from data from the view \sqlil{sale}.
@@ -265,7 +265,7 @@ Fine, you already have a feeling about how such queries work.
 But remember: \sqlil{sale} is \emph{not} a table.
 It itself is just a query!
 So what happens here is that the query stored as view \sqlil{sale} is executed.
-Its results are taken and then on top of these results, the new query that sums up the customer purchases (or the product purchases) is executed.
+Its results are taken and then on top of these results, the new query that sums up the customer purchases~(or the product purchases) is executed.
 The results of \sqlil{sale} are not stored.
 \sqlil{sale} is not a table.
 Instead, whenever we access it, the query it represents is executed.
@@ -300,7 +300,7 @@ Instead, it was referenced by pointing to another table via its id~2.
 This made the data hard to read.
 But now we know how we can put the records back together.
 
-Admittedly, the sales query that pulls all the data together (given in \cref{lst:factory:create_view_sale}) is not very easy to read if you are new to \sql.
+Admittedly, the sales query that pulls all the data together~(given in \cref{lst:factory:create_view_sale}) is not very easy to read if you are new to \sql.
 On one hand, once you are more familiar with \sql, such queries become a joy to write.
 On the other hand, we also can simply store the query in the \db\ as a so-called \emph{view}.
 We can re-use this view whenever we want.

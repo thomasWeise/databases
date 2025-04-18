@@ -80,7 +80,7 @@ Before IDS and IMS, this had to be part of your application's code.
 Actually, it had to be part of the code of \emph{all} applications that accessed the data, if multiple such applications exist~\cite{BBP2007TBOI}.
 Now this is part of IDS and IMS, and the user can ignore this complexity and just use a simple programming language where she can define which record to load, change, delete, or add.%
 %
-\cquotation{C1970ARMODFLSDB}{Future users of large data banks must be protected from having to know how the data is organized in the machine (the internal representation).}%
+\cquotation{C1970ARMODFLSDB}{Future users of large data banks must be protected from having to know how the data is organized in the machine~(the internal representation).}%
 %
 In \citeyear{C1970ARMODFLSDB}, the seminal paper \emph{\citetitle{C1970ARMODFLSDB}} by \citeauthor{C1970ARMODFLSDB} appeared, starting with the above quote.
 He noticed the shortcomings of the IDS network model, namely that the programmers accessing the data still need a lot of information about how the data is actually represented and organized internally.
@@ -89,9 +89,9 @@ Even \citeauthor{B2009TOOTIDSITFDAD} himself mentioned that issues with IDS aros
 He models data as a relational view by using tables, that he calls \emph{relations}.
 Each column has a type that defines its permitted values.
 Each row must be distinct.
-One set of columns per table (usually a single column), the \emph{primary key}, is used to uniquely identify the row.
+One set of columns per table~(usually a single column), the \emph{primary key}, is used to uniquely identify the row.
 Rows in one table can references other rows of either the same table or another table.
-Therefore, some column(s) of the table (called \emph{foreign key}) then store the primary key of the row to be reference.
+Therefore, some column(s) of the table~(called \emph{foreign key}) then store the primary key of the row to be reference.
 The data in the \pgls{db} is then a collection of tables.
 He further describes a set of operations that can work on the tables to extract information, which we will discuss later on.
 By the end of the 1970s, over a dozen \pglspl{dbms} had been implemented based on these new concepts~\cite{K1979RDS}.
