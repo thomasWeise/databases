@@ -1,4 +1,5 @@
 \hsection{\crowsFoot{C}{O1}{D}{M1}}%
+\label{sec:rm:cd}%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{CD_tables.sql}{relationships}{}{}{postgres.sh}{CD_tables}{%
 The three-table realization of a \crowsFoot{C}{O1}{D}{M1} conceptual relationship.%
@@ -28,6 +29,7 @@ The consequence is that these elements must be created first, as shown in~\cref{
 It is impossible to insert a row into table~\sqlil{c} that references a row in table~\sqlil{d} that is already referenced by another row in table~\sqlil{c}, as shown in \cref{lst:CD_insert_error}.
 Neither can we insert a row into table~\sqlil{c} that does \emph{not} reference any row in table~\sqlil{d}, because of the \sqlil{NOT NULL} constraint, nor can we create a row in table~\sqlil{c} that references multiple rows in table~\sqlil{d}, since the foreign key attribute~\sqlil{d} of table~\sqlil{c} can only take on one value.
 Notice that, together, this also means there can never be fewer entities of type~D than entities of type~C.%
+%
 \FloatBarrier%
 \endhsection%
 %

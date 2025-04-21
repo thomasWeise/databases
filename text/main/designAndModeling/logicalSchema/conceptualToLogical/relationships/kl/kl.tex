@@ -1,0 +1,35 @@
+%
+\hsection{\crowsFoot{K}{M1}{L}{OM}}%
+\label{sec:rm:kl}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{KL_tables.sql}{relationships}{}{}{postgres.sh}{KL_tables}{%
+The realization of a \crowsFoot{K}{M1}{L}{OM} conceptual relationship.%
+}%
+\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{KL_insert_and_select.sql}{relationships}{}{}{postgres.sh}{KL_insert_and_select}{%
+Inserting into and selecting data from the realization of an \crowsFoot{K}{M1}{L}{OM} conceptual relationship given in \cref{lst:KL_tables}.%
+}%
+%
+We have the two entity types~K and~L.
+Each entity of type~K may be connected to zero, one, or multiple entities of type~L.
+Each entity of type~L is connected to exactly one entity of type~K.
+
+We need a table~\sqlil{k} for the entities of type~K and a table~\sqlil{l} for the entities of type~L.
+Every row of table~\sqlil{l} must be related to exactly one row of table~\sqlil{k}.
+The three table solution from the \crowsFoot{E}{O1}{F}{OM} scenario therefore makes no sense:
+The third table could never have few rows, it would always have exactly as many rows as~\sqlil{l}.
+
+The only sensible solution is to add a foreign key column to table~\sqlil{l} that references the primary key of table~\sqlil{k}, as shown in \cref{lst:KL_tables}.
+Since the relationship is mandatory, the column must be~\sqlil{NOT NULL}.
+It does not need to be unique, because each row in table~\sqlil{k} can be related to arbitrarily many rows in~\sqlil{l}.
+
+It is impossible to add a row to table~\sqlil{l} without providing an existing value of the primary key attribute~\sqlil{id} of table~\sqlil{k} for the foreign key column~\sqlil{k}.
+In other words, because of the \sqlil{REFERENCES} and the \sqlil{NOT NULL} constraint, each row in table~\sqlil{l} must reference exactly one row in table~\sqlil{k}.
+It cannot reference more than one row, because the atttribute~\sqlil{k} can only take on a single value.
+In turn, the rows in table~\sqlil{k} can be referenced by arbitrarily many rows in table~\sqlil{l}.
+Maybe by no row at all, maybe by one, maybe be hundreds.
+This is exactly the meaning of the \inQuotes{optionally-many} relationship end pointing towards entity type~L.
+In \cref{lst:KL_insert_and_select}, we insert some rows into both tables and combine the data together using a single \sqlilIdx{INNER JOIN}.%
+%
+\FloatBarrier%
+\endhsection%
+%

@@ -116,7 +116,7 @@ It is important to understand how to interpret the cardinalities and modalities 
 The participation of an entity depends on the \emph{other} end.
 Let's take \crowsFoot{K}{M1}{L}{OM} as example.
 First, place your finger on the~K as say \inQuotes{Each~K has\dots}.
-Now move your finger towards the~L and read the relationship end there says:~\inQuotes{{\dots}one to many~L.}~\cite{SE:DA:2016HDIRENCFTCTNL}.
+Now move your finger towards the~L and read the relationship end there says:~\inQuotes{{\dots}zero, one, or many~L.}~\cite{SE:DA:2016HDIRENCFTCTNL}.
 Then place your finger on the~L an say \inQuotes{Each~L has\dots}.
 Move the finger to the~K and read the relationship end touching the~K.
 This means that~\inQuotes{{\dots}exactly one~K.}
@@ -125,54 +125,80 @@ To be on the safe side, let's write down the meaning of each of them based on \c
 %
 \begin{itemize}%
 %
-\item \crowsFoot{A}{O1}{B:}{O1} Each~A may be linked to zero or one~B. Each~B may be linked to zero or one~A.~\cite{BS2023G:CFNIERD}\\%
+\item \crowsFoot{A}{O1}{B:}{O1} %
+Each entity of type~A may be linked to zero or one entity of type~B.
+Each entity of type~B may be linked to zero or one entity of type~A.~\cite{BS2023G:CFNIERD}\\%
 \emph{Example:}~When issuing an order for goods online, a customer may enter a discount code.
 Each discount code must be used at most once.
 At most one discount code can be used for an order.~\cite{BS2023G:CFNIERD}\\%
-\emph{Example:}~One person maybe married to another person.~\cite{R2024CDS:E}%
+\emph{Example:}~One person maybe married to another person.~\cite{R2024CDS:E}\\%
+See later in \cref{sec:rm:ab}.%
 %
-\item \crowsFoot{C}{O1}{D:}{M1} Each~C must be linked to exactly one~D. Each~D may be linked to zero or one~C.~\cite{T2025CDBMS:ERM}\\%
+\item \crowsFoot{C}{O1}{D:}{M1}
+Each entity of type~C must be linked to exactly one entity of type~D.
+Each entity of type~D may be linked to zero or one entity of type~C.~\cite{T2025CDBMS:ERM}\\%
 \emph{Example:}~Each office in an office building may host zero or one salespersons.
 Each salesperson must have one office.~\cite{T2025CDBMS:ERM}\\%
 \emph{Example:}~A professor may be the dean of school or not be a dean.
-A school must have exactly one dean.~\cite{R2024CDS:E}%
+A school must have exactly one dean.~\cite{R2024CDS:E}\\%
+See later in \cref{sec:rm:cd}.%
 %
-\item \crowsFoot{E}{O1}{F:}{OM} Each~E may be linked to zero, one, or many~F. Each~F may be linked to at most one~E.~\cite{MA2006MAC:DMERDED}\\%
+\item \crowsFoot{E}{O1}{F:}{OM}
+Each entity of type~E may be linked to zero, one, or many entities of type~F.
+Each entity of type~F may be linked to zero or one entity of type~E.~\cite{MA2006MAC:DMERDED}\\%
 \emph{Example:}~Assume that for bank accounts, two addresses may be associated:
 A home address is required~(not relevant for this example).
 Additionally, a bank account may be linked to zero or one postal address.
-Each address may be the postal address of zero, one, or many bank accounts.~\cite{MA2006MAC:DMERDED}%
+Each address may be the postal address of zero, one, or many bank accounts.~\cite{MA2006MAC:DMERDED}\\%
+See later in \cref{sec:rm:ef}.%
 %
-\item \crowsFoot{G}{O1}{H:}{MM} Each~G is related at least one, but maybe many~H. Each~H may or may not be linked to a~G, but never to more than one~G.%
+\item \crowsFoot{G}{O1}{H:}{MM}
+Each entity of type~G is related at least one, but maybe many entities of type~H.
+Each entity of type~H is linked to zero or one entity of type~G.\\%
+See later in \cref{sec:rm:gh}.%
 %
-\item \crowsFoot{I}{M1}{J:}{M1} Each~I must be associated with exactly one~J. Each~J must be associated with exactly one~I.\\%
+\item \crowsFoot{I}{M1}{J:}{M1}
+Each entity of type~I must be associated with exactly one entity of type~J.
+Each entity of type~J must be associated with exactly one entity of type~I.\\%
 \emph{Example:}~In a company, one salesperson must be the backup for each~(other) salesperson.
-Each salesperson is the backup of one salesperson.~\cite{T2025CDBMS:ERM}%
+Each salesperson is the backup of one salesperson.~\cite{T2025CDBMS:ERM}\\%
+See later in \cref{sec:rm:ij}.%
 %
-\item \crowsFoot{K}{M1}{L:}{OM} Each~K may be linked to zero or many~L. Each~L must be linked to exactly one~K.~\cite{MA2006MAC:DMERDED,BS2023G:CFNIERD}\\%
+\item \crowsFoot{K}{M1}{L:}{OM}
+Each entity of type~K may be linked to zero, one, or many entities of type~L.
+Each entity of type~L must be linked to exactly one entity of type~K.~\cite{MA2006MAC:DMERDED,BS2023G:CFNIERD}\\%
 \emph{Example:}~A customer may issue zero or arbitrarily many orders for products.
 However, each order must be linked to exactly one customer.~\cite{BS2023G:CFNIERD}\\%
 \emph{Example:}~A bank account may take part in zero, one, or many bank transfers as source account.
 However, each bank transfer must have exactly one source bank account.~\cite{MA2006MAC:DMERDED}\\%
 \emph{Example:}~Each customer is handled by exactly one salesperson.
-A salesperson may not have any customers, one customer, or many customers.~\cite{T2025CDBMS:ERM}%
+A salesperson may not have any customers, one customer, or many customers.~\cite{T2025CDBMS:ERM}\\%
+See later in \cref{sec:rm:kl}.%
 %
-\item \crowsFoot{M}{M1}{N:}{MM} Each~M is related to at least one and possibly multiple~N. Each~N is related to exactly one~M.~\cite{BS2023G:EDFAHMSCFN}\\%
+\item \crowsFoot{M}{M1}{N:}{MM}
+Each entity of type~M is related to at least one and possibly multiple entities of type~N.
+Each entity of type~N is related to exactly one entity of type~M.~\cite{BS2023G:EDFAHMSCFN}\\%
 \emph{Example:}~A patient can make several appointments~(to visit doctors).
 Each appointment is linked to exactly one patient.~\cite{BS2023G:EDFAHMSCFN}\\%
 \emph{Example:}~A school of a university must consist of at least one, but possibly many departments.
 Each department must belong to exactly one school.~\cite{R2024CDS:E}%
 %
-\item \crowsFoot{O}{OM}{P:}{OM} Each~O may be related to zero, one, or multiple~P. Each~P may be related to zero, one, or multiple~Q.\\%
+\item \crowsFoot{O}{OM}{P:}{OM}
+Each entity of type~O may be related to zero, one, or multiple entities of type~P.
+Each entity of type~P may be related to zero, one, or multiple entities of type~Q.\\%
 \emph{Example:}~A pizza shop sells pizza to customers.
 A pizza may be ordered by zero, one, or many customers.
 A customer may not order pizza~(maybe the want to eat something else), or order one pizza, or order multiple pizzas.~\cite{FCC2016D:CFNRSAHTRD}%
 %
-\item \crowsFoot{Q}{OM}{R:}{MM} Each~Q must be linked to at least one~R, i.e, one or many~R. Each~R may be related to zero or many~Q.~\cite{BS2023G:CFNIERD}\\%
+\item \crowsFoot{Q}{OM}{R:}{MM}
+Each entity of type~Q must be linked to at least one entity of type~R, i.e, one or many entities of type~R.
+Each entity of type~R may be related to zero, one, or many entities of type~Q.~\cite{BS2023G:CFNIERD}\\%
 \emph{Example:}~When placing an order for products online, the order must be for at least one product.
 Each product may be referenced by zero, one, or many orders.~\cite{BS2023G:CFNIERD}%
 %
-\item \crowsFoot{S}{MM}{T:}{MM} Each~S is linked to at least one~T. Each~T is linked to at least one~S.~\cite{T2025CDBMS:ERM}\\%
+\item \crowsFoot{S}{MM}{T:}{MM}
+Each entity of type~S is linked to at least one, but maybe many entities of type~T.
+Each entity of type~T is linked to at least one, but maybe many entities of type~S.~\cite{T2025CDBMS:ERM}\\%
 \emph{Example:}~Each salesperson sells at least one product but may also sell more than one product.
 Each product by be sold by one salesperson, but also by many salespeople.~\cite{T2025CDBMS:ERM}
 %

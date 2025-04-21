@@ -1,5 +1,6 @@
 %
 \hsection{\crowsFoot{G}{O1}{H}{MM}}%
+\label{sec:rm:gh}%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{GH_tables.sql}{relationships}{}{}{postgres.sh}{GH_tables}{%
 The realization of an \crowsFoot{G}{O1}{H}{MM} conceptual relationship.%
@@ -7,6 +8,18 @@ The realization of an \crowsFoot{G}{O1}{H}{MM} conceptual relationship.%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{GH_insert_and_select.sql}{relationships}{}{}{postgres.sh}{GH_insert_and_select}{%
 Inserting into and selecting data from the realization of an \crowsFoot{G}{O1}{H}{MM} conceptual relationship given in \cref{lst:GH_tables}.%
+}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{GH_insert_error_1.sql}{relationships}{}{}{postgres.sh}{GH_insert_error_1}{%
+Trying to first create a row in table~\sqlil{g} and then creating the relationship to a row in table~\sqlil{h} by creating a row in \sqlil{relate_g_and_h}:~This does not work.%
+}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{GH_insert_error_2.sql}{relationships}{}{}{postgres.sh}{GH_insert_error_2}{%
+Trying to first create a relationship entry in table~\sqlil{relate_g_and_h} and then adding the corresponding row to table~\sqlil{g}:~This does not work either.%
+}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{GH_insert_error_3.sql}{relationships}{}{}{postgres.sh}{GH_insert_error_3}{%
+Trying to relate a row in table~\sqlil{h} to more than one row in table~\sqlil{g}. This is forbidden.%
 }%
 %
 We have the two entity types~G and~H.
@@ -61,9 +74,13 @@ Let us check what we have done:
 
 Can we insert a row into table~\sqlil{g} that is not related to at least one row in table~\sqlil{h}?
 No, we cannot.
-Inserting a row in~\sqlil{g} requires that the tuple~\sqlil{(id, h)} of the primary key~\sqlil{id} and the referenced entity of type~H correctly references one row in~\sqlil{relate_g_and_h}.
-Such rows always hold pairs of rows in~\sqlil{g} and \sqlil{h}.
+Inserting a row in~\sqlil{g} requires that the tuple~\sqlil{(id, h)} of the primary key~\sqlil{id} and the referenced entity of type~H correctly references one existing row in~\sqlil{relate_g_and_h}.
+Trying to violate this requirement fails with an error, as illustrated in \cref{lst:GH_insert_error_1}.
+Such rows in \sqlil{relate_g_and_h} always hold pairs of the primary keys of rows in~\sqlil{g} and \sqlil{h}.
 Since we enforce that the primary key of our new row is part of such a pair~(because it is part of the foreign key), there must be a corresponding row in~\sqlil{h}.
+In other words, we require one existing row in \sqlil{relate_g_and_h} to hold a reference to the \sqlil{id} of the to-be-created row in table~\sqlil{g}.
+Creating this row in \sqlil{relate_g_and_h} first, even if we would know what value the primary key~\sqlil{id} of the to-be-created row in table~\sqlil{g} will have, does not work.
+Because this would violate the foreign key \sqlil{REFERENCES} constraint of the column~\sqlil{g} of table~\sqlil{relate_g_and_h}, as shown in \cref{lst:GH_insert_error_2}.
 
 But could we insert a row in table~\sqlil{relate_g_and_h} that does not relate one row in~\sqlil{g} to another row in~\sqlil{h}, that maybe has invalid or non-existing values?
 No, we cannot, because both of the columns of that table are bound by~\sqlil{REFERENCES} constraints.
@@ -90,7 +107,7 @@ Checking of constraints that are deferrable can be postponed until the end of th
 %
 In \postgresql~(and probably several other \pglspl{dbms}), constraints are checked at the end of a command's execution.
 Indeed, a single command in \postgresql\ behave like transactions~\cite{PGDG:T}, meaning that reference integrity constraints are checked at at the end of the command execution and the changes are committed to the data if the constraints are met and rolled back otherwise.
-To insert a row into table~\sqlil{g}, we also need to insert a record into table~\sqlil{relate_g_to_h} that relates this new row to one row in table~\sqlil{h}.
+To insert a row into table~\sqlil{g}, we also need to insert a record into table~\sqlil{relate_g_and_h} that relates this new row to one row in table~\sqlil{h}.
 If we can wrap these two insertions into a single \sql\ command, then things might work.%
 %
 \begin{sloppypar}%
@@ -130,6 +147,8 @@ By this time, the referential integrity has been established, since we inserted 
 \end{sloppypar}%
 %
 Relating the rows in~\sqlil{g} to additional rows in~\sqlil{h} is then much easier and can be done with single \sqlilIdx{INSERT INTO}~statements.
+As final sanity test, we check whether it is possible to relate a row in table~\sqlil{h} to more than one row in table~\sqlil{g}, which is not allowed by our relationship model.
+The output of the execution of \cref{lst:GH_insert_error_3} shows that this is not possible, because of the \sqlil{UNIQUE} constraint imposed on the column~\sqlil{h} of table~\sqlil{relate_g_and_h}.%
 %
 \FloatBarrier%
 \endhsection%

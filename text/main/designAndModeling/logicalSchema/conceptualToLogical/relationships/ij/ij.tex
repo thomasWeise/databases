@@ -1,0 +1,21 @@
+%
+\hsection{\crowsFoot{I}{M1}{J}{M1}}%
+\label{sec:rm:ij}%
+%
+\gitSQL{\databasesCodeRepo}{conceptualToRelational/IJ_tables.sql}{IJ_tables}{%
+The single-table realization of an \crowsFoot{I}{M1}{J}{M1} conceptual relationship.%
+}%
+%
+We have the two entity types~I and~J.
+Each entity of type~I must be linked to exactly one entity of type~J.
+Each entity of type~J must be linked to exactly one entity of type~I.
+
+In this scenario, we only need a single table~\cite{S2024D:MEDTRDM}.
+We just merge the attributes of the two entity types and put them all into one table.
+If each pair of related entities of types~I and~J forms a single row in table~\sqlil{i_j}, then there can never be any issue with the referential integrity.
+Neither can we have a row without the I~entity, nor can we have a row without entity of type~J.
+This is illustrated in \cref{lst:IJ_tables}.%
+%
+\FloatBarrier%
+\endhsection%
+%
