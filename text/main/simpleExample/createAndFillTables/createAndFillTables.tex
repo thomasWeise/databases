@@ -30,7 +30,7 @@ Table names should be singular nous written in lowercase without any prefix~(i.e
 Creating the table \textil{product} to store the products we produce and sell.%
 }%
 %
-We can create a new table using the command \sql{CREATE TABLE}\sqlIdx{CREATE!TABLE}, followed by the table name, followed by the attributes that we want to store, as shown in \cref{lst:factory:create_table_product}.
+We can create a new table using the command \sql{CREATE TABLE}\sqlIdx{CREATE!TABLE}, followed by the table name, followed by the attributes that we want to store~\cite{PGDG:PD:CT2}, as shown in \cref{lst:factory:create_table_product}.
 
 First of all, each product must have a name.
 The names could be long or short, but 100~characters per product should suffice.
@@ -98,7 +98,7 @@ For allowing the latter, we need a unique way to identify each row in our table.
 Now our table already has a column with unique values, namely~\sqlil{name}.
 However, these are of type \sqlilIdx{VARCHAR}, i.e., they are potentially long strings.
 This would mean that each record in the orders table would also need to store the long \sqlil{name} string.
-This would probably be inefficient~\cite{M2014VPKM}.
+This would probably be inefficient~\cite{SE:DA:2014VPKM}.
 Also, maybe later we have many other records referencing a certain product by its name {\dots} but the marketing department chooses to change the name of the product.
 This could wreak havoc to our \db.
 It is better to use an automatically generated unique value as key that will never change even if we change the name of a product~\cite{B2025DS:SBPASG}.%

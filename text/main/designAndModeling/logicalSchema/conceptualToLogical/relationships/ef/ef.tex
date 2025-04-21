@@ -1,0 +1,49 @@
+%
+\hsection{\crowsFoot{E}{O1}{F}{OM}}%
+\gitSQL{\databasesCodeRepo}{conceptualToRelational/EF_1_tables.sql}{EF_1_tables}{%
+The three-table realization of an \crowsFoot{E}{O1}{F}{OM} conceptual relationship.%
+}%
+\gitSQL{\databasesCodeRepo}{conceptualToRelational/EF_1_insert_and_select.sql}{EF_1_insert_and_select}{%
+Inserting into and selecting data from the three-table realization of an \crowsFoot{E}{O1}{F}{OM} conceptual relationship given in \cref{lst:EF_1_tables}.%
+}%
+\gitSQL{\databasesCodeRepo}{conceptualToRelational/EF_2_tables.sql}{EF_2_tables}{%
+A two-table realization of an \crowsFoot{E}{O1}{F}{M1} conceptual relationship.%
+}%
+\gitSQL{\databasesCodeRepo}{conceptualToRelational/EF_2_insert_and_select.sql}{EF_2_insert_and_select}{%
+Inserting into and selecting data from the two-table realization of an \crowsFoot{E}{O1}{F}{OM} conceptual relationship given in \cref{lst:EF_2_tables}.%
+}%
+%
+We have the two entity types~E and~F.
+Each entity of type~E may be connected to zero, one, or multiple entities of type~F.
+Each entity of type~F is connected to zero or one entity of type~E.
+
+We need a table~\sqlil{e} for the entities of type~E and a table~\sqlil{f} for the entities of type~F.
+Apart from that, there can again be two solutions to implementing this relationship:
+We can use three tables or two, again, depending on how many entities of types~E and~F are actually related.
+
+We may have a third table~\sqlil{relate_e_and_f} relating the entities of type~E to those of type~F.
+This approach is illustrated in \cref{lst:EF_1_tables}.
+There will be two columns in that table, the first one~(\sqlil{e})~holding the primary key of the E~entities and the second one~(\sqlil{f})~holding the primary key of the F~entities.
+Since we only store the pairs that exist, both columns are~\sqlil{NOT NULL} and have~\sqlil{REFERENCES} constraints to their respective foreign keys.
+Since each entity of type~F can only be connected to at most one entity of type~E, there will be a~\sqlil{UNIQUE} constraint on the column~\sqlil{f} and it would be the primary key.
+It needs to be the primary key because the values in column~\sqlil{e} do not need to be unique -- one entity of type~E can be related to many entities of type~F.
+
+This is the recommended solution in~\cite{S2024D:MEDTRDM}, but we face a similar situation as back in~\cref{sec:rm:ao1bo1}:
+It is efficient only if there are not many E\nobreakdashes-F pairs that are related.
+If almost all entities of type~F are related to one entity of type~E, then the table~\sqlil{relate_e_and_f} is basically as same as big as the table~F.
+Instead of simply storing the keys of the related E~entities in the table~\sqlil{f}, we now have another table that stores these keys \emph{and} the primary keys of the \sqlil{f}~table.
+Also, we would need two \sqlil{INNER JOIN} statements instead of one when we merge the data, as shown in \cref{lst:EF_1_insert_and_select}.
+
+The two-table solution is illustrated in \cref{lst:EF_2_tables}.
+Here, we need to add a foreign key column~\sqlil{e} to the table~\sqlil{f}.
+This column has a \sqlil{REFERENCES} constraint pointing to~\sqlil{e.id}.
+The value of this column can be \sqlil{NULL}, because not all rows in~\sqlil{f} need to be related to rows in~\sqlil{e}.
+Different from the \crowsFoot{A}{O1}{B}{O1} situation in~\cref{lst:AB_2_tables}, there also does not need to be a \sqlil{UNIQUE} constraint here, because each row of~\sqlil{E} can be related to multiple rows in~\sqlil{f}.
+We also only need a single \sqlil{INNER JOIN} to merge the data, as illustrated in \cref{lst:EF_2_insert_and_select}.
+
+This solution has another interesting aspect:
+In the three-table solution, I can create an \sqlil{INSERT} or \sqlil{UPDATE} query to \sqlil{relate_e_and_f} that fails, namely if I try to relate a row of~\sqlil{f} to more than one row in~\sqlil{e}.
+This is not possible in the two-table solution, because each row of~\sqlil{f} only has one attribute value~\sqlil{e}.%
+%
+\endhsection%
+%

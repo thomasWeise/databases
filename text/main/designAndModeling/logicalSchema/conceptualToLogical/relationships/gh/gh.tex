@@ -1,0 +1,136 @@
+%
+\hsection{\crowsFoot{G}{O1}{H}{MM}}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{GH_tables.sql}{relationships}{}{}{postgres.sh}{GH_tables}{%
+The realization of an \crowsFoot{G}{O1}{H}{MM} conceptual relationship.%
+}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{GH_insert_and_select.sql}{relationships}{}{}{postgres.sh}{GH_insert_and_select}{%
+Inserting into and selecting data from the realization of an \crowsFoot{G}{O1}{H}{MM} conceptual relationship given in \cref{lst:GH_tables}.%
+}%
+%
+We have the two entity types~G and~H.
+Each entity of type~G must be connected to at least one but maybe many entities of type~H.
+Each entity of type~H is connected to zero or one entity of type~G.
+
+We can approach this in the same way as the \crowsFoot{E}{O1}{F}{OM} situation.
+Sadly, there is no really elegant way to enforce all of the constraints of the \inQuotes{optional~1 to mandatory~at~least~one}~ relationship.
+So before we go into depth, let us clarify:
+In many situations, even if we modeled the relationship like this, it may not really be necessary to absolutely enforce the \inQuotes{mandatory many} and instead we could use the much easier \inQuotes{optionally many} relationship type.
+
+However, if we really want to enforce that each entity of type~G must definitely be connected to at least entity of type~H, we could proceed as illustrated in \cref{lst:GH_tables}:
+We approach this in the three-table manner.
+Of course, we need a table~\sqlil{g} for the entities of type~G and a table~\sqlil{h} for the entities of type~H.
+
+In the the third table, \sqlil{relate_g_and_h}, we have two columns, \sqlil{g} and \sqlil{h}, that hold foreign key references to the primary keys of the tables~\sqlil{g} and~\sqlil{h}, respectively.
+Both of the columns are \sqlil{NOT NULL}, because we would only store relationship records in this table that link one row of the table~\sqlil{g} to one row of the table~\sqlil{h}.
+No attribute can be \sqlil{NULL}, that would make no sense here.
+The column holding the foreign key referencing table~\sqlil{h} would also have the \sqlil{UNIQUE} constraint imposed on it:
+Each entity of type~H can be connected to at most one entity of type~G, so the primary key of~\sqlil{h} cannot occur in more than one relationship.
+
+So far, we have realized an \inQuotes{optionally-one to optionally-many} relationship using this table.
+Any row of~\sqlil{q} may be referenced zero, one, or multiple times in~\sqlil{relate_g_and_h}.
+Any row of~\sqlil{h} may be referenced at most once.
+
+However, we want to make the relationship to~\sqlil{h} a \inQuotes{mandatory-many} relationship.
+This means that we must enforce that the primary key of each row of~\sqlil{g} must occur at least once in~\sqlil{relate_g_and_h}.
+In other words, we cannot permit any row to be inserted in~\sqlil{g} unless its primary key also appears in one row of~\sqlil{relate_g_and_h},
+
+This is a chicken-and-egg problem.
+For now, we ignore the fact that the primary key of~\sqlil{g} is automatically generated and we do not know its value until we inserted the row into~\sqlil{g} which we cannot do unless we already inserted a row with the value of the primary key of that row into~\sqlil{relate_g_and_h} first, which we cannot do because we cannot insert rows into \sqlil{relate_g_and_h} that do not have a matching and existing row in~\sqlil{g}.
+Yes, let us ignore this for now.
+Instead, let us figure out which constraints we need to build to enforce that this chicken-and-egg problem occurs.
+Later we will figure out how to solve it.
+
+So back to the question:
+What constraints could we define to enforce that each row in table~\sqlil{g} must have an associated row in~\sqlil{relate_g_and_h}.
+My solution -- and there might be better ones -- is the following:
+
+First, we define that the primary key of~\sqlil{relate_g_and_h} is a composite key~\sqlil{PRIMARY KEY (g, h)}:
+Both the columns~\sqlil{g} and~\sqlil{h} for the referenced foreign keys participate in it.
+Since both columns are~\sqlil{NOT NULL} and the column~\sqlil{h} is marked as~\sqlil{UNIQUE}, each combination of a value of~\sqlil{g} and~\sqlil{h} must also be unique, thus fulfilling the requirement for primary keys.
+
+We also add a column~\sqlil{h} to our table~\sqlil{g}.
+This column is~\sqlil{NOT NULL} and must hold the reference to the primary key one row of the table~\sqlil{h}.
+It establishes the one required relationship between~\sqlil{g} and~\sqlil{h}.
+To make sure that this relationship \emph{also} appears in~\sqlil{relate_g_and_h}, we mark the combination~\sqlil{(id, h)} of the primary key of the table~\sqlil{g} and that foreign key to table~\sqlil{h} as foreign key that references~\sqlil{relate_g_and_h}.
+You see, the primary key of \sqlil{relate_g_and_h} is a comination of a primary key from table~\sqlil{g} and from table~\sqlil{h}.
+
+We now have created a very awkward yet beautiful mess in \cref{lst:GH_tables}.
+Let us check what we have done:
+
+Can we insert a row into table~\sqlil{g} that is not related to at least one row in table~\sqlil{h}?
+No, we cannot.
+Inserting a row in~\sqlil{g} requires that the tuple~\sqlil{(id, h)} of the primary key~\sqlil{id} and the referenced entity of type~H correctly references one row in~\sqlil{relate_g_and_h}.
+Such rows always hold pairs of rows in~\sqlil{g} and \sqlil{h}.
+Since we enforce that the primary key of our new row is part of such a pair~(because it is part of the foreign key), there must be a corresponding row in~\sqlil{h}.
+
+But could we insert a row in table~\sqlil{relate_g_and_h} that does not relate one row in~\sqlil{g} to another row in~\sqlil{h}, that maybe has invalid or non-existing values?
+No, we cannot, because both of the columns of that table are bound by~\sqlil{REFERENCES} constraints.
+We also cannot relate one row in~\sqlil{h} to multiple rows in~\sqlil{g} because of the \sqlil{UNIQUE} constraint.%
+%
+\begin{sloppypar}%
+So to insert a row into table~\sqlil{q}, the primary key of this row must already appear in table~\sqlil{relate_g_and_h}.
+However, we cannot insert a row into~\sqlil{relate_g_and_h} if there is not already a corresponding row in~\sqlil{g}.
+Nice.
+It looks like we created a situation where we cannot enter any data, because doing so would always violate at least one constraint.%
+\end{sloppypar}%
+%
+Now that we have created our three tables and related them using fierce constraints, we need to see that we can insert data into them.
+In \cref{lst:GH_insert_and_select}, we begin by first filling the table~\sqlil{h}.
+Since entities of type~H do not necessarily be related any entity of type~G, this can be done without worrying about constraints.
+
+When we insert an entity of type~G into our table~\sqlil{g}, we must, at the same time, create a relationship to an entity of type~H via table~\sqlil{relate_g_and_h}.
+We do this with a trick.%
+%
+\cquotation{PGDG:PD:CT2}{%
+A constraint that is not deferrable will be checked immediately after every command. %
+Checking of constraints that are deferrable can be postponed until the end of the transaction\dots%
+}%
+%
+In \postgresql~(and probably several other \pglspl{dbms}), constraints are checked at the end of a command's execution.
+Indeed, a single command in \postgresql\ behave like transactions~\cite{PGDG:T}, meaning that reference integrity constraints are checked at at the end of the command execution and the changes are committed to the data if the constraints are met and rolled back otherwise.
+To insert a row into table~\sqlil{g}, we also need to insert a record into table~\sqlil{relate_g_to_h} that relates this new row to one row in table~\sqlil{h}.
+If we can wrap these two insertions into a single \sql\ command, then things might work.%
+%
+\begin{sloppypar}%
+We have a problem, though:
+We declared the primary key~\sqlil{id} of table~\sqlil{g} as \sqlil{id INT GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY}.
+This means before inserting the row into table~\sqlil{g}, we do not know the value that its primary key will have.
+Luckily, this is a very common problem:
+What if we insert some data into a table with automatically generated primary keys and the need the key that was assigned to that data?
+\sql\ offers an answer with the \sqlilIdx{RETURNING} keywork~\cite{PGDG:PD:RDFMR}.%
+\end{sloppypar}%
+%
+The statement \sqlil{INSERT INTO g (x, h) VALUES ('123', 1) RETURNING id} would insert a row into the table~\sqlil{g} where the value of the attribute~\sqlil{x} is~\sqlil{'123'} and the value of the attribute~\sqlil{h} is~\sqlil{1}.
+It would return the value of~\sqlil{id} that was automatically generated and assigned to this row.
+Of course, this statement will fail, because it would violate our constraint \sqlil{g_id_h_fk} from \cref{lst:GH_tables}.
+But we are one step closer to make things work.%
+%
+\begin{sloppypar}%
+A first idea would be to build some Frankensteinian query trying to plug the first insert into the second in the form \sqlil{INSERT INTO relate_g_and_h (g, h) SELECT id, 4 FROM }\linebreak[3]\sqlil{(INSERT INTO g (x, h) VALUES ('789', 4) RETURNING id);}.
+\postgresql\ and the \sql\ standard do not like this.
+It would be a single statement, but this does not work.%
+\end{sloppypar}%
+%
+However, we can use another tool:~\glsreset{CTE}\pglspl{CTE}.
+You see, a \pgls{CTE} allows us to assign a name to a sub-expression of a query.
+This sub-expression then works a bit like a temporary table.
+It is evaluated only once and can be used like a table in other queries.
+For example, \sqlil{WITH cats AS SELECT age, name FROM animals WHERE type='cat'}\sqlIdx{WITH}, we would assign the result of the query \sqlil{SELECT age, name FROM animals WHERE type='cat'} to the \pgls{CTE}~\sqlil{cats}.
+We could then use \sqlil{cats} as if it was a table and do something like~\sqlil{SELECT name FROM cats;} to get the cat names.
+It's a bit like a~\sqlilIdx{VIEW}, but it is part of an \sql\ command.%
+%
+\begin{sloppypar}%
+We now put everything together:
+First, we put the row insertion into table~\sqlil{g} into a \pgls{CTE}~\sqlil{g_id} by writing \sqlil{WITH g_id AS (INSERT INTO g (x, h) VALUES ('789', 4) RETURNING id)}\sqlIdx{WITH}.
+Then we use this \pgls{CTE} when inserting a row into \sqlil{relate_g_and_h} by doing \sqlil{INSERT INTO relate_g_and_h (g, h) SELECT id, 4 FROM g_id;}.
+Since both sub-expression are part of a single command, the constraint \sqlil{g_id_h_fk} is checked only at the very end, at the~\sqlil{;}.
+By this time, the referential integrity has been established, since we inserted one row into~\sqlil{g} and a corresponding row into~\sqlil{relate_g_and_h}.%
+\end{sloppypar}%
+%
+Relating the rows in~\sqlil{g} to additional rows in~\sqlil{h} is then much easier and can be done with single \sqlilIdx{INSERT INTO}~statements.
+%
+\FloatBarrier%
+\endhsection%
+%

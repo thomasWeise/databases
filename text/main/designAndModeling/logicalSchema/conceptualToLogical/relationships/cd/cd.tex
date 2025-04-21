@@ -1,0 +1,33 @@
+\hsection{\crowsFoot{C}{O1}{D}{M1}}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{CD_tables.sql}{relationships}{}{}{postgres.sh}{CD_tables}{%
+The three-table realization of a \crowsFoot{C}{O1}{D}{M1} conceptual relationship.%
+}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{CD_insert_and_select.sql}{relationships}{}{}{postgres.sh}{CD_insert_and_select}{%
+Inserting into and selecting data from the three-table realization of a \crowsFoot{C}{O1}{D}{M1} conceptual relationship given in \cref{lst:CD_tables}.%
+}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{CD_insert_error.sql}{relationships}{}{}{postgres.sh}{CD_insert_error}{%
+It is impossible to insert a row into table~\sqlil{c} that references a row in table~\sqlil{d} that is already referenced by another row in table~\sqlil{c}.%
+}%
+%
+We have the two entity types~C and~D.
+Each entity of type~C must be connected to exactly one entity of type~D.
+Each entity of type~D is connected to zero or one entity of type~C.
+
+The solution for implementing this in a \pgls{rdb} is similar to the two-table variant in the previous section:
+We need a table for the entities of type~C and one for the entities of type~D.
+Since each entity of type~C must be connected to exactly one entity of type~D, we add one column to the table for~C which holds the primary key to the D~entities as foreign key.
+This column thus has a \sqlil{REFERENCES} constraint to the foreign key.
+Different from the previous section, this column must also have a \sqlil{NOT NULL}~constraint, because each entity of type~C must necessarily be related to one entity of type~D, as shown in \cref{lst:CD_tables}.
+The column also has a \sqlil{UNIQUE} constraint, because the entities of type~D can only reference at most one entity of type~C.
+
+We can only insert rows into the table for entity type~C that reference existing rows in the table for entity type~D.
+The consequence is that these elements must be created first, as shown in~\cref{lst:CD_insert_and_select}.
+It is impossible to insert a row into table~\sqlil{c} that references a row in table~\sqlil{d} that is already referenced by another row in table~\sqlil{c}, as shown in \cref{lst:CD_insert_error}.
+Neither can we insert a row into table~\sqlil{c} that does \emph{not} reference any row in table~\sqlil{d}, because of the \sqlil{NOT NULL} constraint, nor can we create a row in table~\sqlil{c} that references multiple rows in table~\sqlil{d}, since the foreign key attribute~\sqlil{d} of table~\sqlil{c} can only take on one value.
+Notice that, together, this also means there can never be fewer entities of type~D than entities of type~C.%
+\FloatBarrier%
+\endhsection%
+%

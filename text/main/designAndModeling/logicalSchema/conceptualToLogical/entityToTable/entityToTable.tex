@@ -1,28 +1,51 @@
-\hsection{Entity Types to Tables}%
+\hsection{Mapping Conceptual Entity Types to Logical Models}%
 \label{sec:mappingEntitiesToTables}%
 %
 Translating entity types from the conceptual model to the logical model is fairly simple.
 Each entity type in the conceptual model becomes one table in the logical model.
+The entity type \emph{Student} becomes the table~\sqlil{student}.
 Each simple single-valued attribute becomes one column of that table.
+The attribute~\emph{Name} becomes the column~\sqlil{name} with a specific \sql~datatype for text and maybe an added sanity constraint, e.g., names should begin and end with printable (non-whitespace) characters.
+
 Each component of a composite attribute becomes one column of that table.
+If \emph{Name} is not a simple attribute but a composite attribute consisting of the two components \emph{Full Name} and \emph{Salutation}, then we will have two columns, one called~\sqlil{full_name} and one called~\sqlil{saluation}.
+Both have reasonable datatypes and attached sanity constraints.
+In this case, the composite attribute~\emph{Name} in the conceptual model does not have a column in the table for the entity type of the logical model, but instead its components have columns.
+Of course, if the components themselves are composite attributes, the process is repeated recursively, i.e., the components are broken down until we arrive at simple attribes, for which we then have columns.
+
 Multi-valued attributes come separate tables, where each row references the primary key of entity's table as foreign key.
+For example, if the \emph{Student} entity type in the conceptual model has the multi-valued attribute \emph{Mobile Phone}, this would mean that each entity of type \emph{Student} can have multiple values of \emph{Mobile Phone} associated with it.
+The relational model, all datatypes are atomic, i.e., we cannot have a column that is of type \inQuotes{list of something}.
+Each attribute can only have a single value in each record.
+Thus, multi-valued attributes need to become tables by themselves.
+So we would need to create a table~\sqlil{mobile} just for mobile phone numbers.
+This table would, at least, need a column for the actual phone number and a column that references the corresponding \emph{Student} record via a foreign key.
+It may also need to have a surrogate key, but this we discuss later on.
 Derived attributes are not included in the table.
 
 OK, so our goal here would be to either transform the conceptual model of a \db\ to a logical model~(or to directly design the logical model).
-But what is a logical model?
+But lets first circle back to what a logical model is.
 In \cref{def:logicalModel}, we basically stated that the logical model is the collective view that users and applications have on the \db.
 In the relational model, this means that it defines all the tables, their attributes and constraints, as well as the queries.
 
 In our small initial example in \cref{sec:simpleExampleFactory}, we only worked with the logical model.
 We did not create a conceptual model and neither did we bother with a physical model.
-The logical model can be specified in \sql\ -- and that is what we did back in that example.
+We just directly went for the action, we fired out \sql\ scripts to the \postgresql\ \pgls{server}.
+Indeed, if we have chosen an \pgls{rdb} as \db\ type for our project, then the logical model can be specified in \sql\ -- and that is what we did back in that example.
 
+This time, we do have a conceptual model.
+We want to follow the \db\ design process properly, based on a software engineering perspective.
 Back in \cref{sec:conceptualSchemaDesign}, we designed our conceptual models based on a very loose syntax using the graphical editor \yEd.
 This editor is entirely unrelated to any \dbms.
 If we wanted, we could have painted diagrams that make no sense at all.
 And this freedom is useful when designing conceptual models.
+We can quickly change entity types, attributes, and relationships.
+We do not need to worry about technical aspects.
+We can discuss our model with stakeholders who don't know anything about \sql.
 
-However, there are also tools that are tied closely to \sql\ or even to specific \pglspl{dbms}.
+The logical model, however, is bound to a technology.
+At this level, using a tool like \yEd\ makes little sense.
+Instead, there are also tools that are tied closely to \sql\ or even to specific \pglspl{dbms}.
 \mysqlWorkbench~\cite{M2013MWDM}, for example, can connect to the \mysql\ \dbms\ and allows us to craft tables using an \pgls{ERD}\nobreakdashes-like syntax.
 \pgmodeler~\cite{AES2006PPDM} allows us to do the same for the \postgresql\ \dbms.
 The idea here is that we can use a much clearer and more restricted syntax to draw a visual representation of our \db.
@@ -604,7 +627,7 @@ This, in turn, means that there cannot be a student record without student~ID.
 In \cref{fig:makeStudentTable09studentIdLenNotNullApply}, we click~\menu{Apply}.%
 %
 \bestPractice{columnNames}{%
-To avoid issues with quotations, it is best to use only lower case character names and underscores~(\sqlil{_}) to separate nouns for all named things in \pgmodeler, including tables, columns, and constraints.%
+To avoid issues with quotations, it is best to use only lower case character names and underscores~(\sqlil{_}) to separate words for all named things in \pgmodeler, including tables, columns, and constraints.%
 }%
 %
 The new column appears in the table creation dialog.
@@ -656,7 +679,7 @@ In the \menu{Constraints} register, we click~\menu{Add Item}~\pgmodelerAddItem, 
 If you think about, we can consider the fact that a column is the \emph{primary key} as a combination of a \sqlilIdx{UNIQUE} and a \sqlilIdx{NOT NULL} constraint~(maybe together with some special indexing for fast access).
 So first, we want to choose a primary key.
 
-What would be the most suitable column?
+What would be the most suitable column for use as primary key?
 The columns \sqlil{name}, \sqlil{address}, and \sqlil{date_of_birth} are unsuitable -- if not for obvious reasons -- then at least because they are not necessarily unique.
 The two columns \sqlil{student_id} and \sqlil{national_id} both look promising a primary keys.
 However, a person may enroll several times, maybe first as Bachelor and later as Master's student.
@@ -674,6 +697,7 @@ Constraints should have descriptive names~\cite{B2025DS:SBPASG}. %
 If some table modification fails, we will see the name of the constraint that was violated. %
 If the name makes sense and is easy to understand, then this makes it easier to find out what went wrong and why.%
 }%
+%
 The new constraint appears and we click on \menu{Add Item}~\pgmodelerAddItem\ in \cref{fig:makeStudentTable24studentIdAddedNewConstraint}.
 We now want to add a constraint checking that the national~ID is correct.
 We call it \sqlil{student_national_id_check} and select \sqlil{CHECK}\sqlIdx{CONSTRAINT!CHECK} in the \menu{Type} drop-down box in \cref{fig:makeStudentTable25nationalIdCheck}.
@@ -689,7 +713,7 @@ Standard \mbox{GB11643\nobreakdashes-1999} \citetitle{GB116431999CIN}~\cite{GB11
 The next eight digits are the \pgls{dateOfBirth} in format YYYYMMDD, followed by three digits of order code.
 The last character is a single checksum digit~(which can be~X).
 We could check this in a super fancy fashion.
-We could get our hands on a list of the actual valid values for the first digits, assuming that not all possible 999'999~possible administrative division codes are actually valid.
+We could get our hands on a list of the actual valid values for the first digits, assuming that not all possible 1\decSep000\decSep000~possible administrative division codes are actually valid.
 We could compare the next six digits to the \pgls{dateOfBirth} that we store as well\footnote{%
 On second thought, if we require ID numbers to be present, we would not need to store the \pgls{dateOfBirth} anymore {\dots} but well, now we did it and will stick to it.}.
 We could even try to compute the checksum digit and check whether it matches.
@@ -707,7 +731,35 @@ This means we now have $6+2+9=17$~digits, leaving the final checksum character, 
 This is expressed by the~\textil{[0-9X]}.
 The~textil{\$} that follows marks the end of the string, which, hence, must come directly after the checksum digit.
 
-We click~\menu{Apply} in \cref{fig:makeStudentTable26nationalIdConstraintApply} and the constraint is specified.
+You may ask:
+Why do we create such a trivial constraint?
+Well, this constraint would still guard against several possible typos.
+Verifying the checksum with a \pgls{regex} is probably not possible anyway, at least not with a \pgls{regex} of reasonable complexity.
+Eventually, we would create an application program through which the administrative staff enters student information.
+This program should then check the checksum of the \sqlil{national_id} field.
+
+So you may ask:
+If we check the national~ID value in the application anyway, then why do we put a constraint here?
+We could just leave it away and assume that the application will check the validity of the field.
+The answer is \emph{defense in depth}.%
+%
+\bestPractice{defenseInDepth}{%
+Data should be checked at all levels of an application, in the forms where it is entered, in the \db\ via constraints, and back in the application when it is loaded from the \db. %
+The more lines of defense we create with constraints, static checks, and dynamic checks, the higher is our chance to discover errors early, to prevent them from propagating, and to pinpoint the reason of errors. %
+This gives us the best chance to locate and fix the error if it is a problem with a program as well as to prevent errors resulting from typos to enter and pollute our \db.%
+}%
+%
+This best practice also fits well to what we wrote in \citetitle{programmingWithPython}~\cite{programmingWithPython} for the \python\ programming language:%
+%
+\bestPractice{exceptions}{%
+Errors should \emph{not} be ignored and input data should \emph{not} be artificially sanitized. %
+Instead, the input of our functions should be checked for validity wherever reasonable. %
+Faulty input should always be signaled by errors breaking the program flow. %
+[In \python, ]\pythonilsIdx{Exception} should be raised as early as possible and whenever an unexpected situation occurs.%
+}%
+%
+So it makes sense to specify as many constraints as early as possible wherever possible, even if they can only check some aspects of the data.
+Either way, after specifying the constraint, we click~\menu{Apply} in \cref{fig:makeStudentTable26nationalIdConstraintApply} and the constraint is specified.
 The new constraint appears and we click on~\menu{Add Item}~\pgmodelerAddItem\ in \cref{fig:makeStudentTable27nationalIdAddedNewConstraint}.
 
 We now create a similar \sqlil{CHECK}\sqlIdx{CONSTRAINT!CHECK}~constraint for the column~\sqlil{mobile} in \cref{fig:makeStudentTable28mobileCheck}.
@@ -786,7 +838,7 @@ In stark contrast, \yEd\ allows us to paint almost arbitrary graphics.
 We could have drawn stars and clouds into our \pgls{ERD} if we wanted to.
 
 However, sticking to \sql~(or, more precisely, the \postgresql\ flavor of it), has another advantage:
-We can actually create a \db\ from our model!
+We can actually create a \db\ directly from our model!
 
 We therefore open the \menu{Export} dialog again.
 This time, we want to export our model to~\sql\ and we therefore select \menu{SQL file} option in the \menu{Export} dialog.
@@ -1170,12 +1222,12 @@ Instead of directly including it when the table is created, the table is later c
 The constraint is added via \sqlilIdx{ADD CONSTRAINT}.
 Apart from this and some additional behavior specifications that we will ignore here, it looks not much different from the \sqlilIdx{REFERENCES} statement we used when creating our factory's \sqlil{demand} table back in \cref{lst:factory:create_table_demand}.
 Well, it looks different, because now it is explicitly defined as constraint instead of being declared inline.
-But it clearly is the same.
+But it clearly has the same functionality and if you understand what one notation means, you can also infer what the other means.
 
 We execute all four scripts.
 Their output in \cref{exec:logical:teachingManagment:student_database_2:01_student_database_database_2001,exec:logical:teachingManagment:student_database_2:04_public_mobile_table_5081,exec:logical:teachingManagment:student_database_2:04_public_mobile_table_5081,exec:logical:teachingManagment:student_database_2:05_public_mobile_mobile_student_id_fk_constraint_5087} shows that everything went successfully.
 
-Let us now also use the \db\ a bit.
+Let us now also use the \db\ for a bit.
 For this, we again manually write another \sql~script.
 In \cref{lst:logical:teachingManagment:student_database_2:insert_and_select}, we first insert some rows into the \sqlil{student} table.
 Mr.~Bibbo and Mr.~Bebbo enroll into our university.

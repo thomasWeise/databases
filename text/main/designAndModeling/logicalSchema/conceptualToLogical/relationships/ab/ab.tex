@@ -1,0 +1,91 @@
+\hsection{\crowsFoot{A}{O1}{B}{O1}}%
+\label{sec:rm:ao1bo1}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{AB_1_tables.sql}{relationships}{}{}{postgres.sh}{AB_1_tables}{%
+The three-table realization of an \crowsFoot{A}{O1}{B}{O1} conceptual relationship.%
+}%
+\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{AB_1_insert_and_select.sql}{relationships}{}{}{postgres.sh}{AB_1_insert_and_select}{%
+Inserting into and selecting data from the three-table realization of an \crowsFoot{A}{O1}{B}{O1} conceptual relationship given in \cref{lst:AB_1_tables}.%
+}%
+\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{AB_1_insert_error_1.sql}{relationships}{}{}{postgres.sh}{AB_1_insert_error_1}{%
+The schema illustrated in \cref{lst:AB_1_tables} prevents entities of type~A to be related to more than one entity of type~B.%
+}%
+\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{AB_1_insert_error_2.sql}{relationships}{}{}{postgres.sh}{AB_1_insert_error_2}{%
+The schema illustrated in \cref{lst:AB_1_tables} prevents entities of type~B to be related to more than one entity of type~A.%
+}%
+\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{AB_1_cleanup.sql}{relationships}{}{}{postgres.sh}{AB_1_cleanup}{%
+Deleting the three tables again, because we want to try another realization of the \crowsFoot{A}{O1}{B}{O1} conceptual relationship.%
+}%
+%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{AB_2_tables.sql}{relationships}{}{}{postgres.sh}{AB_2_tables}{%
+The two-table realization of an \crowsFoot{A}{O1}{B}{O1} conceptual relationship.%
+}%
+\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{AB_2_insert_and_select.sql}{relationships}{}{}{postgres.sh}{AB_2_insert_and_select}{%
+Inserting into and selecting data from the two-table realization of an \crowsFoot{A}{O1}{B}{O1} conceptual relationship given in \cref{lst:AB_2_tables}.%
+}%
+\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{AB_2_insert_error_2.sql}{relationships}{}{}{postgres.sh}{AB_2_insert_error_2}{%
+The schema illustrated in \cref{lst:AB_2_tables} prevents entities of type~B to be related to more than one entity of type~A via constraints. %
+The entities of type~A can only be associated with one entity of type~B because of the table structure.%
+}%
+%
+We have the two entity types~A and~B.
+Each entity of type~A is connected to zero or one entity of type~B.
+Each entity of type~B is connected to zero or one entity of type~A.
+We need one table~\sqlil{a} for the entity type~A and one table~\sqlil{b} for the entity type~B.
+
+As shown in \cref{lst:AB_1_tables}, we may have a third table~\sqlil{relate_a_and_b} relating the entities of type~A to those of type~B, as suggested in, e.g.,~\cite{S2024D:MEDTRDM}.
+There will be two columns in~\sqlil{relate_a_and_b}, the first one, \sqlil{a}, holding the primary key of the A~entities and the second one, \sqlil{b}, holding the primary key of the~B entities.
+Since we only store the pairs that exist, both columns have the~\sqlil{NOT NULL} constraint.
+Both also have~\sqlil{REFERENCES} constraints to their respective foreign keys.
+Since on both relationship ends there can only be one entity, both columns also have \sqlil{UNIQUE}~constraints.
+Either of them may be used as~\sqlil{PRIMARY KEY}.
+We would probably choose the key belonging from the most common direction in which we access the table.
+If we most likely look for fitting entities of type~B coming from a row representing an entity of type~A~(as is the case in \cref{lst:AB_1_insert_and_select}), then we would probably use~\sqlil{a} as \sqlil{PRIMARY KEY}.
+If it was the other way around, we would pick~\sqlil{b}.
+
+Imagine that we want to query some information about~A, using~\sqlil{SELECT}, but also need information about the potentially related~B.
+This means that we need an~\sqlil{INNER JOIN} on the third table~\sqlil{relate_a_and_b}.
+We would also need another~\sqlil{INNER JOIN} with the table for~B, as shown in \cref{lst:AB_1_insert_and_select}.
+This way, we can reconstruct the related data in two steps.
+
+Notice that it is impossible to have any row of table~\sqlil{a} that is related to more than one row in table~\sqlil{b}, as demonstrated in \cref{lst:AB_1_insert_error_1}.
+The \sqlil{UNIQUE} constraint on the column~\sqlil{a} of~\sqlil{relate_a_and_b} prevents this.
+Vice versa, the \sqlil{UNIQUE} constraint on column~\sqlil{b} in~\sqlil{relate_a_and_b} prevents that any row in table~\sqlil{b} is related to more than one row in table~\sqlil{a}.
+This is demonstrated in \cref{lst:AB_1_insert_error_2}.
+
+However, there are two problems with this three-table-method:
+First, we need two \sqlil{INNER JOIN} statements to combine the data from the entities~A and~B.
+Second, this approach makes sense only if comparatively \emph{few}~pairs of related A~and B~entities exist.
+Performance and space-wise, in the worst case, all entities of type~A are related to an entity of type~B or vice versa.
+In other words, our third table can be about as big as the smaller one of the two other tables.
+If the tables are big, then the query may not be fast.
+Also, if all entities of type~A were related to an entity of type~B, then we could just as well reference these B~entities directly from the table for entity type~A.
+Actually, in that case, using the third table would just be a waste of space and query time.
+
+Thus, if many or most A~entities are related to B~entities, then instead of using a third table, we could alternatively add a column~\sqlil{b} to the table for~A and store the primary keys of the related B~entities in that column.
+We delete the tables we just created in \cref{lst:AB_1_cleanup} to explore the two-table solution in \cref{lst:AB_1_tables}.
+The new column~\sqlil{b} added to the table~\sqlil{a} needs a \sqlil{REFERENCES} constraint but also be allowed to be~\sqlil{NULL}, because not all entities of type~A must be related to an entity of type~B.
+
+In \cref{lst:AB_2_tables}, we add this constraint later via \sqlilIdx{ALTER TABLE}, very much like \pgmodeler\ does it~(see back in \cref{lst:logical:teachingManagment:student_database_2:05_public_mobile_mobile_student_id_fk_constraint_5087}).
+Otherwise, we would need to create table~\sqlil{b} before table~\sqlil{a}.
+That is totally OK, but if we had many tables, the required order of table creation could make our \sql\ code harder to read.
+Also, the probability of making errors that are hard to figure out would be higher.
+It sometimes is just easier to first create the tables and then add the constraints via \sqlIdx{ALTER TABLE}.
+I guess this is why \pgmodeler\ does it like this, too.
+
+Either way, the values of the new column~\sqlil{b} are subject to a \sqlil{UNIQUE} constraint, because each~B can be related to at most one~A.
+This constraint only applies to values that are not~\sqlil{NULL}.
+We could also do this vice versa, or even for both tables.
+This removes the need for a third table and the query would only have a single~\sqlil{INNER JOIN}, as illustrated in \cref{lst:AB_2_insert_and_select}.
+
+Relating entities of type~A to multiple entities of type~B is impossible, because the column~\sqlil{b} in table~\sqlil{a} can only have one value.
+Relating entities of type~B to multiple entities of type~A is impossible, because of the \sqlil{UNIQUE} constraint imposed on it, as the failed attempt to do so in \cref{lst:AB_2_insert_error_2} shows.
+
+Of course, the table for entity type~A then needs more space.
+If only few entities of type~A are related to entities of type~B, maybe the first solution, based on three tables, is better.
+I think most often, the second solution, the two-table approach, is the way to go.
+Still, it depends on how many of the A~and B~entities are related, from which \inQuotes{side} we most likely navigate the relationship, and how big the tables are.%
+%
+\FloatBarrier%
+\endhsection%
