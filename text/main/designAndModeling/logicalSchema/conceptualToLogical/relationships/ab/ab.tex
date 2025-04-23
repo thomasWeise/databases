@@ -32,21 +32,50 @@ The entities of type~A can only be associated with one entity of type~B because 
 We have the two entity types~A and~B.
 Each entity of type~A is connected to zero or one entity of type~B.
 Each entity of type~B is connected to zero or one entity of type~A.
-We need one table~\sqlil{a} for the entity type~A and one table~\sqlil{b} for the entity type~B.
+There are two possible ways to implement this relationship pattern:%
+%
+\begin{enumerate}%
+%
+\item We can use a three-table solution, where each entity type gets one table and the relationship between the entity types~A and~B is managed in a third table.
+This solution makes sense if we have only few pairs of~A and B~entities that are related.%
+%
+\item We can use a two-table solution, where we manage the relationship with an additional column in one of the tables.
+This is the better solution if we have many related pairs of~A and B~entities.%
+%
+\end{enumerate}%
+%
+Regardless which solution we pick, we need at least the following two tables.
+First, table~\sqlil{a} is used for the entity type~A.
+As primary key, we here use a surrogate primary key~\sqlil{aid} which is an automatically generated integer sequence.
+Let us assume that the entity type~A also has a feature~\sqlil{x}, for illustration purposes, a string composed of three characters.
+Second, table~\sqlil{b} for the entity type~B.
+We here use a surrogate primary key~\sqlil{bid}, again an automatically generated integer sequence.
+Assume that there also is an attribute~\sqlil{y}, which is a string of two characters.
+(In all the remaining examples in this section, we will use similar table patterns).
 
-As shown in \cref{lst:AB_1_tables}, we may have a third table~\sqlil{relate_a_and_b} relating the entities of type~A to those of type~B, as suggested in, e.g.,~\cite{S2024D:MEDTRDM}.
-There will be two columns in~\sqlil{relate_a_and_b}, the first one, \sqlil{a}, holding the primary key of the A~entities and the second one, \sqlil{b}, holding the primary key of the~B entities.
+We start with the three-table approach in~\cref{lst:AB_1_tables}, as suggested in, e.g.,~\cite{S2024D:MEDTRDM}.
+There, we have a third table~\sqlil{relate_a_and_b} relating the entities of type~A to those of type~B.
+This table has two columns, the first one, \sqlil{fkaid}, holding the primary key of the A~entities as foreign key and the second one, \sqlil{fkbid}, holding the primary key of the B~entities as foreign key.
 Since we only store the pairs that exist, both columns have the~\sqlil{NOT NULL} constraint.
 Both also have~\sqlil{REFERENCES} constraints to their respective foreign keys.
 Since on both relationship ends there can only be one entity, both columns also have \sqlil{UNIQUE}~constraints.
 Either of them may be used as~\sqlil{PRIMARY KEY}.
-We would probably choose the key belonging from the most common direction in which we access the table.
-If we most likely look for fitting entities of type~B coming from a row representing an entity of type~A~(as is the case in \cref{lst:AB_1_insert_and_select}), then we would probably use~\sqlil{a} as \sqlil{PRIMARY KEY}.
-If it was the other way around, we would pick~\sqlil{b}.
 
-Imagine that we want to query some information about~A, using~\sqlil{SELECT}, but also need information about the potentially related~B.
-This means that we need an~\sqlil{INNER JOIN} on the third table~\sqlil{relate_a_and_b}.
-We would also need another~\sqlil{INNER JOIN} with the table for~B, as shown in \cref{lst:AB_1_insert_and_select}.
+We would probably choose the key belonging from the most common direction in which we access the table.
+If we most likely look for fitting entities of type~B coming from a row representing an entity of type~A~(as is the case in \cref{lst:AB_1_insert_and_select}), then we would probably use~\sqlil{fkaid} as \sqlil{PRIMARY KEY}.
+If it was the other way around, we would pick~\sqlil{fkbid}.
+
+In \cref{lst:AB_1_insert_and_select}, we fill some data into the tables.
+Since both relationship ends are optional, we can begin by inserting data into tables~\sqlil{a} and~\sqlil{b} without specifying any references to the other table.
+We do not need to specify the primary keys, since the are automatically generated, and, as said, we can omit the foreign keys, because they are allowed to be~\sqlil{NULL}.
+So we only need to provide values for the attributes~\sqlil{x} and~\sqlil{y}.
+After this, we have filled both tables with some data.
+We can then establish relationships between the rows of tables~\sqlil{a} and~\sqlil{b} by adding entries to~\sqlil{relate_a_and_b} with the primary keys of the related rows.
+\sqlil{INSERT INTO relate_a_and_b (fkaid, fkbid) VALUES (2, 3);}, for example, would relate the row in table~\sqlil{a} with~\sqlil{aid = 2} to the row in table~\sqlil{b} with~\sqlil{bid = 3}.
+
+Now we want to query some information about~A, using~\sqlil{SELECT}, but also need information about the potentially related~B.
+We use an~\sqlil{INNER JOIN} coming from table~\sqlil{a} on the third table~\sqlil{relate_a_and_b} based on the primary key~\sqlil{aid} of table~\sqlil{a}.
+We then need another~\sqlil{INNER JOIN} with the table for~B on its primary key~\sqlil{bid}, as shown in \cref{lst:AB_1_insert_and_select}.
 This way, we can reconstruct the related data in two steps.
 
 Notice that it is impossible to have any row of table~\sqlil{a} that is related to more than one row in table~\sqlil{b}, as demonstrated in \cref{lst:AB_1_insert_error_1}.
@@ -63,10 +92,13 @@ If the tables are big, then the query may not be fast.
 Also, if all entities of type~A were related to an entity of type~B, then we could just as well reference these B~entities directly from the table for entity type~A.
 Actually, in that case, using the third table would just be a waste of space and query time.
 
-Thus, if many or most A~entities are related to B~entities, then instead of using a third table, we could alternatively add a column~\sqlil{b} to the table for~A and store the primary keys of the related B~entities in that column.
+Thus, if many or most A~entities are related to B~entities, then instead of using a third table, we could alternatively add a column~\sqlil{fkbid} to the table for~A and store the primary keys of the related B~entities in that column.
 We delete the tables we just created in \cref{lst:AB_1_cleanup} to explore the two-table solution in \cref{lst:AB_1_tables}.
-The new column~\sqlil{b} added to the table~\sqlil{a} needs a \sqlil{REFERENCES} constraint but also be allowed to be~\sqlil{NULL}, because not all entities of type~A must be related to an entity of type~B.
+The new column~\sqlil{fkbid} added to the table~\sqlil{a} can be allowed to be~\sqlil{NULL}, because not all entities of type~A need to be related to an entity of type~B.
+It must be marked as \sqlilIdx{UNIQUE}, though, because no entity of type~B can be related to more than one entity of type~A.
+This constraint only applies to values that are \emph{not}~\sqlil{NULL}.
 
+It also needs a \sqlil{REFERENCES} constraint.
 In \cref{lst:AB_2_tables}, we add this constraint later via \sqlilIdx{ALTER TABLE}, very much like \pgmodeler\ does it~(see back in \cref{lst:logical:teachingManagment:student_database_2:05_public_mobile_mobile_student_id_fk_constraint_5087}).
 Otherwise, we would need to create table~\sqlil{b} before table~\sqlil{a}.
 That is totally OK, but if we had many tables, the required order of table creation could make our \sql\ code harder to read.
@@ -74,16 +106,21 @@ Also, the probability of making errors that are hard to figure out would be high
 It sometimes is just easier to first create the tables and then add the constraints via \sqlIdx{ALTER TABLE}.
 I guess this is why \pgmodeler\ does it like this, too.
 
-Either way, the values of the new column~\sqlil{b} are subject to a \sqlil{UNIQUE} constraint, because each~B can be related to at most one~A.
-This constraint only applies to values that are not~\sqlil{NULL}.
-We could also do this vice versa, or even for both tables.
-This removes the need for a third table and the query would only have a single~\sqlil{INNER JOIN}, as illustrated in \cref{lst:AB_2_insert_and_select}.
+We could also do this vice versa, i.e., add an column~\sqlil{fkaid} to table~\sqlil{b} instead.
+Either way, this removes the need for a third table.
 
-Relating entities of type~A to multiple entities of type~B is impossible, because the column~\sqlil{b} in table~\sqlil{a} can only have one value.
-Relating entities of type~B to multiple entities of type~A is impossible, because of the \sqlil{UNIQUE} constraint imposed on it, as the failed attempt to do so in \cref{lst:AB_2_insert_error_2} shows.
+In \cref{lst:AB_2_insert_and_select}, we insert the data into the two tables~\sqlil{a} and~\sqlil{b} exactly as before.
+The relationships are now no longer inserted into a third table.
+Instead, we use \sqlilIdx{UPDATE} statements~\cite{PGDG:PD:U}, as illustrated in \cref{lst:AB_2_insert_and_select}.
+\sqlil{UPDATE a SET fkbid = 3 WHERE aid = 2;}, for example, relates the row in table~\sqlil{a} with~\sqlil{aid = 2} to the row in table~\sqlil{b} with~\sqlil{bid = 3}.
+We can now recombine the data from the two tables using a single~\sqlil{INNER JOIN}.
 
-Of course, the table for entity type~A then needs more space.
-If only few entities of type~A are related to entities of type~B, maybe the first solution, based on three tables, is better.
+Relating entities of type~A to multiple entities of type~B is impossible, because the column~\sqlil{fkbid} in table~\sqlil{a} can only have one value.
+Relating entities of type~B to multiple entities of type~A is impossible, because of the \sqlil{UNIQUE} constraint imposed on it the column~\sqlil{fkbid} in table~\sqlil{a}.
+A failed attempt to do so anyway is shown in \cref{lst:AB_2_insert_error_2}.
+
+Of course, the table for entity type~A now needs more space.
+If only few entities of type~A are related to entities of type~B, maybe the first solution, based on three tables, is maybe better.
 I think most often, the second solution, the two-table approach, is the way to go.
 Still, it depends on how many of the A~and B~entities are related, from which \inQuotes{side} we most likely navigate the relationship, and how big the tables are.%
 %
