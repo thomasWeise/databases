@@ -11,23 +11,23 @@ Inserting into and selecting data from the realization of an \crowsFoot{G}{O1}{H
 }%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{GH_insert_error_1.sql}{relationships}{}{}{postgres.sh}{GH_insert_error_1}{%
-Trying to use a row in table~\sqlil{h} as \inQuotes{primary related row} for a new row in table~\sqlil{g} is not possible if that row is already related to another row in table~\sqlil{g}.%
+Trying to create a row into table~\sqlil{g} that is not related to any row in table~\sqlil{h} is not possible.%
 }%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{GH_insert_error_2.sql}{relationships}{}{}{postgres.sh}{GH_insert_error_2}{%
-Trying to first create a relationship entry in table~\sqlil{g} pointing to a row in table~\sqlil{h} that is not pointing back to it. This is not possible due to constraint~\sqlil{g_fkhid_gid_fk}.%
+Trying to create a row in table~\sqlil{g} that references a row in table~\sqlil{h} which is not referencing any row in table~\sqlil{g} is not possible.%
 }%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{GH_insert_error_3.sql}{relationships}{}{}{postgres.sh}{GH_insert_error_3}{%
-Can we insert a row into table~\sqlil{g} and make its foreign key point to a row in table~\sqlil{h} that is already related~(via its own foreign key) to another row in table~\sqlil{g}? Now, this would violate the \sqlil{UNIQUE} constraint on the foreign key in table~\sqlil{g}.%
+Trying to create a row in table~\sqlil{g} that references a row in table~\sqlil{h} which is already referencing another row in table~\sqlil{g} is not possible.%
 }%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{GH_insert_error_4.sql}{relationships}{}{}{postgres.sh}{GH_insert_error_4}{%
-Trying the same thing as in \cref{lst:GH_insert_error_3}, but this time trying to also re-adjusting the row from~\sqlil{h} with an~\sqlil{UPDATE} instruction -- does not work either, also because of the \sqlil{UNIQUE} constraint.%
+Trying the same thing as in \cref{lst:GH_insert_error_3}, but this time also attempting to re-adjusting the row in~\sqlil{h} with an~\sqlil{UPDATE} instruction to make it reference the new row in table~\sqlil{g}, is also not possible.%
 }%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{GH_insert_error_5.sql}{relationships}{}{}{postgres.sh}{GH_insert_error_5}{%
-Just updating a row in table~\sqlil{h} using an \sqlil{UPDATE} instruction to make it point to another row in table~\sqlil{g} is not possible if it is already pointing to one row, again because of constraint~\sqlil{g_fkhid_gid_fk}.%
+Changing a row in table~\sqlil{h} that references a row in table~\sqlil{g} to now reference another row in table~\sqlil{g} is not possible.%
 }%
 %
 We have the two entity types~G and~H.

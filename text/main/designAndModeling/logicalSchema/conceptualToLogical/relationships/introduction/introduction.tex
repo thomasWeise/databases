@@ -1,9 +1,33 @@
 %
-We will now work our way through the ten different types of relationships between two entity types that can occur in an \pgls{ERD} created during conceptual modeling.
-Back in \cref{sec:conceptual:relationshipCardinalities}, we already painstakingly worked our way through these types and tried to find examples in existing sources.
-This was nothing.
-We will now set out to find how each of these relationships can be implemented in \sql.
+In \cref{sec:conceptual:relationshipCardinalities}, we discussed ten different types of binary relationships between two entity types that can occur in an \pgls{ERD} created during conceptual modeling.
+Back then, we worked our way through these types and tried to find examples in existing sources.
 
+We can view the binary relationship types as requirements that are imposed on the elements of two entity types.
+In a \crowsFoot{C}{O1}{D}{M1} relationship, for example, it is required that any entity of type~C \emph{must} be related to exactly one entity of type~D.
+Relationships are bi-directional, i.e., if an entity of type~C is related to an entity of type~D, then that very same entity of type~D is obviously also related to the entity of type~C.
+Vice versa, the \crowsFoot{C}{O1}{D}{M1} pattern also permits an entity of type~D to either be linked to one or no entity of type~C.%
+%
+\begin{definition}[Referential Integrity]%
+A \db\ where the relationship constraints between entities are correctly maintained has the property of \emph{referential integrity}.%
+\end{definition}%
+%
+In other words, if we map a conceptual models, say given as \pgls{ERD}, to a relational data model, we must also map the relationship patterns.
+This means essential to translate crow's foot notation to \sql.
+\sql\ offers us four major tools to implement relationship constraints:%
+%
+\begin{itemize}%
+%
+\item the primary key constraint~\sqlil{PRIMARY KEY},%
+%
+\item the foreign key constraint~\sqlil{REFERENCES},%
+%
+\item the \sqlil{NOT NULL} constraint that prevents an attribute to ever be undefined~(\sqlil{NULL}),%
+%
+\item the \sqlil{UNIQUE} constraint that prevents a value from occurring twice in a column.%
+%
+\end{itemize}%
+%
+We will now set out to find how each of the ten binary conceptual relationship types that we discussed can be implemented in \sql.
 We will do this in plain \sql\ and not in the \pgmodeler, because we start from the visual representation of the relationships and want to transform them to \sql.
 Using \pgmodeler, we would practically do the same, just in a convenient \pgls{GUI}.
 \pgmodeler\ is also more suitable for managing larger models, whereas we will slash and hammer our way through several small models with two entity types each.
