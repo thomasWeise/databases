@@ -6,6 +6,31 @@ We now tear down the example \db\ that we used to play around with when mapping 
 }%
 %
 This was quite a journey.
-We can now get rid of our example \db\ in~\cref{lst:conceptualToRelational:cleanup}.%
+We have worked our way through every single binary conceptual relationship type that can be expressed with crow's foot notation.
+We listed all of these relationship types back in \cref{sec:conceptual:relationshipCardinalities}.
+
+We found that each of these types can be enforced in a relational \dbms.
+With \emph{enforced}, we refer to the cardinality and modality of the relationship ends.
+If we want to implement, for example, a relationship following the pattern \crowsFoot{K}{M1}{L}{OM} in a \dbms, then we can do that.
+We can create a table~\sqlil{k} for the entities of type~K and a table~\sqlil{l} for the entities of type~L.
+Then we can use constraints that enforce that each row in table~\sqlil{l} must be related to exactly one row in table~\sqlil{k}.
+We can enforce that, at no time, there can ever be a row in table~\sqlil{l} that is not related to a row in table~\sqlil{k} or related to more than one such row.
+We can also enforce that each row in table~\sqlil{k} can be related to an arbitrary amount of rows in table~\sqlil{l}.
+Of course, we also enforce that if a row in table~\sqlil{l} is related to one row in table~\sqlil{k}, then that row in table~\sqlil{k} must be related to that row in table~\sqlil{l} and vice versa.
+No relationship end can be \inQuotes{open}.
+If these conditions are met, then our \db\ has the property of \emph{referential integrity}.
+
+What we also learned is that specifying the necessary constraints is not always easy.
+Especially if both relationship ends are mandatory, things can get complicated.
+We still managed to find solutions for all cases and also learned some additional \sql\ commands, such as~\glsreset{CTE}\pglspl{CTE}.
+Sometimes, however, we used \postgresql-specific extensions to \sql.
+One particularly useful one is the \sqlil{RETURNING} statement, which is also supported by \mariadb~\cite{M:MSD:IR} and \sqlite~\cite{HWACIS:R}.
+Another one were sequences and the \sqlil{NEXTVAL} function~\cite{PGDG:PD:CS,PGDG:PD:SMF}.
+
+Due to the complexity, we may sometimes choose to change the relationship types when moving from the conceptual model to the logical model.
+We only considered binary relationship between two entity types, and doing something like \crowsFoot{M}{M1}{N}{MM} while also having \crowsFoot{N}{MM}{X}{MM} might prove too annoying to actually implement.
+
+Creating examples for every single possible relationship type for two tables was fun, though.
+As final step, we can now get rid of our example \db\ in~\cref{lst:conceptualToRelational:cleanup}.%
 %
 \endhsection%

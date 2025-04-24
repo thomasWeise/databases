@@ -99,8 +99,8 @@ This means that we can generate a valid primary key value for table~\sqlil{m}, t
 %
 \begin{sloppypar}%
 In \cref{lst:MN_insert_and_select}, we thus insert a pair of rows into tables~\sqlil{m} and~\sqlil{n} as follows:
-First, we generate the primary key for the row that we want to insert into table~\sqlil{m} as \pgls{CTE} that just invokes \sqlil{NEXTVAL('sqmid')} and remembers the result, i.e., \sqlil{new_m AS (SELECT NEXTVAL('sqmid') AS new_mid)}.
-Then we insert a row into table~\sqlil{n}, also as \pgls{CTE}, by doing \sqlil{new_n AS (INSERT INTO n (y, fkmid) SELECT 'AB', new_mid FROM new_m RETURNING nid, fkmid)}.
+First, we generate the primary key for the row that we want to insert into table~\sqlil{m} as \pgls{CTE} that just invokes \sqlil{NEXTVAL('sqmid')} and remembers the result, i.e., \sqlil{m_id AS (SELECT NEXTVAL('sqmid') AS new_mid)}.
+Then we insert a row into table~\sqlil{n}, also as \pgls{CTE}, by doing \sqlil{new_n AS (INSERT INTO n (y, fkmid) SELECT 'AB', new_mid FROM m_id RETURNING nid, fkmid)}.
 This \pgls{CTE} returns the primary key~\sqlil{nid} of the new row in table~\sqlil{n} as well as the previously generated primary key~\sqlil{new_mid} for the row that we will insert into table~\sqlil{m}~(as \sqlil{fkmid}).
 We use both values in to finally actually insert the row into table~\sqlil{m} by calling \sqlil{INSERT INTO m (mid, x, fknid) SELECT fkmid, '123', nid FROM new_n;}.%
 \end{sloppypar}%

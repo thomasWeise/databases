@@ -79,6 +79,8 @@ The last sentence is interesting, as it poses a somewhat philosophical problem.
 We said that \inQuotes{each room is inside one building and each building is composed of one or multiple rooms.}
 This is what we wrote in our \pgls{ERD} in \cref{fig:erdRoom1} and this is what makes sense.
 On a technical level, this causes me to scratch my head.
+What we have here is a \crowsFoot{Building}{M1}{Room}{MM}~pattern.
+
 Regardless of what data model I use, I will be forced to instantiate the data structure for \emph{Room} to, well, represent a room in my \db.
 Following the formal definition of the above rule, I would need to have an existing entity of type \emph{Building} at this point in time.
 Because I must link each room to one building.
@@ -92,6 +94,7 @@ First, we could say:
 In the real world, each room is inside a building and a building has at least one room. %
 That is true and that is what we model here.
 Whether or not this can be realized technically is not relevant at this stage of development.}}
+
 Second, we could say, maybe even as a corollary of the above, that:
 \emph{\inQuotes{On a technical level, we simply do not enforce that buildings must contain rooms. %
 We know that the user will add rooms to buildings eventually. %
@@ -99,15 +102,19 @@ We just accept that there may be a temporary state of the \db\ where one of the 
 Just for a short time, between the moment when the user has created a building and right before she adds a room. %
 It doesn't matter.}}
 
-Third, we could even solve this technically:
+The third solution is that we, well, actually implement it as specified.
 Most \pglspl{dbms} support \emph{transactions}, i.e., groups of instructions to the \db\ that are executed as one atomic unit and either fail together or succeed together.
 There is no intermediate state, as transactions are indivisible, atomically executed units.
 Thus, we could require that every time a new building is added to the \db, the first room is specified as well.
 The creation of the building and room record could be executed together as atomic transaction.
 If we do this, the conceptual constraints would perfectly map to a technical constraints, at the expense of slightly more complex update operations~(because we now need to use transactions).
-\postgresql\ permits us to defer the constraints checking to the end of a transaction via the \sqlil{SET CONSTRAINTS ALL DEFERRED}\sqlIdx{SET CONSTRAINTS} command~\cite{PGDG:PD:SC:SC,N2016SSFA:DC}.
+\postgresql\ permits us to defer the constraints checking to the end of a transaction~\cite{PGDG:PD:SC:SC,N2016SSFA:DC}.
+Later, in \cref{sec:rm:mn}, we will learn that using \postgresql-specific extensions to \sql, we can group the necessary instructions together such that they form an implicit transaction and do not even need to make the constraints deferrable.
 
-Anyway.
+Anyway, the point is that conceptual relationships that seem hard to realize in software may exist.
+We will see that all relationship models that can be represented with crow's notation can be implemented in a relational \dbms.
+Whether it makes sense to do it -- it can become a bit complicated -- or not, this should not bother us during the conceptual modelling phase.
+
 Rooms are also connected with non-identifying relationships to schools:
 One school may be permitted to use zero or more rooms for teaching.
 Each room must be usable by at least one school~(because otherwise, we simply don't need to store it in the \db).

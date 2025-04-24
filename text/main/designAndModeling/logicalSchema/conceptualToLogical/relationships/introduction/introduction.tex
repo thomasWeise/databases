@@ -36,8 +36,14 @@ Please also consider this as an exercise in \sql.
 This is not so much about whether all of these relationship types do occur in practice.
 It is also not about memorizing the different approaches how they can be implemented.
 It is mainly about getting some feeling and understanding how the utilities that \sql\ offers us, mainly \sqlil{NOT NULL}, \sqlil{REFERENCES}, \sqlil{UNIQUE}, and \sqlil{PRIMARY KEY}~constraints~\cite{PGDG:PD:C} together with \sqlil{INNER JOIN} queries~\cite{PGDG:PD:JT} can be used to enforce referential integrity between tables.
-And also, for some relationship types {\dots} it is even fun to figure out how they can be implemented.
-
+And also, for some relationship types {\dots} it is even fun to figure out how they can be implemented.%
+%
+\noviceHint{%
+It is totally OK to skip over a few of the following subsections. %
+Once you understand the basic concepts, it may not be necessarily to reproduce all ten scenarios. %
+You can revisit the section later if you are looking for a particular setup.%
+}%
+%
 Of course, keeping with our practical \inQuotes{This is what it looks like when we execute it on the \postgresql\ \pgls{server}.}~attitude, we spin up a \db\ to really see some of the concepts in action in~\cref{lst:conceptualToRelational:init}.%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{init.sql}{}{}{}{postgres.sh}{conceptualToRelational:init}{%

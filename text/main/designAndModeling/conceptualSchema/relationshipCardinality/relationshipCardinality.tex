@@ -181,26 +181,30 @@ Each entity of type~N is related to exactly one entity of type~M.~\cite{BS2023G:
 \emph{Example:}~A patient can make several appointments~(to visit doctors).
 Each appointment is linked to exactly one patient.~\cite{BS2023G:EDFAHMSCFN}\\%
 \emph{Example:}~A school of a university must consist of at least one, but possibly many departments.
-Each department must belong to exactly one school.~\cite{R2024CDS:E}%
+Each department must belong to exactly one school.~\cite{R2024CDS:E}\\%
+See later in \cref{sec:rm:mn}.%
 %
 \item \crowsFoot{O}{OM}{P:}{OM}
 Each entity of type~O may be related to zero, one, or multiple entities of type~P.
 Each entity of type~P may be related to zero, one, or multiple entities of type~Q.\\%
 \emph{Example:}~A pizza shop sells pizza to customers.
 A pizza may be ordered by zero, one, or many customers.
-A customer may not order pizza~(maybe the want to eat something else), or order one pizza, or order multiple pizzas.~\cite{FCC2016D:CFNRSAHTRD}%
+A customer may not order pizza~(maybe the want to eat something else), or order one pizza, or order multiple pizzas.~\cite{FCC2016D:CFNRSAHTRD}\\%
+See later in \cref{sec:rm:op}.%
 %
 \item \crowsFoot{Q}{OM}{R:}{MM}
 Each entity of type~Q must be linked to at least one entity of type~R, i.e, one or many entities of type~R.
 Each entity of type~R may be related to zero, one, or many entities of type~Q.~\cite{BS2023G:CFNIERD}\\%
 \emph{Example:}~When placing an order for products online, the order must be for at least one product.
-Each product may be referenced by zero, one, or many orders.~\cite{BS2023G:CFNIERD}%
+Each product may be referenced by zero, one, or many orders.~\cite{BS2023G:CFNIERD}\\%
+See later in \cref{sec:rm:qr}.%
 %
 \item \crowsFoot{S}{MM}{T:}{MM}
 Each entity of type~S is linked to at least one, but maybe many entities of type~T.
 Each entity of type~T is linked to at least one, but maybe many entities of type~S.~\cite{T2025CDBMS:ERM}\\%
 \emph{Example:}~Each salesperson sells at least one product but may also sell more than one product.
-Each product by be sold by one salesperson, but also by many salespeople.~\cite{T2025CDBMS:ERM}
+Each product must be sold by at least one salesperson, but may also be sold by many salespeople.~\cite{T2025CDBMS:ERM}\\%
+See later in \cref{sec:rm:st}.%
 %
 \end{itemize}%
 %

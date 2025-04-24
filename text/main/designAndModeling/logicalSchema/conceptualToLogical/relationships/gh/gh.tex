@@ -126,7 +126,9 @@ We declared the primary key~\sqlil{gid} of table~\sqlil{g} as \sqlil{INT GENERAT
 This means that the values of this key are generated when the rows are created.
 This, in turn, means that before inserting the row into table~\sqlil{g}, we do not know the value that its primary key will have.
 Luckily, this is a very common problem:~\inQuotes{What if we insert some data into a table with automatically generated primary keys and then need the key that was assigned to that data?}
-\postgresql\ offers an answer with the \sqlilIdx{RETURNING} keyword~\cite{PGDG:PD:RDFMR,SE:DA:2020WDSSOAOTNPSDIOR}.
+\postgresql\ offers an answer with the \sqlilIdx{RETURNING} keyword\footnote{%
+This is a \postgresql\ addition to~\sql~\cite{SE:DA:2020WDSSOAOTNPSDIOR} and does not seem to be part of the \sql\ standard, but it is also supported by \mariadb~\cite{M:MSD:IR} and \sqlite~\cite{HWACIS:R}.%
+}~\cite{PGDG:PD:RDFMR}.%
 
 The statement \sqlil{INSERT INTO g (fkhid, x) VALUES (1, '123') RETURNING gid, fkhid} would insert a row into the table~\sqlil{g} where the value of the attribute~\sqlil{x} is~\sqlil{'123'} and the value of the attribute~\sqlil{fkhid} is~\sqlil{1}.
 It would return the value of the primary key column~\sqlil{gid} that was automatically generated and assigned to this row as well as the value of~\sqlil{fkhid}, which would be~\sqlil{1} in this case.

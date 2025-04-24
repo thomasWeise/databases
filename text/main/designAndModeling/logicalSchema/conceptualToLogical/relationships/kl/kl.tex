@@ -14,6 +14,8 @@ Each entity of type~K may be connected to zero, one, or multiple entities of typ
 Each entity of type~L is connected to exactly one entity of type~K.
 
 We need a table~\sqlil{k} for the entities of type~K and a table~\sqlil{l} for the entities of type~L.
+We call the primary key for table~\sqlil{k} \sqlil{kid} and also add the example attribute~\sqlil{x}.
+The primary key for table~\sqlil{l} be~\sqlil{lid} and we again provide the example attribute~\sqlil{y}.
 Every row of table~\sqlil{l} must be related to exactly one row of table~\sqlil{k}.
 The three table solution from the \crowsFoot{E}{O1}{F}{OM} scenario therefore makes no sense:
 The third table could never have few rows, it would always have exactly as many rows as~\sqlil{l}.
