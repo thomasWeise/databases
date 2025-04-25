@@ -30,7 +30,7 @@ Inserting into and selecting data from the realization of an \crowsFoot{Q}{OM}{R
 \input{\cdtrmTableRQR}%
 \floatSep%
 \caption{The contents of the the three tables in the implementation of the \crowsFoot{Q}{OM}{R}{MM} conceptual relationship after executing \cref{lst:QR_insert_and_select}.}%
-\label{fig:rm:op:tables}%
+\label{fig:rm:qr:tables}%
 \end{figure}%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{QR_insert_error_1.sql}{relationships}{}{}{postgres.sh}{QR_insert_error_1}{%
@@ -96,7 +96,7 @@ Both insertions are executed as one single command and the referential integrity
 %
 We insert a few rows into tables~\sqlil{q} and~\sqlil{relate_q_and_r} using this method.
 Once this is done, we can easily add more connections as rows in table~\sqlil{relate_q_and_r}.
-The contents of all three tables after we inserted the data are displayed in \cref{fig:rm:op:tables}.
+The contents of all three tables after we inserted the data are displayed in \cref{fig:rm:qr:tables}.
 Finally, we can merge the data again using the same two \sqlil{INNER JOIN} expressions we used several times before.
 
 It is clear that we cannot insert any row into table~\sqlil{q} that does not provide a foreign key to a row in table~\sqlil{r}, as shown in \cref{lst:QR_insert_error_1}.
