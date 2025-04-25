@@ -2,12 +2,37 @@
 \hsection{\crowsFoot{O}{OM}{P}{OM}}%
 \label{sec:rm:op}%
 %
+\begin{figure}%
+\centering%
+\includegraphics[width=0.86\linewidth]{\currentDir/OP}%
+\caption{We encountered the \crowsFoot{O}{OM}{P}{OM} relationship pattern in \cref{fig:erdPersonStudentFaculty2}.}%
+\label{fig:rm:op}%
+\end{figure}%
+%
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{OP_tables.sql}{relationships}{}{}{postgres.sh}{OP_tables}{%
 The realization of a \crowsFoot{O}{OM}{P}{OM} conceptual relationship.%
 }%
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{OP_insert_and_select.sql}{relationships}{}{}{postgres.sh}{OP_insert_and_select}{%
 Inserting into and selecting data from the realization of an \crowsFoot{O}{OM}{P}{OM} conceptual relationship given in \cref{lst:OP_tables}.%
 }%
+%
+\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships o oid;x}{cdtrmTableO}%
+\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships p pid;y}{cdtrmTableP}%
+\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships relate_o_and_p fkoid;fkpid}{cdtrmTableROP}%
+%
+\begin{figure}%
+\centering%
+\floatSep%
+\input{\cdtrmTableO}%
+\floatSep%
+\input{\cdtrmTableP}%
+\floatSep%
+\input{\cdtrmTableROP}%
+\floatSep%
+\caption{The contents of the the three tables in the implementation of the \crowsFoot{O}{OM}{P}{OM} conceptual relationship after executing \cref{lst:OP_insert_and_select}.}%
+\label{fig:rm:op:tables}%
+\end{figure}%
+%
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{OP_insert_error.sql}{relationships}{}{}{postgres.sh}{OP_insert_error}{%
 Trying to relate two entities twice, which is of course not permitted in \emph{any} relationship pattern.%
 }%
@@ -16,7 +41,16 @@ We have the two entity types~O and~P.
 Each entity of type~O may be connected to zero, one, or multiple entities of type~P.
 Each entity of type~P may be connected to zero, one, or multiple entities of type~O.
 
-We need a table~\sqlil{o} for the entities of type~O.
+We encountered this pattern back in \cref{fig:erdPersonStudentFaculty2} when we modeled the relationship between the different types of modules and the different types of teacher position.
+For example, maybe a lecturer can propose and chair a module of type elective specialization course.
+The mandatory core module may only be chaired by a full professor, who is also permitted to chair elective specialization course.
+The Master's (thesis module) supervision may only be available to teachers that hold the position Master's supervisor.
+This means that each position may give a faculty member the credentials to chair zero, one, or many different types of modules.
+At the same time, a module type may be chaired by teachers belonging to zero, one, or many position types, as illustrated in \cref{fig:rm:op}.
+Granted, the situation where a module type cannot be chaired by any position type would be very strange.
+This maybe a shortcoming of our model back then{\dots}
+
+When implementing this pattern, we need a table~\sqlil{o} for the entities of type~O.
 The primary key of this table be~\sqlil{oid} and there also will be the example attribute~\sqlil{x}.
 We also need a table~\sqlil{p} for the entities of type~P, which gets the primary key~\sqlil{pid} and the example attribute~\sqlil{y}.
 Now, since each row in~\sqlil{o} can be related to multiple rows in table~\sqlil{p} and vice versa, no two-table solution is possible.
@@ -37,6 +71,7 @@ And primary keys must be unique by default, so this constraint also covers the u
 In \cref{lst:OP_insert_and_select}, we now insert data into the two tables.
 Since both relationship ends are optional, we can first enter some data into the tables~\sqlil{o} and~\sqlil{p}.
 Then we can add the relationships between the rows of these tables by inserting rows into table~\sqlil{relate_o_and_p}.
+The contents of all three tables after inserting the data are displayed in \cref{fig:rm:op:tables}.
 If we want to recombine data from the two tables, we can do this with two \sqlil{INNER JOIN}~expressions.
 
 During the above example, we inserted the row~\sqlil{(1, 1)} into table~\sqlil{relate_o_and_p}.

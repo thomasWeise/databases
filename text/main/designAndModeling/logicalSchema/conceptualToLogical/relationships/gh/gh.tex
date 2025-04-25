@@ -2,6 +2,13 @@
 \hsection{\crowsFoot{G}{O1}{H}{MM}}%
 \label{sec:rm:gh}%
 %
+\begin{figure}%
+\centering%
+\includegraphics[width=0.97\linewidth]{\currentDir/GH}%
+\caption{An example of the \crowsFoot{G}{O1}{H}{MM} relationship pattern from back in \cref{sec:conceptual:relationshipCardinalities}.}%
+\label{fig:rm:gh}%
+\end{figure}%
+%
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{GH_tables.sql}{relationships}{}{}{postgres.sh}{GH_tables}{%
 The realization of an \crowsFoot{G}{O1}{H}{MM} conceptual relationship.%
 }%
@@ -9,6 +16,20 @@ The realization of an \crowsFoot{G}{O1}{H}{MM} conceptual relationship.%
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{GH_insert_and_select.sql}{relationships}{}{}{postgres.sh}{GH_insert_and_select}{%
 Inserting into and selecting data from the realization of an \crowsFoot{G}{O1}{H}{MM} conceptual relationship given in \cref{lst:GH_tables}.%
 }%
+%
+\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships g gid;fkhid;x}{cdtrmTableG}%
+\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships h hid;fkgid;y}{cdtrmTableH}%
+%
+\begin{figure}%
+\centering%
+\floatSep%
+\input{\cdtrmTableG}%
+\floatSep%
+\input{\cdtrmTableH}%
+\floatSep%
+\caption{The contents of the the two tables in the implementation of the \crowsFoot{G}{O1}{H}{MM} conceptual relationship after executing \cref{lst:GH_insert_and_select}.}%
+\label{fig:rm:gh:tables}%
+\end{figure}%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{GH_insert_error_1.sql}{relationships}{}{}{postgres.sh}{GH_insert_error_1}{%
 Trying to create a row into table~\sqlil{g} that is not related to any row in table~\sqlil{h} is not possible.%
@@ -33,10 +54,15 @@ Changing a row in table~\sqlil{h} that references a row in table~\sqlil{g} to no
 We have the two entity types~G and~H.
 Each entity of type~G must be connected to at least one but maybe many entities of type~H.
 Each entity of type~H is connected to zero or one entity of type~G.
+
+An example of the \crowsFoot{G}{O1}{H}{MM} relationship pattern is given back in \cref{sec:conceptual:relationshipCardinalities}:
+In a soccer club, each trainer coaches several club members.
+Each member can be coached by one trainer or, if they have other functions, not be coached at all.
+This example is illustrated in \cref{fig:rm:gh}.
+
 We again create two tables~\sqlil{g} and~\sqlil{h}, respectively.
 They have the primary keys~\sqlil{gid} and~\sqlil{hid} as well as the example attributes~\sqlil{x} and~\sqlil{y}, respectively.
-
-We can approach this in the same way as the in the two-table manner in the \crowsFoot{E}{O1}{F}{OM} situation.
+Then we can approach this in the same way as the in the two-table manner in the \crowsFoot{E}{O1}{F}{OM} situation.
 However, enforcing this relationship pattern is a bit more complicated, but doable, as illustrated in \cref{lst:GH_tables}:
 
 We begin by preparing the table~\sqlil{g}.
@@ -161,6 +187,7 @@ This would make the foreign key stored in this row point to our new row in table
 Since both sub-expression are part of a single command, the referential integrity constraints~(the \sqlil{REFERENCES}~constraints) are checked only at the very end, when  the~\sqlil{;} is reached.
 By this time, the referential integrity has been established, since we inserted one row into table~\sqlil{g} and made the corresponding row in table~\sqlil{h} reference it.
 
+The contents of the tables~\sqlil{g} and~\sqlil{h} after inserting the data are shown in \cref{fig:rm:gh:tables}.
 Relating the existing rows in~\sqlil{g} to additional rows in~\sqlil{h} is then much easier and can be done with single \sqlilIdx{UPDATE}~statements applied to table~\sqlil{h}.
 
 We now conduct a few additional sanity tests to check whether our constraints work and really protect the referential integrity.

@@ -2,12 +2,33 @@
 \hsection{\crowsFoot{M}{M1}{N}{MM}}%
 \label{sec:rm:mn}%
 %
+\begin{figure}%
+\centering%
+\includegraphics[width=0.9\linewidth]{\currentDir/MN}%
+\caption{We encountered the \crowsFoot{M}{M1}{N}{MM} relationship pattern in \cref{fig:erdPerson4}.}%
+\label{fig:rm:mn}%
+\end{figure}%
+%
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{MN_tables.sql}{relationships}{}{}{postgres.sh}{MN_tables}{%
 The realization of a \crowsFoot{M}{M1}{N}{MM} conceptual relationship.%
 }%
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{MN_insert_and_select.sql}{relationships}{}{}{postgres.sh}{MN_insert_and_select}{%
 Inserting into and selecting data from the realization of an \crowsFoot{M}{M1}{N}{MM} conceptual relationship given in \cref{lst:MN_tables}.%
-}%%
+}%
+%
+\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships m mid;fknid;x}{cdtrmTableM}%
+\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships n nid;fkmid;y}{cdtrmTableN}%
+%
+\begin{figure}%
+\centering%
+\floatSep%
+\input{\cdtrmTableM}%
+\floatSep%
+\input{\cdtrmTableN}%
+\floatSep%
+\caption{The contents of the the two tables in the implementation of the \crowsFoot{M}{M1}{N}{MM} conceptual relationship after executing \cref{lst:MN_insert_and_select}.}%
+\label{fig:rm:mn:tables}%
+\end{figure}%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{MN_insert_error_1.sql}{relationships}{}{}{postgres.sh}{MN_insert_error_1}{%
 Trying to create a row into table~\sqlil{m} that is not related to any row in table~\sqlil{n} is not possible.%
@@ -32,6 +53,11 @@ Changing a row in table~\sqlil{n} that references a row in table~\sqlil{m} to no
 We have the two entity types~M and~N.
 Each entity of type~M must be linked to at least one entity of type~N, but can also be linked to many of them.
 Each entity of type~N is connected to exactly one entity of type~M.
+
+We encountered this relationship pattern in \cref{fig:erdPerson4}, when we tried to model the relationship between entities of type~\emph{Person} and~\emph{Personal~ID}.
+Each person must have at least one personal~ID.
+Each personal~ID belongs to exactly one person.
+This is illustrated in \cref{fig:rm:mn}.
 
 Implementing the referential integrity of this relationship pattern in \sql\ is a bit complicated but doable.
 I did struggle with the \crowsFoot{G}{O1}{H}{MM} relationship pattern back in \cref{sec:rm:gh}, but in the end we figured it out.
@@ -107,6 +133,8 @@ We use both values in to finally actually insert the row into table~\sqlil{m} by
 %
 After this, if we want to append  another row to table~\sqlil{n} and link it to the now existing row in table~\sqlil{m}, we can do this more easily via~\sqlil{INSERT INTO n (y, fkmid) VALUES ('CD', 1);}.
 The creation of new rows for table~\sqlil{m}, however, requires us to have the two \pglspl{CTE}.
+The contents of the tables~\sqlil{m} and~\sqlil{n} after inserting the data are shown in \cref{fig:rm:mn:tables}.
+Reassembling the data from both tables can be achieved with a single~\sqlil{INNER JOIN}, as illustrated at the bottom of \cref{lst:MN_insert_and_select}.
 
 This solution requires several \postgresql-specific techniques, such as \sqlilIdx{RETURNING}, \sqlilIdx{NEXTVAL}, and the creation of sequences.
 Other \pglspl{dbms} certainly have similar or slightly different extensions to the \sql\ standard that allow us to do similar things.

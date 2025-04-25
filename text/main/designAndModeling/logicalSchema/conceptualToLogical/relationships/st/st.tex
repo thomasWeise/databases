@@ -2,12 +2,37 @@
 \hsection{\crowsFoot{S}{MM}{T}{MM}}%
 \label{sec:rm:st}%
 %
+\begin{figure}%
+\centering%
+\includegraphics[width=0.97\linewidth]{\currentDir/ST}%
+\caption{We encountered the \crowsFoot{S}{MM}{T}{MM} relationship pattern in \cref{fig:erdPlatform1}.}%
+\label{fig:rm:st}%
+\end{figure}%
+%
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{ST_tables.sql}{relationships}{}{}{postgres.sh}{ST_tables}{%
 The realization of a \crowsFoot{S}{MM}{T}{MM} conceptual relationship.%
 }%
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{ST_insert_and_select.sql}{relationships}{}{}{postgres.sh}{ST_insert_and_select}{%
 Inserting into and selecting data from the realization of an \crowsFoot{S}{MM}{T}{MM} conceptual relationship given in \cref{lst:ST_tables}.%
 }%
+%
+\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships s sid;fktid;x}{cdtrmTableS}%
+\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships t tid;fksid;y}{cdtrmTableT}%
+\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships relate_s_and_t fksid;fktid}{cdtrmTableRST}%
+%
+\begin{figure}%
+\centering%
+\floatSep%
+\input{\cdtrmTableS}%
+\floatSep%
+\input{\cdtrmTableT}%
+\floatSep%
+\input{\cdtrmTableRST}%
+\floatSep%
+\caption{The contents of the the three tables in the implementation of the \crowsFoot{S}{MM}{T}{MM} conceptual relationship after executing \cref{lst:ST_insert_and_select}.}%
+\label{fig:rm:st:tables}%
+\end{figure}%
+%
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{ST_insert_error_1.sql}{relationships}{}{}{postgres.sh}{ST_insert_error_1}{%
 Trying to insert new related rows into tables~\sqlil{s} and~\sqlil{t} without updating table~\sqlil{relate_s_and_t} does not work.%
 }%
@@ -18,6 +43,12 @@ Trying to insert a new row into tables~\sqlil{s} and relate it to an existing ro
 We have the two entity types~S and~T.
 Each entity of type~S must be connected to at least one entity of type~T, but can be connected to many.
 Each entity of type~T must be connected to at least one entity of type~P, but can be connected to many.
+
+We encountered this relationship pattern back in \cref{fig:erdPlatform1} when constructing the overall model of our teaching management platform.
+Back then, we related address records to person entities.
+Each person must have at least one address, but may have more than one address.
+Each address stored in our system must be associated with at least one person, but it is possible that multiple people live at the same place.
+This part of the model is sketched in \cref{fig:rm:st}.
 
 To implement this relationship pattern, we will combine what we learned when implementing the \crowsFoot{M}{M1}{N}{MM}~pattern in \cref{sec:rm:mn} with the method for implementing the \crowsFoot{Q}{OM}{R}{MM}~pattern in \cref{sec:rm:qr}.
 
@@ -86,13 +117,15 @@ As result, we get the primary key~\sqlil{sid} of the new row in table~\sqlil{s} 
 We can then \sqlil{INSERT INTO relate_s_and_t (fksid, fktid) SELECT sid, fktid FROM new_s} and are done.%
 \end{sloppypar}%
 %
-Since the relationship pattern is symmetric, we can do exaclty the same for table~\sqlil{t}.
+\begin{sloppypar}%
+Since the relationship pattern is symmetric, we can do exactly the same for table~\sqlil{t}.
 We can insert a new row into table~\sqlil{t} and relate it to an existing row in table~\sqlil{s}.
-For this, we would procede exactly the same way and also use one~\pgls{CTE}.
-
+For this, we would proceed the same way and also use one~\pgls{CTE}.
 Finally, we can also simply relate two existing rows in tables~\sqlil{s} and~\sqlil{t} by just creating one new row in table~\sqlil{relate_s_and_t}.
 This can be like this:~\sqlil{INSERT INTO relate_s_and_t VALUES (1, 3);}.
-
+The contents of all three tables after inserting the data are shown in \cref{fig:rm:st:tables}.%
+\end{sloppypar}%
+%
 Merging the data requires again two \sqlil{INNER JOIN} expressions, exactly as before.
 The constraints prevent us from creating rows in~\sqlil{s}~(or~\sqlil{t}) that are not related to rows in~\sqlil{t}~(or~\sqlil{s}).
 We also cannot relate rows without creating the corresponding entry in~\sqlil{relate_s_and_t}, as shown in \cref{lst:ST_insert_error_1,lst:ST_insert_error_2}.%

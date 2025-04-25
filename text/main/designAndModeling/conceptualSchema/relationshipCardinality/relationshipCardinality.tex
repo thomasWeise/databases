@@ -155,13 +155,16 @@ See later in \cref{sec:rm:ef}.%
 \item \crowsFoot{G}{O1}{H:}{MM}
 Each entity of type~G is related at least one, but maybe many entities of type~H.
 Each entity of type~H is linked to zero or one entity of type~G.\\%
+\emph{Example:}~The trainer of a football club coaches many club members.
+A club member can be coached by at most one trainer or not be coached at all, if they have other functions~\cite{SE:DA:2020UTFBRTCACFE}.\\%
 See later in \cref{sec:rm:gh}.%
 %
 \item \crowsFoot{I}{M1}{J:}{M1}
 Each entity of type~I must be associated with exactly one entity of type~J.
 Each entity of type~J must be associated with exactly one entity of type~I.\\%
-\emph{Example:}~In a company, one salesperson must be the backup for each~(other) salesperson.
-Each salesperson is the backup of one salesperson.~\cite{T2025CDBMS:ERM}\\%
+\emph{Example:}~Police patrols always are done by a team of two police officers~(at least in classic movies and TV shows).\\%
+\emph{Example:}~In public bus transportation, it could be that there are always teams of one bus driver and one ticket inspector working together.\\%
+\emph{Example:}~In a certain company, each salesperson must be the backup for one other salesperson and vice versa.~\cite{T2025CDBMS:ERM}\\%
 See later in \cref{sec:rm:ij}.%
 %
 \item \crowsFoot{K}{M1}{L:}{OM}

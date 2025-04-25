@@ -1,12 +1,37 @@
 \hsection{\crowsFoot{A}{O1}{B}{O1}}%
 \label{sec:rm:ab}%
 %
+\begin{figure}%
+\centering%
+\includegraphics[width=0.97\linewidth]{\currentDir/AB}%
+\caption{Examples of the \crowsFoot{A}{O1}{B}{O1} relationship pattern from back in \cref{sec:conceptual:relationshipCardinalities}.}%
+\label{fig:rm:ab}%
+\end{figure}%
+%
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{AB_1_tables.sql}{relationships}{}{}{postgres.sh}{AB_1_tables}{%
 The three-table realization of an \crowsFoot{A}{O1}{B}{O1} conceptual relationship.%
 }%
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{AB_1_insert_and_select.sql}{relationships}{}{}{postgres.sh}{AB_1_insert_and_select}{%
 Inserting into and selecting data from the three-table realization of an \crowsFoot{A}{O1}{B}{O1} conceptual relationship given in \cref{lst:AB_1_tables}.%
 }%
+%
+\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships a aid;x}{cdtrmTableAO}%
+\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships b bid;y}{cdtrmTableBO}%
+\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships relate_a_and_b fkaid;fkbid}{cdtrmTableRAB}%
+%
+\begin{figure}%
+\centering%
+\floatSep%
+\centering\input{\cdtrmTableAO}%
+\floatSep%
+\centering\input{\cdtrmTableBO}%
+\floatSep%
+\centering\input{\cdtrmTableRAB}%
+\floatSep%
+\caption{The contents of the the tables in the three-table implementation of the \crowsFoot{A}{O1}{B}{O1} conceptual relationship after executing \cref{lst:AB_1_insert_and_select}.}%
+\label{fig:rm:ab:1:tables}%
+\end{figure}%
+%
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{AB_1_insert_error_1.sql}{relationships}{}{}{postgres.sh}{AB_1_insert_error_1}{%
 The schema illustrated in \cref{lst:AB_1_tables} prevents entities of type~A to be related to more than one entity of type~B.%
 }%
@@ -17,13 +42,27 @@ The schema illustrated in \cref{lst:AB_1_tables} prevents entities of type~B to 
 Deleting the three tables again, because we want to try another realization of the \crowsFoot{A}{O1}{B}{O1} conceptual relationship.%
 }%
 %
-%
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{AB_2_tables.sql}{relationships}{}{}{postgres.sh}{AB_2_tables}{%
 The two-table realization of an \crowsFoot{A}{O1}{B}{O1} conceptual relationship.%
 }%
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{AB_2_insert_and_select.sql}{relationships}{}{}{postgres.sh}{AB_2_insert_and_select}{%
 Inserting into and selecting data from the two-table realization of an \crowsFoot{A}{O1}{B}{O1} conceptual relationship given in \cref{lst:AB_2_tables}.%
 }%
+%
+\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships a aid;fkbid;x}{cdtrmTableAT}%
+\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships b bid;y}{cdtrmTableBT}%
+%
+\begin{figure}%
+\centering%
+\floatSep%
+\input{\cdtrmTableAT}%
+\floatSep%
+\input{\cdtrmTableBT}%
+\floatSep%
+\caption{The contents of the the tables in the two-table implementation of the \crowsFoot{A}{O1}{B}{O1} conceptual relationship after executing \cref{lst:AB_2_insert_and_select}.}%
+\label{fig:rm:ab:2:tables}%
+\end{figure}%
+%
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{AB_2_insert_error_2.sql}{relationships}{}{}{postgres.sh}{AB_2_insert_error_2}{%
 The schema illustrated in \cref{lst:AB_2_tables} prevents entities of type~B to be related to more than one entity of type~A via constraints. %
 The entities of type~A can only be associated with one entity of type~B because of the table structure.%
@@ -32,7 +71,20 @@ The entities of type~A can only be associated with one entity of type~B because 
 We have the two entity types~A and~B.
 Each entity of type~A is connected to zero or one entity of type~B.
 Each entity of type~B is connected to zero or one entity of type~A.
-There are two possible ways to implement this relationship pattern:%
+
+We saw examples of this relationship pattern back in \cref{sec:conceptual:relationshipCardinalities}:
+Let's we are a pizzeria that allows customers to order pizzas online.
+We also hand out discount vouchers that allow can reduce the cost of an online order by~20\%.
+Each voucher can be redeemed for one such online order or it may also not be redeemed at all.
+For each online order, you may use one voucher to reduce the cost, or you may not use any voucher at all.
+
+Another example could be integrated into our teaching management platform.
+As you will remember, we used the entity type~\emph{Person} as central model component.
+If we wanted, we could add information about the current marital status of all people in form of, fittingly, relationships.
+Each person can be married to zero or one (other) person.
+These two examples are illustrated in \cref{fig:rm:ab}.
+
+There are two possible ways to implement this relationship pattern in a relational \dbms:%
 %
 \begin{enumerate}%
 %
@@ -72,6 +124,7 @@ So we only need to provide values for the attributes~\sqlil{x} and~\sqlil{y}.
 After this, we have filled both tables with some data.
 We can then establish relationships between the rows of tables~\sqlil{a} and~\sqlil{b} by adding entries to~\sqlil{relate_a_and_b} with the primary keys of the related rows.
 \sqlil{INSERT INTO relate_a_and_b (fkaid, fkbid) VALUES (2, 3);}, for example, would relate the row in table~\sqlil{a} with~\sqlil{aid = 2} to the row in table~\sqlil{b} with~\sqlil{bid = 3}.
+The contents of the tables after executing \cref{lst:AB_1_insert_and_select} is illustrated in \cref{fig:rm:ab:1:tables}.
 
 Now we want to query some information about~A, using~\sqlil{SELECT}, but also need information about the potentially related~B.
 We use an~\sqlil{INNER JOIN} coming from table~\sqlil{a} on the third table~\sqlil{relate_a_and_b} based on the primary key~\sqlil{aid} of table~\sqlil{a}.
@@ -113,6 +166,7 @@ In \cref{lst:AB_2_insert_and_select}, we insert the data into the two tables~\sq
 The relationships are now no longer inserted into a third table.
 Instead, we use \sqlilIdx{UPDATE} statements~\cite{PGDG:PD:U}, as illustrated in \cref{lst:AB_2_insert_and_select}.
 \sqlil{UPDATE a SET fkbid = 3 WHERE aid = 2;}, for example, relates the row in table~\sqlil{a} with~\sqlil{aid = 2} to the row in table~\sqlil{b} with~\sqlil{bid = 3}.
+The contents of the tables after creating the data is illustrated in~\cref{fig:rm:ab:2:tables}.
 We can now recombine the data from the two tables using a single~\sqlil{INNER JOIN}.
 
 Relating entities of type~A to multiple entities of type~B is impossible, because the column~\sqlil{fkbid} in table~\sqlil{a} can only have one value.

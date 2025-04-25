@@ -2,12 +2,37 @@
 \hsection{\crowsFoot{Q}{OM}{R}{MM}}%
 \label{sec:rm:qr}%
 %
+\begin{figure}%
+\centering%
+\includegraphics[width=0.9\linewidth]{\currentDir/QR}%
+\caption{We encountered the \crowsFoot{Q}{OM}{R}{MM} relationship pattern in \cref{fig:erdMessage1}.}%
+\label{fig:rm:qr}%
+\end{figure}%
+%
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{QR_tables.sql}{relationships}{}{}{postgres.sh}{QR_tables}{%
 The realization of a \crowsFoot{Q}{OM}{R}{MM} conceptual relationship.%
 }%
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{QR_insert_and_select.sql}{relationships}{}{}{postgres.sh}{QR_insert_and_select}{%
 Inserting into and selecting data from the realization of an \crowsFoot{Q}{OM}{R}{MM} conceptual relationship given in \cref{lst:QR_tables}.%
 }%
+%
+\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships q qid;fkrid;x}{cdtrmTableQ}%
+\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships r rid;y}{cdtrmTableR}%
+\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships relate_q_and_r fkqid;fkrid}{cdtrmTableRQR}%
+%
+\begin{figure}%
+\centering%
+\floatSep%
+\input{\cdtrmTableQ}%
+\floatSep%
+\input{\cdtrmTableR}%
+\floatSep%
+\input{\cdtrmTableRQR}%
+\floatSep%
+\caption{The contents of the the three tables in the implementation of the \crowsFoot{Q}{OM}{R}{MM} conceptual relationship after executing \cref{lst:QR_insert_and_select}.}%
+\label{fig:rm:op:tables}%
+\end{figure}%
+%
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{QR_insert_error_1.sql}{relationships}{}{}{postgres.sh}{QR_insert_error_1}{%
 Trying to create a row into table~\sqlil{q} without providing a foreign key to a row in~\sqlil{r} fails.%
 }%
@@ -21,6 +46,11 @@ Even if we can choose the primary key for the new row in table~\sqlil{q}, we can
 We have the two entity types~Q and~R.
 Each entity of type~Q may be connected to zero, one, or multiple entities of type~R.
 Each entity of type~R must be connected to at least one entity of type~P, but can be connected to many.
+
+We came across this situation when modeling the messaging subsystem of our teaching management platform back in \cref{fig:erdMessage1}.
+A message must have at least one receiver, but it could also be sent to multiple people at once.
+Each person may receive zero, one, or many messages.
+This situation is sketched in \cref{fig:rm:qr}.
 
 Let us again begin by establishing the basic tables that we need and then sort out how we can enforce referential integrity with proper constraints.
 We need a table~\sqlil{q} for the entities of type~Q.
@@ -66,6 +96,7 @@ Both insertions are executed as one single command and the referential integrity
 %
 We insert a few rows into tables~\sqlil{q} and~\sqlil{relate_q_and_r} using this method.
 Once this is done, we can easily add more connections as rows in table~\sqlil{relate_q_and_r}.
+The contents of all three tables after we inserted the data are displayed in \cref{fig:rm:op:tables}.
 Finally, we can merge the data again using the same two \sqlil{INNER JOIN} expressions we used several times before.
 
 It is clear that we cannot insert any row into table~\sqlil{q} that does not provide a foreign key to a row in table~\sqlil{r}, as shown in \cref{lst:QR_insert_error_1}.

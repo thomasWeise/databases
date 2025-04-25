@@ -2,6 +2,13 @@
 \hsection{\crowsFoot{E}{O1}{F}{OM}}%
 \label{sec:rm:ef}%
 %
+\begin{figure}%
+\centering%
+\includegraphics[width=0.9\linewidth]{\currentDir/EF}%
+\caption{We encountered the \crowsFoot{E}{O1}{F}{OM} relationship pattern in \cref{fig:erdMessage1}.}%
+\label{fig:rm:ef}%
+\end{figure}%
+%
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{EF_1_tables.sql}{relationships}{}{}{postgres.sh}{EF_1_tables}{%
 The three-table realization of an \crowsFoot{E}{O1}{F}{OM} conceptual relationship.%
 }%
@@ -9,6 +16,24 @@ The three-table realization of an \crowsFoot{E}{O1}{F}{OM} conceptual relationsh
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{EF_1_insert_and_select.sql}{relationships}{}{}{postgres.sh}{EF_1_insert_and_select}{%
 Inserting into and selecting data from the three-table realization of an \crowsFoot{E}{O1}{F}{OM} conceptual relationship given in \cref{lst:EF_1_tables}.%
 }%
+%
+\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships e eid;x}{cdtrmTableEO}%
+\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships f fid;y}{cdtrmTableFO}%
+\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships relate_e_and_f fkeid;fkfid}{cdtrmTableREF}%
+%
+\begin{figure}%
+\centering%
+\floatSep%
+\input{\cdtrmTableEO}%
+\floatSep%
+\input{\cdtrmTableFO}%
+\floatSep%
+\input{\cdtrmTableREF}%
+\floatSep%
+\caption{The contents of the the tables in the three-table implementation of the \crowsFoot{E}{O1}{B}{OM} conceptual relationship after executing \cref{lst:EF_1_insert_and_select}.}%
+\label{fig:rm:ef:1:tables}%
+\end{figure}%
+%
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{EF_1_cleanup.sql}{relationships}{}{}{postgres.sh}{EF_1_cleanup}{Deleting the tables created in \cref{lst:EF_1_tables}.}%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{EF_2_tables.sql}{relationships}{}{}{postgres.sh}{EF_2_tables}{%
@@ -19,16 +44,35 @@ A two-table realization of an \crowsFoot{E}{O1}{F}{M1} conceptual relationship.%
 Inserting into and selecting data from the two-table realization of an \crowsFoot{E}{O1}{F}{OM} conceptual relationship given in \cref{lst:EF_2_tables}.%
 }%
 %
+\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships e eid;x}{cdtrmTableET}%
+\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships f fid;fkeid;y}{cdtrmTableFT}%
+%
+\begin{figure}%
+\centering%
+\floatSep%
+\input{\cdtrmTableET}%
+\floatSep%
+\input{\cdtrmTableFT}%
+\floatSep%
+\caption{The contents of the the tables in the two-table implementation of the \crowsFoot{E}{O1}{B}{OM} conceptual relationship after executing \cref{lst:EF_2_insert_and_select}.}%
+\label{fig:rm:ef:2:tables}%
+\end{figure}%
+%
 We have the two entity types~E and~F.
 Each entity of type~E may be connected to zero, one, or multiple entities of type~F.
 Each entity of type~F is connected to zero or one entity of type~E.
+
+We encountered this relationship pattern back in \cref{fig:erdMessage1}, where we tried to model the messaging subsystem for our teaching management platform.
+A message can either be a new message or a reply to exactly one existing message.
+There may be zero, one, or many replies to any existing message.
+This situation is sketched in \cref{fig:rm:ef}.
 
 We need a table~\sqlil{e} for the entities of type~E and a table~\sqlil{f} for the entities of type~F.
 Both have their respective surrogate primary keys~\sqlil{eid} and~\sqlil{fid} and we also add the example attributes~\sqlil{x} and~\sqlil{y} to them, respectively.
 Apart from that, there can again be two solutions to implementing this relationship:
 We can use three tables or two, again, depending on how many entities of types~E and~F are actually related.
 
-We may have a third table~\sqlil{relate_e_and_f} relating the entities of type~E to those of type~F.
+We may use a third table~\sqlil{relate_e_and_f} relating the entities of type~E to those of type~F.
 This approach is illustrated in \cref{lst:EF_1_tables}.
 There will be two columns in that table.
 The first one, \sqlil{fkeid}, holds the reference to the primary key~\sqlil{eid} of the E~entities.
@@ -37,6 +81,11 @@ Since we only store the pairs that exist, both columns are~\sqlil{NOT NULL} and 
 
 Since each entity of type~F can only be connected to at most one entity of type~E, there will be a~\sqlil{UNIQUE} constraint on the column~\sqlil{fkfid} and it would be the primary key of table~\sqlil{relate_e_and_f}.
 It needs to be the primary key because the values in column~\sqlil{fkeid} do not need to be unique -- one entity of type~E can be related to many entities of type~F.
+
+In \cref{lst:EF_1_insert_and_select}, we insert some data into the tables.
+Since both relationship ends are optional, we can first populate tables~\sqlil{e} and~\sqlil{f}.
+Then we can establish the relationships by adding rows to table~\sqlil{relate_e_and_f}.
+The contents of the three tables after executing \cref{lst:EF_1_insert_and_select} are given in \cref{fig:rm:ef:1:tables}.
 
 This is the recommended solution in~\cite{S2024D:MEDTRDM}, but we face a similar situation as back in~\cref{sec:rm:ab}:
 It is efficient only if there are not too many E\nobreakdashes-F pairs that are related.
@@ -49,6 +98,14 @@ Here, we need to add a foreign key column~\sqlil{fkeid} to the table~\sqlil{f}.
 This column has a \sqlil{REFERENCES} constraint pointing to column~\sqlil{eid} of table~\sqlil{e}.
 The value of this column can be \sqlil{NULL}, because not all rows in~\sqlil{f} need to be related to rows in~\sqlil{e}.
 Different from the \crowsFoot{A}{O1}{B}{O1} situation in~\cref{lst:AB_2_tables}, there also \emph{should not} be a \sqlil{UNIQUE} constraint here, because each row of~\sqlil{E} can be related to multiple rows in~\sqlil{f}.
+
+We store some data into the three tables in \cref{lst:EF_2_insert_and_select}.
+We can do this by first inserting rows into table~\sqlil{e}.
+Then we add rows to table~\sqlil{f}.
+For each such row, we can provide a valid foreign key~\sqlil{fkeid} to a row in table~\sqlil{e} identified by primary key~\sqlil{eid}.
+This means that the new row in table~\sqlil{f} will be related to the existing row in table~\sqlil{e}.
+We can also store~\sqlil{NULL} as \sqlil{fkeid}, in which case the row in table~\sqlil{f} is not related to any row in table~\sqlil{e}.
+The contents of the two tables after executing \cref{lst:EF_2_insert_and_select} are given in \cref{fig:rm:ef:2:tables}.
 We also only need a single \sqlil{INNER JOIN} to merge the data, as illustrated in \cref{lst:EF_2_insert_and_select}.
 
 This solution has another useful aspect:
