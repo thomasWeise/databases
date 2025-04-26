@@ -91,7 +91,7 @@ A bit later we will discuss the meaning and structure of this statement.
 For now, just accept it as is.
 
 We now enter a \pythonilIdx{with} statement, which you also find discussed in~\cite{programmingWithPython}.
-The sessions and cursors to the \db\ are implemented as context managers~\cite{PSF2024WSCM}, which means that they will automatically be closed at the end of the \pythonilIdx{with} block.
+The sessions and cursors to the \db\ are implemented as context managers~\cite{PSF:P3D:TPLR:WSCM}, which means that they will automatically be closed at the end of the \pythonilIdx{with} block.
 At the beginning of the block, a connection \pythonil{conn} is opened to the \postgresql\ \dbms~\cite{VDGE2022PPDAFP:CC1} by using the \pythonilIdx{connect}~function.
 For this purpose, the same connection \pgls{URI} that we already used with \psql\ needs to be specified.
 It defines the where the \postgresql\ \server\ can be found, which user and password to use for logging in, and which \db\ we want to work on.
