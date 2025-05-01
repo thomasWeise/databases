@@ -1,0 +1,44 @@
+\hsection{Other Non-Relational Objects}%
+%
+When we begin designing an application, we develop the conceptual model.
+For this purpose, we usually use \glsreset{ERD}\pglspl{ERD}.
+\Pglspl{ERD} give us lots of freedom in how we can represent the real world.
+We can use strong entities, weak entities, and relationships, and all three of these object types can have attributes.
+Attributes can be single-values or multi-valued as well as atomic or composite.
+
+We then use the relational data modelling approach for the logical model of our applications.
+At its core, the only type of objects offered by relational model for storing data are relations.
+Relations have attributes which are single-valued and atomic.
+Tables are the practical implementation of relations inside a \dbms\ and table columns represent attributes.
+
+One of the beautiful things of the relational data model is that it feels very natural.
+Many components of the conceptual modeling level can directly be translated to the logical level.
+For example, Entities become tables.
+
+Conceptual relationships are objects in the conceptual model that do not exist in the relational model as singular objects.
+Instead, they become either tables or columns and constraints, as we have discussed in the previous section.
+Multi-valued attributes, which are useful at the conceptual level, also do not exist in the relational model.
+They become tables in their own right.
+Composite attributes are broken down to their elements which then become columns.
+All of this we have already discussed.
+
+When scrolling over our section on conceptual modelling, we find that three types of objects are still \inQuotes{left over:}%
+%
+\begin{enumerate}%
+%
+\item We discussed strong entities, but not weak entities.%
+%
+\item We discussed relationships, but not relationship attributes.%
+%
+\item While we exhaustively discussed all possible binary relationship patterns, we did not discuss relationships of a higher degree, i.e., situations where three or more entity types participate in a relationship.%
+%
+\end{enumerate}%
+%
+To complete our treatment on the translation of conceptual models to logical models, let us also take a look how these are translated to the relational data model.%
+%
+\FloatBarrier%
+\hinput{weakEntities}{weakEntities.tex}%
+\hinput{relationshipAttributes}{relationshipAttributes.tex}%
+%
+\endhsection%
+%

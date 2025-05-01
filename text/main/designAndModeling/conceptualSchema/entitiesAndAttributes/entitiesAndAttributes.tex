@@ -1,7 +1,6 @@
 %
 \hsection{Entities and Attributes}%
 \label{sec:entitisAttrsErd}%
-\xdef\conceptualSchemaEntitiesAndAttributesDir{\currentDir}%
 %
 The first major component to model are the datastructures to be stored inside the \db.
 For this purpose, the following modeling primitives have emerged.
@@ -264,10 +263,11 @@ We leave all settings as-is and click \menu{OK}.%
 %
 \floatRowSep
 %
+\xdef\figYedErdEntitiesAXXIerd{\currentDir/yedErdEntitiesA21erd}%
 \subfloat[][%
 This produces this beautiful \pgls{ERD}.%
 \label{fig:yedErdEntitiesA21erd}%
-]{\includegraphics[scale=0.6]{\currentDir/yedErdEntitiesA21erd}}%
+]{\includegraphics[scale=0.6]{\figYedErdEntitiesAXXIerd}}%
 %
 %
 \caption{Drawing an \pgls{ERD} for the \emph{Student} entity using \yEd~(Continued).}%
@@ -378,7 +378,8 @@ During our discussion with the administrators, a few issues come up.
 
 \begin{figure}%
 \centering%
-\includegraphics[scale=0.6]{\currentDir/erdStudent2}%
+\xdef\figErdStudentII{\currentDir/erdStudent2}%
+\includegraphics[scale=0.6]{\figErdStudentII}%
 \caption{A new version of the \emph{Student} \pgls{ERD} from \cref{fig:yedErdEntitiesA21erd}, this time with \emph{Name} as composite attribute and \emph{Mobile Phone} as multi-valued attribute.}%
 \label{fig:erdStudent2}%
 \end{figure}%

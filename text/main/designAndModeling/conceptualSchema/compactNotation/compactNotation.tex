@@ -304,7 +304,7 @@ Our system also has some shortcomings.
 For example, there may be some more levels of structural indirection in a university.
 A school may be subdivided into different departments.
 
-Furthermore, we should be able to add timestamps and notes to most of the data items, which we did not really model here.
+Furthermore, we should be able to add timestamps and notes to most of the data items -- a technique called \pgls{timestamping} -- which we did not really model here.
 Also, we did not model rights management.
 We would probably need a table assigning which person is permitted to enroll students into a class or curriculum, which person in a school can create new modules, classes, curricula, and so on.
 Or we could also handle this via the position submodule that we already designed.
@@ -314,7 +314,7 @@ Additionally, we may want to create a table creating an audit trail~\cite{K2010A
 Such a table would store which user added/changed which record in which table at which point in time.
 
 Finally, in our \emph{Address} entity, countries and provinces are simple attributes.
-We could probably have another entity type to represent countries and country subdivisions~(such as provinces) based on the ISO~3166 standard~\cite{ISO3166}, maybe with additional information such as the phone number prefix.
+We could probably have another entity type to represent countries and country subdivisions~(such as provinces) based on the ISO~3166 standard~\cite{ISO3166,HD2025IISC}, maybe with additional information such as the phone number prefix.
 Each address could be linked to at least one such entity via a relationship.
 
 For now, we omit all of this.

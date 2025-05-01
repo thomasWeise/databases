@@ -1,5 +1,6 @@
 %
 \hsection{Relationships}%
+\label{sec:conceptual:relationships}%
 %
 If we only had a single entity type in our \db, the using a \db\ makes no sense.
 In that case, we would be better of using simple documents, like \pgls{CSV} or \pgls{XML} files.
@@ -240,7 +241,8 @@ This allows for an arbitrarily complex and ugly model.
 
 \begin{figure}%
 \centering%
-\includegraphics[width=0.9999\linewidth]{\currentDir/erdPerson2}%
+\xdef\figErdPersonII{\currentDir/erdPerson2}%
+\includegraphics[width=0.9999\linewidth]{\figErdPersonII}%
 \caption{We now add the ID entity type to our \emph{Person} \pgls{ERD} from \cref{fig:erdPerson1}.}%
 \label{fig:erdPerson2}%
 \end{figure}%
