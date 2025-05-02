@@ -300,7 +300,7 @@ The new constraint appears and we click on \menu{Add Item}~\pgmodelerAddItem.%
 %
 \subfloat[][%
 We now want to add a constraint checking that the national~ID is correct. %
-We call it \sqlil{student_national_id_check} and select \sqlil{CHECK}\sqlIdx{CONSTRAINT!CHECK} in the \menu{Type} drop-down box.
+We call it \sqlil{student_national_id_check} and select \sqlilIdx{CHECK}\sqlIdx{CONSTRAINT!CHECK} in the \menu{Type} drop-down box.
 \label{fig:makeStudentTable25nationalIdCheck}%
 ]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/makeStudentTable25nationalIdCheck}}}%
 %
@@ -313,7 +313,7 @@ We call it \sqlil{student_national_id_check} and select \sqlil{CHECK}\sqlIdx{CON
 \centering%
 %
 \subfloat[][{\sloppy%
-\sqlil{CHECK}\sqlIdx{CONSTRAINT!CHECK} constraints are specified as \sql\ \menu{Expression}. %
+\sqlilIdx{CHECK}\sqlIdx{CONSTRAINT!CHECK} constraints are specified as \sql\ \menu{Expression}. %
 To validate the field~\sqlil{national_id}, we specify the \pgls{regex} \sqlil{national_id~'^\\d\{6\}((19)|(20))\\d\{9\}[0-9X]\$'}. %
 We click~\menu{Apply}.}%
 \label{fig:makeStudentTable26nationalIdConstraintApply}%
@@ -329,7 +329,7 @@ The new constraint appears and we click on~\menu{Add Item}~\pgmodelerAddItem.%
 \floatRowSep%
 %
 \subfloat[][%
-We create a \sqlil{CHECK}\sqlIdx{CONSTRAINT!CHECK}~constraint for the column~\sqlil{mobile}. %
+We create a \sqlilIdx{CHECK}\sqlIdx{CONSTRAINT!CHECK}~constraint for the column~\sqlil{mobile}. %
 The expression~\sqlil{mobile ~ '^\\d\{11\}\$'} demands an 11~digit string. %
 We click on~\menu{Apply}.%
 \label{fig:makeStudentTable28mobileCheck}%
@@ -351,7 +351,7 @@ The new constraint appears and we click on~\menu{Add Item}~\pgmodelerAddItem.%
 \centering%
 %
 \subfloat[][%
-We specify the \sqlil{CHECK}\sqlIdx{CONSTRAINT!CHECK} constraint for the \pgls{dateOfBirth} and call it~\sqlil{student_date_of_birth_check}. %
+We specify the \sqlilIdx{CHECK}\sqlIdx{CONSTRAINT!CHECK} constraint for the \pgls{dateOfBirth} and call it~\sqlil{student_date_of_birth_check}. %
 We combine the condition \sqlil{date_of_birth > '1900-01-01'}~(demanding that students may not be born before the year~1900) and \sqlil{date_of_birth < '2100-01-01'}~(which prevents students born in the 22nd century) with~\sqlilIdx{AND}. %
 We click~\menu{Apply}.%
 \label{fig:makeStudentTable30dateOfBirthCheck}%
@@ -367,7 +367,7 @@ The new constraint appears and we click on~\menu{Add Item}~\pgmodelerAddItem.%
 \floatRowSep%
 %
 \subfloat[][%
-We create a \sqlil{CHECK}\sqlIdx{CONSTRAINT!CHECK}~constraint for the column~\sqlil{name} and call it~\sqlil{student_name_check}. %
+We create a \sqlilIdx{CHECK}\sqlIdx{CONSTRAINT!CHECK}~constraint for the column~\sqlil{name} and call it~\sqlil{student_name_check}. %
 The expression~\expandafter\sqlil{name ~ '^\\S+.*\\S+\$'} demands that names both start and end with printable characters and may contain an arbitrary number of characters in between %
 We click on~\menu{Apply}.%
 \label{fig:makeStudentTable32nameCheck}%
@@ -670,7 +670,7 @@ For example, mobile phone numbers are not strings of arbitrary characters, but c
 Chinese ID~numbers also are composed of digits, with the exception that the last character might be an~\textil{X}.
 Also, we should probably not permit arbitrary dates as \pglspl{dateOfBirth}.
 Even though September~23,~1811 would be a totally valid date, as the \pgls{dateOfBirth} of a student it would be unusual.
-Actually, we already learned how to deal with such restrictions on valid data back in \cref{sec:factory:table:customer}:
+Actually, we already learned how to deal with such restrictions on valid data back in \dref{sec:factory:table:customer}:
 by using constraints.
 We also did not yet define a primary key~(see \cref{sec:primaryKey}) for our table.
 
@@ -700,7 +700,7 @@ If the name makes sense and is easy to understand, then this makes it easier to 
 %
 The new constraint appears and we click on \menu{Add Item}~\pgmodelerAddItem\ in \cref{fig:makeStudentTable24studentIdAddedNewConstraint}.
 We now want to add a constraint checking that the national~ID is correct.
-We call it \sqlil{student_national_id_check} and select \sqlil{CHECK}\sqlIdx{CONSTRAINT!CHECK} in the \menu{Type} drop-down box in \cref{fig:makeStudentTable25nationalIdCheck}.
+We call it \sqlil{student_national_id_check} and select \sqlilIdx{CHECK}\sqlIdx{CONSTRAINT!CHECK} in the \menu{Type} drop-down box in \cref{fig:makeStudentTable25nationalIdCheck}.
 Indeed, we are going to create a \sqlil{CHECK} constraint\sqlIdx{CONSTRAINT!CHECK}.
 For this, we just need to provide an \sql\ \menu{Expression}.
 This expression is evaluated whenever a row is added to the table or when a row is changed.
@@ -716,10 +716,11 @@ We could check this in a super fancy fashion.
 We could get our hands on a list of the actual valid values for the first digits, assuming that not all possible 1\decSep000\decSep000~possible administrative division codes are actually valid.
 We could compare the next six digits to the \pgls{dateOfBirth} that we store as well\footnote{%
 On second thought, if we require ID numbers to be present, we would not need to store the \pgls{dateOfBirth} anymore {\dots} but well, now we did it and will stick to it.}.
-We could even try to compute the checksum digit and check whether it matches.
-
+We could even try to compute the checksum digit and check whether it matches.%
+%
+\begin{sloppypar}%
 This is all too complicated for us.
-Instead, we will resort to a \glsreset{regex}\pgls{regex} to check the field like back in \cref{sec:factory:table:customer}.
+Instead, we will resort to a \glsreset{regex}\pgls{regex} to check the field like back in \dref{sec:factory:table:customer}.
 We write \expandafter\sqlil{national_id ~ '^\\d\{6\}((19)|(20))\\d\{9\}[0-9X]\$'}.
 The \sqlil{national_id ~ xxx} means that the value of \sqlil{national_id} must match to some \pgls{regex}~\textil{xxx}.
 In the \pgls{regex}, \textil{^}~indicates the start of the text.
@@ -729,8 +730,9 @@ This is because we do not permit \pglspl{dateOfBirth} before the year 19\textcol
 After that, we require nine digits to follow via~\textil{\\d\{9\}}.
 This means we now have $6+2+9=17$~digits, leaving the final checksum character, which can be any digit from 0~to~9 or~X.
 This is expressed by the~\textil{[0-9X]}.
-The~textil{\$} that follows marks the end of the string, which, hence, must come directly after the checksum digit.
-
+The~textil{\$} that follows marks the end of the string, which, hence, must come directly after the checksum digit.%
+\end{sloppypar}%
+%
 You may ask:
 Why do we create such a trivial constraint?
 Well, this constraint would still guard against several possible typos.
@@ -762,20 +764,20 @@ So it makes sense to specify as many constraints as early as possible wherever p
 Either way, after specifying the constraint, we click~\menu{Apply} in \cref{fig:makeStudentTable26nationalIdConstraintApply} and the constraint is specified.
 The new constraint appears and we click on~\menu{Add Item}~\pgmodelerAddItem\ in \cref{fig:makeStudentTable27nationalIdAddedNewConstraint}.
 
-We now create a similar \sqlil{CHECK}\sqlIdx{CONSTRAINT!CHECK}~constraint for the column~\sqlil{mobile} in \cref{fig:makeStudentTable28mobileCheck}.
+We now create a similar \sqlilIdx{CHECK}\sqlIdx{CONSTRAINT!CHECK}~constraint for the column~\sqlil{mobile} in \cref{fig:makeStudentTable28mobileCheck}.
 We call it~\sqlil{student_mobile_check}.
 The expression~\sqlil{mobile ~ '^\\d\{11\}\$'} demands an 11~digit string:
 It states that the \sqlil{mobile} value must, right at its begin~(\textil{^}), have eleven digits~(\textil{\\d\{11\}}), and then the end of the string follows immediately~(\textil{\$}).
 We click on~\menu{Apply}.
 
 The new constraint appears and we click on~\menu{Add Item}~\pgmodelerAddItem\ again in \cref{fig:makeStudentTable29mobileAddedNewConstraint}.
-We want to specify the \sqlil{CHECK}\sqlIdx{CONSTRAINT!CHECK} constraint for the \pgls{dateOfBirth} and call it~\sqlil{student_date_of_birth_check}.
+We want to specify the \sqlilIdx{CHECK}\sqlIdx{CONSTRAINT!CHECK} constraint for the \pgls{dateOfBirth} and call it~\sqlil{student_date_of_birth_check}.
 We combine the condition \sqlil{date_of_birth > '1900-01-01'}~(demanding that students may not be born before the year~1900) and \sqlil{date_of_birth < '2100-01-01'}~(which prevents students born in the 22nd century) with~\sqlilIdx{AND}.
 We click~\menu{Apply} in \cref{fig:makeStudentTable30dateOfBirthCheck}.
 
 In \cref{fig:makeStudentTable31dateOfBirthAddedNewConstraint}, the new constraint appears and we click on~\menu{Add Item}~\pgmodelerAddItem.
 As final constraint, we want to set some restriction on valid names.
-We create a \sqlil{CHECK}\sqlIdx{CONSTRAINT!CHECK}~constraint for the column~\sqlil{name} and call it~\sqlil{student_name_check}.
+We create a \sqlilIdx{CHECK}\sqlIdx{CONSTRAINT!CHECK}~constraint for the column~\sqlil{name} and call it~\sqlil{student_name_check}.
 We specify the expression~\expandafter\sqlil{name ~ '^\\S+.*\\S+\$'}.
 The \textil{\\S} matches a single character that is not whitespace, i.e., a character that is neither space nor a line break nor a tabulator.
 The \textil{+} means \inQuotes{one or multiple repetitions of the previous}, so \textil{\\S+} means \inQuotes{one or multiple non-space characters}.
@@ -860,7 +862,7 @@ In \cref{fig:makeStudentTable51explorer}, we enter the folder into which we expo
 We find three new files.
 The first one, named something like~\textil{01_student_database_database...sql}, is the \sql\ script for creating the \db.
 We list its contents in \cref{lst:logical:teachingManagment:student_database_1:01_student_database_database_2001}.
-Besides some comments, we only find the \sqlil{CREATE DATABASE student_database;}\sqlIdx{CREATE!DATABASE} statement.
+Besides some comments, we only find the \sqlil{CREATE DATABASE student_database;}\sqlIdx{CREATE!DATABASE}\sqlIdx{DATABASE} statement.
 This what we expect and we submit to to \sql\ using the \sqlil{postgres} administrative account in \cref{exec:logical:teachingManagment:student_database_1:01_student_database_database_2001}.%
 %
 \begin{sloppypar}%
@@ -868,8 +870,8 @@ The second file is empty, so we can ignore it.
 The third file is named something like \textil{03_public_student_table_...sql}.
 This file contains the commands for creating the table \sqlil{student}.
 Its contents are shown in \cref{lst:logical:teachingManagment:student_database_1:03_public_student_table_5071}.
-There is not really anything there that goes beyond what we discussed in our initial example back in \cref{sec:factoryCreatingTableAndInsertingData}.
-We see the \sqlil{CREATE TABLE}\sqlIdx{CREATE!TABLE} command together with statements for creating the constraints\sqlIdx{CONSTRAINT}.%
+There is not really anything there that goes beyond what we discussed in our initial example back in \dref{sec:factoryCreatingTableAndInsertingData}.
+We see the \sqlil{CREATE TABLE}\sqlIdx{CREATE!TABLE}\sqlIdx{TABLE} command together with statements for creating the constraints\sqlIdx{CONSTRAINT}.%
 \end{sloppypar}%
 %
 When we pass the contents of this file to \psql, we must make sure to send them to the \db\ \sqlil{student_database}.
@@ -1156,7 +1158,7 @@ This means that their mobile phone number may occur multiple times.
 Since each student can have multiple mobile phone numbers, the primary key \sqlil{student_id} that we will need as foreign key is also not unique.
 
 This means that we need a surrogate key.
-We already used surrogate keys in our factory example back in \cref{sec:factoryCreatingTableAndInsertingData}.
+We already used surrogate keys in our factory example back in \dref{sec:factoryCreatingTableAndInsertingData}.
 We will do exactly the same here.
 However, for the sake of convenience, we will do so in the \pgmodeler.
 We create the column \sqlil{id} of type \sqlil{integer}.
@@ -1218,7 +1220,7 @@ Both types are synonymous.
 
 The foreign key constraint is not included in \cref{lst:logical:teachingManagment:student_database_2:04_public_mobile_table_5081}.
 Instead, it went into its own script, here reproduced as \cref{lst:logical:teachingManagment:student_database_2:05_public_mobile_mobile_student_id_fk_constraint_5087}.
-Instead of directly including it when the table is created, the table is later changed~(\sqlilIdx{ALTER TABLE}).
+Instead of directly including it when the table is created, the table is later changed~(\sqlil{ALTER TABLE}\sqlIdx{ALTER!TABLE}\sqlIdx{TABLE}).
 The constraint is added via \sqlilIdx{ADD CONSTRAINT}.
 Apart from this and some additional behavior specifications that we will ignore here, it looks not much different from the \sqlilIdx{REFERENCES} statement we used when creating our factory's \sqlil{demand} table back in \cref{lst:factory:create_table_demand}.
 Well, it looks different, because now it is explicitly defined as constraint instead of being declared inline.

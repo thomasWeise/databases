@@ -476,10 +476,15 @@ This is illustrated in \cref{fig:erdStudent3}.
 \caption{A new version of the \emph{Student} \pgls{ERD} from \cref{fig:erdStudent3}, where we added the derived attribute \emph{Age}.}%
 \label{fig:erdStudent4}%
 \end{figure}%
-
-Finally, there are also so-called derived attributes.
-A derived attribute is calculated based on the values of other attributes.
-It does not need to be stored in the \db.
+%
+Finally, there are also so-called derived attributes.%
+%
+\begin{definition}[Derived Attribute]%
+\label{def:derivedAttribute}%
+A \emph{derived attribute} is calculated based on the values of other attributes.%
+\end{definition}%
+%
+Derived attributes do not need to be stored in the \db.
 A typical example is the age of person.
 If we know the \pgls{dateOfBirth} and the current date, the age can directly be calculated.
 This can be done very quickly.
@@ -498,7 +503,7 @@ An address, for example, can be divided into country, province, city, etc.
 
 It is not always immediately clear how an attribute could be modeled.
 For example, our students have the attribute \glsreset{dateOfBirth}\emph{\pgls{dateOfBirth}}.
-Technically, we have learned back in \cref{sec:factory:demand} that dates are atomic datatypes in \sql.
+Technically, we have learned back in \dref{sec:factory:demand} that dates are atomic datatypes in \sql.
 So naturally, we would model the \pgls{dateOfBirth} as an atomic attribute.
 Of course, we could also model it as a composite attribute consisting of year, month, and day.
 Then again, an address could also be represented as a single string of text instead of using a composite attribute.

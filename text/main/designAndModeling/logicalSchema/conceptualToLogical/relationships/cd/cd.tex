@@ -48,7 +48,7 @@ And we need a table~\sqlil{d} for the entities of type~D.
 Both tables are also structured as in the previous section, including surrogate primary keys~\sqlil{cid} and~\sqlil{did} as well as attributes~\sqlil{x} and~\sqlil{y}, respectively.
 
 Since each entity of type~C must be connected to exactly one entity of type~D, we add one column~\sqlil{fkdid} to the table for~C which holds the primary key to the D~entities as foreign key.
-This column thus has a \sqlil{REFERENCES} constraint to the foreign key, which we add at the end of the script \cref{lst:CD_tables} via~\sqlilIdx{ALTER TABLE}.
+This column thus has a \sqlil{REFERENCES} constraint to the foreign key, which we add at the end of the script \cref{lst:CD_tables} via~\sqlil{ALTER TABLE}\sqlIdx{ALTER!TABLE}\sqlIdx{TABLE}.
 Different from the previous section, this column~\sqlil{fkdid} must also have a \sqlil{NOT NULL}~constraint, because each entity of type~C must necessarily be related to one entity of type~D.
 The column also has a \sqlil{UNIQUE} constraint, because the entities of type~D can only reference at most one entity of type~C.
 

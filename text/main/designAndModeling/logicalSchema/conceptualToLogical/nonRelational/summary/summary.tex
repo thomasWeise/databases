@@ -1,0 +1,13 @@
+\hsection{Summary}%
+%
+At this stage, we now have the means to translate conceptual models to logical models that follow the relational principle.
+In \glsreset{rdb}\pglspl{rdb}, all the data is stored in tables.
+Each table as a primary key.
+One table can refer to another table via columns that can store the primary keys of that other table.
+These columns then are called the foreign keys.
+The referential integrity between the tables is maintained via \sqlilIdx{REFERENCES}, \sqlilIdx{NOT NULL}, and \sqlilIdx{UNIQUE} constraints.
+We have learned how to map weak entities, relationship attributes, derived attributes, and relationships of higher degrees to this data model as well.
+With this, we have the tools to transform all the elements that can draw into a \glsreset{ERD}\pgls{ERD} to \sql\ code.%
+%
+\endhsection%
+%

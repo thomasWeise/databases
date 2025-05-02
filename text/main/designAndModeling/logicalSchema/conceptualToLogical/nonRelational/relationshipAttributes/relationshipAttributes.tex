@@ -4,7 +4,7 @@
 \centering%
 %
 \subfloat[][%
-A reproduction of \cref{fig:erdPerson2} from back in \cref{sec:conceptual:relationships}, which was created using \yEd.%
+A reproduction of \cref{fig:erdPerson2} from back in \dref{sec:conceptual:relationships}, which was created using \yEd.%
 \label{fig:erdPerson1B}%
 ]{\includegraphics[width=0.9\linewidth]{\figErdPersonII}}%
 %
@@ -19,13 +19,13 @@ A transformation of \cref{fig:erdPerson1B} to a logical model using \pgmodeler.%
 \label{fig:logicalPerson2X}%
 \end{figure}%
 %
-Relationships in conceptual models may have attributes.
+Relationships in conceptual models may have attributes, as stated in \cref{def:relationshipAttribute}.
 Of course, since relationships do not exist as distinct objects in the relational data model, we must find another way to express these attributes.
 Since only relations exist in the relational model and such relations become tables in a \db, the attributes of relationships also become table columns.
 
 It will depend on the relationship pattern where we put them.
 To try this concept out, let us go back to an even earlier example of the \emph{Person} entity:
-to \cref{fig:erdPerson2} from back in \cref{sec:conceptual:relationships}.
+to \cref{fig:erdPerson2} from back in \dref{sec:conceptual:relationships}.
 We created this figure using \yEd\ and reprint it in \cref{fig:erdPerson1B}.
 As you can see, in this figure, there is a relationship \emph{has~ID} that connects the \emph{Person} entities with the entity type~\emph{ID~Type}.
 
@@ -33,7 +33,7 @@ In the model, we did not annotate the relationships with cardinalities, because 
 However, it is rather clear that this would either be a \crowsFoot{\emph{Person}}{OM}{\emph{ID Type}}{OM} or a \crowsFoot{\emph{Person}}{MM}{\emph{ID Type}}{OM} relationship.
 We can store arbitrarily many forms of ID for each person and each form of ID may be used by arbitrarily many people.
 Since we went the hard way in the last section and modeled a relationship with the \emph{mandatory many} pattern, we this time go easy and choose \crowsFoot{\emph{Person}}{OM}{\emph{ID Type}}{OM}.
-In other words, we follow the pattern \crowsFoot{O}{OM}{P}{OM} discussed in \cref{sec:rm:op}.
+In other words, we follow the pattern \crowsFoot{O}{OM}{P}{OM} discussed in \dref{sec:rm:op}.
 
 For this pattern, we need an additional table.
 We follow exactly the same method as back in \cref{sec:rm:op}, except that we use different table and column names.
@@ -118,5 +118,6 @@ With this, we have constructed the \sqlil{person_database}.
 We fill the \db\ with data in \cref{lst:person_database_2:insert}.
 In \cref{lst:person_database_2:select}, we use a query that combines data from several tables using \sqlilIdx{INNER JOIN} statements and then concatenates the data to single text strings per result row.%
 %
+\FloatBarrier%
 \endhsection%
 %

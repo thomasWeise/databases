@@ -39,6 +39,7 @@ Each entity participating in relationship may have a role, which defines the way
 If we imagine the ternary \emph{Student enrolls into Module taught by Professor} relationship, then the student could have the role \emph{enrolls} and the professor could have the role \emph{teaches}.%
 %
 \begin{definition}[Relationship Attribute]%
+\label{def:relationshipAttribute}%
 A relationship type can have attributes describing properties of the relationship.%
 \end{definition}%
 %
@@ -76,11 +77,11 @@ It also does not give us the information when the course takes place.%
 %
 \floatRowSep%
 %
-%
+\xdef\erdStudentModuleProfIII{\currentDir/erdStudentModuleProf3}%
 \subfloat[][%
 The ternary relationship of students, modules, and professors with the relationship attribute semester.%
 \label{fig:erdStudentModuleProf3}%
-]{\parbox{0.99\linewidth}{\centering\includegraphics[scale=0.6]{\currentDir/erdStudentModuleProf3}}}%
+]{\parbox{0.99\linewidth}{\centering\includegraphics[scale=0.6]{\erdStudentModuleProfIII}}}%
 %
 \caption{Modeling the relationship between students, professors, and modules.}%
 \label{fig:erdStudentModuleProf}%
@@ -221,7 +222,7 @@ An application could enforce that each person has either a passport or a governm
 However, it would still feel awkward to somehow create a Frankensteinesque primary key out of this.
 The easiest solution here is to use a surrogate key.
 In our model, we actually call it \emph{Surrogate Key,} to avoid any form of misunderstanding.
-We will assumet that whatever \dbms\ we will eventually use, it will be able to somehow generate unique values~(like back in \cref{sec:factory:table:product}).
+We will assume that whatever \dbms\ we will eventually use, it will be able to somehow generate unique values, like back in \dref{sec:factory:table:product}.
 Our \emph{Person} in \cref{fig:erdPerson1} now looks fairly reasonable.
 
 Having solved this problem, we now want to clean up the issue of IDs and ID documents.
@@ -266,7 +267,7 @@ This, however, creates the problem how to validate ID values.
 After all, mobile phone numbers and passport numbers and ID numbers are very different.
 We can leave this, to some degree, to the application that we will build on top of our \db.
 We can still add some very basic method to check ID values.
-Back in \cref{sec:factory:table:customer}, we learned about \pglspl{regex}, i.e., text strings that describe patterns can be matched against other strings.
+Back in \dref{sec:factory:table:customer}, we learned about \pglspl{regex}, i.e., text strings that describe patterns can be matched against other strings.
 We will simply store one \pgls{regex} as \inQuotes{Validation RegEx} attribute for each ID type entity.
 When the administrator enters a new ID of a given type, this value will be matched against this the corresponding pattern.
 While we cannot emulate checksums or other advanced validation techniques, we can this way at least ensure the right amount of characters or numbers for the IDs.

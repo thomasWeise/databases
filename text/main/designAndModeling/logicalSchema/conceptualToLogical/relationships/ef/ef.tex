@@ -85,14 +85,16 @@ It needs to be the primary key because the values in column~\sqlil{fkeid} do not
 In \cref{lst:EF_1_insert_and_select}, we insert some data into the tables.
 Since both relationship ends are optional, we can first populate tables~\sqlil{e} and~\sqlil{f}.
 Then we can establish the relationships by adding rows to table~\sqlil{relate_e_and_f}.
-The contents of the three tables after executing \cref{lst:EF_1_insert_and_select} are given in \cref{fig:rm:ef:1:tables}.
-
-This is the recommended solution in~\cite{S2024D:MEDTRDM}, but we face a similar situation as back in~\cref{sec:rm:ab}:
+The contents of the three tables after executing \cref{lst:EF_1_insert_and_select} are given in \cref{fig:rm:ef:1:tables}.%
+%
+\begin{sloppypar}%
+This is the recommended solution in~\cite{S2024D:MEDTRDM}, but we face a similar situation as back in~\dref{sec:rm:ab}:
 It is efficient only if there are not too many E\nobreakdashes-F pairs that are related.
 If almost all entities of type~F are related to one entity of type~E, then the table~\sqlil{relate_e_and_f} is about as same as big as the table~F.
 Instead of simply storing the keys of the related E~entities in the table~\sqlil{f}, we now have another table that stores these keys \emph{and} the primary keys of the \sqlil{f}~table.
-Also, we would again need two \sqlil{INNER JOIN} statements instead of one when we merge the data, as shown in \cref{lst:EF_1_insert_and_select}.
-
+Also, we would again need two \sqlil{INNER JOIN} statements instead of one when we merge the data, as shown in \cref{lst:EF_1_insert_and_select}.%
+\end{sloppypar}%
+%
 The two-table solution is illustrated in \cref{lst:EF_2_tables}.
 Here, we need to add a foreign key column~\sqlil{fkeid} to the table~\sqlil{f}.
 This column has a \sqlil{REFERENCES} constraint pointing to column~\sqlil{eid} of table~\sqlil{e}.

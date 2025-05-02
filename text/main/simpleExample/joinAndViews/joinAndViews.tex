@@ -200,7 +200,7 @@ This way, we can re-use it whenever we want.
 Storing it as a view is very very simple.
 We first need to pick a name for it.
 Let's call it \sqlil{sale}.
-Then, we just need to write \sqlil{CREATE VIEW sale AS}\sqlIdx{CREATE!VIEW}\sqlIdx{AS} right before our new query~\cite{PGDG:PD:CV}.
+Then, we just need to write \sqlil{CREATE VIEW sale AS}\sqlIdx{CREATE!VIEW}\sqlIdx{VIEW}\sqlIdx{AS} right before our new query~\cite{PGDG:PD:CV}.
 If we do this, the query is not actually executed.
 It is stored under the name \sqlil{sale} as a view.
 We do this in \cref{lst:factory:create_view_sale}.

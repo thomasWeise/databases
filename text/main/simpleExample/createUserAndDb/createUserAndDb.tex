@@ -50,7 +50,7 @@ The password shall be \inQuotes{superboss123}.
 Obviously, this is a very unsafe password.
 The boss will have to change it as soon as possible.
 Anyway, in order to create the new user with that password, we write \sqlil{CREATE USER boss WITH ENCRYPTED PASSWORD 'superboss123';}.
-The first part of the command, \sqlIdx{CREATE!USER}\sqlil{CREATE USER xyz}, tells the \server\ to create a new user account under the name \textil{xyz}.
+The first part of the command, \sqlIdx{CREATE!USER}\sqlIdx{USER}\sqlil{CREATE USER xyz}, tells the \server\ to create a new user account under the name \textil{xyz}.
 The second part, \sqlil{WITH ENCRYPTED PASSWORD 'abc'}\sqlIdx{WITH!ENCRYPTED PASSWORD}, tells the \server\ that the password \textil{abc} should be used for this user.
 Passwords are stored in an encrypted way anyway in \postgresql, but it never hurts to specify this clearly.
 Maybe we want to run the same commands later on another \dbms\ where it is necessary to explicitly say that passwords shall be encrypted.
@@ -85,7 +85,7 @@ Using \sql\ to create a database for user \textil{boss}.%
 %
 \begin{sloppypar}%
 Having created the new user~\inQuotes{boss}, we can now create the \db\ \inQuotes{factory} to be owned and worked on by that user.
-For this, all we have to do is to type the \sql\ command \sqlil{CREATE DATABASE factory OWNER boss;}\sqlIdx{CREATE!DATABASE}\sqlIdx{OWNER}.
+For this, all we have to do is to type the \sql\ command \sqlil{CREATE DATABASE factory OWNER boss;}\sqlIdx{CREATE!DATABASE}\sqlIdx{DATABASE}\sqlIdx{OWNER}.
 This command pretty much explains itself.
 It will create a new \db\ with the name \textil{factory}.
 The user \textil{boss} will be owner of this \db, i.e., they will have full access to add and manipulate its data.

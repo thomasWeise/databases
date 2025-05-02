@@ -11,7 +11,7 @@ Second, in the relational data model, relationships do not exist as independent 
 In this model, we only have entity types~(embodied by tables) and attributes~(the columns of the tables).
 Relationships are realized as foreign keys, i.e., as special attributes.
 
-In the context of \pglspl{rdb}, the same definitions for attributes and domains~(\cref{def:attribute,def:attributeDomain}) that we already discussed back in \cref{sec:entitisAttrsErd} are used.
+In the context of \pglspl{rdb}, the same definitions for attributes and domains~(\cref{def:attribute,def:attributeDomain}) that we already discussed back in \dref{sec:entitisAttrsErd} are used.
 The following additional definitions are commonly considered~\cite{C1970ARMODFLSDB}:%
 %
 \begin{definition}[Relation Schema]%
@@ -122,7 +122,7 @@ We can then design a view that merges the two tables~(using \sqlilIdx{UNION}).
 An application sitting on top of that will not see any change.%
 %
 \item Integrity Independence Rule:~Integrity constraints specific to a particular relational database must be definable in the relational data sublanguage and storable in the catalog~(not in the application programs).
-We did this several times, for example with the \sqlilIdx{PRIMARY KEY} constraint, the \sqlilIdx{REFERENCES} constraint, and the \sqlil{CHECK}\sqlIdx{CONSTRAINT!CHECK} constraint back in \cref{sec:factoryCreatingTableAndInsertingData}.
+We did this several times, for example with the \sqlilIdx{PRIMARY KEY} constraint, the \sqlilIdx{REFERENCES} constraint, and the \sqlilIdx{CHECK}\sqlIdx{CONSTRAINT!CHECK} constraint as far back as in \dref{sec:factoryCreatingTableAndInsertingData}.
 All of them were defined in \sql.
 %
 \item Distribution Independence Rule:~A relational \pgls{dbms} has distribution independence.

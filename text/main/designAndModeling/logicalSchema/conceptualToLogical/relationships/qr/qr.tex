@@ -66,7 +66,7 @@ Like in \cref{sec:rm:op}, each pair~\sqlil{(fkqid, fkrid)} can appear only once 
 This is implemented via the constraint~\sqlil{PRIMARY KEY (fkqid, fkrid)}.
 
 Compared to \cref{sec:rm:op}, the problem that we need to solve is that we must force that each row in table~\sqlil{q} is related to (at least) one row in table~\sqlil{r}.
-Back in \cref{sec:rm:gh}, we faced a similar problem with the \crowsFoot{G}{O1}{H}{MM}, i.e., \inQuotes{How can we make sure that each entity of type~G is connected to at least one entity of type~H?}
+Back in \dref{sec:rm:gh}, we faced a similar problem, i.e., \inQuotes{How can we make sure that each entity of type~G is connected to at least one entity of type~H?}
 The main problem there was not to make a new row in table~\sqlil{g} reference some row in table~\sqlil{h}, but that we then must make that row in table~\sqlil{h} reference back the same row in table~\sqlil{g}.
 We solved this by creating a constraint that enforced that the primary key of that row in table~\sqlil{h} together with the foreign key to the table~\sqlil{q} would need to be the same as the foreign key of the row in table~\sqlil{q} and its primary key.
 

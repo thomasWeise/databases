@@ -4,7 +4,7 @@
 \begin{figure}%
 \centering%
 \includegraphics[width=0.97\linewidth]{\currentDir/AB}%
-\caption{Examples of the \crowsFoot{A}{O1}{B}{O1} relationship pattern from back in \cref{sec:conceptual:relationshipCardinalities}.}%
+\caption{Examples of the \crowsFoot{A}{O1}{B}{O1} relationship pattern from back in \dref{sec:conceptual:relationshipCardinalities}.}%
 \label{fig:rm:ab}%
 \end{figure}%
 %
@@ -72,7 +72,7 @@ We have the two entity types~A and~B.
 Each entity of type~A is connected to zero or one entity of type~B.
 Each entity of type~B is connected to zero or one entity of type~A.
 
-We saw examples of this relationship pattern back in \cref{sec:conceptual:relationshipCardinalities}:
+We saw examples of this relationship pattern back in \dref{sec:conceptual:relationshipCardinalities}:
 Let's we are a pizzeria that allows customers to order pizzas online.
 We also hand out discount vouchers that allow can reduce the cost of an online order by~20\%.
 Each voucher can be redeemed for one such online order or it may also not be redeemed at all.
@@ -152,7 +152,7 @@ It must be marked as \sqlilIdx{UNIQUE}, though, because no entity of type~B can 
 This constraint only applies to values that are \emph{not}~\sqlil{NULL}.
 
 It also needs a \sqlil{REFERENCES} constraint.
-In \cref{lst:AB_2_tables}, we add this constraint later via \sqlilIdx{ALTER TABLE}, very much like \pgmodeler\ does it~(see back in \cref{lst:logical:teachingManagment:student_database_2:05_public_mobile_mobile_student_id_fk_constraint_5087}).
+In \cref{lst:AB_2_tables}, we add this constraint later via \sqlil{ALTER TABLE}\sqlIdx{ALTER!TABLE}\sqlIdx{TABLE}, very much like \pgmodeler\ does it~(see back in \cref{lst:logical:teachingManagment:student_database_2:05_public_mobile_mobile_student_id_fk_constraint_5087}).
 Otherwise, we would need to create table~\sqlil{b} before table~\sqlil{a}.
 That is totally OK, but if we had many tables, the required order of table creation could make our \sql\ code harder to read.
 Also, the probability of making errors that are hard to figure out would be higher.

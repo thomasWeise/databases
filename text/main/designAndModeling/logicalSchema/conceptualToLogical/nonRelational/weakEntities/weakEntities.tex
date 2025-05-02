@@ -4,7 +4,7 @@
 \centering%
 %
 \subfloat[][%
-A reproduction of \cref{fig:erdPerson4} from back in \cref{sec:conceptual:relationshipCardinalities}, which was created using \yEd.%
+A reproduction of \cref{fig:erdPerson4} from back in \dref{sec:conceptual:relationshipCardinalities}, which was created using \yEd.%
 \label{fig:erdPerson4B}%
 ]{\includegraphics[width=0.9\linewidth]{\figErdPersonIV}}%
 %
@@ -19,8 +19,8 @@ A transformation of \cref{fig:erdPerson4} to a logical model using \pgmodeler.%
 \label{fig:logicalErdPerson4X}%
 \end{figure}%
 %
-Weak entity types always appear in at least one identifying relationship with a strong entity type~\cite{S2024D:MEDTRDM}.
-In \cref{fig:erdPerson4} back in \cref{sec:conceptual:relationshipCardinalities}, which is here reprinted as \cref{fig:erdPerson4B}, we modeled IDs that belong to a person as such a week entity type.
+As introduced in \cref{sec:weakEntities}, weak entity types always appear in at least one identifying relationship with a strong entity type~\cite{S2024D:MEDTRDM}.
+In \cref{fig:erdPerson4} back in \dref{sec:conceptual:relationshipCardinalities}, which is here reprinted as \cref{fig:erdPerson4B}, we modeled IDs that belong to a person as such a week entity type.
 Each \emph{Personal~ID} is in an identifying relationship with an entity of type~\emph{Person} and also in an identifying relationship with an entity of type~\emph{ID~Type}.
 
 If we map such identifying relationships to \sql, then they must be represented with mandatory ends on the sides opposing the weak entity type.
@@ -183,7 +183,7 @@ Of course, now, we are only working on a part of a logical model of the teaching
 So there is no application that actually uses these \pglspl{regex}.
 But at least in our imagination, we would have provided the means for checking ID values.
 
-Then we use basically the same code as in \cref{lst:MN_insert_and_select} from back in \cref{sec:rm:mn} to fill the tables~\sqlil{person} and \sqlil{personal_id}.
+Then we use basically the same code as in \cref{lst:MN_insert_and_select} from back in \dref{sec:rm:mn} to fill the tables~\sqlil{person} and \sqlil{personal_id}.
 First we create a \sqlil{person} record with an associated Chinese national~ID, then we add a mobile phone number to that record.
 Then we create a second record, again with national~ID.
 At the end, we combine the information back together using an~\sqlilIdx{INNER JOIN}.

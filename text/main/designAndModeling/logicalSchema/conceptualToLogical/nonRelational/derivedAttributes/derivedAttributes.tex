@@ -1,0 +1,71 @@
+\hsection{Derived Attributes}%
+%
+Derived attributes, introduced in \cref{def:derivedAttribute}, are attributes that are computed based on the values of other attributes.
+Whether or not they should be stored in a table depends on how hard it is to compute them.
+For example, imagine that we have a factory and package things in boxes, pretty much like back in \dref{sec:factory:table:product}.
+Maybe we have a table in our \db\ just for storing the types of boxes by their width, height, and depth.
+The volume of a box could be derived attribute, computed as the product of the three dimensions.
+It would not make sense wasting space by storing this value, because we can easily compute it in an \sql\ query.
+
+Then again, we may sell multiple products as packages.
+For example, we may offer a vacuum cleaner together with a spare battery, two different nozzles, two brushes, an edge tool, and other attachments, and a pack of air filter papers.
+These package elements need to all fit together into a box and the order in which they are packed into the is important.
+This is a bit like a puzzle game.
+The best order could be computed based on the dimensions of the box and the dimensions of the package components.
+Doing so, however, means solving an \npHard\ problem, which requires lots of time.
+Then, we would definitely store the corresponding data as attributes even though they could be re-computed.
+
+A derived attribute that is stored is just a normal table column.
+If the value can be computed from values of other columns, as is the case in the box volume example above, the column can be annotated as \sqlilIdx{GENERATED}~\cite{PGDG:PD:GC}.
+At the time of this writing, \postgresql~17 is the current major version.
+This major version only supports \sqlilIdx{STORED} generated columns~\cite{PGDG:PD:GC}, but in the future, \sqlilIdx{VIRTUAL} generated columns whose values are not stored in the \db, but which are computed when read, will be introduced.
+
+In summary, there are three choices of how we can implement derived attributes:%
+%
+\begin{itemize}%
+%
+\item realize them as \sqlilIdx{GENERATED} table columns and store their values~\cite{PGDG:PD:GC},%
+\item realize them as virtual \sqlilIdx{GENERATED} table columns without storing their values, which is currently not yet supported by \postgresql~\cite{PGDG:PD:GC}, but will be implementedd in the future and may be supported by other \dbms\ already, or%
+\item realize them by computing their values in \sqlilIdx{SELECT} queries as needed.%
+%
+\end{itemize}%
+%
+Now, in the conceptual model illustrated as \cref{fig:erdPerson1B} in the previous section, there was one derived attribute, namely~\emph{Age}.
+This attribute is supposed to represent the age of a person.
+Of course, if we know the \pgls{dateOfBirth} of a the person, we can compute the age right away.
+So how would we realize this attribute:
+As a stored \sqlilIdx{GENERATED} column or compute it on the fly during \sqlilIdx{SELECT} queries?
+
+Storing this value makes no sense:
+The age of a person is not a constant.
+It will change as time goes by.
+Also, even if \postgresql\ does support virtual (not stored) \sqlilIdx{GENERATED} columns, it would \emph{still} be a mistake to use those to represent the age of people.%
+%
+\cquotation{PGDG:PD:GC}{%
+Several restrictions apply to the definition of generated columns and tables involving generated columns:\\%
+\textbf{-}~The generation expression can only use immutable functions and cannot use subqueries or reference anything other than the current row in any way.\\%
+\textbf{-}~\dots%
+}%
+%
+To compute the age of a person, we need the \pgls{dateOfBirth} and we will somehow subtract it from the \sqlil{CURRENT_DATE}\sqlIdx{CURRENT\_DATE}.
+\sqlil{CURRENT_DATE}\sqlIdx{CURRENT\_DATE} certainly is not an immutable or constant function.
+It changes daily.
+%
+\gitSQLAndOutput{\databasesCodeRepo}{teachingManagement/logical/person_database_2}{view_person_age.sql}{person_database}{}{}{postgres.sh}{person_database_2:view_person_age}{%
+Create a view that represents the derived attribute \emph{age} and execute it.%
+}%
+%
+\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_2 cleanup.sql}%
+
+So regardless of whether we have virtual \sqlilIdx{GENERATED} columns or not, the best way to compute the age of a person is by defining a query, maybe solidified as a \sqlilIdx{VIEW}.
+Still having the \sqlil{person_database} from the previous section lying around, we will do it in there.
+
+In \cref{lst:person_database_2:view_person_age}, we create a view\sqlIdx{CREATE!VIEW}\sqlIdx{VIEW} with the name \sqlil{person_age}.
+\postgresql\ offers the function \sqlilIdx{AGE}~\cite{PGDG:PD:DTFAO} which computes the difference between \sqlil{CURRENT_DATE}\sqlIdx{CURRENT\_DATE} and the \sqlilIdx{TIMESTAMP} or \sqlilIdx{DATE} value provided as parameter.
+Our new view simply selects all the columns from table~\sqlil{person} and adds a new column called~\sqlil{age} computed as~\sqlil{AGE(date_of_birth)}.
+In \cref{exec:person_database_2:view_person_age}, we then first print the value of the \sqlil{CURRENT_DATE}\sqlIdx{CURRENT\_DATE} of the time when this book is compiled for reference.
+Then we combine the result of the new view \sqlil{person_age} with the table~\sqlil{name} to print all the person records together with their name, \pglspl{dateOfBirth}, and ages.
+Having done that, we can delete the \db\ \sqlil{person_database} again.%
+%
+\endhsection%
+%

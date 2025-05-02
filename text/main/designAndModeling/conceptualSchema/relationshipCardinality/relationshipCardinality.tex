@@ -111,7 +111,7 @@ There are four possibilities to annotate the end of a relation:%
 \item Mandatory~Many:~\crowsFootMandatoryMany, equivalent to~\intRange{1}{*}, \intRange{1}{\textnormal{N}}, and~\intRange{1}{\infty}.%
 \end{itemize}%
 %
-Since each relationship as two ends, this gives us $4+3+2+1=10$ different combinations.
+Since each relationship as two ends, this gives us $4+3+2+1=10=\frac{\factorial{(4+2-1)}}{\factorial{4-1}*\factorial{2}}$ different combinations.
 It is important to understand how to interpret the cardinalities and modalities of the relationship ends, because this can easily be mistaken:
 The participation of an entity depends on the \emph{other} end.
 Let's take \crowsFoot{K}{M1}{L}{OM} as example.
