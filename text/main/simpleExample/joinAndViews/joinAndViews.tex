@@ -175,7 +175,7 @@ This would render the output close to unreadable for human operators.
 Let's go all the way:
 We simply concatenate the customer name and their phone number.
 We do \sqlil{SELECT customer.name || ', ' || customer.phone as customer_name ...}.
-The \sqlil{a || b}\sqlIdx{\textbar\textbar} operator concatenates two strings \sqlil{a} and \sqlil{b}.
+The \sqlil{a || b}\sqlIdx{\textbar\textbar} operator concatenates two strings \sqlil{a} and \sqlil{b}~\cite{PGDG:PD:SFAO}.
 Thus \sqlil{'Hello ' || 'Word!'} will result in the string \sqlil{'Hello World!'}.
 Our third customer, Mrs.~Bebba, would be displayed as \sqlil{'Bebba, 33333333333'}.
 Since the phone numbers are \sqlilIdx{UNIQUE} in our \db, names plus phone numbers must also necessarily be unique.

@@ -410,6 +410,7 @@ It does: the user \textil{boss} now owns two tables, \sqlil{product} and \sqlil{
 \endhsection%
 %
 \hsection{Inserting some Data}%
+\label{sec:factory:table:customer:insert}%
 \gitSQLAndOutput{\databasesCodeRepo}{factory}{insert_into_table_customer.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:insert_into_table_customer}{%
 Storing some customer records in the table \textil{customer}.%
 }%
@@ -464,7 +465,9 @@ Indeed, there are three foreign customers and one domestic one in our \db.%
 %
 If you looked at this example carefully, then you noticed that the method of deciding whether a customer is from China or not, as well as the method of detecting french customers, are not very precise.
 For example, if a customer would have specified their country as 中国, i.e., China written in Chinese, we would have considered them a foreigner.
-Then again, if the director of the imaginary \emph{Donut Factory Vive la France} in Shanghai would order shoes from us, we would consider his address to be french and domestic at the same time.
+Then again, if the director of the imaginary \emph{Donut Factory Vive la France} in Shanghai would order shoes from us, we would consider his address to be french and domestic at the same time.\footnote{%
+This situation arises because we here violate the \glsreset{1NF}\pgls{1NF}, which we will discuss much much later, in \cref{sec:normalForm:1}. %
+Indeed, dividing the \sqlil{address} column into multiple columns would be part of the solution.}
 Maybe we should have had another column \sqlil{country}?
 In this case, we would most likely need a table with countries and link that table to our \sqlil{customer} table\dots
 Next, we will explore how tables can be \inQuotes{linked} together.%

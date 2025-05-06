@@ -55,7 +55,16 @@ Also notice the plural \emph{attributes} in \cref{def:entityType}:%
 \bestPractice{entityTypesHaveMultipleAttributes}{%
 Only things with multiple attributes should become entity types.%
 }%
+%
 Indeed, it makes little sense, for example, to consider \emph{year} as an entity type, because it does not have multiple attributes.%
+%
+\bestPractice{entityTypeSingleObject}{%
+Each entity (type) should model one (type of) object from reality (and not more than one)~\cite{SS2005EIDDDFDB:NQORD}.%
+}%
+%
+If we model the setup of, let's say, a car race, then drivers and cars should be separate entity types.
+If instead we would include the name of the driver and the type and features of a car into a single entity type, then we would likely encounter redundancy:
+If multiple cars of the same type participate in the race, we would store information about them several times~(each time together with other driver data).%
 %
 \begin{definition}[Entity Set]%
 An \emph{entity set} is a subset of an entity type. %

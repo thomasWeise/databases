@@ -2,13 +2,21 @@
 \label{sec:normalForm:1}%
 %
 The \glsreset{1NF}\pgls{1NF} dates back to \citeauthor{C1970ARMODFLSDB}'s seminal paper~\cite{C1970ARMODFLSDB}.
-Under the \pgls{1NF}, all rows in a table must have the same number of fields.
+Under the \pgls{1NF}, all rows in a table must have the same number of fields and all fields must be atomic.
 This excludes multi-valued attributes as well as composite attributes.
 As we already discussed before the relational data model does not support such attributes anyway.
 
 In \cref{sec:mappingEntitiesToTables}, we discussed how entity types in the conceptual schema are translate to tables in the logical schema based on the requirements of the relational data model.
 We stated that multi-valued attributes become separate tables and that composite attributes need to be recursively broken down into their atomic components, which then become separate columns.
-If we use the relational data model, then we would naturally produce logical models in \pgls{1NF}.%
+If we use the relational data model, then we would naturally produce logical models in \pgls{1NF}.
+
+However, this is only true if we \emph{recognize} multi-valued attributes and composite attributes as such.
+If a table does have attributes that are semantically composite but we implement them as single flat attributes, then it violates the \pgls{1NF}.
+If an attribute of an entity is multi-valued, but instead of placing it into an additional table, we try to represent it using multiple columns in the table for entity, we violate the \pgls{1NF}.
+Let us explore what happens if we violate the \pgls{1NF}.%
 %
+\FloatBarrier%
+\hinput{composite}{composite}%
+\FloatBarrier%
 \endhsection%
 %
