@@ -10,7 +10,7 @@ It does so at the trade-off of data retrieval speed:
 Data which, in unnormalized form, could be stored in a single table needs to be reassembled using \sqlilIdx{INNER JOIN} and similar constructs combining multiple tables in normalized form~\cite{K1983ASGTFNFIRDT}.
 Therefore, whether to normalize data and to which degree is a question always to be answered with performance in mind~\cite{K1983ASGTFNFIRDT}.
 
-There exist several normal forms, such as the \pgls{1NF}, the \pgls{2NF}, the \pgls{3NF}, and so on.
+There exist several \glsreset{NF}\pglspl{NF}, such as the \glsreset{1NF}\pgls{1NF}, the \glsreset{2NF}\pgls{2NF}, the \glsreset{3NF}\pgls{3NF}, and so on.
 Higher normal forms are more restrictive.
 Therefore, if a part of a logical model is in a higher normal form, then it is also in all of the lower normal forms.
 %
