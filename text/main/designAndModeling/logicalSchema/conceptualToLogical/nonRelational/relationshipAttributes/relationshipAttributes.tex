@@ -53,7 +53,7 @@ Each row in table~\sqlil{o} can be related to arbitrarily many rows in table~\sq
 Each row in table~\sqlil{p} can be related to arbitrarily many rows in table~\sqlil{relate_o_and_p}.
 Indeed, that forms a \crowsFoot{O}{OM}{P}{OM} relationship.
 
-Also, when implementing the full conceptual model given in \cref{fig:erdPerson1B}, we again encounter multi-valued attributes:~\emph{Name} and \emph{Address}.
+Also, when implementing the full conceptual model given in \cref{fig:erdPerson1B}, we again encounter multivalued attributes:~\emph{Name} and \emph{Address}.
 As we already learned before, these go into additional tables, which we call \sqlil{name} and \sqlil{address}, respectively.
 For these, we again use the proper foreign key \sqlilIdx{REFERENCES} constraints.
 
@@ -97,7 +97,7 @@ We can export the logical model created with \pgmodeler\ and we get \cref{lst:pe
 \Cref{lst:person_2:01_person_database_database_2001} creates the \db\ \sqlil{person_database}.
 The table \sqlil{person} is created in \cref{lst:person_2:03_public_person_table_5071}, with a surrogate primary key and a field \sqlil{date_of_birth} for the \pgls{dateOfBirth}.
 
-In \cref{lst:person_2:04_public_name_table_5075}, the table \sqlil{name} is created for the multi-valued composite attribute \emph{Name}.
+In \cref{lst:person_2:04_public_name_table_5075}, the table \sqlil{name} is created for the multivalued composite attribute \emph{Name}.
 Each row in table~\sqlil{name} will store a foreign key~\sqlil{person} that is linked to a row in table~\sqlil{person} using a \sqlilIdx{REFERENCES} constraint, which is added later in \cref{lst:person_2:08_public_name_name_person_fk_constraint_5108}.
 Apart from that, we added a small gimmick for your enjoyment:
 The column \sqlil{start_date} is created \sqlil{NOT NULL DEFAULT CURRENT_DATE}.

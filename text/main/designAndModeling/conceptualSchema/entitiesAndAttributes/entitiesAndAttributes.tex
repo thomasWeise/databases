@@ -389,7 +389,7 @@ During our discussion with the administrators, a few issues come up.
 \centering%
 \xdef\figErdStudentII{\currentDir/erdStudent2}%
 \includegraphics[scale=0.6]{\figErdStudentII}%
-\caption{A new version of the \emph{Student} \pgls{ERD} from \cref{fig:yedErdEntitiesA21erd}, this time with \emph{Name} as composite attribute and \emph{Mobile Phone} as multi-valued attribute.}%
+\caption{A new version of the \emph{Student} \pgls{ERD} from \cref{fig:yedErdEntitiesA21erd}, this time with \emph{Name} as composite attribute and \emph{Mobile Phone} as multivalued attribute.}%
 \label{fig:erdStudent2}%
 \end{figure}%
 %
@@ -432,10 +432,10 @@ If we print the name on a certificate, we will use the full name.
 A composite attribute in the \pgls{ERD} is simply drawn with the components as attributes connected to the attribute.
 
 We also notice that a student may have multiple mobile phone numbers.
-Such multi-valued attributes can be modeled by ellipses with small ellipses inside.%
+Such multivalued attributes can be modeled by ellipses with small ellipses inside.%
 %
 \begin{definition}[Multi-Valued Attribute]%
-An entity may have multiple values for a \emph{multi-valued attribute}.%
+An entity may have multiple values for a \emph{multivalued attribute}.%
 \end{definition}%
 \begin{definition}[Single-Valued Attribute]%
 An entity has~(at most) one value for a \emph{single-valued} attribute.%
@@ -448,9 +448,9 @@ If an attribute has no value, this is often represented as \sqlilIdx{NULL}.%
 A single-valued optional attribute has either one value or no value.
 A single-valued non-optional attribute has exactly one value.
 A multi-value optional value has either no value, one value, or multiple values.
-A multi-valued non-optional attribute has one value or multiple values.
+A multivalued non-optional attribute has one value or multiple values.
 
-Upon closer inspection, we notice that the mobile phone number attribute should probably be modeled as optional multi-valued attribute.
+Upon closer inspection, we notice that the mobile phone number attribute should probably be modeled as optional multivalued attribute.
 While it seems very unlikely nowadays, there may be students who do not have a mobile phone number.
 Well, maybe a foreign exchange student, i.e., a 留学生, who enters China does not yet have a mobile phone number when enrolling into our university.
 So making this attribute optional is reasonable.
@@ -468,7 +468,7 @@ They also can have no or one ID.
 \begin{figure}%
 \centering%
 \includegraphics[scale=0.6]{\currentDir/erdStudent3}%
-\caption{A new version of the \emph{Student} \pgls{ERD} from \cref{fig:erdStudent2}, this time with \emph{Address} as multi-valued \emph{and} composite attribute.}%
+\caption{A new version of the \emph{Student} \pgls{ERD} from \cref{fig:erdStudent2}, this time with \emph{Address} as multivalued \emph{and} composite attribute.}%
 \label{fig:erdStudent3}%
 \end{figure}%
 %
@@ -476,7 +476,7 @@ While we are at this, we realize that \emph{Address} should also be a composite 
 An address is not just a line of text, but consists of components such as country, province, city, district, postal code, street and street number, quarter, building, and flat number.
 Modeling that would be cumbersome.
 We propose that everything after the postal code could simply be merged into one string named \emph{street address}, because an automated system probably cannot really handle information at a finer granularity than postal code in any meaningful way.
-While discussing the subject with our partners, we also realize that \emph{Address} should be a multi-valued attribute, i.e., a student can have multiple addresses.
+While discussing the subject with our partners, we also realize that \emph{Address} should be a multivalued attribute, i.e., a student can have multiple addresses.
 This is illustrated in \cref{fig:erdStudent3}.
 
 \begin{figure}%

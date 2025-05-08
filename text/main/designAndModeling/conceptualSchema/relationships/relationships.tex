@@ -153,7 +153,7 @@ Either way, there can be a variety of reasons why names change.
 However, changing the names in the \db\ is not an option.
 Because this would mean that the old name \inQuotes{disappears}.
 Then we would eventually have older documents in the real world that can no longer be matched with the updated data in the \db.
-So we need to make names a multi-valued attribute, too.
+So we need to make names a multivalued attribute, too.
 When doing this, we may decide to assign names a valid-from and valid-from attribute, to emphasize the time when the names changed.
 
 \begin{figure}%
@@ -197,7 +197,7 @@ This function, too, has a start date and an optional end date.
 In \cref{fig:erdPerson1}, we copy the attributes from the \emph{Student} entity type in \cref{fig:erdStudent5} to the new \emph{Person} entity type.
 Of course, we now do no longer include the student ID.
 We also fix the \emph{Name} attribute.
-It is now a multi-valued attribute.
+It is now a multivalued attribute.
 Each name now also has a start and (optional) end date associated with it.
 This should help to sort out situations such as name changes nicely.
 We will also define the constraint that exactly one name of a person must be the \emph{offical} name and that this name must have a start date before the present date and no end date.
@@ -212,9 +212,9 @@ And since our university is an international university with students and facult
 
 To our dismay, we realize one problem, though:
 We can no longer spot a reasonable candidate for primary key in our \emph{Person} entity type.
-\emph{Name} and \emph{Address} both are multi-valued composite attributes that do not need to be unique.
+\emph{Name} and \emph{Address} both are multivalued composite attributes that do not need to be unique.
 The government-issued \emph{ID} is optional.
-The \emph{Mobile Phone} number is both optional and multi-valued.
+The \emph{Mobile Phone} number is both optional and multivalued.
 \emph{Date of Birth} is certainly not unique and \emph{Age} is additionally derived.
 None of them and neither combination is necessarily unique.
 Of course, later, we will add other ID values like passport numbers and email addresses.

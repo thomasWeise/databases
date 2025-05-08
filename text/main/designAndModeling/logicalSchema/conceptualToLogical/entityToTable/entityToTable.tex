@@ -13,11 +13,11 @@ Both have reasonable datatypes and attached sanity constraints.
 In this case, the composite attribute~\emph{Name} in the conceptual model does not have a column in the table for the entity type of the logical model, but instead its components have columns.
 Of course, if the components themselves are composite attributes, the process is repeated recursively, i.e., the components are broken down until we arrive at simple attribes, for which we then have columns.
 
-Multi-valued attributes come separate tables, where each row references the primary key of entity's table as foreign key.
-For example, if the \emph{Student} entity type in the conceptual model has the multi-valued attribute \emph{Mobile Phone}, this would mean that each entity of type \emph{Student} can have multiple values of \emph{Mobile Phone} associated with it.
+Multivalued attributes come separate tables, where each row references the primary key of entity's table as foreign key.
+For example, if the \emph{Student} entity type in the conceptual model has the multivalued attribute \emph{Mobile Phone}, this would mean that each entity of type \emph{Student} can have multiple values of \emph{Mobile Phone} associated with it.
 The relational model, all datatypes are atomic, i.e., we cannot have a column that is of type \inQuotes{list of something}.
 Each attribute can only have a single value in each record.
-Thus, multi-valued attributes need to become tables by themselves.
+Thus, multivalued attributes need to become tables by themselves.
 So we would need to create a table~\sqlil{mobile} just for mobile phone numbers.
 This table would, at least, need a column for the actual phone number and a column that references the corresponding \emph{Student} record via a foreign key.
 It may also need to have a surrogate key, but this we discuss later on.
@@ -915,7 +915,7 @@ To depart from this example with a clean slate, we execute the \sql\ script give
 \centering%
 %
 \subfloat[][%
-We want to design a model where composite and multi-valued attributes are represented. %
+We want to design a model where composite and multivalued attributes are represented. %
 We therefore reprint the \pgls{ERD} from \cref{fig:erdStudent2} here.%
 \label{fig:erdStudent22}%
 ]{\includegraphics[width=0.48\linewidth]{\figErdStudentII}}%
@@ -953,7 +953,7 @@ We click~\menu{Apply}.%
 \centering%
 %
 \subfloat[][%
-Multi-valued attributes should go into their own table. %
+Multivalued attributes should go into their own table. %
 So we create a new table by right-clicking into our model and then selecting \menu{New>Schema object>Table}.%
 \label{fig:newStudentDb04newTable}%
 ]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/newStudentDb04newTable}}}%
@@ -1120,8 +1120,8 @@ We delete the \db\ again, so we can start with a clean slate in the next experim
 We currently are in the business of translating entity types to the relational data model, i.e., to tables.
 When entity types have composite attributes, these get recursively divided into their components.
 Each component of the composite attribute that cannot further be divided becomes an column in the table for the entity type.
-Multi-valued attributes, i.e., attributes that can take on several values for each entity, instead need to go into their own, separate tables.
-Back when designing conceptual models, we had one variant of the \emph{Student} entity type design that had both a composite and a multi-valued attribute -- see \cref{fig:erdStudent2}.
+Multivalued attributes, i.e., attributes that can take on several values for each entity, instead need to go into their own, separate tables.
+Back when designing conceptual models, we had one variant of the \emph{Student} entity type design that had both a composite and a multivalued attribute -- see \cref{fig:erdStudent2}.
 
 We will now use this example to also exercise these steps of the conceptual-to-logical model mapping step.
 We therefore reprint the \pgls{ERD} from \cref{fig:erdStudent2} here as \cref{fig:erdStudent22}.
@@ -1144,7 +1144,7 @@ For this one, we do not require the \sqlil{NOT NULL} feature.
 If no salutation is provided, we simply assume that the full name can be used to addressed a student.
 After doing this \cref{fig:newStudentDb03columnsAdded}, we click~\menu{Apply}.
 
-Multi-valued attributes should go into their own table.
+Multivalued attributes should go into their own table.
 We therefore need to create a second table in our logical model.
 We create a new table by right-clicking somewhere into our model~(but \emph{not} on the \sqlil{student} table) and then selecting \menu{New>Schema object>Table} in \cref{fig:newStudentDb04newTable}.
 A suitable name for this new table is \sqlil{mobile}.

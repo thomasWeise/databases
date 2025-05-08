@@ -139,9 +139,9 @@ All of them are stored in table \sqlilIdx{pg\_catalog.pg\_tables} in the \postgr
 We only print the table names, which are in column~\sqlilIdx{tablename}.
 We only want to see those owned by \sqlil{boss}, so we add the statement \sqlil{WHERE tableowner = 'boss'}.
 The name of the user owning each table is stored in column \sqlilIdx{tableowner}, and only if it equals \sqlil{boss}, we print the table name.
-This results in the query \sqlil{SELECT tablename FROM pg_catalog.pg_tables WHERE tableowner = 'boss';}\sqlIdx{SELECT{\idxdots}FROM}\sqlIdx{WHERE}.
+This results in the query \sqlil{SELECT tablename FROM pg_catalog.pg_tables WHERE tableowner = 'boss';}\sqlIdx{SELECT{\idxdots}FROM}\sqlIdx{WHERE}~\cite{PGDG:PD:SC:S}.
 As you can see, before executing the \sqlil{CREATE TABLE}\sqlIdx{CREATE!TABLE}\sqlIdx{TABLE} command, this query returns nothing.
-Afterwards, one new table exists, namel~\sqlil{product}.%
+Afterwards, one new table exists, namely~\sqlil{product}.%
 \end{sloppypar}%
 \FloatBarrier%
 \endhsection%
@@ -170,7 +170,7 @@ After saying what we want to store, we specify the \sqlilIdx{VALUES} to store.
 Each row is written in parentheses, values and rows are separated by commas.
 The complete command for storing all the data is shown in \cref{lst:factory:insert_into_table_product}.
 
-There, we first print all the data currently in the table by typing \sqlil{SELECT * FROM product;}\sqlIdx{SELECT{\idxdots}FROM}\sqlIdx{WHERE}\sqlIdx{*}.
+There, we first print all the data currently in the table by typing \sqlil{SELECT * FROM product;}\sqlIdx{SELECT{\idxdots}FROM}\sqlIdx{WHERE}\sqlIdx{*}~\cite{PGDG:PD:SC:S}.
 This prints nothing, because the table is empty.
 Then we insert the eleven products via one single \sqlilIdx{INSERT INTO} command.
 Afterwards, we try \sqlil{SELECT * FROM product;}\sqlIdx{SELECT{\idxdots}FROM}\sqlIdx{WHERE}\sqlIdx{*} again -- and now it prints 11~rows.

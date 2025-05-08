@@ -69,7 +69,6 @@ These, however, are only crutches and no solutions.
 We can easily imagine addresses that still will be misclassified.
 For example, what do we do with the \inQuotes{Embassy of China in Berlin, Germany}?
 
-
 \begin{figure}%
 \centering%
 \includegraphics[width=0.6\linewidth]{\currentDir/fixedComposite}%
@@ -128,8 +127,19 @@ Therefore, when adding her address record, we left the \sqlil{province} column a
 In \postgresql, concatenating a string with \sqlilIdx{NULL} yields \sqlilIdx{NULL}.
 If we just combined all the address fields using \sqlil{||}\sqlIdx{\textbar\textbar}, we would yield \sqlilIdx{NULL} for the address of Ms.~Bebbe.
 To deal with the potentially \sqlil{NULL} in the \sqlil{province} field, we use the \sqlilIdx{COALESCE} function~\cite{PGDG:PD:CE}.
-This function takes arbitrarily many arguments and returns the first argument that is not~\sqlilIdx{NULL}~(or \sqlilIdx{NULL} if all of its arguments are~\sqlilIdx{NULL}).
-
+This function takes arbitrarily many arguments and returns the first argument that is not~\sqlilIdx{NULL}~(or \sqlilIdx{NULL} if all of its arguments are~\sqlilIdx{NULL}).%
+%
+\begin{sloppypar}%
+When reading the query, you will also find one additional change when checking the country:
+We could have used the logical \sqlilIdx{OR} to combine the three conditions \sqlil{country ILIKE '\%china\%'}, \sqlil{country ILIKE '\%PRC\%'}, and \sqlil{country ILIKE '\%P.R.C.\%'}\sqlIdx{ILIKE}.
+Instead, we wrote \sqlil{country ILIKE ANY(ARRAY['\%china\%', '\%PRC\%', '\%P.R.C.\%'])}\sqlIdx{ANY}\sqlIdx{ARRAY}, which is equivalent to that~\cite{PGDG:PD:RAAC,PGDG:PD:A}:
+We can declare an array of the values \sqlil{a}, \sqlil{b}, \sqlil{c}, and~\sqlil{d} as \sqlil{ARRAY[a, b, c, d]}\sqlIdx{ARRAY}.
+The expression \sqlil{XXX operator ANY(ARRAY[...])}\sqlIdx{ANY} becomes \sqlil{TRUE} if \sqlil{XXX operator YYY} is \sqlil{TRUE} for any, i.e., at least one, \sqlil{YYY} in the array~\cite{PGDG:PD:RAAC}.
+In our case, \sqlil{XXX} is \sqlil{country} and \sqlil{operator} is \sqlilIdx{ILIKE}.
+(Similarly, the expression \sqlil{XXX operator ALL(ARRAY[...])}\sqlIdx{ALL} becomes \sqlil{TRUE} if \sqlil{XXX operator YYY} is \sqlil{TRUE} for every single, i.e., all, \sqlil{YYY} in the array~\cite{PGDG:PD:RAAC}.)
+Thus, we can use the shorter expression to save a bit space.%
+\end{sloppypar}%
+%
 Anyway, we have seen one anomaly that can occur when designing logical schemas.
 If we incorrectly model composite attributes as atomic attributes and later need to pull the components out of them, we can quickly descend into the hell of crutches and special cases.
 Properly recognizing the nature of attributes and strictly adhering to the \pgls{1NF} can reduce the potential errors very significantly.
