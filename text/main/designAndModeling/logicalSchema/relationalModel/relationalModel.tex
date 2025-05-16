@@ -16,13 +16,14 @@ The following additional definitions are commonly considered~\cite{C1970ARMODFLS
 %
 \begin{definition}[Relation Schema]%
 \sloppy%
-A \emph{relation schema} is the ordered sequences of $n$~attributes~$(a_1, a_2, \dots, a_n)$, i.e., is a sequence of attribute names and domains.%
+\label{def:relationSchema}%
+A \emph{relation schema}~\pgls{relSchema} is the ordered sequences of $n$~attributes~$(a_1, a_2, \dots, a_n)$, i.e., is a sequence of attribute names and domains. %
 \end{definition}%
 \fussy%
 %
 \begin{definition}[Relation]%
 \label{def:rdb:relation}%
-A \emph{relation}~$R$ is a set of $n$\nobreakdashes-tuples $R\subseteq\attrDomainb{a_1}\times\attrDomainb{a_2}\times\dots\times\attrDomainb{a_n}$ which is associated to a relation schema that specifies the attributes~$(a_1, a_2, \dots, a_n)$.%
+A \emph{relation}~$R$ is a set of $n$\nobreakdashes-tuples $R\subseteq\attrDomainb{a_1}\times\attrDomainb{a_2}\times\dots\times\attrDomainb{a_n}$ to which a relation schema~\relSchemab{R}~\cite{SS2005EIDDDFDB:SDWSD2} that specifies the attributes~$(a_1, a_2, \dots, a_n)$ is associated.%
 \end{definition}%
 %
 The definition of relation schemas in the relational model is therefore somewhat equivalent to the definition of entity types in the entity model~(see \cref{def:entityType}).

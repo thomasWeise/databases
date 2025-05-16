@@ -1,0 +1,35 @@
+\hsection{Second Normal Form}%
+\label{sec:normalForm:2}%
+%
+The \glsreset{2NF}\pgls{2NF}~\cite{C1971FNOTDBRM,C1971NDBSABT,K1983ASGTFNFIRDT,D2003AITDS,EN2015FODS} applies to composite primary keys only, i.e., primary keys that consist of multiple columns of a table.
+
+Back in \cref{sec:primaryKey}, we learned that a primary key, let's call it~$X$, is used to identify entities.
+If a primary key~$X$ uniquely identifies an object, then all the other attributes of an entity provide information about that object.
+In a table in the relational model, the primary key is a unique identifier for each row.
+In other words, there can be at most one row for each value of~$X$.
+All the other columns provide additional information about the real-world object represented by that primary key.
+The \pgls{2NF} is violated when a non-key field is a fact about a \emph{subset} of a key~\cite{K1983ASGTFNFIRDT}.
+It is only relevant when the key is composite, i.e., consists of several fields.
+In other words, a table is in \pgls{2NF} if it is in the \pgls{1NF} \emph{and} all columns that are not part of the primary key provide information about the complete primary key.
+
+Another perspective on the \pgls{2NF} is offered by \glsreset{funcDep}\pglspl{funcDep}.%
+%
+\begin{definition}[Functional Dependency]%
+\label{def:functionalDependency}%
+A \glsreset{funcDep}\emph{\pgls{funcDep}} is a relationship between two groups of attributes~$X$ and $Y$, such that for each instance of~$X$, the value of~$X$ determines the value of~$Y$~\cite{S2024D:RNDAFDNF}. %
+This can be written as~$\funcDepb{X}{Y}$.%
+\end{definition}%
+%
+In other words, if $\funcDepb{X}{Y}$, then it is invalid to have two records with the same value of~$X$ but different value of~$Y$~\cite{K1983ASGTFNFIRDT}.
+A given value of~$X$ must always occur with the same value of~$Y$.
+If $X$ is a key, then all fields are by definition dependent on~$X$, because there cannot be two rows in a table with the same value of~$X$.
+
+The relational schema of relation~$R$ be~\relSchemab{R} and the primary key be~$X\subseteq\relSchemab{R}$.
+Of course, all attributes~$a$ in\relSchemab{R} depend on the primary key attributes~$X$, i.e., it always holds that~$\funcDepb{X}{a}$.
+If the \pgls{2NF} is observed, then for all attributes~$a\in\relSchemab{R}$ that are not part of the primary key~($a \not\in X$) there does not exist a proper subset~$X'\subset X$ with $X'\neq X$ such that~$a$ functionally depends on~$X'$, i.e.~$\funcDepb{X'}{a}$.
+In other words, in the \pgls{2NF}, all attributes depend on the \emph{complete} primary key~$X$.%
+%
+\hinput{violation}{violation.tex}%
+%
+\endhsection%
+%

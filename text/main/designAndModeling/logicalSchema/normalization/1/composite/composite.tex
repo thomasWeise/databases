@@ -1,4 +1,5 @@
-\hsection{Violation:~The Use of Composite Attributes}%
+\hsection{Composite Attributes}%
+\hsection{Violation:~{T}he Use of Composite Attributes}%
 \FloatBarrier%
 %
 \begin{figure}%
@@ -67,8 +68,10 @@ We exclude addresses that have China in their text but also Chinatown.
 And we include addresses that mention PRC and, for good measures, also those including P.R.C.
 These, however, are only crutches and no solutions.
 We can easily imagine addresses that still will be misclassified.
-For example, what do we do with the \inQuotes{Embassy of China in Berlin, Germany}?
-
+For example, what do we do with the \inQuotes{Embassy of China in Berlin, Germany}?%
+\endhsection%
+%
+\hsection{Repair:~{D}isassembling the Composite Attribute}%
 \begin{figure}%
 \centering%
 \includegraphics[width=0.6\linewidth]{\currentDir/fixedComposite}%
@@ -94,7 +97,8 @@ Trying to find all the students with an address in China becomes easier now, bec
 Also, reassembling the full address using the string concatenation operation~\sqlil{||}\sqlIdx{\textbar\textbar}.}%
 %
 \gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/fixed_composite cleanup.sql}%
-
+%
+Let us now fix this problem.
 A proper solution can only be to model the address as a composite attribute.
 At least the country needs to be split off.
 Maybe also the province, because that could come in handy, too.
@@ -146,5 +150,6 @@ Properly recognizing the nature of attributes and strictly adhering to the \pgls
 It comes at the cost of slightly more complicated queries when reassembling the compound data.%
 %
 \FloatBarrier%
+\endhsection%
 \endhsection%
 %

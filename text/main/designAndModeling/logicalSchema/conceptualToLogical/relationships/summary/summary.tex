@@ -24,7 +24,7 @@ What we also learned is that specifying the necessary constraints is not always 
 Especially if both relationship ends are mandatory, things can get complicated.
 We still managed to find solutions for all cases and also learned some additional \sql\ commands, such as~\glsreset{CTE}\pglspl{CTE}.
 Sometimes, however, we used \postgresql-specific extensions to \sql.
-One particularly useful one is the \sqlil{RETURNING} statement, which is also supported by \mariadb~\cite{M:MSD:IR} and \sqlite~\cite{HWACIS:R}.
+One particularly useful one is the \sqlil{RETURNING} statement~\cite{PGDG:PD:RDFMR}, which is also supported by \mariadb~\cite{M:MSD:IR} and \sqlite~\cite{HWACIS:R}.
 Another one were sequences and the \sqlil{NEXTVAL} function~\cite{PGDG:PD:CS,PGDG:PD:SMF}.
 
 Due to the complexity, we may sometimes choose to change the relationship types when moving from the conceptual model to the logical model.
