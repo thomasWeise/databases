@@ -1,7 +1,7 @@
 \hsection{Second Normal Form}%
 \label{sec:normalForm:2}%
 %
-The \glsreset{2NF}\pgls{2NF} deals with the relationship between key fields and non-key fields~\cite{C1971FNOTDBRM,C1971NDBSABT,K1983ASGTFNFIRDT,D2003AITDS,EN2015FODS}.
+The \glsreset{2NF}\pgls{2NF} deals with the relationship between key attributes and non-key attributes~\cite{C1971FNOTDBRM,C1971NDBSABT,K1983ASGTFNFIRDT,D2003AITDS,EN2015FODS}.
 It applies to composite keys only, i.e., keys that consist of multiple columns of a table.
 Back in \cref{def:key,def:key2}, we learned that a key can be used to uniquely identify entities.
 If a key~$X$ uniquely identifies an object, then this means that all the other attributes of an entity provide information about that object and, hence, that key.
@@ -9,7 +9,7 @@ In a table in the relational model, a key is a unique identifier for each row.
 In other words, there can be at most one row for each value of~$X$.
 All the other columns provide additional information about the real-world object represented by that key.
 
-The \pgls{2NF} is violated when a non-key field is a fact about a \emph{proper subset} of \emph{any} key~\cite{K1983ASGTFNFIRDT}.
+The \pgls{2NF} is violated when a non-key attribute is a fact about a \emph{proper subset} of \emph{any} key~\cite{K1983ASGTFNFIRDT}.
 A proper subset can only exist of a set with more than one element.
 Therefore, the \pgls{2NF} is only relevant if our tables have a key that is composite, i.e., consists of more than one column.
 A table is in \pgls{2NF} if it is in the \pgls{1NF} \emph{and} all columns that are not part of a key provide information about the complete key(s).
@@ -40,7 +40,7 @@ The correct definition for the \pgls{2NF} there is given as follows~\cite{SS2005
 %
 \begin{definition}[\glsreset{2NF}\Pgls{2NF}]%
 \label{def:2nf}%
-A relation~$R$ with the primary key~$P\subseteq\relSchema{R}$ is in the \glsreset{2NF}\pgls{2NF} if and only if, for all sets of attributes~$X\subseteq\relSchemab{R}$ and all attributes~$a\in\relSchemab{R}$ with~$a\not\in X$, $a\not\in P$ and~$\funcDepb{X}{a}$, it holds that $X$ is either a key or a super key, but not a proper subset of any key of~$R$.%
+A relation~$R$ with the primary key~$P\subseteq\relSchema{R}$ is in the \glsreset{2NF}\pgls{2NF} if and only if it is in the \pgls{1NF} and for all sets of attributes~$X\subseteq\relSchemab{R}$ and all attributes~$a\in\relSchemab{R}$ with~$a\not\in X$, $a\not\in P$ and~$\funcDepb{X}{a}$, it holds that $X$ is either a key or a super key, but not a proper subset of any key of~$R$.%
 \end{definition}%
 %
 \hinput{violation}{violation.tex}%

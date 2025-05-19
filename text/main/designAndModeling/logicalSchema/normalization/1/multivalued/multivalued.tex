@@ -4,7 +4,7 @@
 %
 \begin{figure}%
 \centering%
-\includegraphics[width=0.6\linewidth]{\currentDir/anomalyMultivalued}%
+\includegraphics[width=0.85\linewidth]{\currentDir/anomalyMultivalued}%
 \caption{A violation of the \pgls{1NF}:~{T}he \sqlil{student} table has two columns with the same semantic, i.e., a repeating group. %
 Both columns reference addresses to simulate a multivalued attribute.}%
 \label{fig:anomalyMultivalued}%
@@ -116,7 +116,7 @@ We learned about this in relationship pattern \dref{sec:rm:qr}.%
 \hsection{Repair:~{E}xtracting Multivalued Attributes to Separate Table}%
 \begin{figure}%
 \centering%
-\includegraphics[width=0.8\linewidth]{\currentDir/fixedMultivalued}%
+\includegraphics[width=0.85\linewidth]{\currentDir/fixedMultivalued}%
 \caption{A redesign of the logical schema from \cref{fig:anomalyMultivalued}. %
 Refactoring the multivalued attribute that was represented as repeating group into a separate table brings the model into the \pgls{1NF}.}%
 \label{fig:fixedMultivalued}%

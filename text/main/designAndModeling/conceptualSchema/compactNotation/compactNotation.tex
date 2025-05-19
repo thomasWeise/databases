@@ -107,9 +107,9 @@ Most \pglspl{dbms} support \emph{transactions}, i.e., groups of instructions to 
 There is no intermediate state, as transactions are indivisible, atomically executed units.
 Thus, we could require that every time a new building is added to the \db, the first room is specified as well.
 The creation of the building and room record could be executed together as atomic transaction.
-If we do this, the conceptual constraints would perfectly map to a technical constraints, at the expense of slightly more complex update operations~(because we now need to use transactions).
+If we do this, the conceptual constraints would perfectly map to technical constraints, at the expense of more complex update operations~(because we now need to use transactions).
 \postgresql\ permits us to defer the constraints checking to the end of a transaction~\cite{PGDG:PD:SC:SC,N2016SSFA:DC}.
-Later, in \cref{sec:rm:mn}, we will learn that using \postgresql-specific extensions to \sql, we can group the necessary instructions together such that they form an implicit transaction and do not even need to make the constraints deferrable.
+Later, in \cref{sec:rm:mn}, we will learn that using \postgresql-specific extensions to \sql, we can group the necessary instructions together such that they form an implicit transaction.
 
 Anyway, the point is that conceptual relationships that seem hard to realize in software may exist.
 We will see that all relationship models that can be represented with crow's notation can be implemented in a relational \dbms.

@@ -126,7 +126,7 @@ After all of that, we delete the \db\ again using \sqlil{DROP DATABASE}\sqlIdx{D
 
 In this example, we noticed that we could realize the conceptual ternary relationship given in \cref{fig:erdStudentModuleProf3B} in two different ways in a logical schema.
 In other scenarios, there may yet be other choices.
-It does not make much sense to iterate over all the $\frac{\factorial{(4+3-1)}}{\factorial{4-1}*\factorial{3}}=20$ possible ternary relationships here.
+It does not make much sense to iterate over all the $\frac{\factorial{(4+3-1)}}{\factorial{(4-1)}*\factorial{3}}=20$ possible ternary relationships here.
 Then we would have to also iterate over all 35~possible relationships that involve four entity types, all 56~relationship patterns of five entity types, and so on.
 We should also remember that relationship attributes may be present, which could mess up the patterns further.
 

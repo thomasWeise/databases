@@ -4,7 +4,7 @@
 %
 \begin{figure}%
 \centering%
-\includegraphics[width=0.6\linewidth]{\currentDir/anomalyComposite}%
+\includegraphics[width=0.85\linewidth]{\currentDir/anomalyComposite}%
 \caption{A violation of the \pgls{1NF}:~{T}he \sqlil{full_address} field is semantically a composite attribute, but represented as flat \sqlilIdx{VARCHAR}.}%
 \label{fig:anomalyComposite}%
 \end{figure}%
@@ -74,7 +74,7 @@ For example, what do we do with the \inQuotes{Embassy of China in Berlin, German
 \hsection{Repair:~{D}isassembling the Composite Attribute}%
 \begin{figure}%
 \centering%
-\includegraphics[width=0.6\linewidth]{\currentDir/fixedComposite}%
+\includegraphics[width=0.85\linewidth]{\currentDir/fixedComposite}%
 \caption{A new variant of \cref{fig:anomalyComposite} that does no longer violate the \pgls{1NF}. %
 The address data has been disassembled in several columns, allowing us to extract the country of an address with ease.}%
 \label{fig:fixedComposite}%
