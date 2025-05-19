@@ -1,5 +1,5 @@
-%
 \hsection{Keys}%
+\label{sec:conceptualKeys}%
 %
 In \cref{def:entity}, we stated that an entity can be distinguished from all other entities in the world.
 This means that it must be unique.
@@ -8,25 +8,34 @@ The only way it can be unique is because of its attributes.
 These unique identifiers are called \emph{keys}~\cite{S2024D:CDMERDE}.%
 %
 \begin{definition}[Super Key]%
+\label{def:superKey}%
 A \emph{super key} is an attribute or set of attributes of an entity type that unique identifies an entity in an entity set~\cite{S2024D:CDMERDE,G2011EW2ITDS:CMUTERM}.%
 \end{definition}%
 %
-A student entity, for example, can uniquely be identified by the student ID.
+A student entity, for example, can uniquely be identified by the student~ID.
 It can also be uniquely identified by the combination of the address and mobile phone number.
 Or just by the mobile phone number.
 Or the email address.
 Or by the government-issued ID.
 Or we could try using the name, address, and \pgls{dateOfBirth}.%
 %
-\begin{definition}[Candidate Key]%
-A \emph{candidate key} of an entity type is a minimal super key, i.e., a super key consisting of the smallest number of attributes~\cite{S2024D:CDMERDE,G2011EW2ITDS:CMUTERM}.%
+\begin{definition}[(Candidate) Key]%
+\label{def:key}%
+A \emph{key}~(or \emph{candidate key}) of an entity type is a minimal super key, i.e., a super key that either consists of a single attribute or that would lose its unique property is a single attribute was removed from it~\cite{S2024D:CDMERDE,G2011EW2ITDS:CMUTERM,SS2005EIDDDFDB:SDLDUTRDM}.%
 \end{definition}%
 %
+This does not necessarily mean that all candidate keys have the same number of attributes.
+For example, when identifying a person, one candidate key could be the government issued~ID number.
+Another possible candidate key could be a combination of the name, place of birth, and \pgls{dateOfBirth}.
+Both would be minimal in the sense of the above definition.
+The government-issued ID, however, would consist of a single attribute whereas the other choice consists of three.
+The combination of all four attributes would be a super key, but not a candidate key.
+
 We have at least three different candidate keys for students:
-the student ID, the government-issued ID, and the mobile phone number.%
+the student~ID, the government-issued ID, and the mobile phone number.%
 %
 \begin{definition}[Primary Key]%
-\label{sec:primaryKey}%
+\label{def:primaryKey}%
 The \emph{primary key} of an entity type is a \emph{candidate key} that is used as the identifying attribute or group of attributes of an entity when modeling relationships between different entity types.%
 \end{definition}%
 %
@@ -46,7 +55,7 @@ Primary keys should never be \sqlilIdx{NULL}.
 So we rule out phone numbers as primary keys.
 This leaves us the government-issued ID and the student~ID that the university itself issues.
 
-We would naturally prefer the student ID.
+We would naturally prefer the student~ID.
 The reason is as follows:
 A student joins a curriculum, maybe studies in the Bachelor Program \inQuotes{Computer Science and Technology} at our university.
 For this process, they receive a student~ID.

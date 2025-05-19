@@ -1,17 +1,18 @@
 \hsection{Second Normal Form}%
 \label{sec:normalForm:2}%
 %
-The \glsreset{2NF}\pgls{2NF}~\cite{C1971FNOTDBRM,C1971NDBSABT,K1983ASGTFNFIRDT,D2003AITDS,EN2015FODS} applies to composite primary keys only, i.e., primary keys that consist of multiple columns of a table.
-
-Back in \cref{sec:primaryKey}, we learned that a primary key, let's call it~$X$, is used to identify entities.
-If a primary key~$X$ uniquely identifies an object, then all the other attributes of an entity provide information about that object.
-In a table in the relational model, the primary key is a unique identifier for each row.
+The \glsreset{2NF}\pgls{2NF} deals with the relationship between key fields and non-key fields~\cite{C1971FNOTDBRM,C1971NDBSABT,K1983ASGTFNFIRDT,D2003AITDS,EN2015FODS}.
+It applies to composite keys only, i.e., keys that consist of multiple columns of a table.
+Back in \cref{def:key,def:key2}, we learned that a key can be used to uniquely identify entities.
+If a key~$X$ uniquely identifies an object, then this means that all the other attributes of an entity provide information about that object and, hence, that key.
+In a table in the relational model, a key is a unique identifier for each row.
 In other words, there can be at most one row for each value of~$X$.
-All the other columns provide additional information about the real-world object represented by that primary key.
-The \pgls{2NF} is violated when a non-key field is a fact about a \emph{subset} of a key~\cite{K1983ASGTFNFIRDT}.
-It is only relevant when the key is composite, i.e., consists of several fields.
-In other words, a table is in \pgls{2NF} if it is in the \pgls{1NF} \emph{and} all columns that are not part of the primary key provide information about the complete primary key.
+All the other columns provide additional information about the real-world object represented by that key.
 
+The \pgls{2NF} is violated when a non-key field is a fact about a \emph{proper subset} of \emph{any} key~\cite{K1983ASGTFNFIRDT}.
+A proper subset can only exist of a set with more than one element.
+Therefore, the \pgls{2NF} is only relevant if our tables have a key that is composite, i.e., consists of more than one column.
+A table is in \pgls{2NF} if it is in the \pgls{1NF} \emph{and} all columns that are not part of a key provide information about the complete key(s).
 Another perspective on the \pgls{2NF} is offered by \glsreset{funcDep}\pglspl{funcDep}.%
 %
 \begin{definition}[Functional Dependency]%
@@ -20,17 +21,76 @@ A \glsreset{funcDep}\emph{\pgls{funcDep}} is a relationship between two groups o
 This can be written as~$\funcDepb{X}{Y}$.%
 \end{definition}%
 %
-In other words, if $\funcDepb{X}{Y}$, then it is invalid to have two records with the same value of~$X$ but different value of~$Y$~\cite{K1983ASGTFNFIRDT}.
-A given value of~$X$ must always occur with the same value of~$Y$.
-If $X$ is a key, then all fields are by definition dependent on~$X$, because there cannot be two rows in a table with the same value of~$X$.
+In other words, if $\funcDepb{X}{Y}$ and $X$~is a key, then it is invalid to have two records with the same value of~$X$ but different values of~$Y$~\cite{K1983ASGTFNFIRDT}.
+A given value of the key~$X$ must always occur with the same value of~$Y$.
+Also, if $X$ is a key, then all other columns are by definition dependent on~$X$, simply because there cannot be two rows in a table with the same value of~$X$.
 
-The relational schema of relation~$R$ be~\relSchemab{R} and the primary key be~$X\subseteq\relSchemab{R}$.
-Of course, all attributes~$a$ in\relSchemab{R} depend on the primary key attributes~$X$, i.e., it always holds that~$\funcDepb{X}{a}$.
-If the \pgls{2NF} is observed, then for all attributes~$a\in\relSchemab{R}$ that are not part of the primary key~($a \not\in X$) there does not exist a proper subset~$X'\subset X$ with $X'\neq X$ such that~$a$ functionally depends on~$X'$, i.e.~$\funcDepb{X'}{a}$.
-In other words, in the \pgls{2NF}, all attributes depend on the \emph{complete} primary key~$X$.%
+The relational schema of relation~$R$ be~\relSchemab{R} and a key be~$X\subseteq\relSchemab{R}$.
+Of course, all attributes~$a$ in\relSchemab{R} depend on the key attributes~$X$, i.e., it always holds that~$\funcDepb{X}{a}$.
+Let us approach a definition of the \pgls{2NF} using \pglspl{funcDep}.
+If the \pgls{2NF} is observed, then for all attributes~$a\in\relSchemab{R}$ that are not part of the key~$X$~(meaning $a \not\in X$), there does \emph{not} exist a proper subset~$X'\subset X$ such that~$a$ functionally depends on~$X'$, i.e.~$\funcDepb{X'}{a}$.
+(\emph{Proper} means that $X'\neq X$.)
+In the \pgls{2NF}, all attributes depend on the \emph{complete} key~$X$.
+
+However, this definition is not fully correct.
+As we discussed before and will discuss again later, there can be multiple keys, i.e., multiple sets of attributes, that uniquely identify rows in~$R$.
+The non-key attributes must depend on all of these keys in their entirety.
+It is not permitted that they depend any subset of any key.
+The correct definition for the \pgls{2NF} there is given as follows~\cite{SS2005EIDDDFDB:SDWSD2}:%
+%
+\begin{definition}[\glsreset{2NF}\Pgls{2NF}]%
+\label{def:2nf}%
+A relation~$R$ with the primary key~$P\subseteq\relSchema{R}$ is in the \glsreset{2NF}\pgls{2NF} if and only if, for all sets of attributes~$X\subseteq\relSchemab{R}$ and all attributes~$a\in\relSchemab{R}$ with~$a\not\in X$, $a\not\in P$ and~$\funcDepb{X}{a}$, it holds that $X$ is either a key or a super key, but not a proper subset of any key of~$R$.%
+\end{definition}%
 %
 \hinput{violation}{violation.tex}%
 \hinput{fixed}{fixed.tex}%
+%
+\hsection{Summary}%
+The \pgls{2NF} is a rule that helps us to avoid redundancy.
+It prescribes that there should not be a functional dependency from non-key attributes on a part of any composite key.
+As the result, it reduces the chance of errors during data entry, because the volume of data entered becomes smaller.
+We do not need to enter the same information several times if it only concerns a part of a key.
+The \pgls{2NF} also mitigates problems that can be caused by deletion and update anomalies.
+It comes at the cost of slightly more complicated queries:
+If the \pgls{2NF} is violated, information is stored in a single table that needs to be divided into multiple tables if the \pgls{2NF} is observed.
+Hence, when we need all of the information together, we need to merge it from these separate tables again using, e.g., \sqlilIdx{INNER JOIN} queries.
+
+At the beginning of this section,  we were talking about \emph{keys}, but not just \emph{primary keys}.
+We even gave the rather complicated \dref{def:2nf}, involving keys, the primary key, and super keys.
+This looked all quite complicated for a rather simple statement, namely that no attribute can depend on a part of a key only.
+
+The reason for this complicated formulation is that a relation can have multiple different keys.
+Let's say we want to store information about people in table.
+Then a reasonable key of such a table would be the government-issued ID number.
+The name, place of birth, and \pgls{dateOfBirth} could be another key~(although this would be a slightly more dangerous choice, because two people of the same name could be born in the same place on the same day).
+Yet another key could be the primary mobile phone number.
+Maybe the best choice in a practical \db\ implementation would be to use a surrogate key, i.e., an identifier
+that is unique and automatically generated by the \dbms.
+This last possible choice is interesting and relevant here.
+
+We presented a design of the room planning subsystem of our imaginary teaching management platform that violated the \pgls{2NF}.
+We put all the data of rooms and buildings into a single table.
+The primary key was composed of the building number and room number.
+The columns for building name and building address only depend on the building number, but not on the room number.
+This was the violation of the \pgls{2NF}.
+We normalized the design to comply with the \pgls{2NF} by separating these columns into a new table.
+
+If the \pgls{2NF} would only consider \emph{primary keys}, then another \inQuotes{solution} to this problem would be to simply use a surrogate key for our original table~\sqlil{building_room}.
+Since the surrogate key would be a single column, the \pgls{2NF} would then no longer be violated.
+If you refer back to our example and think about this method, you quickly realize:
+This would have solved none of the problems of the design.
+The deletion and update anomalies would have remained.
+
+So having a definition for the \pgls{2NF} that can easily be implemented making a useless change to the design that leads to no improvement at all would be useless.
+\Pglspl{NF} are defined exactly with the goal to give us guidance towards good \db\ design.
+Observing them should yield a good structure and reduce the chance of anomalies.
+
+For this purpose, the \pgls{2NF} concerns \emph{all key} attributes, not just the \emph{primary key} attributes.
+Therefore, using a surrogate key would \emph{not} lead to a normalization under the \pgls{2NF}.
+The building number/room number attribute combination would still be key for the table.
+And the building name and building address would still only depend on a part of that key.%
+\endhsection%
 %
 \endhsection%
 %

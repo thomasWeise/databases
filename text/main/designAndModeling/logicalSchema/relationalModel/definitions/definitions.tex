@@ -1,0 +1,52 @@
+\hsection{Definitions}%
+In the context of \pglspl{rdb}, the same definitions for attributes and domains~(\cref{def:attribute,def:attributeDomain}) that we already discussed back in \dref{sec:entitisAttrsErd} are used.
+The following additional definitions are commonly considered~\cite{C1970ARMODFLSDB}:%
+%
+\begin{definition}[Relation Schema]%
+\sloppy%
+\label{def:relationSchema}%
+A \emph{relation schema}~\pgls{relSchema} is the ordered sequences of $n$~attributes~$(a_1, a_2, \dots, a_n)$, i.e., is a sequence of attribute names and domains. %
+\end{definition}%
+\fussy%
+%
+\begin{definition}[Relation]%
+\label{def:rdb:relation}%
+A \emph{relation}~$R$ is a set of $n$\nobreakdashes-tuples $R\subseteq\attrDomainb{a_1}\times\attrDomainb{a_2}\times\dots\times\attrDomainb{a_n}$ to which a relation schema~\relSchemab{R}~\cite{SS2005EIDDDFDB:SDWSD2} that specifies the attributes~$(a_1, a_2, \dots, a_n)$ is associated.%
+\end{definition}%
+%
+The definition of relation schemas in the relational model is therefore somewhat equivalent to the definition of entity types in the entity model~(see \cref{def:entityType}).
+When translating our conceptual model to a logical relational model, an entity type will become a relation schema.
+The difference between conceptual and logical model is that we will use relations to implement both entities and relationships.
+
+Also, at first glance, one may think that \inQuotes{Relations = Tables} in a \db.
+In other words, one may think that relations are implemented as tables.
+But this is only partially true:
+Relations can also be the result from a \sqlil{SELECT}\sqlIdx{SELECT{\idxdots}FROM} statement in \sql.
+Relations can also be the parameter of an \sqlilIdx{INSERT INTO} statement.
+Thus, relations are a quite versatile concept to represent our data.
+
+Notice that a relation is a \emph{set} of tuples.
+Since a set cannot contain the same element twice, this means that duplicate tuples~(rows, records) are not permitted in relations by definition~\cite{C20245YOQ}.
+As a deviation from the pure formalism, the \sql\ language does permit duplicate tuples in tables and query results~\cite{C20245YOQ}.
+Sets are also not ordered, so there is no default order of the tuples in relations either.
+
+All attributes~(columns) must have names, i.e., there are no anonymous attributes~\cite{S2024D:LDMRMRA}.
+In the original works on \pglspl{rdb}~\cite{C1970ARMODFLSDB}, the order of the attributes~(columns) in a relation mattered and it was permitted that two column have the same name.
+This idea was later abandoned.
+Today, the order of columns are unimportant and the columns of a table must have unique names~\cite{S2024D:LDMRMRA}.
+The values of attributes are atomic, i.e., there are no multivalued attributes and no composite attributes~\cite{S2024D:LDMRMRA,SS2005EIDDDFDB:SDLDUTRDM}.
+
+The degree of a relation is defined as follows~(please to not mix this up with the degree of a \emph{relationship} discussed in \cref{def:degreeOfRelationship}):%
+%
+\begin{definition}[Degree of a Relation]%
+The \emph{degree} of a relation is the number~$n$ of its attributes.%
+\end{definition}%
+%
+Relations are at the core of \pglspl{rdb}.%
+%
+\cquotation{C1970ARMODFLSDB}{%
+The totality of data in a data bank may be viewed as a collection of time-varying relations. %
+These relations are of assorted degrees. %
+As time progresses, each $n$\nobreakdashes-ary relation may be subject to insertion of additional $n$\nobreakdashes-tuples, deletion of existing ones, and alteration of components of any of its existing $n$\nobreakdashes-tuples.}%
+%
+\endhsection%

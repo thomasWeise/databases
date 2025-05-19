@@ -508,7 +508,9 @@ How can we do that?
 Via so-called \emph{foreign keys}~\cite{PGDG:PD:FK}.
 You see, in both of our existing tables, we have defined a \sqlilIdx{PRIMARY KEY}.
 We used auto-generated integers, as we also do in the new table.
-We can now define a column which also is of type \sqlilIdx{INT} and that references the primary key of another table.
+We can now define a column which also is of type \sqlilIdx{INT} and that references the primary key of another table.\footnote{%
+Much later, we will formalize the concept of foreign keys in \cref{def:foreignKey}.%
+}
 
 We can write \sqlil{customer INT NOT NULL REFERENCES customer(id)}\sqlIdx{REFERENCES} to define such a file.
 The name of this new column in our table \sqlil{demand} will be \sqlil{customer}.
