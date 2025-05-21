@@ -11,5 +11,7 @@ Formally, this can be stated as follows~\cite{SS2005EIDDDFDB:SDWSD2}:%
 A relation~$R$ is in \pgls{3NF} if it is in~\pgls{2NF} and each attribute~$a\in\relSchemab{R}$ that is transitively dependent on a key~$X\subseteq\relSchemab{R}$, i.e., for which it holds that~$\funcDepb{X}{\funcDepb{Y}{a}}$ with~$Y\subseteq\relSchemab{R}$, then either~$Y$ contains a key, $a$~is part of the primary key, or~$a\in X$.%
 \end{definition}%
 %
+\hinput{violation}{violation}%
+%
 \endhsection%
 %

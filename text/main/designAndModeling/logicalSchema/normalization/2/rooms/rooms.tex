@@ -1,0 +1,16 @@
+\hsection{Example: Room Management System}%
+%
+If a table is normalized to the \pgls{2NF}, then all attributes depend on the entire primary key.
+This only matters if the primary key is composite, i.e., if it consists of multiple columns.
+If a table violates the \pgls{2NF}, then this means that some columns are functionally dependent only on a part of but not the whole primary key.
+
+Let us explore why this can be a bad thing.
+Back in \dref{fig:erdRoom1}, we presented an \pgls{ERD} for the room planning subsystem of our teaching management platform.
+We will now create two implementations that try to realize a part of such a system.
+The first one will violate the \pgls{2NF} and the second one will not.%
+%
+\hinput{violation}{violation.tex}%
+\hinput{fixed}{fixed.tex}%
+%
+\endhsection%
+%
