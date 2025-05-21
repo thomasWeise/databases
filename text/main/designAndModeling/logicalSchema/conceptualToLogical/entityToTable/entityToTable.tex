@@ -1083,13 +1083,49 @@ We see that each row in the table \sqlil{student} may be linked to arbitrarily m
 \floatRowSep%
 %
 \subfloat[][%
-This is the model if exported as \pgls{SVG} graphic.%
+This is the model if exported as \pgls{SVG} graphic by following the steps in~\cref{fig:makeStudentTable40export,fig:makeStudentTable41exportAsSvg,fig:makeStudentTable42fileName,fig:makeStudentTable43exportToSvgExport}.%
 \label{fig:newStudentDb18model}%
 ]{\includegraphics[width=0.65\linewidth]{\currentDir/newStudentDb18model}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+In order to see more details in the diagram, we press the \pgmodelerToggleCompact\ button at the top-right of the tools bar.%
+\label{fig:newStudentDb19toggleCompact}%
+]{\tightbox{\includegraphics[width=0.65\linewidth]{\currentDir/newStudentDb19toggleCompact}}}%
 %
 %
 \caption{Creating a logical model represent students with a composite name attribute and multiple mobile phone numbers~(continued).}%
 \label{fig:newStudentDb:E}%
+\end{figure}%
+%
+\begin{figure}
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+More details, such as the column types, appear in the diagram, causing the tables to overlap. %
+We drag them apart with the mouse.%
+\label{fig:newStudentDb20notCompactViewDragTables}%
+]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/newStudentDb20notCompactViewDragTables}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+The new layout looks much clearer.%
+\label{fig:newStudentDb21tablesDragged}%
+]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/newStudentDb21tablesDragged}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+We export the model again to a \pgls{SVG} graphic, following the steps in~\cref{fig:makeStudentTable40export,fig:makeStudentTable41exportAsSvg,fig:makeStudentTable42fileName,fig:makeStudentTable43exportToSvgExport}. %
+This graphic now contains more details as well.%
+\label{fig:newStudentDb22model}%
+]{\includegraphics[width=0.86\linewidth]{\currentDir/newStudentDb22model}}%
+%
+\caption{Creating a logical model represent students with a composite name attribute and multiple mobile phone numbers~(continued).}%
+\label{fig:newStudentDb:F}%
 \end{figure}%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{teachingManagement/logical/student_database_2/generated_sql}{01_student_database_database_2001.sql}{}{}{}{postgres.sh}{logical:teachingManagment:student_database_2:01_student_database_database_2001}{%
@@ -1204,10 +1240,28 @@ We see that each row in the table \sqlil{student} may be linked to arbitrarily m
 This is a bit different from before, as now students are permitted to exist that do not have a mobile phone number associated with themselves.
 But this is also OK, so let's not fuss about it too much.
 
-We can again export the model as \pgls{SVG} graphic.
+We can again export the model as \pgls{SVG} graphic by following the steps given in~\cref{fig:makeStudentTable40export,fig:makeStudentTable41exportAsSvg,fig:makeStudentTable42fileName,fig:makeStudentTable43exportToSvgExport}.
 \Cref{fig:newStudentDb18model} shows how nice it looks {\dots} just compare how much better a vector graphic looks compared to a pixel graphic~(\cref{fig:newStudentDb17model}).
 
-We can also export this model to \sql, as we did before.
+We also notice now that, while our model looks visually pleasing, the diagram lacks some details.
+For example, we cannot see the datatypes of columns.
+We cannot see whether they are annotated as \sqlilIdx{UNIQUE} or \sqlilIdx{NOT NULL}.
+This can easily be solved:
+In \cref{fig:newStudentDb19toggleCompact}, we click on the  \pgmodelerToggleCompact\ button at the top-right of the tools bar.
+This button lets the details appear.
+
+This also makes the tables in the diagram larger, as shown in \cref{fig:newStudentDb20notCompactViewDragTables}.
+We drag them apart with the mouse, which gives us the much clearer layout in \cref{fig:newStudentDb21tablesDragged}.
+In this layout, we see, for example, that \sqlil{student_id} is the primary key of the table~\sqlil{student} from the key symbol and the \inGuillemot{pk}~annotation.
+We see that it is of datatype \sqlil{CHARACTER(11)}.
+We lso see that \sqlil{national_id} is a text string of the fixed length~18.
+and since it is annotated with~\inGuillemot{nn}, it must be~\sqlilIdx{NOT NULL}.
+
+We can export the model again to a \pgls{SVG} graphic.
+This graphic, shown in \cref{fig:newStudentDb22model}, now contains all the details as well.
+It clearly shows the structure and the most important information of our logical model at a glance.
+
+We now export this model to \sql, exactly as we did before.
 This time, we get four scripts.
 The first one, \cref{lst:logical:teachingManagment:student_database_2:01_student_database_database_2001}, again creates the \sqlil{student_database}~\db.
 The second one, \cref{lst:logical:teachingManagment:student_database_2:03_public_student_table_5071}, creates the \sqlil{student} table.
