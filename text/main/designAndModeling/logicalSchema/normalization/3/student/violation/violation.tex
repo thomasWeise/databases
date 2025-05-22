@@ -6,20 +6,20 @@
 %
 \includegraphics[width=0.56\linewidth]{\currentDir/studentViolation3nf}%
 %
-\caption{A table which stores data about students and their parents.}%
+\caption{A table which stores data about students and their parents in violation of the \pgls{3NF}, because the parent name depends on the parent phone number, which depends on the student~ID.}%
 \label{fig:studentViolation3nf}%
 \end{figure}%
 %
 \gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/3nf/student/violation/generated_sql 01_violation_database_2001.sql}%
 %
-\gitSQL{\databasesCodeRepo}{normalization/3nf/student/violation/generated_sql/03_public_student_table_5071.sql}{3nf:violation:03_public_student_table_5071}{The generated \sql\ code for creating the table \sqlil{student} that violates the \pgls{3NF} based on \cref{fig:studentViolation3nf}.}%
+\gitSQL{\databasesCodeRepo}{normalization/3nf/student/violation/generated_sql/03_public_student_table_5071.sql}{3nf:student:violation:03_public_student_table_5071}{The generated \sql\ code for creating the table \sqlil{student} that violates the \pgls{3NF} based on \cref{fig:studentViolation3nf}.}%
 \gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/3nf/student/violation/generated_sql 03_public_student_table_5071.sql violation}%
 %
-\gitSQL{\databasesCodeRepo}{normalization/3nf/student/violation/insert.sql}{normalization:3nf:student:violation:insert}{%
+\gitSQL{\databasesCodeRepo}{normalization/3nf/student/violation/insert.sql}{3nf:student:violation:insert}{%
 Inserting some data into the table~\sqlil{student} in violation of the \pgls{3NF}.}%
 \gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/3nf/student/violation insert.sql violation}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{normalization/3nf/student/violation}{update.sql}{violation}{}{}{postgres.sh}{normalization:3nf:student:violation:update}{%
+\gitSQLAndOutput{\databasesCodeRepo}{normalization/3nf/student/violation}{update.sql}{violation}{}{}{postgres.sh}{3nf:student:violation:update}{%
 We noticed that the name of the father of Mr.~Bibbo, Mr.~Bibotto, and Ms.~Bibboba is actually Mr.~B{\"o}dd{\"o}, not Mr.~Boddo. %
 To change it, we need to touch three records, which is a typical update anomaly.%
 }%
@@ -34,7 +34,7 @@ The column with the student name is also not a key and not necessarily unique.
 For each student, we also store the name of one parent and their mobile phone number as a contact for emergencies.
 
 This table is in the \pgls{1NF}, as there are neither compound attributes nor repeated groups.
-It is also in the \pgls{2NF}, because there is no compound key and, hence, it is not possible that an attribute cound depend on a part of such a key only.
+It is also in the \pgls{2NF}, because there is no compound key and, hence, it is not possible that an attribute could depend on a part of such a key only.
 However, this table violates the \pgls{3NF}.
 The attribute \sqlil{parent_name} is functionally dependent on the attribute \sqlil{parent_mobile}.
 We can write~\funcDepb{\sqlil{parent_mobile}}{\sqlil{parent_name}}.
@@ -44,17 +44,17 @@ The transitive relationship \funcDepb{\sqlil{student_id}}{\funcDepb{\sqlil{paren
 And it violates the \pgls{3NF}.
 
 Let us explore what consequences this has.
-We first create the table by executing the script given in \cref{lst:3nf:violation:03_public_student_table_5071}.
-Then we insert four student records into the \db\ using the script given in \cref{lst:normalization:3nf:student:violation:insert}.
+We first create the table by executing the script given in \cref{lst:3nf:student:violation:03_public_student_table_5071}.
+Then we insert four student records into the \db\ using the script given in \cref{lst:3nf:student:violation:insert}.
 There are four students, Mr.~Bibbo, Mr.~Bebbo, Mr.~Bibboto, and Ms.~Bibboba.
 Their IDs are not important.
-What is important is that Mr.~Bibbo, Mr.~Bibboto, and Ms.~Bibboba happen to be sibblings.
+What is important is that Mr.~Bibbo, Mr.~Bibboto, and Ms.~Bibboba happen to be siblings.
 Their proud father is Mr.~B{\"o}dd{\"o}.
 
 Now it happened that, being located in China, the teacher in the administrative office did not really know how to enter the letter~\inQuotes{\"o}.
 So they chose, for the time being, to call the dad of the three kids simply Mr.~Boddo.
-A few days later, the found a solution on how to enter the letter~\inQuotes{\"o}.
-In order to fix the data, they created the script \cref{lst:normalization:3nf:student:violation:update}.
+A few days later, they found a solution on how to enter the letter~\inQuotes{\"o}.
+In order to fix the data, they created the script \cref{lst:3nf:student:violation:update}.
 
 They use the mobile phone number~555\decSep444\decSep666\decSep77 of Mr.~B{\"o}dd{\"o} to identify him in the table.
 To test this, the script it uses a \sqlilIdx{SELECT} statement to get the three student/parent name pairs associated with this mobile phone number.

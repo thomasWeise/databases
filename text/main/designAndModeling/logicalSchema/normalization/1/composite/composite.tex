@@ -18,11 +18,11 @@
 \gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/anomaly_composite/generated_sql 04_public_student_table_5075.sql anomalies}%
 \gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/anomaly_composite/generated_sql 05_public_student_student_address_fk_constraint_5080.sql anomalies}%
 %
-\gitSQL{\databasesCodeRepo}{normalization/1nf/anomaly_composite/insert.sql}{normalization:1nf:anomaly_composite:insert}{%
+\gitSQL{\databasesCodeRepo}{normalization/1nf/anomaly_composite/insert.sql}{1nf:anomaly_composite:insert}{%
 Inserting some data into the tables~\sqlil{student} and~\sqlil{address} in violation of the \pgls{1NF} based on \cref{fig:anomalyComposite}.}%
 \gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/anomaly_composite insert.sql anomalies}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{normalization/1nf/anomaly_composite}{select.sql}{anomalies}{}{}{postgres.sh}{normalization:1nf:anomaly_composite:select}{%
+\gitSQLAndOutput{\databasesCodeRepo}{normalization/1nf/anomaly_composite}{select.sql}{anomalies}{}{}{postgres.sh}{1nf:anomaly_composite:select}{%
 Trying to find all the students with an address in China, which is hard, because table \sqlil{address} violates the \pgls{1NF}.}%
 %
 \gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/anomaly_composite cleanup.sql}%
@@ -30,7 +30,7 @@ Trying to find all the students with an address in China, which is hard, because
 In \cref{fig:anomalyComposite}, we illustrate a part of a logical model that relates student records to address records.
 In this relationship, each student has exactly one address.
 In \cref{lst:1nf:anomaly_composite:03_public_address_table_5071,lst:1nf:anomaly_composite:04_public_student_table_5075}, we create the two tables, while leaving the \db\ and constraint creation to your imagination.
-We then insert some data into them \db\ \cref{lst:normalization:1nf:anomaly_composite:insert}.
+We then insert some data into them \db\ \cref{lst:1nf:anomaly_composite:insert}.
 At first glance, all looks well.
 
 And all could be well, if we would treat the address of a student always as a single text string.
@@ -44,7 +44,7 @@ How would we do that?%
 \begin{sloppypar}%
 Matter of fact, we encountered this very same situation back in \cref{sec:factory:table:customer:insert}.
 Back then, we used the \sqlilIdx{ILIKE} expression and we do so again here:
-In \cref{lst:normalization:1nf:anomaly_composite:select}, we combine the tables~\sqlil{student} and \sqlil{address} by using an \sqlilIdx{INNER JOIN} statement.
+In \cref{lst:1nf:anomaly_composite:select}, we combine the tables~\sqlil{student} and \sqlil{address} by using an \sqlilIdx{INNER JOIN} statement.
 We then only keep the rows \sqlil{WHERE full_address ILIKE '\%china\%'}, in other words, where the word \inQuotes{china} occurs anywhere in the \sqlil{full_address} columns, regardless of its casing.
 \inQuotes{China,} \inQuotes{china,} \inQuotes{CHINA,} \inQuotes{cHina} -- all are OK.
 Doing this will yield the two students Mr.~Bibbo and Ms.~Bibbi.
@@ -63,7 +63,7 @@ We modelled it as an atomic attribute, which turned out to be wrong, because now
 An atomic attribute does not have components.
 
 Now our \db\ can still \inQuotes{work}.
-We can construct the second query in \cref{lst:normalization:1nf:anomaly_composite:select}, which deals with both of the special cases mentioned above.
+We can construct the second query in \cref{lst:1nf:anomaly_composite:select}, which deals with both of the special cases mentioned above.
 We exclude addresses that have China in their text but also Chinatown.
 And we include addresses that mention PRC and, for good measures, also those including P.R.C.
 These, however, are only crutches and no solutions.
@@ -88,11 +88,11 @@ The address data has been disassembled in several columns, allowing us to extrac
 \gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/fixed_composite/generated_sql 04_public_student_table_5079.sql fixed}%
 \gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/fixed_composite/generated_sql 05_public_student_student_address_fk_constraint_5084.sql fixed}%
 %
-\gitSQL{\databasesCodeRepo}{normalization/1nf/fixed_composite/insert.sql}{normalization:1nf:fixed_composite:insert}{%
+\gitSQL{\databasesCodeRepo}{normalization/1nf/fixed_composite/insert.sql}{1nf:fixed_composite:insert}{%
 Inserting some data into the tables~\sqlil{student} and~\sqlil{address} as designed in \cref{fig:fixedComposite}, which now comply with the \pgls{1NF}.}%
 \gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/fixed_composite insert.sql fixed}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{normalization/1nf/fixed_composite}{select.sql}{fixed}{}{}{postgres.sh}{normalization:1nf:fixed_composite:select}{%
+\gitSQLAndOutput{\databasesCodeRepo}{normalization/1nf/fixed_composite}{select.sql}{fixed}{}{}{postgres.sh}{1nf:fixed_composite:select}{%
 Trying to find all the students with an address in China becomes easier now, because \sqlil{county} is its own column. %
 Also, reassembling the full address using the string concatenation operation~\sqlil{||}\sqlIdx{\textbar\textbar}.}%
 %
@@ -110,17 +110,17 @@ Instead, we have the columns~\sqlil{country}, \sqlil{province}, \sqlil{city}, \s
 We permit \sqlil{province} to be \sqlilIdx{NULL}, because some countries maybe do not have provinces, whereas all other fields must be~\sqlilIdx{NOT NULL}.
 Nothing else changes, the table~\sqlil{student} can stay as it is.
 
-When we insert the data into our \db\ \cref{lst:normalization:1nf:fixed_composite:insert}, we of course also need to split the addresses properly over the columns.
+When we insert the data into our \db\ \cref{lst:1nf:fixed_composite:insert}, we of course also need to split the addresses properly over the columns.
 This also shows us a slight drawback that is inherent to all normal forms:
 They break compound data into independent pieces.
 If we later need the complete data again, we need to reassemble the pieces.
 Thus, if we need the full address string, we first must reassemble it, probably using the string concatenation operator~\sqlil{||}\sqlIdx{\textbar\textbar}~\cite{PGDG:PD:SFAO}.
 
-As you can see in \cref{exec:normalization:1nf:fixed_composite:select}, we now can indeed obtain the list of all students with addresses in China much more easily.
+As you can see in \cref{exec:1nf:fixed_composite:select}, we now can indeed obtain the list of all students with addresses in China much more easily.
 It is a given that we still have to deal with the fact that different people may use different names for the country, but at least we cannot accidentally classify someone from Chinatown in San Francisco as a PRC resident.
 
 While we are here, let's do a small excursion that just fits nicely in this topic but is otherwise unrelated to the \pgls{1NF}.
-If you read \cref{lst:normalization:1nf:fixed_composite:select}, you notice that reassembling the full address was a bit complicated and went beyond simply using~\sqlil{||}\sqlIdx{\textbar\textbar}.
+If you read \cref{lst:1nf:fixed_composite:select}, you notice that reassembling the full address was a bit complicated and went beyond simply using~\sqlil{||}\sqlIdx{\textbar\textbar}.
 This is because we allowed the \sqlil{province} column to be \sqlil{NULL}.
 
 We even have such a case in our table:
