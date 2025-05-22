@@ -4,7 +4,24 @@ Imagine that during the design of the teaching management platform, a colleague 
 Sometimes there can be situations where such information could be useful.
 Maybe a student has an accident on campus.
 Maybe a student suddenly stops coming to lectures and is nowhere to be found.
-Then it would be good to be able to call a parent.%
+Then it would be good to be able to call a parent.
+
+Assume that the following information about students should be stored in our \db:%
+\begin{itemize}%
+\item their university-assigned Student~ID~\sqlil{student_id},%
+\item their name~\sqlil{student_name},%
+\item the name~\sqlil{parent_name} of one of their parents, and%
+\item the mobile phone number~\sqlil{parent_mobile} of that parent.%
+\end{itemize}%
+%
+The following \pglspl{funcDep} exist at first glance:%
+%
+\begin{itemize}%
+\item \funcDepb{\sqlil{student_id}}{\sqlil{student_name}}, %
+\item \funcDepb{\sqlil{student_id}}{\sqlil{parent_name}}, %
+\item \funcDepb{\sqlil{student_id}}{\sqlil{parent_mobile}}, and %
+\item \funcDepb{\sqlil{parent_mobile}}{\sqlil{parent_name}}.
+\end{itemize}%
 %
 \hinput{violation}{violation}%
 \hinput{fixed}{fixed}%

@@ -4,12 +4,22 @@
 The \glsreset{3NF}\pgls{3NF} deals with the relationship between non-key attributes~\cite{C1971FNOTDBRM,C1971NDBSABT,K1983ASGTFNFIRDT,D2003AITDS,EN2015FODS}.
 The \pgls{3NF} is violated when a non-key attribute is a fact about another non-key attribute~\cite{K1983ASGTFNFIRDT}.
 A relation~$R$ is in the \pgls{3NF} if no non-key attribute transitively depends on a key attribute.
+%
+\begin{definition}[Transitive Functional Dependency]%
+\label{def:transitiveDependency}%
+Let $A$, $B$, and~$C$ be three distinct attributes (or distinct sets of attributes) in the relation~$R$, i.e, $A\subseteq\relSchemab{R}$, $B\subseteq\relSchemab{R}$, and~$C\subseteq\relSchemab{R}$.
+The functional dependency~$\funcDepb{A}{C}$ is a \emph{transitive dependency}, if and only if \funcDepb{A}{B} and~\funcDepb{B}{C} are true while \funcDepb{B}{A} is \emph{not} true.%
+\end{definition}%
+%
 Formally, this can be stated as follows~\cite{SS2005EIDDDFDB:SDWSD2}:%
 %
 \begin{definition}[\glsreset{3NF}\Pgls{3NF}]%
 \label{def:3nf}%
 A relation~$R$ is in \pgls{3NF} if it is in~\pgls{2NF} and each attribute~$a\in\relSchemab{R}$ that is transitively dependent on a key~$X\subseteq\relSchemab{R}$, i.e., for which it holds that~$\funcDepb{X}{\funcDepb{Y}{a}}$ with~$Y\subseteq\relSchemab{R}$, then either~$Y$ contains a key, $a$~is part of the primary key, or~$a\in X$.%
 \end{definition}%
+%
+A table is in \pgls{3NF} if it is in the \pgls{2NF} and all the attributes that are not part of any candidate key depend directly on the primary key.
+Every non-prime attribute is non-transitively dependent on every candidate key in the table.
 %
 \hinput{student}{student}%
 %

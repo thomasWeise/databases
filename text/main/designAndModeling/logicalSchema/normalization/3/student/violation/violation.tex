@@ -4,16 +4,16 @@
 \begin{figure}%
 \centering%
 %
-\includegraphics[width=0.56\linewidth]{\currentDir/studentViolation3nf}%
+\includegraphics[width=0.5\linewidth]{\currentDir/studentViolation3nf}%
 %
-\caption{A table which stores data about students and their parents in violation of the \pgls{3NF}, because the parent name depends on the parent phone number, which depends on the student~ID.}%
+\caption{A table which stores data about students and their parents in violation of the \pgls{3NF}, because the parent name depends on the parent phone number, which transitively depends on the student~ID.}%
 \label{fig:studentViolation3nf}%
 \end{figure}%
 %
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/3nf/student/violation/generated_sql 01_violation_database_2001.sql}%
+\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/3nf/student/violation/generated_sql 01_violation_database_2002.sql}%
 %
-\gitSQL{\databasesCodeRepo}{normalization/3nf/student/violation/generated_sql/03_public_student_table_5071.sql}{3nf:student:violation:03_public_student_table_5071}{The generated \sql\ code for creating the table \sqlil{student} that violates the \pgls{3NF} based on \cref{fig:studentViolation3nf}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/3nf/student/violation/generated_sql 03_public_student_table_5071.sql violation}%
+\gitSQL{\databasesCodeRepo}{normalization/3nf/student/violation/generated_sql/03_public_student_table_5103.sql}{3nf:student:violation:03_public_student_table_5103}{The generated \sql\ code for creating the table \sqlil{student} that violates the \pgls{3NF} based on \cref{fig:studentViolation3nf}.}%
+\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/3nf/student/violation/generated_sql 03_public_student_table_5103.sql violation}%
 %
 \gitSQL{\databasesCodeRepo}{normalization/3nf/student/violation/insert.sql}{3nf:student:violation:insert}{%
 Inserting some data into the table~\sqlil{student} in violation of the \pgls{3NF}.}%
@@ -28,23 +28,24 @@ To change it, we need to touch three records, which is a typical update anomaly.
 In \cref{fig:studentViolation3nf}, we show a part of logical model which illustrates a \db\ table for storing information about students and their parents.
 The table has five columns.
 In the first column, we store the student~ID, which is the primary key.
-In the second column we store the national Chinese~ID number~(中国公民身份号码).
-This is not a key column, since the same person may enroll into more than one programme, maybe first do a BSc and then go for a Master's degree.
-The column with the student name is also not a key and not necessarily unique.
+The second column is the student name.
+It is not a key and not necessarily unique.
 For each student, we also store the name of one parent and their mobile phone number as a contact for emergencies.
 
 This table is in the \pgls{1NF}, as there are neither compound attributes nor repeated groups.
 It is also in the \pgls{2NF}, because there is no compound key and, hence, it is not possible that an attribute could depend on a part of such a key only.
 However, this table violates the \pgls{3NF}.
-The attribute \sqlil{parent_name} is functionally dependent on the attribute \sqlil{parent_mobile}.
-We can write~\funcDepb{\sqlil{parent_mobile}}{\sqlil{parent_name}}.
+The attribute \sqlil{parent_name} is functionally dependent on the attribute \sqlil{parent_mobile}, which we write as~\funcDepb{\sqlil{parent_mobile}}{\sqlil{parent_name}}.
 A mobile phone number is associated with a single person, hence there can only be one name for a given mobile phone number.
-Both the parent mobile phone number and the parent name also depend on the primary key.
-The transitive relationship \funcDepb{\sqlil{student_id}}{\funcDepb{\sqlil{parent_mobile}}{\sqlil{parent_name}}} exists.
-And it violates the \pgls{3NF}.
+The parent mobile phone number depends on the primary key~\sqlil{student_id}, i.e., \funcDepb{\sqlil{student_id}}{\sqlil{parent_mobile}}.
+The chain \funcDepb{\sqlil{student_id}}{\funcDepb{\sqlil{parent_mobile}}{\sqlil{parent_name}}} exists.
+It obviously does not hold that \funcDepb{\sqlil{parent_mobile}}{\sqlil{student_id}}.
+Therefore, \cref{def:transitiveDependency} is fulfilled.
+The relationship \funcDepb{\sqlil{student_id}}{\sqlil{parent_name}} is transitive.
+And since it occurs in the table~\sqlil{student}, it violates the \pgls{3NF}.
 
 Let us explore what consequences this has.
-We first create the table by executing the script given in \cref{lst:3nf:student:violation:03_public_student_table_5071}.
+We first create the table by executing the script given in \cref{lst:3nf:student:violation:03_public_student_table_5103}.
 Then we insert four student records into the \db\ using the script given in \cref{lst:3nf:student:violation:insert}.
 There are four students, Mr.~Bibbo, Mr.~Bebbo, Mr.~Bibboto, and Ms.~Bibboba.
 Their IDs are not important.
