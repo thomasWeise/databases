@@ -6,6 +6,20 @@
 We here provide all the resources of this course.
 
 The goal of the course and book is to teach undergraduate and graduate students the topic of databases.
+Our focus is a practice-oriented approach to the topic.
+This means that each concept that we introduce or discuss is always accompanied by a rich set of examples.
+In the course we will use many tools, ranging from
+
+- the [PostgreSQL](https://www.postgresql.org) database management system, over
+- [yED](https://yed.yworks.com), a graph editor that can be used for conceptual modeling,
+- [LibreOffice Base](https://www.libreoffice.org), which can be used as convenient front end for creating forms and reports for data in a database,
+- [Python](https://thomasweise.github.io/programmingWithPython), a programming language which offers the [Psycopg](https://www.psycopg.org) module to connect to PostgreSQL, to the
+- [pgModeler](https://pgmodeler.io), a tool with which we can conveniently design logical PostgreSQL database schemas.
+
+After completing the course, you should be able to productively work with databases, at least at a beginner level.
+You should be able to realize simple database-based applications.
+And you should be able to navigate the huge ecosystem of different database management systems, tools, and paradigms in this field in order to pick the right tool for the right problem.
+
 This is work in progress, as I just began writing this book.
 
 ## 2. Resources
@@ -13,6 +27,11 @@ The website with up-to-date information about the course is <https://thomasweise
 
 ### 2.1. The Book
 The book itself can be downloaded as pdf at <https://thomasweise.github.io/databases/databases.pdf>.
+
+### 2.2. Die Slides in Deutsch  &mdash; The Slides in German Language
+The slides in German language can be found at <https://thomasweise.github.io/databasesSlidesDE> and are listed here:
+
+1. [Einleitung](https://thomasweise.github.io/databasesSlidesDE/01_einleitung.pdf)
 
 ### 2.2. The Examples
 This is a practice-oriented course on databases.
@@ -40,7 +59,7 @@ Your feedback would help us to improve the book.
 
 This book is released under the Attribution-NonCommercial-ShareAlike 4.0 International license (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), see [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/) for a summary.
 
-We statically include the [pdfsizeopt](https://github.com/pts/pdfsizeopt) tool in the [GitHub Repository](https://github.com/thomasWeise/databases) of our book and use it during the book compiling and building process to compress the book pdf file.
+We statically include the [pdfsizeopt](https://github.com/pts/pdfsizeopt) tool in the build process of our book  via the [bookbase repository](https://github.com/thomasWeise/bookbase) and use it during the book compiling and building process to compress the book pdf file.
 This tool is excluded from the license mentioned above.
 It is under the GNU GENERAL PUBLIC LICENSE Version 2, June 1991 and the copyright belongs to its authors.
 
