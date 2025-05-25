@@ -1,0 +1,20 @@
+course:
+  titleEN: Databases
+  titleCN: 数据库原理与应用
+  year: '2025'
+  teacher:
+    name: Weise
+  students:
+    student:
+      - studentID: '1234567890'
+        name: Bibbo
+        score: '85'
+      - studentID: '1234567891'
+        name: Bebbo
+        score: '73'
+      - studentID: '1234567892'
+        name: Bibboto
+        score: '90'
+      - studentID: '1234567894'
+        name: Bibboba
+        score: '97'

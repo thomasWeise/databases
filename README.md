@@ -13,7 +13,7 @@ In the course we will use many tools, ranging from
 - the [PostgreSQL](https://www.postgresql.org) database management system, over
 - [yED](https://yed.yworks.com), a graph editor that can be used for conceptual modeling,
 - [LibreOffice Base](https://www.libreoffice.org), which can be used as convenient front end for creating forms and reports for data in a database,
-- [Python](https://thomasweise.github.io/programmingWithPython), a programming language which offers the [Psycopg](https://www.psycopg.org) module to connect to PostgreSQL, to the
+- [Python](https://thomasweise.github.io/programmingWithPython), a programming language which can connect to PostgreSQL by using the [Psycopg](https://www.psycopg.org) module, to the
 - [pgModeler](https://pgmodeler.io), a tool with which we can conveniently design logical PostgreSQL database schemas.
 
 After completing the course, you should be able to productively work with databases, at least at a beginner level.
