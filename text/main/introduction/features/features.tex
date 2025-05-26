@@ -4,46 +4,75 @@
 So far, we developed some rough ideas about what a \pgls{db} is.
 We developed these ideas by contrasting the requirements of organizations with the limitations of simple document files.
 To get maybe some further ideas of what we want to accomplish with \glspl{db}, let us reiterate what requirements organizations face when dealing with data.
-Let us work through this list of desired features by imagining that we are building a database for a bank.
-We can imagine that the database is supposed to store customers, accounts, transactions, and bank employees.
+Let us work through this list of desired features by imagining that we are building a \pgls{db} for a bank.
+We can imagine that the \pgls{db} is supposed to store customers, accounts, transactions, and bank employees.
 Without getting too specific, we can explore our expectations based on this idea.
 Our goal will be to compile some sort of wishlist of features.%
 %
 \hsection{Data Modelling and Representation}%
-First of all, the \pgls{dbms} must give us the tools into our hands to create and implement a model for our data.
-Matter of fact, we can distinguish several facets of modeling and representing data.
-We here focus on the \emph{relational} data model, which is discussed in \cref{sec:relationalModel}.
-This data model is based on tables and the relations between them.
-There also are \pglspl{db} using other models, such as graphs, hierarchies, objects, and such and such~(see \cref{sec:history,sec:dbModelSelection}), but we focus on the relational approach.
+The most important capability that a \pgls{dbms} needs to offer us is to create basic models, also called schemas, of our data.
+These models can be understood as analog to the datastructures or classes that imperative programming languages offer to us.
+They define what can be stored and how it can be stored.
+In other words, the \pgls{dbms} must give us the tools into our hands to define and implement the structure of our data.
 
-Based on the data model, we must be able to define a logical schema for our \pgls{db}.
-For example, we want to specify which kind of tables exist, e.g., a table with customer information, a table with bank employee information, a table for the accounts that exist, and a table with all the transactions.
+We here focus on the \emph{relational} data model, whose basic primitives are tables, columns, the datatypes of columns, constraints, and relationships between different tables.
+The so-called \emph{logical schema} for our \pgls{db}~(see \cref{sec:logicalModelDesign}) defines which tables exist, what the names and datatypes and constraints of their columns are, and how the different tables are related.
+In our bank example, we would maybe want to specify that there should be a table with customer information, a table with bank employee information, a table for the accounts that exist, and a table with all the transactions.
 We can define which information we want to store about customers, say their name, ID number, mobile phone number, etc.
 This includes some basic validity constraints, e.g., names cannot be empty, ID~numbers must follow the standard Chinese~ID number~(中国公民身份号码) scheme~\cite{GB116431999CIN}, and so on.
 We must also be able to specify the relationships between these tables.
 For example, each bank account must be associated with exactly one customer, but one customer may have multiple accounts.
 Ideally, this can be done using a simple programming language.
 
-This logical model can be separate from the physical model of the \pgls{db}, namely how the data is actually organized on the disk.
-The \pglspl{dbms} should allow the \pgls{db} designers to, for instance, define indexes for tables to speed up the access.
+But such a logical schema is only one of the aspects of data modelling that a \pgls{dbms} must offer us.
+There actually exist several different levels of abstractions which are involved in this process.
+For example, it should be possible to separate this logical model from the way the data is actually organized on the disk, i.e., the \emph{physical schema}.
+The \pglspl{dbms} should \emph{allow} the \pgls{db} designers to, for instance, define indexes for tables to speed up the access.
+But it should \emph{not require} the designer to deal with or to necessarily understand the layout of the actual datastructures or the files on the disk.
 
-Nevertheless, the concept of \emph{Data Independence} is important:
-There are different levels of abstraction.
-The application programs that access the data based on the logical schema should be independent from the physical organization of the data.
-It should not really matter to them whether records are stored in a hash, a B\nobreakdashes-tree, or as simple sequences in a file.
+The fact that the logical schema and a physical schema and data layout are different things is interesting.
+When we think about this, we naturally arrive at the concept of \emph{data independence}.
+When we design a \pgls{db}-based application, there will be different levels of abstraction which should be as independent from each other as possible.
+The application programs that access the data based on the logical schema should be independent from the physical organization of the data on the disk.
+It should not really matter to them whether records are stored or indexed in a hash, a B\nobreakdashes-tree, or as simple sequences in a file.
 If we create an easy-to-use application as interface for our banking \pgls{db}, this interface would interact with the logical view of the data via the \pgls{dbms}.
 How the data is actually stored does not matter to our application.
 This is called \emph{physical data independence}.
 
-Let's say we create two applications:
+Rarely there exists only one single program that accesses a large \db.
+In our banking example, let's say that we create two applications:
 We create an application for the bank employees to manage accounts and customers.
 We also create a web application through which the customers can log into their bank accounts and make transfers.
-The first application may offer much more information to the bank employees.
-Customers have do not have access to the accounts of other customers, for example.
-The web application for customers can also not access information about the bank employee who is managing their accounts.
-Therefore, it should work independently from such information.
+Both applications can have a different view on the data.
+The first application may offer much more information and functionality only accessible to the bank employees.
+The view on the data available second application may naturally be much more restrictive.
+It should work independently from the information outside of this view.
 If the structure of these information~(that it cannot see) is changed later, then this should have no impact on that program.
 This is called \emph{logical data independence}.
+
+\begin{figure}%
+\centering%
+\includegraphics[width=0.85\linewidth]{\currentDir/threeSchemas}%
+\caption{The Three-Schema Architecture of \glsreset{db}\pglspl{db}~\cite{AXSSGDMS1978FRODMS,TK1978TAXSDFROTSGODMS,BFJKMRGRT1985RMFDSDAFTGDOTAXSDSSG,SS2005EIDDDFDB:I}.}%
+\label{fig:threeSchemas}%
+\end{figure}
+
+This means that a \pglspl{dbms} should support designing \pglspl{db} in the so-called three-schema architecture~\cite{AXSSGDMS1978FRODMS,TK1978TAXSDFROTSGODMS,BFJKMRGRT1985RMFDSDAFTGDOTAXSDSSG,SS2005EIDDDFDB:I} illustrated in \cref{fig:threeSchemas}:
+It should be possible to provide different views on the data for different users and applications.
+At the bottom layer of the \pgls{db} is the physical model managing how data is stored.
+On top of that sits the conceptual~(or logical) layer, where the structure of the tables and the relationships between them are defined.
+On the highest level, different views on the data can be provided for different applications.
+
+In comparison, \microsoftExcel\ and \libreofficeCalc\ also offer us the ability to work with tables.
+However, we cannot \emph{a priori} define a model or structure of the data that we want to store in tables.
+While we can create some relations between cells of different tables, enforcing relationships on new rows that we are going to add is not possible.
+While we can format cells and columns to emulate certain datatypes, we cannot strictly prevent that the user enters invalid data.
+So these applications do not offer us any modeling capability on the logical level.
+We have no influence on the way the data is stored and we cannot improve the performance by telling the applications to index the data in any reasonable way.
+So there are no physical modeling capabilities either.
+Finally, any person who would use a \microsoftExcel\ or \libreofficeCalc\ table as backend for different applications that have different views on data shall be stripped of their degree and credentials as a software developer.
+Spreadsheets therefore obviously do not have any schema design capabilities at all and most certainly do not support anything resembling a three-schema architecture.
+A \pgls{dbms} therefore needs to offer us data modeling tools that are very far beyond spreadsheets.%
 \endhsection%
 %
 \hsection{Data Availability} %
@@ -127,23 +156,11 @@ Thinking this through even further, a bank employee may be assigned as manager t
 The employees should only be able to see the information in these accounts.
 All of this can be done by assigning roles to users and processes and access rights to roles.
 
-\begin{figure}%
-\centering%
-\includegraphics[width=0.85\linewidth]{\currentDir/threeSchemas}%
-\caption{The Three Schema Architecture of databases~\cite{AXSSGDMS1978FRODMS,TK1978TAXSDFROTSGODMS,BFJKMRGRT1985RMFDSDAFTGDOTAXSDSSG,SS2005EIDDDFDB:I}.}%
-\label{fig:threeSchemas}%
-\end{figure}
+The aforementioned three-schema architecture goes hand-in-hand with security measures.
+At the highest level, the applications, users can only see the data that they need to be able to see and nothing more.
+This is ensured by the different views that are provided for them.
 
-Another aspect of this is the so-called Three-Schema Architecture~\cite{AXSSGDMS1978FRODMS,TK1978TAXSDFROTSGODMS,BFJKMRGRT1985RMFDSDAFTGDOTAXSDSSG,SS2005EIDDDFDB:I} illustrated in \cref{fig:threeSchemas}:
-It should be possible to provide different views on the data for different users and applications.
-As already mentioned before, the application for bank employees should be able to \inQuotes{see} other data than an application for customers.
-In other words, at the bottom layer of the \pgls{db} is the physical model managing how data is stored.
-On top of that sits the conceptual~(or logical) layer, where the structure of the tables and the relationships between them are defined.
-On the highest level, different views on the data can be provided for different applications.
-This way, users can only see the data that they need to be able to see and nothing more.
-
-This goes hand-in-hand with security measures.
-Examples could be that all access to the \pgls{db} is password protected.
+Additionally, all access to the \pgls{db} should be password protected.
 Communication with the \pgls{db} happens over encrypted connections.
 
 A \pgls{dbms} should also support accounting and an audit trail.

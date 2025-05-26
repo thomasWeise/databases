@@ -56,7 +56,7 @@ Once we found the right document, we arrive at the end of what traditional techn
 Nowadays, maybe we can generate a summary using an \pgls{AI}, but in the end, we still have unstructured information to digest.
 
 Then, there is data that is tightly structured and self-contained.
-For data that can be stored in a single table, simple text formats like \glsreset{CSV}\pgls{CSV}~\cite{RFC4180} or \microsoftExcel~\cite{B2023DMWME,G2024ECRFMME} and \libreofficeCalc~\cite{S2022L7PFEUU,DF2024LTDF} tables are common.
+For data that can be stored in a single table, there exist simple text formats like \glsreset{CSV}\pgls{CSV}~\cite{RFC4180} and applications like \microsoftExcel~\cite{B2023DMWME,G2024ECRFMME} and \libreofficeCalc~\cite{S2022L7PFEUU,DF2024LTDF} tables are common.
 One example is given in \cref{fig:libreOfficeCalc}.
 If the data is more complex, maybe hierarchically structured, formats like \glsreset{XML}\pgls{XML}~\cite{BPSMM2008EMLX1FE,K2019ITXJY,CH2013XFCAMLTMC}, \glsreset{JSON}\pgls{JSON}~\cite{E2017SE4TJDIS,RFC8259}, or \glsreset{YAML}\pgls{YAML}~\cite{DNMAASBE2021YAMLYV1,K2019ITXJY,CGTYB2022YFFDCAIE} may be more suitable.
 Examples of these formats are given in \cref{fig:treeDataStructures}.
@@ -71,12 +71,19 @@ However, they are mainly suitable for data that, well, can be stored in single f
 They are not suitable for manipulating huge datasets.
 They are also not suitable for modelling more complex relationships between different datasets.
 
-For example, if we want to represent all the personnel, schools, students, and assets of our university, we could try to do that in a single \pgls{XML}~document.
+\begin{figure}%
+\centering%
+\includegraphics[width=0.8\linewidth]{\currentDir/relationalData}%
+\caption{A diagram illustrating an example of the structure of data with more complex relations.}%
+\label{fig:relationalData}%
+\end{figure}%
+
+For example, if we want to represent the personnel, schools, students, and assets of our university, as sketched in \cref{fig:relationalData}, we could try to do that in a single \pgls{XML}~document.
 This document would need to store which teacher belongs to which school, which student belongs to which school, which student is supervised by which teacher, and so on.
 This \emph{can} be done.
 Maybe a single person could write such a document.
-But as soon as multiple people need to work on such a document together, everything will collapse.
-Also, the document will be \emph{huge}.
+The document will be \emph{huge}.
 Finding something or changing something will be incredibly tedious.
 If an error occurs, maybe a misplaced character, maybe an unescaped quotation mark, then the whole document will no longer be valid.
+As soon as multiple people need to work on such a document together, everything will collapse.
 Clearly, another way to work with \emph{relational} data is needed.

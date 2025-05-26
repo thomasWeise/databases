@@ -1,10 +1,17 @@
 \hsection{}%
 \hsection{Introduction}%
 %
+Data is ubiquitously present.
+Names, addresses, bank accounts and transactions,  online purchases, train tickets, mobile phone numbers, \pgls{wechat} chats, websites, books, manuals, program source code, map data, highschool grades, health check results and medical histories, tax data, employment histories, game scores {\dots} everything is data.
+Data is maybe one of the most important resources of our digital age.
+And data needs to be stored, sorted, retrieved, backed-up, aggregated, summarized, updated, and managed.
+
 \hinput{typesOfData}{typesOfData}
 
 Welcome to the course book \citetitle{databases}.
 Here, we learn about exactly such a way.
+A way to deal with structured and relational data.
+A way in which multiple users can concurrently work on a large base of data while preserving data integrity.
 Before we begin to do that, let us clarify some simple definitions:%
 %
 \begin{definition}[Database]%
@@ -16,14 +23,14 @@ There are \pglspl{db} for documents, \pglspl{db} for complex objects, and \pglsp
 We, however, will mainly focus on \pglspl{db} that store data in tables which may be coupled by relationships:%
 %
 \begin{definition}[Relational Database]%
-A \pgls{rdb} is a \pgls{db} that organizes data into rows~(tuples, records) and columns~(attributes), which collectively form tables~(relations) where the data points are related to each other~\cite{I2021WIARDB,C1970ARMODFLSDB,SC1975OTPOARADI,T2018ISARD,H2016RDDAI,HM2024IMARD}.
+A \pgls{rdb} is a \pgls{db} that organizes data into rows~(tuples, records) and columns~(attributes), which collectively form tables~(relations) where the data points are related to each other~\cite{I2021WIARDB,C1970ARMODFLSDB,SC1975OTPOARADI,T2018ISARD,H2016RDDAI,HM2024IMARD}.%
 \end{definition}%
 %
 \begin{definition}[Record]%
 A record is a group of related data items treated as a unit by an application program.%
 \end{definition}%
 %
-For example, a record with student information could store the student's name, date of birth, ID number, and mobile phone number.
+For example, a record with student information could store the student's name, \pgls{dateOfBirth}, ID~number, and mobile phone number.
 Records are the basic units of data stored in \pglspl{rdb}.
 A second key element of \pglspl{rdb} are the relationships between records.
 These relationships guard the correctness and integrity of the data.
@@ -41,14 +48,14 @@ As you can see, figuring out how the records can be related alone can already be
 So now we have arrived at the kind of data that we want to talk about.
 We talk about data that comprises entities of different types, say, student records, teacher records, course records, maybe even teaching room records, schedule elements, grade records, and so on.
 Between such records, relations exist that must not be violated.
-There could be arbitrarily many such records.
+There could be arbitrarily many such records, record types, and relationships.
 Indeed, \pglspl{db} usually grow over time.
 And there often are many people~(or programs) who work with the \pglspl{db}.
 It is easy to see that we will need some kind of software to manage all of that.%
 %
 \begin{definition}[Database Management System]%
 The \acrfull{dbms} is a software system for manipulating \pglspl{db}. %
-It offers the ability to create, modify, and delete \pglspl{db}, tables, and records, to add rows to tables, and so on.
+It offers the ability to create, save, modify, and delete \pglspl{db}, tables, and records, to add rows to tables, and so on.
 It also manages and controls the access rights to the \pgls{db}.%
 \end{definition}%
 %
@@ -64,8 +71,10 @@ If you have learned \python\ programming~\cite{programmingWithPython}, then you 
 {\dots}but these data structures exist in the RAM of a computer, and \pglspl{dbms} need to work with files on the disk.
 Therefore, the datastructures they implement become even more complicated.
 
-Second, \pglspl{dbms} also allow us to specify the possible relationships between data.
-And they need enforce that the data never violates the relationships.
+Second, \pglspl{dbms} also allow us to specify constraints on single data elements as well as the possible relationships between data.
+Maybe we only permit \pglspl{dateOfBirth} between January~1st, 1900 and December~31, 2020, for all students and university employees.
+Maybe we strictly want to enforce that each university employee record is assigned to one, exactly one, and only one school record.
+And they need enforce that the data never violates the constraints and relationships.
 
 Third, they also need to offer a user management and access rights management.
 In a \pglspl{db} for the \acrfull{HR} in a big organization, for example, not every \pgls{HR} staff member is allowed to access~(and much less to modify) all the data.
@@ -94,6 +103,7 @@ Banks manage accounts using \pglspl{rdb}.
 The government manages tax payments using \pglspl{rdb}.
 \Pglspl{rdb} store the information about the inventory and cashflow of online shops.
 Basically every organization with a certain size uses multiple \pglspl{rdb}.%
+And therefore, many have~\pglspl{dba}.%
 %
 \hinput{features}{features.tex}%
 \hinput{history}{history.tex}%

@@ -252,9 +252,9 @@ We decide to cut our losses.
 How about this:
 We create an entity type to represent \emph{ID Type}s.
 An entity of this type will store the name of the ID type, which is the primary key of this entity type.
-This could be \inQuotes{Mobile Phone~(China),} \inQuotes{Mobile Phone~(Intl),} \inQuotes{ID~(中华人民共和国居民身份证),} \inQuotes{Passport~(护照),} \inQuotes{Work Permit~(中华人民共和国外国人工作许可证),} \inQuotes{X1-Visa,} \inQuotes{X2-Visa,} \inQuotes{Z-Visa,} \inQuotes{Email Address,} \inQuotes{WeChat~(微信) User Name,} whatever.
+This could be \inQuotes{Mobile Phone~(China),} \inQuotes{Mobile Phone~(Intl),} \inQuotes{ID~(中华人民共和国居民身份证),} \inQuotes{Passport~(护照),} \inQuotes{Work Permit~(中华人民共和国外国人工作许可证),} \inQuotes{X1-Visa,} \inQuotes{X2-Visa,} \inQuotes{Z-Visa,} \inQuotes{Email Address,} \inQuotes{\pgls{wechat} User Name,} whatever.
 Notice how this makes our system future-prove:
-While the importance of Emails is currently fading and WeChat has become the main communication device, maybe something new will emerge later.
+While the importance of Emails is currently fading and \pgls{wechat} has become the main communication device, maybe something new will emerge later.
 Or maybe there will be new visa types later on.
 We could then just add a new ID type.
 We could also extend this entity type with attributes, such as \emph{is for communication}, \emph{is ID document}, etc., to add more context.

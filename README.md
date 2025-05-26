@@ -22,22 +22,29 @@ And you should be able to navigate the huge ecosystem of different database mana
 
 This is work in progress, as I just began writing this book.
 
+
 ## 2. Resources
 The website with up-to-date information about the course is <https://thomasweise.github.io/databases>.
+
 
 ### 2.1. The Book
 The book itself can be downloaded as pdf at <https://thomasweise.github.io/databases/databases.pdf>.
 
+
 ### 2.2. Die Slides in Deutsch  &mdash; The Slides in German Language
 The slides in German language can be found at <https://thomasweise.github.io/databasesSlidesDE> and are listed here:
 
-1. [Einleitung](https://thomasweise.github.io/databasesSlidesDE/01_einleitung.pdf)
+1. [Organisation](https://thomasweise.github.io/databasesSlidesDE/01_organisation.pdf)
+2. [Einleitung](https://thomasweise.github.io/databasesSlidesDE/02_einleitung.pdf)
+3. [Anforderungen](https://thomasweise.github.io/databasesSlidesDE/03_anforderungen.pdf)
+
 
 ### 2.3. The Examples
 This is a practice-oriented course on databases.
 Therefore, we also provide a set of examples.
 The examples that we provide are all "real" in the sense that they can actually be executed and their results are actually presented in the book.
 All of them are available in the online repository <https://github.com/thomasweise/databasesCode>.
+
 
 ### 2.4. LaTeX Sources, Graphics, Bibliography, etc.
 The book is written in LaTeX.
