@@ -36,7 +36,8 @@ The slides in German language can be found at <https://thomasweise.github.io/dat
 
 1. [Organisation](https://thomasweise.github.io/databasesSlidesDE/01_organisation.pdf)
 2. [Einleitung](https://thomasweise.github.io/databasesSlidesDE/02_einleitung.pdf)
-3. [Anforderungen](https://thomasweise.github.io/databasesSlidesDE/03_anforderungen.pdf)
+3. [Anforderungen an ein Datenbankmanagementsystem](https://thomasweise.github.io/databasesSlidesDE/03_anforderungen.pdf)
+4. [Geschichte](https://thomasweise.github.io/databasesSlidesDE/04_geschichte.pdf)
 
 
 ### 2.3. The Examples
@@ -53,8 +54,11 @@ You may use these files under the licensing terms provided below.
 
 
 ## 3. License
-All the course material is freely available.
-You can download its newest version from <https://thomasweise.github.io/databases>.
+All the course material that was created by me is freely available.
+The course material also includes some images and figures created by others, which are marked explicitly and licensed under their author's terms.
+With the exception of such material, this book is released under the Attribution-NonCommercial-ShareAlike 4.0 International license (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), see [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/) for a summary.
+
+You can download its newest version of the course material from <https://thomasweise.github.io/databases>.
 This version may change since this course and book both are work in progress.
 You can freely share this.
 You can also copy text or figures under the license given below, as long as you cite the book as the original source, e.g., by using the following BibTeX:
@@ -63,8 +67,6 @@ You can also copy text or figures under the license given below, as long as you 
 
 **If you have any comments or suggestions regarding the book, or if you spotted an error or typo, please feel free to submit an [issue here](https://github.com/thomasWeise/databases/issues).**
 Your feedback would help us to improve the book.
-
-This book is released under the Attribution-NonCommercial-ShareAlike 4.0 International license (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), see [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/) for a summary.
 
 We statically include the [pdfsizeopt](https://github.com/pts/pdfsizeopt) tool in the build process of our book  via the [bookbase repository](https://github.com/thomasWeise/bookbase) and use it during the book compiling and building process to compress the book pdf file.
 This tool is excluded from the license mentioned above.
