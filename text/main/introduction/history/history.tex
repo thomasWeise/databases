@@ -66,7 +66,7 @@ The collection and analysis of information never stopped from then onwards.
 \floatSep%
 %
 \subfloat[][An IBM 029 punched card. %
-Source:~\cite{T2018TI0CP}, licensed under \href{https://creativecommons.org/licenses/by-sa/4.0/}{CC~BY\nobreakdashes-SA~4.0}.%
+Source:~\cite{T2018TI0CP}, licensed under \href{https://creativecommons.org/licenses/by-sa/4.0}{CC~BY\nobreakdashes-SA~4.0}.%
 \label{fig:T2018TI0CP}]{%
 \parbox[t]{0.35\linewidth}{\centering\includegraphics[angle=90,height=0.999\linewidth]{\currentDir/ibm029punchedCard}}%
 }%
@@ -94,7 +94,7 @@ The way data can be retrieved depends on how the data is stored.
 Punch cards can be sorted, stacked, and otherwise cleverly be arranged to access information quickly.
 Tape-based storages requires us to sequentially spool through the tape to find the data we are looking for.
 Either way, efficient organization of data and media became more and more important.
-In \citeyear{BIF1958OARORGIALSEP}, the Electronic Recording Machine Accounting~(ERMA) Mark~1 was developed as automated system for organizing banking records~\cite{BIF1958OARORGIALSEP}.
+In 1958 the Electronic Recording Machine Accounting~(ERMA) Mark~1 was developed as automated system for organizing banking records~\cite{BIF1958OARORGIALSEP}.
 It had features of file system, although the term \inQuotes{files} was meant literally -- they organized paper-based documents, using a structure reminiscent of the aforementioned hierarchical, number-based Dewey categorization method.
 
 \begin{figure}%
@@ -127,13 +127,31 @@ Instead, the data on its disks could be accessed in any order~(hence the name \e
 \textcopyright~UKRI Science and Technology Facilities Council, available from \url{https://www.chilton-computing.org.uk}.}%
 \label{fig:M2025CC:FCSA1B1}%
 \end{figure}%
+%
+\begin{figure}%
+\centering%
+\includegraphics[width=0.3\linewidth]{\currentDir/multicsOperatorConsole}%
+\floatSep%
+\includegraphics[width=0.3\linewidth]{\currentDir/multicsFirstBoot}%
+\floatSep%
+\includegraphics[width=0.3\linewidth]{\currentDir/multicsLs}%
+%
+\caption{Some screenshots of the \pgls{terminal} of Multics~MR12.7 taken from~\cite{BWAOEOSH:M}, licensed under \href{https://creativecommons.org/licenses/by-sa/4.0}{CC~BY\nobreakdashes-SA~4.0}.}%
+\label{fig:BWAOEOSH:M}%
+\end{figure}%
 
 The first file systems for computers appeared in the 1960s.
 The Atlas system in the UK had offered a rudimentary file system functionality already in~\citeyear{KPH1961TAS}~\cite{KPH1961TAS,M2025CC:FCSA1B1}, as sketched in~\cref{fig:M2025CC:FCSA1B1}.
 The \pgls{OS} \emph{Compatible Time-Sharing System}~(CTSS)~\cite{CMDDCHOK1963TCTSSAPG} at the MIT had a flat filesystem only one or two years later~\cite{OD1963TCCSLABTCDE}.
-The hierarchical file system for the \emph{Multics}~\pgls{OS}~\cite{CV1965IAOOTMS}, published in \citeyear{DN1965AGPFSFSS}, already had surprisingly many advanced features that we know from today's file systems: fine-grained access control for data privacy, backup ability, links, and IO~queue management.
+The hierarchical file system for the \emph{Multiplexed Information and Computing Service}~(Multics)~\pgls{OS}~\cite{CV1965IAOOTMS,BWAOEOSH:M}, published in \citeyear{DN1965AGPFSFSS}, already had surprisingly many advanced features that we know from today's file systems: fine-grained access control for data privacy, backup ability, links, and IO~queue management.
+Inheriting from CTSS, it itself became the ancestor of Unix which, in turn, inspired \linux.
+The \bashil{ls}~command shown in \cref{fig:BWAOEOSH:M} also was a feature of Multics (adapted from CTSS) and has survived all those years~\cite{F1999ABHOTLC}.
 File systems are very good for organizing documents and heterogeneous data.
 They are not very suitable to main the sort of relational data and to achieve the features that would like \pglspl{db} to have.
+
+The need for systems that supported modern \db\ features became aparent.
+At the same time, it was not really clear how that could be done.
+Different groups began developing concepts, ideas, and prototypes.
 
 The first version of the Integrated Data Store~(IDS) was developed by \citeauthor{B2009TOOTIDSITFDAD} in 1961/62 at General Electric~\cite{B2009TOOTIDSITFDAD,B1965SFRAP}.
 IDS offered the first direct access \pgls{db}, holding data in virtual memory.
@@ -153,8 +171,8 @@ Like IDS, it was not a \pgls{dbms} for \emph{\pglspl{rdb}}.
 Instead, it offered hierarchically structured records.
 This system, too, had a set of disadvantages~\cite{KC2024DS:ITD}:
 If your data is not structured hierarchically, some records may need to be duplicated.
-For example, if we have a database that assigns students to courses, then a student would appear in each of the records of the courses that she attends.
-The programming language is also relatively low-level and, for example, the search strategy has to be implemented.
+For example, if we have a \db\ that assigns students to courses, then a student would appear in each of the records of the courses that she attends.
+The programming language offered by the IMS for the data access is also relatively low-level and, for example, the search strategy has to be implemented.
 Finally, changes to the logical schema will require us to perform cascading changes in the code accessing them.
 
 Both IDS and IMS offered a strikingly new concept:
@@ -169,7 +187,7 @@ Just think about it:
 All data is eventually mapped/stored to sequential files on a hard disk or other storage medium.
 You must be able to add new records and delete old records.
 You must also be able to find them.
-This alone is not easy to implement, but all of that has to be efficient, so (today) one would probably like to use data structures like hashes, tress, and sorted lists {\dots} all of which are actually located in sequential files.
+This alone is not easy to implement, but all of that has to be efficient, so (today) one would probably like to use datastructures like hashes, tress, and sorted lists {\dots} all of which are actually located in sequential files.
 Before IDS and IMS, this had to be part of your application's code.
 Actually, it had to be part of the code of \emph{all} applications that accessed the data, if multiple such applications exist~\cite{BBP2007TBOI}.
 Now this is part of IDS and IMS, and the user can ignore this complexity and just use a simple programming language where she can define which record to load, change, delete, or add.%
@@ -179,6 +197,7 @@ Now this is part of IDS and IMS, and the user can ignore this complexity and jus
 In \citeyear{C1970ARMODFLSDB}, the seminal paper \emph{\citetitle{C1970ARMODFLSDB}} by \citeauthor{C1970ARMODFLSDB} appeared, starting with the above quote.
 He noticed the shortcomings of the IDS network model, namely that the programmers accessing the data still need a lot of information about how the data is actually represented and organized internally.
 Even \citeauthor{B2009TOOTIDSITFDAD} himself mentioned that issues with IDS arose when users did not consider how data is internally sorted~\cite{B2009TOOTIDSITFDAD}.
+
 \Citeauthor{C1970ARMODFLSDB} wanted to protect programmers against such errors.
 He models data as a relational view by using tables, that he calls \emph{relations}.
 Each column has a type that defines its permitted values.
@@ -215,7 +234,7 @@ In 1969, the first four nodes of the network became operational and in 1972, ARP
 
 \Citeauthor{CHIRW1974ABECFDBM} proposed putting a \pgls{dbms} on a dedicated back-end computer in~\citeyear{CHIRW1974ABECFDBM}~\cite{CHIRW1974ABECFDBM}.
 Applications and users would access the \pgls{dbms} from another computer via a communication link.
-The first Ethernet was developed at the Xerox Palo Alto Research Center~(PARC) in 1976 by Metcalfe and Boggs~\cite{CHM1996CLN}, TCP/IP became deployed 1983, and in the 1990s, the internet took off~\cite{KR2020CNATDA}
+The first Ethernet was developed at the Xerox Palo Alto Research Center~(PARC) in 1976 by Metcalfe and Boggs~\cite{CHM1996CLN}, TCP/IP became deployed 1983, and in the 1990s, the internet took off~\cite{KR2020CNATDA}.
 The term \pglspl{client} was coined in \citeyear{IMS1978SDFFIADFS} by~\citeauthor{IMS1978SDFFIADFS}~\cite{IMS1978SDFFIADFS}.
 From now on, the notation of the \pgls{clientServerArchitecture}~\cite{RCKS2019PNP,B1996CSA,OHE1999CSSG,RF2020FOSAAEA,EOEBEB:CSA}, in which most \pglspl{dbms} are implemented today, was formalized.
 From then on, the development was unstoppable.
@@ -261,7 +280,7 @@ The answer is: %
 both Chinese characters and the ER~model are trying to model the world -- trying to use graphics to represent the entities in the real world. Therefore, there should be some similarities in their constructs.%
 }%
 %
-Oracle \pglspl{db}, the first commercial \pgls{SQL}-based product, was released in 1979~\cite{C20245YOQ} by the company Software Development Laboratories~(SDL), which later renamed itself to Oracle.
+The Oracle \pglspl{db}, the first commercial \pgls{SQL}-based product, was released in 1979~\cite{C20245YOQ} by the company Software Development Laboratories~(SDL), which later renamed itself to Oracle.
 It was an immediate success, because it was portable and could run cheaper hardware.
 IBM released its \pgls{SQL} \pgls{dbms} DB2 in 1983~\cite{C20245YOQ,HS2013THAGOID}.
 \pgls{SQL} became a US~ANSI standard in \citeyear{ANSIX3135} and an international ISO~standard in~\citeyear{ISO90751987}~\cite{ANSIX3135,ISO90751987}.
