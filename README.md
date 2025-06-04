@@ -38,6 +38,7 @@ The slides in German language can be found at <https://thomasweise.github.io/dat
 2. [Einleitung](https://thomasweise.github.io/databasesSlidesDE/02_einleitung.pdf)
 3. [Anforderungen an ein Datenbankmanagementsystem](https://thomasweise.github.io/databasesSlidesDE/03_anforderungen.pdf)
 4. [Geschichte](https://thomasweise.github.io/databasesSlidesDE/04_geschichte.pdf)
+5. [Software und Literatur](https://thomasweise.github.io/databasesSlidesDE/05_software_und_literatur.pdf)
 
 
 ### 2.3. The Examples
