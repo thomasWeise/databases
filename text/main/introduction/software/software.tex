@@ -5,16 +5,32 @@
 \begin{figure}%
 \centering%
 \includegraphics[width=0.99\linewidth]{\currentDir/soDevSurv}%
-\caption{A chart of a subset of the \pglspl{dbms} with which developers have worked, according to the StackOverflow Developer Surveys from 2017 to 2024~\cite{SE:SO:2024DS}. %
+\caption{A chart of a selection of the \pglspl{dbms} with which developers have worked, according to the StackOverflow Developer Surveys from 2017 to 2024~\cite{SE:SO:2024DS}. %
 Not all of them are relational \pglspl{dbms}.}%
 \label{fig:soDevSurv}%
 \end{figure}%
 %
 A wide range of \pglspl{dbms} for \pglspl{rdb} exist.
-The \begin{noglslink}\citetitle{RS2025DERORD}\end{noglslink}~\cite{RS2025DERORD} lists 166 products and in the \citetitle{SE:SO:2024DS}~\cite{SE:SO:2024DS}, programmers gave feedback on 25~\pglspl{dbms}.
+The \begin{noglslink}\citetitle{RS2025DERORD}\end{noglslink}~\cite{RS2025DERORD} lists 166 products.
 The \citetitle{SE:SO:2024DS} asked the opinions of developers on 35 systems~\cite{SE:SO:2024DS}.
-A subset of the mentioned systems in these yearly surveys since 2017 is illustrated in \cref{fig:soDevSurv}.
-A few of these popular \pglspl{dbms} were already mentioned in our history section.%
+A selection of the mentioned systems in these yearly surveys since 2017 is illustrated in \cref{fig:soDevSurv}.
+A few of these popular \pglspl{dbms} were already mentioned in our history section.
+We can distinguish two types of \db\ products:%
+\begin{itemize}%
+%
+\item \glsreset{OSS}\Pgls{OSS} is software whose source code is made availabe for free, usually through the internet.
+Such software is often maintained by groups of volunteers, sometimes with financial support of enterprises or governmental grants.
+The software does not cost money.
+Open source projects are often hosted on collaborative platforms like \github\ and manage the evolution of their code via \pgls{VCS} like \git.
+According to \citeauthor{HNZ2024TVOOSS} the value of \pgls{OSS} exceeds eight trillion dollars in~\citeyear{HNZ2024TVOOSS}~\cite{HNZ2024TVOOSS}.
+%
+\item Proprietary / commercial software is usually closed-source and developed by an enterprise which sells it as product.
+These products are either sold on a per-version basis or via maintenance contracts.
+The enterprises often offer good service and advanced support, however it is usually not easy to change vendors and future pricing developments are hard to predict.%
+%
+\end{itemize}%
+%
+We here will discuss a small selection of products from either family, which, however, must remain brief and incomplete.%
 %
 \hsection{Open Source Relational Database Management Systems}%%
 %
@@ -43,32 +59,36 @@ The \sqlite\ logo.%
 The \libreoffice\ logo.%
 ]{\includegraphics[height=1.35cm]{\currentDir/libreofficeLogo}}%
 %
-\caption{The logos of several important open source softwares / \pglspl{dbms}.}%
+\caption{The logos of several important \pglspl{OSS} / \pglspl{dbms}.}%
 \label{fig:ossDBlogos}%
 %
 \end{figure}%
 %
 A very big chunk of the \pglspl{rdb} in many scenarios is managed by open source \pglspl{dbms}.
-These systems are available for free and their source code is readily available in the internet.
+These systems do not cost money and their source code is readily available in the internet.
 Large communities exist around them that can offer all kinds of advise.
 This makes them very attractive for developers and users.
-Several of these systems are around since the 1990s, so they are mature and tested products~\cite{C20245YOQ}.
+Several of these systems are around since the 1990s.
+In the early 2000s, they took off and began being used in more and more applications and systems~\cite{P2004OSDMITM}.
+By now, they are mature and well-tested products~\cite{C20245YOQ}.
 \Cref{fig:ossDBlogos} shows some of their logos.
 
 \mysql\ is a \pgls{dbms} for \pglspl {rdb}~\cite{WAM2002MRMDFTS,TA2024DDAMWPAM,BT2021HPM,RGS2021BTOTONAMDFPC,D2015LMAM}.
 It was originally developed by Michael Widenius and David Axmark at the Swedish company \mysql~AB and released in 1996~\cite{C20245YOQ}.
 It soon gained widespread use as part of the \lampStack, i.e., a system setup for web applications based on the \linux\ operating system, the Apache webserver, the \mysql\ database, and the server-side scripting language~PHP~\cite{C2022HAFTLS,H2020ULU2E}.
 Probably as the result of this, it ranked first in the \citetitle{SE:SO:2024DS} in the years 2017 to 2022.
+In the recent survey~\cite{PMPVEPWGSMB2025ATAODMSTTHOOSP} of the code of 371~\pgls{Java} open source projects on \github, \mysql\ was found to be the most-used relational \pgls{dbms}.
 \mysql~AB was acquired by Sun Microsystems in 2008, which in turn was acquired by Oracle in 2010~\cite{C20245YOQ}.
 
 After the acquisition by Oracle, some of the original developers of \mysql, including Michael Widenius, created a fork of \mysql:~\mariadb~\cite{R2014MM,B2019LTMEELFFSAA,D2015LMAM,AA2018QAWMV1ITSQ,AA2018QAWMV2IDQ}.
 They promise that \mariadb\ will stay open source forever.
+In \cite{PMPVEPWGSMB2025ATAODMSTTHOOSP}, \mariadb\ was already the fifth most popular relational~\pgls{dbms}.
 
 \postgresql~\cite{TA2024DDAMWPAM,FP2023LP,OH2017PUAR,B2024PELUYDW} is an object-relational \pgls{dbms}, meaning that it supports concepts from \pgls{OOP}, such as inheritance relationships between tables.
 It also supports many additional types like \pgls{JSON} objects and geometric types.
 \postgresql\ emerged from the POSTGRES project, the successor of the INGRES project at the University of Berkeley in California~\cite{C20245YOQ}.
 It may be the most fully-featured of the existing open source \pgls{SQL} \pglspl{dbs}
-In the \citetitle{SE:SO:2024DS}, it was the most popular \pgls{dbms}~\cite{SE:SO:2024DS}.
+In the \citetitle{SE:SO:2024DS}, it was the most popular \pgls{dbms}~\cite{SE:SO:2024DS} and in the open source code survey~\cite{PMPVEPWGSMB2025ATAODMSTTHOOSP}, it ranked second.
 
 The \pgls{SQL} \pgls{db} with the widest distribution is \sqlite~\cite{WB2019RHSOOS,GPBHKP2022SPPAF,C20245YOQ,HWACIS:HO2023WKUOS}.
 It breaks with the common approach to offer access to the \pgls{db} follwing a \gls{clientServerArchitecture}.
@@ -93,7 +113,7 @@ Different from the open source solutions, they do cost money and their source co
 
 As already discussed, the first commercial \pgls{SQL}-based product was the \oracleDB~\cite{C20245YOQ,O2007OTHTMIMIOHWCFTPWMIH}.
 This product is still one of the most successful and widely used commercial \pglspl{db} with many advanced features~\cite{BBDDSY2011ADOODM,KK2021EODATASFHPAP}.
-In June~2025, it ranked first as most popular \pgls{dbms} in~\cite{RS2025DERORD}.
+In June~2025, it ranked first as most popular \pgls{dbms} in~\cite{RS2025DERORD} and it was the fourth most popular \pgls{dbms} in \cite{PMPVEPWGSMB2025ATAODMSTTHOOSP}.
 How to migrate an \oracleDB\ to \postgresql\ is discussed in~\cite{KO2023DMFOTP}.
 
 The third-ranking \pgls{dbms} in~\cite{RS2025DERORD} was the \microsoftSqlServer~\cite{P2020MSS2ABG,A2024TSAFMSS2,W2018MSSDB}.
@@ -109,6 +129,7 @@ All the things that can be done with \libreofficeBase\ that we will explore can 
 IBM's \ibmDB~\cite{CWDS2007UDLVWE,BBBCCDMMP2016SPTAFOIDFI} is another early relational \dbms~\cite{HS2013THAGOID}.
 It emerged as a software for powerful mainframe computers that IBM manufactured themselves.
 Mainframes are very powerful central computers, often used by large organisations and businesses.
+While Oracle focussed on providing \pglspl{db} for normal computers, IBM focussed on powerful central servers.
 By 1989, half of all mainframe customers had \ibmDB\ installed~\cite{HS2013THAGOID}.
 \ibmDB\ still ranked sixth in the~\begin{noglslink}\citetitle{RS2025DERORD}\end{noglslink}~\cite{RS2025DERORD} and 23rd in the \citetitle{SE:SO:2024DS}~\cite{SE:SO:2024DS}.%
 %
