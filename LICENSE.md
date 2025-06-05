@@ -1,26 +1,37 @@
-This repository also includes some images and figures created by others, which are marked explicitly and licensed under their author's terms.
-All logos and trademarks are under the copyright of their respective owners.
-The rest of the content is under the `Attribution-NonCommercial-ShareAlike 4.0 International` license.
+This repository contains two types of material:
+Materials that I (Thomas Weise) have created by myself and such that have been created by others.
 
+The vast majority of the material is teaching material created by me (Thomas Weise).
+This and only this material is released under the Attribution-NonCommercial-ShareAlike 4.0 International license (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), see below and [http://creativecommons.org/licenses/by-nc-sa/4.0](http://creativecommons.org/licenses/by-nc-sa/4.0/) for a summary.
+
+However, the repository also includes some images and figures created by others, which are marked explicitly and licensed under their authors' terms.
+For example, all logos and trademarks are under the copyright of their respective owners.
 The list of files not under the CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0 license but under their individual owner's copyrights includes, but is not limited to:
-+ the LibreOffice Logo, e.g.,
+
++ the [LibreOffice](https://www.libreoffice.org) Logo, e.g.,
   - text/main/introduction/software/libreofficeLogo.pdf
   - text/main/introduction/software/libreofficeLogo.svg
-+ the MariaDB Logo, e.g.,
++ the [MariaDB](https://mariadb.org) Logo, e.g.,
   - text/main/introduction/software/mariadbLogo.pdf
   - text/main/introduction/software/mariadbLogo.svg
-+ the PostgreSQL Logo, e.g.,
++ the [PostgreSQL](https://www.postgresql.org) Logo, e.g.,
   - text/main/introduction/software/postgresqlLogo.pdf
   - text/main/introduction/software/postgresqlLogo.svg
-+ the SQLite Logo, e.g.,
-  - text/main/introduction/software/sqliteLogo.pdf
-  - text/main/introduction/software/sqliteLogo.svg
-+ the Psycopg Logo, e.g.,
++ the [Psycopg](https://www.psycopg.org) Logo: Copyright (c) Gabriella Albano and the Psycopg team, e.g.,
   - text/main/gettingStarted/psycopgLogo.pdf
   - text/main/gettingStarted/psycopgLogo.svg
-+ the Python Logo, e.g.,
++ the [Python](https://www.python.org) Logo, e.g.,
   - text/main/gettingStarted/pythonLogo.pdf
   - text/main/gettingStarted/pythonLogo.svg
++ the [SQLite](https://sqlite.org) Logo, e.g.,
+  - text/main/introduction/software/sqliteLogo.pdf
+  - text/main/introduction/software/sqliteLogo.svg
++ the [yEd](https://www.yworks.com/products/yed) Logo: The yEd logo is protected by copyright. yEd is a registered trademark of [yWorks GmbH](https://www.yworks.com). Unauthorized use, reproduction, or distribution is strictly prohibited., e.g.,
+  - text/main/introduction/gettingStarted/yEdLogo.pdf
+  - text/main/introduction/gettingStarted/yEdLogo.svg
++ the [PgModeler](https://pgmodeler.io) Logo: This logo is under the copyright of Raphael Araújo~e~Silva, e.g.,
+  - text/main/introduction/gettingStarted/pgmodelerLogo.pdf
+  - text/main/introduction/gettingStarted/pgmodelerLogo.svg
 
 ## creative commons
 

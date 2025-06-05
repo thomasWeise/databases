@@ -56,35 +56,44 @@ You may use these files under the licensing terms provided below.
 
 
 ## 3. License
-All the course material that was created by me is freely available.
-The course material also includes some images and figures created by others, which are marked explicitly and licensed under their author's terms.
-All logos and trademarks are under the copyright of their respective owners.
-With the exception of such material, this book is released under the Attribution-NonCommercial-ShareAlike 4.0 International license (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), see [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/) for a summary.
+This repository contains two types of material:
+Materials that I (Thomas Weise) have created by myself and such that have been created by others.
 
+The vast majority of the material is teaching material created by me (Thomas Weise).
+This and only this material is released under the Attribution-NonCommercial-ShareAlike 4.0 International license (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), see [http://creativecommons.org/licenses/by-nc-sa/4.0](http://creativecommons.org/licenses/by-nc-sa/4.0/) for a summary.
+
+However, the repository also includes some images and figures created by others, which are marked explicitly and licensed under their authors' terms.
+For example, all logos and trademarks are under the copyright of their respective owners.
 The list of files not under the CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0 license but under their individual owner's copyrights includes, but is not limited to:
-+ the LibreOffice Logo, e.g.,
+
++ the [LibreOffice](https://www.libreoffice.org) Logo, e.g.,
   - text/main/introduction/software/libreofficeLogo.pdf
   - text/main/introduction/software/libreofficeLogo.svg
-+ the MariaDB Logo, e.g.,
++ the [MariaDB](https://mariadb.org) Logo, e.g.,
   - text/main/introduction/software/mariadbLogo.pdf
   - text/main/introduction/software/mariadbLogo.svg
-+ the PostgreSQL Logo, e.g.,
++ the [PgModeler](https://pgmodeler.io) Logo: This logo is under the copyright of Raphael Araújo~e~Silva, e.g.,
+  - text/main/introduction/gettingStarted/pgmodelerLogo.pdf
+  - text/main/introduction/gettingStarted/pgmodelerLogo.svg
++ the [PostgreSQL](https://www.postgresql.org) Logo, e.g.,
   - text/main/introduction/software/postgresqlLogo.pdf
   - text/main/introduction/software/postgresqlLogo.svg
-+ the SQLite Logo, e.g.,
-  - text/main/introduction/software/sqliteLogo.pdf
-  - text/main/introduction/software/sqliteLogo.svg
-+ the Psycopg Logo, e.g.,
++ the [Psycopg](https://www.psycopg.org) Logo: Copyright (c) Gabriella Albano and the Psycopg team, e.g.,
   - text/main/gettingStarted/psycopgLogo.pdf
   - text/main/gettingStarted/psycopgLogo.svg
-+ the Python Logo, e.g.,
++ the [Python](https://www.python.org) Logo, e.g.,
   - text/main/gettingStarted/pythonLogo.pdf
   - text/main/gettingStarted/pythonLogo.svg
++ the [SQLite](https://sqlite.org) Logo, e.g.,
+  - text/main/introduction/software/sqliteLogo.pdf
+  - text/main/introduction/software/sqliteLogo.svg
++ the [yEd](https://www.yworks.com/products/yed) Logo: The yEd logo is protected by copyright. yEd is a registered trademark of [yWorks GmbH](https://www.yworks.com). Unauthorized use, reproduction, or distribution is strictly prohibited., e.g.,
+  - text/main/introduction/gettingStarted/yEdLogo.pdf
+  - text/main/introduction/gettingStarted/yEdLogo.svg
 
 You can download its newest version of the course material from <https://thomasweise.github.io/databases>.
 This version may change since this course and book both are work in progress.
-You can freely share this.
-You can also copy text or figures under the license given below, as long as you cite the book as the original source, e.g., by using the following BibTeX:
+You can cite this book as follows:
 
 <pre>@book{databases,<br/>&nbsp;author&nbsp;=&nbsp;{Thomas&nbsp;Weise},<br/>&nbsp;title&nbsp;=&nbsp;{Databases},<br/>&nbsp;year&nbsp;=&nbsp;{2025},<br/>&nbsp;publisher&nbsp;=&nbsp;{Institute&nbsp;of&nbsp;Applied&nbsp;Optimization,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.hfuu.edu.cn/aibd">School&nbsp;of&nbsp;Artificial&nbsp;Intelligence&nbsp;and&nbsp;Big&nbsp;Data</a>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.hfuu.edu.cn/">Hefei&nbsp;University</a>},<br/>&nbsp;address&nbsp;=&nbsp;{Hefei,&nbsp;Anhui,&nbsp;China},<br/>&nbsp;url&nbsp;=&nbsp;{<a href="https://thomasweise.github.io/databases">https://thomasweise.github.io/databases</a>}<br/>}</pre>
 
@@ -98,8 +107,8 @@ It is under the GNU GENERAL PUBLIC LICENSE Version 2, June 1991 and the copyrigh
 
 ## 4. Contact
 If you have any questions or suggestions, please contact
-Prof. Dr. [Thomas Weise](http://iao.hfuu.edu.cn/5) (汤卫思教授)
-at the Institute of Applied Optimization (应用优化研究所, [IAO](http://iao.hfuu.edu.cn))
+Prof. Dr. Thomas Weise (汤卫思教授)
+at the Institute of Applied Optimization (应用优化研究所, IAO)
 of the School of Artificial Intelligence and Big Data ([人工智能与大数据学院](http://www.hfuu.edu.cn/aibd))
 of [Hefei University](http://www.hfuu.edu.cn/english/) ([合肥大学](http://www.hfuu.edu.cn/)),
 in Hefei, Anhui, China (中国安徽省合肥市)
