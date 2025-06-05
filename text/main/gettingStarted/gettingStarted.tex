@@ -1,7 +1,7 @@
 %
 \hsection{Getting Started}%
 %
-The goal of this course is to introduce databases.
+The goal of this course is to introduce \pglspl{db}.
 However, this is a practical course.
 So we will work on practical examples and create~(more or less) \inQuotes{realistic} \pglspl{db} on real \pglspl{dbms}.
 This means that we will look into several interesting topics.
@@ -15,6 +15,8 @@ We choose \postgresql~\cite{TA2024DDAMWPAM,FP2023LP,OH2017PUAR,B2024PELUYDW}.%
 %
 \item \pglspl{dbms} are usually just \pglspl{server} to which you can send \sql\ commands via a \pgls{client} \pgls{terminal}.
 However, there exist also nicer tools offering rich \pglspl{GUI} that allow you to design forms and reports.
+Forms are structured graphical masks for data entry.
+Reports are documents that are automatically filled with data from a \db.
 We will try using such a tool as well.
 We choose \libreofficeBase~\cite{FNFHWSKLSSGLFRSRPLJG2022BG7R1BOL7C,S2022L7PFEUU}.%
 %
@@ -39,9 +41,26 @@ So we will use it here as well.%
 %
 \end{itemize}%
 %
+\begin{figure}%
+\centering%
+%
+\subfloat[][%
+The logo of the \python\ programming language.%
+]{\includegraphics[width=0.4\linewidth]{\currentDir/pythonLogo}}%
+%
+\floatSep%
+%
+\subfloat[][%
+The logo of \psycopg, the \python\ library for accessing \postgresql. %
+Copyright \textcopyright~Gabriella Albano and the Psycopg team.%
+]{\parbox[t]{0.4\linewidth}{\centering\includegraphics[width=0.3\linewidth]{\currentDir/psycopgLogo}}}%
+%
+\caption{The Logos of \python\ and \psycopg, i.e., of some of the tools that we are using.}%
+\end{figure}%
+%
 \bestPractice{manyTools}{%
 A computer science professional is able and always keen to learn new tools. %
-A computer science professional should know dozens of different software tools for different tasks. %
+A computer science professional should know dozens if not hundreds of different software tools for different tasks. %
 A software engineer is a craftsperson and their knowledge of software is their tool belt.%
 }%
 %
@@ -92,6 +111,9 @@ Any professional computer scientist, software developer, software architect, \pg
 }%
 %
 Maybe you could start with the very easy-to-use \ubuntu\ \linux~\cite{CN2020ULB,H2020ULU2E}.
+If you are a \microsoftWindows\cite{B2023W1IO} user, maybe you could install \ubuntu\ in a virtual machine.
+Either way, I strongly recommend learning and using \linux.
+
 It should also be clear that the instructions provided here will eventually be outdated.
 I am not sure whether I will be able to keep updating them in the future.
 However, even a few years down the road, they should still provide some basic guidance.
