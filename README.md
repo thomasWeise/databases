@@ -62,18 +62,24 @@ All logos and trademarks are under the copyright of their respective owners.
 With the exception of such material, this book is released under the Attribution-NonCommercial-ShareAlike 4.0 International license (CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0), see [http://creativecommons.org/licenses/by-nc-sa/4.0/](http://creativecommons.org/licenses/by-nc-sa/4.0/) for a summary.
 
 The list of files not under the CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0 license but under their individual owner's copyrights includes, but is not limited to:
-- text/main/introduction/software/libreofficeLogo.pdf
-- text/main/introduction/software/libreofficeLogo.svg
-- text/main/introduction/software/mariadbLogo.pdf
-- text/main/introduction/software/mariadbLogo.svg
-- text/main/introduction/software/postgresqlLogo.pdf
-- text/main/introduction/software/postgresqlLogo.svg
-- text/main/introduction/software/sqliteLogo.pdf
-- text/main/introduction/software/sqliteLogo.svg
-- text/main/gettingStarted/psycopgLogo.pdf
-- text/main/gettingStarted/psycopgLogo.svg
-- text/main/gettingStarted/pythonLogo.pdf
-- text/main/gettingStarted/pythonLogo.svg
++ the LibreOffice Logo, e.g.,
+  - text/main/introduction/software/libreofficeLogo.pdf
+  - text/main/introduction/software/libreofficeLogo.svg
++ the MariaDB Logo, e.g.,
+  - text/main/introduction/software/mariadbLogo.pdf
+  - text/main/introduction/software/mariadbLogo.svg
++ the PostgreSQL Logo, e.g.,
+  - text/main/introduction/software/postgresqlLogo.pdf
+  - text/main/introduction/software/postgresqlLogo.svg
++ the SQLite Logo, e.g.,
+  - text/main/introduction/software/sqliteLogo.pdf
+  - text/main/introduction/software/sqliteLogo.svg
++ the Psycopg Logo, e.g.,
+  - text/main/gettingStarted/psycopgLogo.pdf
+  - text/main/gettingStarted/psycopgLogo.svg
++ the Python Logo, e.g.,
+  - text/main/gettingStarted/pythonLogo.pdf
+  - text/main/gettingStarted/pythonLogo.svg
 
 You can download its newest version of the course material from <https://thomasweise.github.io/databases>.
 This version may change since this course and book both are work in progress.
