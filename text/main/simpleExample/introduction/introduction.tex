@@ -1,16 +1,17 @@
-Before we step-by-step learn about the features and intricacies of \pglspl{db}, let us look into a simple example as a teaser.
-So far, you have learned about the history of databases.
+Before we step-by-step learn about the features and intricacies of \pglspl{db}, let us look into a simple self-contained example as a teaser.
+So far, you have learned about the history of \pglspl{db}.
 Many courses that I know then, from here on, focus on several quite useful things:
 First, an outline of the \db\ design process is given.
 Second, you will learn about modeling data, how to draw \pglspl{ERD}.
-Third, you will learn the so-called $\sigma$\nobreakdashes-algebra, which is an mathematical notation abstracting from the technological aspects of \pglspl{rdb}.
-Fourth, they will tell you how to select, insert, and remove data using~\sql.
+Third, you will learn about normalization of data.
+Fourth, you will learn the so-called $\sigma$\nobreakdashes-algebra, which is an mathematical notation abstracting from the technological aspects of \pglspl{rdb}.
+Fifth, they will tell you how to select, insert, and remove data using~\sql.
 Some will give really practical examples and let you explore how to work with a \db\ via homeworks.
-Fifth and finally, you are taught how \pglspl{db} work internally, what datastructures they use, and how they achieve efficient storage and high query performance.
+Sixth and finally, you are taught how \pglspl{db} work internally, what datastructures they use, and how they achieve efficient storage and high query performance.
 
 I agree that it is a good didactic method to approach \pglspl{db} from several different angles as an abstract subject.
 However, when I learned something as a student, I never really learned it this way.
-I learned it by doing.
+I learned it by doing it.
 I am a believer that practical ability is nine tenth of mastering a field.
 And practical ability comes easiest by playing around with the basic tools.
 
@@ -41,11 +42,13 @@ It is important that this is a \emph{learning by doing} example.
 When reading the text, please reproduce the example step-by-step on your own computer.
 
 Our example is a \pglspl{db} for a small company that produces shoes and handbags.
-You were hired to build an \pgls{IT}~department for the company.
+Imagine that you were hired to build an \pgls{IT}~department for the company.
 On you first day, your boss enters and tells you \emph{Make a \db\ for storing all our product variants and customer orders.}
 
 We use a concrete technological environment for our work.
-In particular, we rely on the \postgresql\ ecosystem.%
+In particular, we rely on the \postgresql\ ecosystem.
+We chose it because it is a very mature open source \pgls{dbms}.
+It is widely adopted and was the most popular \pgls{dbms} in the \citetitle{SE:SO:2024DS}~\cite{SE:SO:2024DS} and in the open source code survey~\cite{PMPVEPWGSMB2025ATAODMSTTHOOSP}, it ranked second.%
 %
 \usefulTool{postgresql}{%
 \postgresql~\cite{TA2024DDAMWPAM,FP2023LP,OH2017PUAR,B2024PELUYDW} is an advanced relational \pgls{dbms}. %

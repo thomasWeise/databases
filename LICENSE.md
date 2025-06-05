@@ -1,3 +1,7 @@
+This repository also includes some images and figures created by others, which are marked explicitly and licensed under their author's terms.
+All logos and trademarks are under the copyright of their respective owners.
+The rest of the content is under the `Attribution-NonCommercial-ShareAlike 4.0 International` license.
+
 ## creative commons
 
 # Attribution-NonCommercial-ShareAlike 4.0 International
