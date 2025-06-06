@@ -1,0 +1,119 @@
+%
+\hsection{Selecting Data}%
+%
+Now we have stored data in the table \sqlil{product}.
+But how can we get it out again?
+Well, you already learned a good part of how to do that:~\sqlil{SELECT * FROM product;}\sqlIdx{SELECT{\idxdots}FROM}\sqlIdx{WHERE}\sqlIdx{*}.
+This query lists basically all of the data in the table.
+You have seen it its output at the bottom of \cref{exec:factory:insert_into_table_product}.
+
+Yet, most often, we do not want to retrieve \emph{all} of the data in a table.
+Usually, we only want some part of the data.
+Maybe we only want to see the rows~(records) that match certain criteria.
+Maybe we only want to see a subset of the columns.
+Maybe we even want to compute some statistics.
+How can we do that?
+A large part of the answer is \inQuotes{With the \sqlil{SELECT}\sqlIdx{SELECT{\idxdots}FROM} statement.}
+
+This is a seduce-to-use example, something to play around with.
+So we will play around with the data for a bit in \cref{lst:factory:select_from_table_product}.
+
+First, let's say that we want a list of the names and prices of all types of purses that we sell.
+Let us amend the original query \sqlil{SELECT * FROM product;} for this purpose.
+The \sqlilIdx{*} here means that all columns should be printed.
+Naturally, we would replace it with the columns that we want, namely, \sqlil{name} and \sqlil{price}.
+We write \sqlil{SELECT name, price FROM product;}.
+This gives us the names and prices of \emph{all} products in our table.
+We need to narrow this down to purses.
+We can add a \sqlilIdx{WHERE} clause at the end of the query where we can supply a condition.
+Only the records that match the condition will be shown.
+What condition can we use?
+\sql\ offers us some \emph{pattern matching methods}~\cite{PGDG:PD:PM}.
+The pattern \sqlil{LIKE '\%Purse\%'}\sqlIdx{LIKE}\sqlIdx{\%} will match any string that contains the text~\inQuotes{Purse}.
+The condition \sqlil{name LIKE '\%Purse\%'} therefore requires that the product name contains the text~\inQuotes{Purse}.
+Our first real query thus becomes \sqlil{SELECT name, price FROM product WHERE name LIKE '\%Purse\%';}.
+As you can see in \cref{exec:factory:select_from_table_product}, it will return three rows of purse-related data.%
+%
+\begin{sloppypar}%
+Assume now that you are a lady who wants to purchase some fashion accessory to accentuate your beauty.
+Naturally, you would want to buy the product that gives you the best deal in terms of product weight per monetary unit, i.e, g~per~元.
+Therefore, for each product, we would like to divide the weight by the price and give this new value the name \sqlil{g_per_yuan}.
+Luckily, \sql\ supports mathematical expressions~\cite{PGDG:PD:MFAO}, so it is possible to write \sqlil{weight / price}.
+The query \sqlil{SELECT name, weight / price AS g_per_yuan from product;} would return the product name and the weight-cost ration.
+\sqlil{weight / price AS g_per_yuan}\sqlIdx{AS} means that the ratio of weight and price will be computed and given the name \sqlil{g_per_yuan}.%
+\end{sloppypar}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{factory}{insert_into_table_product_error.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:insert_into_table_product_error}{%
+Showing how the \sqlilIdx{UNIQUE} constraint on column \sqlil{name} prevents us from inserting a product with the same name as an already existing one into table \sqlil{product}.%
+}%
+\gitSQLAndOutput{\databasesCodeRepo}{factory}{select_from_table_product.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:select_from_table_product}{%
+Selecting information from the table \textil{product}.}%
+%
+Suppose that our table \sqlil{product} contains hundreds of entries.
+It would be very hard to spot good deals in that heap of data.
+Luckily, \sql\ also allows to sort data.
+We would like to see our list sorted based on \sqlil{g_per_yuan} from large to small values.
+This way, the best deals will come first.
+We can do that by simply adding \sqlil{ORDER BY g_per_yuan DESC}\sqlIdx{ORDER BY!DESC}.
+\sqlilIdx{ORDER BY} sorts the rows of the query result by the fields listed afterwards.
+If just write \sqlilIdx{ORDER BY} or, optionally, add \sqlil{ASC}\sqlIdx{ORDER BY!ASC}, then it sorts the data in ascending order.
+This means that small values coming first.
+We want a descending order, so we also write~\sqlil{DESC}\sqlIdx{ORDER BY!DESC}.
+
+Finally, we may realize that there are still way to many entries returned.
+We only care about the best five or so deals, the rest does not matter anyway.
+All we have to do to limit the number of rows returned to five is to, well, add~\sqlil{LIMIT 5}\sqlIdx{LIMIT} to our query.
+With this, the query is completed.
+It is the second one in \cref{lst:factory:select_from_table_product}.
+
+Its result in \cref{exec:factory:select_from_table_product} shows us that the large purse is definitely the best deal here.
+For every single~元, we can get 10g of product!
+Indeed, the purse weights 1.5kg and costs 150元, so the result is correct.
+The second-best deal would be the largest shoe in stock.
+At size~43, we can 8.94g of product per~元.
+
+What else can we find out about the data in this table?
+What if we wanted to know whether shoes or purses costed more on average?
+First, let's figure out how to compute arithmetic means in \sql.
+It is rather easy.
+We could write \sqlil{SELECT AVG(price) FROM product;}\sqlIdx{AVG} to get the arithmetic mean over all values in the column \sqlil{price} in the table \sqlil{product}~\cite{PGDG:PD:AF}.
+This query would return a single row with a single value named \sqlil{avg}.
+That value would be \sqlil{148.5381818181818182} if you want to try it by yourself.
+
+Let's give the value a better name.
+Let's try \sqlil{SELECT AVG(price) AS mean_price FROM product;}\sqlIdx{AVG}
+The result would still be pretty much the same, but now the returned column is named~\sqlil{mean_price}~(and there still only a single row).%
+%
+\begin{sloppypar}%
+As the next step, let's compute the average price for purses.
+We can reuse the condition \sqlil{WHERE name LIKE '\%Purse\%'} from before and write \sqlil{SELECT AVG(price) AS mean_price FROM product WHERE name LIKE '\%Purse\%';}
+This returns a single column named \sqlil{mean_price} and a single row.
+The value in that row is now \sqlil{123.3333333333333333}, which indeed is the arithmetic mean of 100, 120, and~150.
+To make clear that this is the purse price, we can simply add an artificial column named~\sqlil{kind} with value~\sqlil{'Purse'}.
+\sqlil{SELECT 'Purse' AS kind, AVG(price) AS mean_price FROM product WHERE name LIKE '\%Purse\%';}.
+Now we got two columns, \sqlil{kind} and \sqlil{mean_price}, and one row with the values \textil{Purse} and \sqlil{123.3333333333333333}.%
+\end{sloppypar}%
+%
+\begin{sloppypar}%
+We can, of course, do the same for shoes.
+All we have to do is to replace \sqlil{'\%Purse\%'} with \sqlil{'\%Shoe\%'} and change the \sqlil{kind} column accordingly.
+\sqlil{SELECT 'Shoe' AS kind, AVG(price) AS mean_price FROM product WHERE name LIKE '\%Shoe\%';} returns also a single row with values \textil{Shoe} and \textil{157.9900000000000000}.
+Indeed, the average price of all of our shoes is 157.99元.%
+\end{sloppypar}%
+%
+So we have two queries that each return two values with the same names.
+At this point, we already know that purses are cheaper than shoes in average.
+But having two queries is somehow unsatisfying.
+We want to package both results together, so that we get the two rows as the result of a single \sql\ command.
+
+Nothing easier than that!
+We just have to remove the trailing~\sqlil{;} from the first query and write a \sqlilIdx{UNION ALL} directly in front of the second query~\cite{PGDG:PD:CQUIE}!
+The \sqlilIdx{UNION ALL} statement effectively appends the results of the second query to the results of the first query.
+The combined statement is shown at the bottom of \cref{lst:factory:select_from_table_product} and its result is given in \cref{exec:factory:select_from_table_product}.
+
+At this point, please notice the beauty of queries:
+We can continue to add data to our table.
+We can change values or delete values.
+But the queries will still work all the same and always give us the up-to-date results.%
+\endhsection%
+%

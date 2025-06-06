@@ -1,0 +1,41 @@
+%
+\hsection{Inserting some Data}%
+\afterpage{\clearpage}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{factory}{insert_into_table_product.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:insert_into_table_product}{%
+Storing some products in the table~\sqlil{product}.%
+}%
+%
+Now the table \sqlil{product} exists, but it is empty.
+Let us fill it with data.
+Our factory has two products:~\inQuotes{Shoe} and~\inQuotes{Purse.}
+The shoes come in sizes~36 to~43.
+Their prices start at 150.99元 for size~36 and increase by 2元 per size.
+They all fit into the same box.
+The smallest shoes weight 1300g and the weight increases by 25g per size.
+Purses come in sizes \emph{small}, \emph{medium}, and \emph{large}, at prices of 100元, 120元, and 150元, respectively.
+They weight 500g, 750g, and 1500g, respectively.
+The smallest purse fits into a shoebox, but the bigger ones require bigger boxes.
+
+We store this data into the table \sqlil{product} by an \sqlilIdx{INSERT INTO} statement.
+Here, we first need to provide the table name~(\sqlil{product}) and the attributes that we want to store in parentheses, i.e., \inQuotes{\sqlil{(...)}}.
+We will store values for the fields \sqlil{name}, \sqlil{price}, \sqlil{weight}, \sqlil{width}, \sqlil{height}, and~\sqlil{depth}.
+We do not need to store values for~\sqlil{id}, because they will be automatically generated for us.
+After saying what we want to store, we specify the \sqlilIdx{VALUES} to store.
+Each row is written in parentheses, values and rows are separated by commas.
+The complete command for storing all the data is shown in \cref{lst:factory:insert_into_table_product}.
+
+There, we first print all the data currently in the table by typing \sqlil{SELECT * FROM product;}\sqlIdx{SELECT{\idxdots}FROM}\sqlIdx{WHERE}\sqlIdx{*}~\cite{PGDG:PD:SC:S}.
+This prints nothing, because the table is empty.
+Then we insert the eleven products via one single \sqlilIdx{INSERT INTO} command.
+Afterwards, we try \sqlil{SELECT * FROM product;}\sqlIdx{SELECT{\idxdots}FROM}\sqlIdx{WHERE}\sqlIdx{*} again -- and now it prints 11~rows.
+
+Before we continue, let us briefly check what the \sqlilIdx{UNIQUE} constraint that we have defined on column~\sqlil{name} does.
+Basically, it says that there cannot be two records in our table with the same value of~\sqlil{name}.
+Therefore, if we would try to insert another product with name \sqlil{'Shoe, Size 36'} into the table, this should fail.
+Because we already have a row with this value.
+We test this in \cref{lst:factory:insert_into_table_product_error}.
+Indeed, \cref{exec:factory:insert_into_table_product_error} shows that this fails with an error and the data remains unchanged.%
+%
+\endhsection%
+%

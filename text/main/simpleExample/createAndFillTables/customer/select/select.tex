@@ -1,0 +1,44 @@
+\hsection{Selecting Data}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{factory}{select_from_table_customer.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:select_from_table_customer}{%
+Obtaining information from our new table~\sqlil{customer}.%
+}%
+%
+Let us complete this exercise by extracting some data from the new table~\sqlil{customer} in \cref{lst:factory:select_from_table_customer}.
+First, we want to have a list of all customers from France.
+This can be done with the query \sqlil{SELECT name, address FROM customer WHERE address LIKE '\%France\%';}\sqlIdx{LIKE}\sqlIdx{WHERE}\sqlIdx{SELECT{\idxdots}FROM}
+The query prints the \sqlil{name} and \sqlil{address} of all customers whose \sqlil{address} field contains, somewhere, the text~\textil{France}.
+
+Next, we want to know how many domestic Chinese customers we have and how many customers purchase our products from abroad, i.e., not from China.
+We first need to decide whether a customer is based in China or not.
+We can do this by \sqlil{address ILIKE '\%china\%' as domestic}\sqlIdx{ILIKE}.
+Notice that we this time wrote \sqlilIdx{ILIKE} instead of \sqlilIdx{LIKE}.
+\sqlilIdx{ILIKE} works basically the same as \sqlilIdx{LIKE}, with the exception that it compares text case-insensitive.
+For \sqlilIdx{LIKE}, \textil{China} and \textil{china} are two different strings.
+For \sqlilIdx{ILIKE}, they are the same.
+By writing \sqlil{SELECT address ILIKE '\%china\%' as domestic from customer;}, we would get a one-column result which contains the value \sqlilIdx{TRUE} for every customer from China and \sqlilIdx{FALSE} for every customer from abroad.%
+%
+\begin{sloppypar}%
+We can now divide the customers into groups based on this column \sqlil{domestic} by adding \sqlil{GROUP BY domestic}\sqlIdx{GROUP BY} to the query.
+We count the number of customers in each group by also selecting the new value \sqlil{COUNT(*)}\sqlIdx{COUNT}.
+\sqlil{COUNT(*)}\sqlIdx{COUNT} counts the rows in the current group and returns the result as integer number.
+The complete query is \sqlil{SELECT COUNT(*), address ILIKE '\%china\%' as domestic FROM customer GROUP BY domestic;}.
+It produces two rows.
+The first row has \sqlil{domestic} as \sqlil{f}, which means \sqlilIdx{FALSE}.
+In its \sqlil{count} column, we see the value~3.
+The second row has \sqlil{domestic} as \sqlil{t}, which means \sqlilIdx{TRUE}.
+In its \sqlil{count} column, we see the value~1.
+Indeed, there are three foreign customers and one domestic one in our \db.%
+\end{sloppypar}%
+%
+If you looked at this example carefully, then you noticed that the method of deciding whether a customer is from China or not, as well as the method of detecting french customers, are not very precise.
+For example, if a customer would have specified their country as 中国, i.e., China written in Chinese, we would have considered them a foreigner.
+Then again, if the director of the imaginary \emph{Donut Factory Vive la France} in Shanghai would order shoes from us, we would consider his address to be french and domestic at the same time.\footnote{%
+This situation arises because we here violate the \glsreset{1NF}\pgls{1NF}, which we will discuss much much later, in \cref{sec:normalForm:1}. %
+Indeed, dividing the \sqlil{address} column into multiple columns would be part of the solution.}
+Maybe we should have had another column \sqlil{country}?
+In this case, we would most likely need a table with countries and link that table to our \sqlil{customer} table\dots
+Next, we will explore how tables can be \inQuotes{linked} together.%
+%
+\endhsection%
+%
