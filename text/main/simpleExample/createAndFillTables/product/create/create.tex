@@ -74,7 +74,7 @@ Creating the table \textil{product} to store the products we produce and sell.%
 }%
 %
 So let us create the table~\sqlil{product}.
-There are two ways for doing this:
+As we have already learned, there are two ways for doing this:
 We can either start a \psql\ session and type in the necessary commands one by one, which is illustrated in \cref{fig:createTableProduct:A}%.
 Or we can send a \sql\ script with all the commands to the \postgresql\ server directly via \psql.
 The script that we would use for this is shown in \cref{lst:factory:create_table_product} and its output is given in \cref{exec:factory:create_table_product}.
@@ -84,7 +84,7 @@ If we chose the manual step-by-step method, then we first start a new \psql\ ses
 This time we do this as user~\sqlil{boss} with password~\sql{superboss123}.
 This user is the owner of our \db\ \sqlil{factory} and has the right to create tables and insert data.
 
-We can create a new table using the command \sql{CREATE TABLE}\sqlIdx{CREATE!TABLE}\sqlIdx{TABLE}, followed by the table name, followed by the attributes that we want to store~\cite{PGDG:PD:CT2}.
+We can create a new table using the command \sqlil{CREATE TABLE}\sqlIdx{CREATE!TABLE}\sqlIdx{TABLE}, followed by the table name, followed by the attributes that we want to store~\cite{PGDG:PD:CT2}.
 We typed this command in \cref{fig:createTable3command}.
 As you can see, this is a bit cumbersome, because the command is long.
 Writing it as a script and then sending this to the \postgresql\ \dbms\ is more convenient, which is why we will prefer this method later on.

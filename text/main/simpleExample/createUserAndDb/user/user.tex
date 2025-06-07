@@ -1,0 +1,250 @@
+%
+\hsection{Creating a User}%
+%
+\begin{figure}%
+\centering%
+%
+\subfloat[][%
+We open a console via \ubuntuTerminal\ under \ubuntu\ \linux\ or by \windowsTerminal\ under \microsoftWindows. %
+We type in the command to connect the \psql\ \pgls{client} to the \postgresql\ \pgls{server} listening at the default port on our current computer~(\localhost) and tell it to log in as user \textil{postgresql} with the password~\textil{XXX}~(which you need to replace with whatever password you are using) and hit~\keys{\enter}.%
+\label{fig:psqlNewUser1starting}%
+]{\parbox[t]{0.99\linewidth}{\centering\includegraphics[width=0.67\linewidth]{\currentDir/psqlNewUser1starting}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+\psql\ is now running and we can enter commands.%
+\label{fig:psqlNewUser2psqlOpen}%
+]{\parbox[t]{0.99\linewidth}{\centering\includegraphics[width=0.67\linewidth]{\currentDir/psqlNewUser2psqlOpen}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+We type in the command \sqlilIdx{CREATE USER} to create the new user \textil{boss} with the password \textil{superboss123}. %
+We hit~\keys{\enter}.%
+\label{fig:psqlNewUser3command}%
+]{\parbox[t]{0.99\linewidth}{\centering\includegraphics[width=0.67\linewidth]{\currentDir/psqlNewUser3command}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+The command is executed successfully and prints its output~\sqlilIdx{CREATE ROLE}.%
+\label{fig:psqlNewUser4executed}%
+]{\parbox[t]{0.99\linewidth}{\centering\includegraphics[width=0.67\linewidth]{\currentDir/psqlNewUser4executed}}}%
+%
+\caption{Creating the new user/role \textil{boss} with password \textil{superboss123} on the \postgresql\ \pgls{server} via the \psql\ \pgls{client}.}%
+\end{figure}%
+%
+\begin{figure}%
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+To confirm whether the command has succeeded, we now list all users on the \postgresql\ \pgls{server}. %
+We therefore select\sqlIdx{SELECT} all user names~(\sqlil{uname}) from the system table \sqlil{pg_catalog.pg_user}.%
+\label{fig:psqlNewUser5getUsers}%
+]{\parbox[t]{0.99\linewidth}{\centering\includegraphics[width=0.67\linewidth]{\currentDir/psqlNewUser5getUsers}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+Besides the DBMS administrator user \sqlil{postgresql}, there now also exists a new user named~\sqlil{boss}.%
+\label{fig:psqlNewUser6gotUsers}%
+]{\parbox[t]{0.99\linewidth}{\centering\includegraphics[width=0.67\linewidth]{\currentDir/psqlNewUser6gotUsers}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+We quit this session by typing in the commant~\textil{\\q} and hit~\keys{\enter}.%
+\label{fig:psqlNewUser7typeQuit}%
+]{\parbox[t]{0.99\linewidth}{\centering\includegraphics[width=0.67\linewidth]{\currentDir/psqlNewUser7typeQuit}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+The \psql\ session has ended and we are back in the \pgls{terminal}.%
+\label{fig:psqlNewUser8quit}%
+]{\parbox[t]{0.99\linewidth}{\centering\includegraphics[width=0.67\linewidth]{\currentDir/psqlNewUser8quit}}}%
+%
+\caption{Creating the new user/role \textil{boss} with password \textil{superboss123} on the \postgresql\ \pgls{server} via the \psql\ \pgls{client}.~(Continued)}%
+\end{figure}%
+%
+\gitSQLAndOutput{\databasesCodeRepo}{factory}{create_user.sql}{}{}{}{postgres.sh}{factory:create_user}{%
+Using \sql\ to create a the user \textil{boss} with password \textil{superboss123}.%
+}%
+
+For the sake of simplicity, assume that we are locally logged in the \db~\server\ computer and that the password to the administrator user \textil{postgres} is set to~\textil{XXX}.
+As illustrated in \cref{fig:psqlNewUser1starting}, we first open a \pgls{terminal}~(console).
+This can be done via \ubuntuTerminal\ under \ubuntu\ \linux, while under \microsoftWindows, you need to \windowsTerminal.
+We want to start the \client\ program \psql\ with the proper connection \pgls{URI}~\cite{PGDG:PD:CU} to access our \postgresql\ \server.%
+%
+\usefulTool{psql}{%
+\psql\ is a text-based console program that can be used to connect to a \postgresql\ \pgls{server}. %
+From the \psql\ console, we can send \sql\ commands to the \postgresql\ \pgls{server} and receive its answers.%
+}%
+%
+We can connect to the \postgresql\ \server\ on our local machine by providing the connection \pgls{URI} \textil{postgres://postgres:XXX@localhost}.
+This \pgls{URI} is constructed as follows~\cite{PGDG:PD:CU}:%
+%
+\begin{itemize}%
+%
+\item The \textil{postgress://} tells \psql\ that this is, indeed, a connection \pgls{URI}.
+%
+\item The second occurrence of \textil{postgres} is actually the user name.
+As you may remember from the installation, the administrator user for the whole \postgresql\ \server\ has the name \textil{postgres}.%
+%
+\item The colon~\inQuotes{\textil{:}} separates the user name from the password~\textil{XXX}.
+Of course, you should not actually use a password like~\textil{XXX}.
+Please replace it with a password you deem reasonable.
+Let me stress again:
+Never use something like \textil{XXX} as a password.
+I am also not doing that.
+For the examples in the book, I just replaced the actual password with \textil{XXX}.
+%
+\item After an \inQuotes{@} comes the network address or host name where the \postgresql\ \server\ is running.
+We write \glsreset{localhost}\localhost, which stands for the current machine itself.
+It corresponds to the IP~address~\textil{127.0.0.1}.
+Basically, it means that we want to connect to the \postgresql\ \server\ running directly on the very machine in front of which we are sitting.%
+%
+\item After this, we could add a \pgls{port}.
+Since we left the \pgls{port} \textil{5432} at the standard setting during the installation, we do not need to provide it.
+We could write \textil{:5432} directly after \localhost, or replace \textil{5432} with whatever \pgls{port} at which the \postgresql\ \server\ is listening.%
+%
+\item If we would like to connect to a specific \db, say with the name~\textil{dbname} then we would then write \textil{/dbname}.
+But we do not want to do this, because we did not create any \db\ yet.
+So we do not specify any \db\ in the connection~\pgls{URI}.%
+\end{itemize}%
+%
+Hence, as illustrated in \cref{fig:psqlNewUser2psqlOpen}, our connection~\pgls{URI} is \textil{postgres://postgres:XXX@localhost}.
+The complete command to launch the \psql\ \client\ is thus \bashil{psql postgres://postgres:XXX@localhost}.
+Once the \psql\ \pgls{terminal} is open, we can begin typing commands in the \sql~language.%
+%
+\noviceHint{%
+Yes, we now use some \sql\ commands. %
+You did not yet learn anything about \sql. %
+Do not let that bother you too much. %
+Most of these commands are relatively close to the natural English language. %
+We will explain the commands and datatypes that we use while we are using them. %
+Remember when we said \emph{learning by doing} at the beginning of~\cref{sec:simpleExampleIntro}? %
+We really mean it. %
+You can read more about \sql, for example, in~\cite{MS2001S1URLC,PGDG:PD:SC,SP2002STYSI2D,SPMP1998SI2TDDASVEI12T,T2018ISARD,ANSIX3135,DB2019HTTPS,ISO90751987,ISOIEC9707112023E}.%
+}%
+%
+We want to create a new user for the \psql\ \server.
+As username, we pick \inQuotes{boss}.
+The password shall be \inQuotes{superboss123}.
+Obviously, this is a very unsafe password.
+The boss will have to change it as soon as possible.%
+%
+\begin{sloppypar}%
+As illustrated in \cref{fig:psqlNewUser3command}, in order to create the new user with that password, we write \sqlil{CREATE USER boss WITH ENCRYPTED PASSWORD 'superboss123';}\sqlIdx{CREATE USER}.
+The first part of the command, \sqlIdx{CREATE!USER}\sqlIdx{USER}\sqlil{CREATE USER xyz}, tells the \server\ to create a new user account under the name \textil{xyz}.
+The second part, \sqlil{WITH ENCRYPTED PASSWORD 'abc'}\sqlIdx{WITH!ENCRYPTED PASSWORD}\sqlIdx{PASSWORD}\sqlIdx{ENCRYPTED}, tells the \server\ that the password \textil{abc} should be used for this user.%
+\end{sloppypar}%
+%
+Passwords are always stored in an encrypted way anyway in \postgresql, but it never hurts to specify this clearly.
+Maybe we want to run the same commands later on another \dbms\ where it is necessary to explicitly say that passwords shall be encrypted.
+You can read more about \sql\ commands in the \postgresql\ reference~\cite{PGDG:PD:SC}.%
+%
+\bestPractice{keywords}{%
+Keywords in \sql\ may always be written completely in uppercase~\cite{DB2019HTTPS:SC}. %
+Well, technically, \sql\ keywords are not case sensitive, so \sqlilIdx{WHERE} and \sqlil{where} work the same. %
+It is most important to be consistent in your casing, regardless whether you prefer upper- or lowercase~\cite{B2025DS:SBPASG}. %
+Nevertheless, I prefer uppercase and the \postgresql\ documentation does so too~\cite{PGDG:PD}.%
+}%
+%
+Anyway, we type in the command and hit~\keys{\enter}.
+The command is executed successfully.
+The system signals this to us with the output \sqlilIdx{CREATE ROLE}\sqlIdx{CREATE!ROLE} in \cref{fig:psqlNewUser4executed}.
+\psql\ always signals success by typing the command back to us, and under \postgresql, \sqlilIdx{CREATE ROLE} and \sqlilIdx{CREATE USER} are (almost) the same.
+
+But how can we confirm the user \inQuotes{boss} has really been created successfully?
+How do we know that it exists now?
+We can simply list all users.
+You see, a fully-fledged relational \dbms\ stores all information in tables, not just the actual data, but also the names of databases, users, and tables themselves~(as we will learn later in \cref{sec:rdbms}).
+The result of this is that we can access information about users in the same way as normal data -- via \sql\ queries.
+OK, as said, you do not yet really know how that works, but for now, just bare with us.
+
+In \postgresql, all users are stored in the table named~\sqlilIdx{pg\_catalog.pg\_user}.\footnote{%
+On other \pglspl{dbms}, the users may be stored differently.}
+So we can just query this table.
+The \sql\sqlIdx{SELECT{\idxdots}FROM} command \sqlil{SELECT usename FROM pg_catalog.pg_user;} will list the value of the column \sqlilIdx{usename} for all rows in the table \sqlilIdx{pg\_catalog.pg\_user}.
+We type it in \cref{fig:psqlNewUser5getUsers} and hit~\keys{\enter}.
+If we had run this command \emph{before} creating the user, on a fresh \postgresql\ installation, it would only list the single user \textil{postgres}, i.e., the administrator of the whole \dbms.
+But if we run it again now, \emph{after} creating the new user, it will also list~\textil{boss}.
+You can see this in \cref{fig:psqlNewUser6gotUsers}.
+
+We can now close this \psql\ session by typing~\sqlil{\\q}\sqlIdx{{\textbackslash}q} and hitting~\keys{\enter}.
+As shown in \cref{fig:psqlNewUser7typeQuit}, this takes us back to our normal \pgls{OS} \pgls{terminal} shown in~\cref{fig:psqlNewUser8quit}.
+
+Actually, there are two ways to use \psql:
+We can either open an interactive session.
+In such a session, we type in the \sql\ commands, execute them by pressing~\keys{\enter}, and then read their output.
+After that, we can type in the next command, execute it, read its output, and so on.
+Eventually, we quit by executing~\sqlil{\\q}\sqlIdx{{\textbackslash}q}.
+
+The other way to use \psql\ is to simply tell it to open a session, execute all the commands in a file~(a so-called \emph{script}), and then to close the session.
+This second way is illustrated in \cref{lst:factory:create_user,exec:factory:create_user}.
+\Cref{lst:factory:create_user} is the \sql\ script with the commands to be executed.
+As you can see, in this script, we first list all the existing users on the \dbms.
+The only user existing right after the \postgresql\ installation should be~\sqlilIdx{postgres}.
+So the output of that first command should be only this single value.
+Then we create the new user via \sqlil{CREATE USER}\sqlIdx{CREATE!USER}.
+The output of this command, if executed successfully, should be \sqlil{CREATE USER} printed back to us.
+Then we query the existing users again, which now should return a table with two values, \sqlilIdx{postgres} and \sqlil{boss}.
+%
+\begin{table}%
+\caption{The parameters of \psql, as defined in~\cite{PGDG:PD:P} and used in executions such as~\cref{exec:factory:create_user}.}%
+\label{tbl:psqlParams}%
+%
+\centering%
+\bashil{psql "postgres://user:password@host:port/database" -v ON_ERROR_STOP=1 -ebf script.sql}%
+\medskip\\%
+%
+\resizebox{0.99\linewidth}{!}{\fbox{\begin{tabular}{rp{0.77\linewidth}}%
+%
+\bashil{psql} &%
+The \sql\ binary, i.e., the program that is executed.\smallskip\\%
+%
+Connection \pgls{URI} &%
+The connection \pgls{URI}, often written inside quotation marks~(\bashil{"..."}).%
+\vspace{-0.7em}%
+\begin{itemize}[noitemsep]%
+\item \textil{postgres://} indicates that this is, in fact, a connection~\pgls{URI}.%
+\item \textil{user:password}~are the user name and password.%
+\item \textil{host}~is the network address or host name of the computer where the \postgresql\ \pgls{server} is waiting for incoming connections. %
+We usually use \localhost, which is the current computer on which \psql\ is executed.%
+\item \textil{port}~is the \pgls{port} at which the \pgls{server} is listening, which can be omitted if it is equal to~\textil{5432}, which is our default setting. %
+\item \textil{database} is the name of the \db\ to access, which can be omitted if we work on the system itself.%
+\end{itemize}\\[-0.9em]%
+%
+\bashil{-v ON_ERROR_STOP=1}&%
+Tells the program to stop and exit immediately if an error happens. %
+In some examples, we intentionally causer errors to demonstrate problems.\smallskip\\%
+%
+\bashil{-e}&%
+Print all (successful) queries back to the \pgls{stdout}.\smallskip\\%
+%
+\bashil{-b}&%
+Print failed queries to the \pgls{stderr}.\\%
+%
+\bashil{-f filename}&%
+Read all commands from the file \textil{filename}.\smallskip\\%
+%
+\bashil{-ebf filename}&Equivalent to \bashil{-e -b -f filename}.\\%
+%
+\end{tabular}}}%
+\end{table}%
+%
+The second listing, \cref{exec:factory:create_user}, is the captured output~(the so-called \pgls{stdout}) of this non-interactive, script-executing \psql\ session.
+It contains exactly the text that we expect.
+However, its first and last line are different.
+
+The first line in output listings like \cref{exec:factory:create_user} is always marked with {\color{listing-tool-command}{dark red color}} and begins with {\color{listing-tool-command}\texttt{\$}}.
+It contains the actual \psql\ execution parameters, which are explained in detail in \cref{tbl:psqlParams} and~\cite{PGDG:PD:P}.
+The last line in the output listings is always marked with {\color{listing-tool-result}dark blue color} and begins with {\color{listing-tool-result}\texttt{\#}}.
+It signifies the version of the software and the \pgls{exitCode}.
+Notice that you can download the whole example and run exactly the commands~(the {\color{listing-tool-command}{red text}} after the {\color{listing-tool-command}\texttt{\$}}) from our repository \url{\databasesCodeRepo}.%
+%
+\FloatBarrier%
+\endhsection%
