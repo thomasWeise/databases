@@ -16,18 +16,18 @@ The realization of a \crowsFoot{S}{MM}{T}{MM} conceptual relationship.%
 Inserting into and selecting data from the realization of an \crowsFoot{S}{MM}{T}{MM} conceptual relationship given in \cref{lst:ST_tables}.%
 }%
 %
-\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships s sid;fktid;x}{cdtrmTableS}%
-\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships t tid;fksid;y}{cdtrmTableT}%
-\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships relate_s_and_t fksid;fktid}{cdtrmTableRST}%
+\gitExec{cdtrmTableRST}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships s sid;fktid;x}{cdtrmTableS}%
+\gitExec{cdtrmTableRST}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships t tid;fksid;y}{cdtrmTableT}%
+\gitExec{cdtrmTableRST}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships relate_s_and_t fksid;fktid}%
 %
 \begin{figure}%
 \centering%
 \floatSep%
-\input{\cdtrmTableS}%
+\input{\gitFile{cdtrmTableS}}%
 \floatSep%
-\input{\cdtrmTableT}%
+\input{\gitFile{cdtrmTableT}}%
 \floatSep%
-\input{\cdtrmTableRST}%
+\input{\gitFile{cdtrmTableRST}}%
 \floatSep%
 \caption{The contents of the the three tables in the implementation of the \crowsFoot{S}{MM}{T}{MM} conceptual relationship after executing \cref{lst:ST_insert_and_select}.}%
 \label{fig:rm:st:tables}%

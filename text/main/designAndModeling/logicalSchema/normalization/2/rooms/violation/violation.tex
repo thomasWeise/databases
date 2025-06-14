@@ -22,14 +22,14 @@ However, the other attributes each only depend on one part of this primary key.}
 \label{fig:roomsViolation2nf}%
 \end{figure}%
 %
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/2nf/rooms/violation/generated_sql 01_violation_database_2001.sql}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/2nf/rooms/violation/generated_sql 01_violation_database_2001.sql}%
 %
 \gitSQL{\databasesCodeRepo}{normalization/2nf/rooms/violation/generated_sql/03_public_building_room_table_5071.sql}{2nf:rooms:violation:03_public_building_room_table_5071}{The generated \sql\ code for creating the table \sqlil{building_room} that violates the \pgls{2NF} based on \cref{fig:roomsViolation2nf:model}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/2nf/rooms/violation/generated_sql 03_public_building_room_table_5071.sql violation}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/2nf/rooms/violation/generated_sql 03_public_building_room_table_5071.sql violation}%
 %
 \gitSQL{\databasesCodeRepo}{normalization/2nf/rooms/violation/insert.sql}{2nf:rooms:violation:insert}{%
 Inserting some data into the table~\sqlil{building_room} in violation of the \pgls{2NF}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/2nf/rooms/violation insert.sql violation}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/2nf/rooms/violation insert.sql violation}%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{normalization/2nf/rooms/violation}{delete.sql}{violation}{}{}{postgres.sh}{2nf:rooms:violation:delete}{%
 First, we select a list of all buildings from the \db, which yields 4~buildings. %
@@ -50,7 +50,7 @@ While we only want to change one single piece of information, we actually have t
 This is an update anomaly~(\cref{def:updateAnomaly}) caused by the violation of the \pgls{2NF} of our design.%
 }%
 %
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/2nf/rooms/violation cleanup.sql}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/2nf/rooms/violation cleanup.sql}%
 %
 In \cref{fig:roomsViolation2nf:model}, we show only a part of this diagram, namely the two entity types \emph{Room} and \emph{Building}.
 As you can see, the two entity types are related based on the \crowsFoot{Room}{OM}{Building}{M1} pattern.

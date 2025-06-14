@@ -10,20 +10,20 @@
 \label{fig:studentFixed3nf}%
 \end{figure}%
 %
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/3nf/student/fixed/generated_sql 01_fixed_database_2001.sql}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/3nf/student/fixed/generated_sql 01_fixed_database_2001.sql}%
 %
 \gitSQL{\databasesCodeRepo}{normalization/3nf/student/fixed/generated_sql/03_public_student_table_5071.sql}{3nf:student:fixed:03_public_student_table_5071}{The generated \sql\ code for creating the table \sqlil{student}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/3nf/student/fixed/generated_sql 03_public_student_table_5071.sql fixed}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/3nf/student/fixed/generated_sql 03_public_student_table_5071.sql fixed}%
 %
 \gitSQL{\databasesCodeRepo}{normalization/3nf/student/fixed/generated_sql/04_public_parent_table_5077.sql}{3nf:student:fixed:04_public_parent_table_5077}{The generated \sql\ code for creating the table \sqlil{parent}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/3nf/student/fixed/generated_sql 04_public_parent_table_5077.sql fixed}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/3nf/student/fixed/generated_sql 04_public_parent_table_5077.sql fixed}%
 %
 \gitSQL{\databasesCodeRepo}{normalization/3nf/student/fixed/generated_sql/05_public_student_parent_mobile_fk_constraint_5081.sql}{3nf:student:fixed:05_public_student_parent_mobile_fk_constraint_5081}{We add the foreign key constraint to table~\sqlil{student}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/3nf/student/fixed/generated_sql 05_public_student_parent_mobile_fk_constraint_5081.sql fixed}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/3nf/student/fixed/generated_sql 05_public_student_parent_mobile_fk_constraint_5081.sql fixed}%
 %
 \gitSQL{\databasesCodeRepo}{normalization/3nf/student/fixed/insert.sql}{3nf:student:fixed:insert}{%
 Inserting some data into the tables~\sqlil{parent} and~\sqlil{student}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/3nf/student/fixed insert.sql fixed}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/3nf/student/fixed insert.sql fixed}%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{normalization/3nf/student/fixed}{select.sql}{fixed}{}{}{postgres.sh}{3nf:student:fixed:select}{%
 If we want to get the names of the parents of the students, we now need an~\sqlilIdx{INNER JOIN}.%

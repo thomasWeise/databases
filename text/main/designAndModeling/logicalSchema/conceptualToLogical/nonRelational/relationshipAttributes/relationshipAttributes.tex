@@ -58,34 +58,34 @@ As we already learned before, these go into additional tables, which we call \sq
 For these, we again use the proper foreign key \sqlilIdx{REFERENCES} constraints.
 
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/person_database_2/generated_sql/01_person_database_database_2001.sql}{person_2:01_person_database_database_2001}{The generated script to create the \sqlil{person_database}~\db.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_2/generated_sql 01_person_database_database_2001.sql}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_2/generated_sql 01_person_database_database_2001.sql}%
 %
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/person_database_2/generated_sql/03_public_person_table_5071.sql}{person_2:03_public_person_table_5071}{The generated \sql\ script to create the table~\sqlil{person}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_2/generated_sql 03_public_person_table_5071.sql person_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_2/generated_sql 03_public_person_table_5071.sql person_database}%
 %
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/person_database_2/generated_sql/04_public_name_table_5075.sql}{person_2:04_public_name_table_5075}{The generated \sql\ script to create the table~\sqlil{name}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_2/generated_sql 04_public_name_table_5075.sql person_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_2/generated_sql 04_public_name_table_5075.sql person_database}%
 %
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/person_database_2/generated_sql/05_public_address_table_5084.sql}{person_2:05_public_address_table_5084}{The generated \sql\ script to create the table~\sqlil{address}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_2/generated_sql 05_public_address_table_5084.sql person_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_2/generated_sql 05_public_address_table_5084.sql person_database}%
 %
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/person_database_2/generated_sql/06_public_id_type_table_5094.sql}{person_2:06_public_id_type_table_5094}{The generated \sql\ script to create the table~\sqlil{id_type}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_2/generated_sql 06_public_id_type_table_5094.sql person_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_2/generated_sql 06_public_id_type_table_5094.sql person_database}%
 %
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/person_database_2/generated_sql/07_public_has_id_table_5100.sql}{person_2:07_public_has_id_table_5100}{The generated \sql\ script to create the table~\sqlil{has_id}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_2/generated_sql 07_public_has_id_table_5100.sql person_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_2/generated_sql 07_public_has_id_table_5100.sql person_database}%
 %
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/person_database_2/generated_sql/08_public_name_name_person_fk_constraint_5108.sql}{person_2:08_public_name_name_person_fk_constraint_5108}{The generated \sql\ script to create the foreign key constraint ensuring that each row in table~\sqlil{name} is associated with one row in table~\sqlil{person}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_2/generated_sql 08_public_name_name_person_fk_constraint_5108.sql person_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_2/generated_sql 08_public_name_name_person_fk_constraint_5108.sql person_database}%
 %
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/person_database_2/generated_sql/09_public_address_address_person_fk_constraint_5109.sql}{person_2:09_public_address_address_person_fk_constraint_5109}{The generated \sql\ script to create the foreign key constraint ensuring that each row in table~\sqlil{address} is associated with one row in table~\sqlil{person}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_2/generated_sql 09_public_address_address_person_fk_constraint_5109.sql person_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_2/generated_sql 09_public_address_address_person_fk_constraint_5109.sql person_database}%
 %
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/person_database_2/generated_sql/10_public_has_id_has_id_id_type_fk_constraint_5110.sql}{person_2:10_public_has_id_has_id_id_type_fk_constraint_5110}{The generated \sql\ script to create the foreign key constraint ensuring that each row in table~\sqlil{has_id} is associated with one row in table~\sqlil{id_type}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_2/generated_sql 10_public_has_id_has_id_id_type_fk_constraint_5110.sql person_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_2/generated_sql 10_public_has_id_has_id_id_type_fk_constraint_5110.sql person_database}%
 %
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/person_database_2/generated_sql/11_public_has_id_has_id_person_fk_constraint_5111.sql}{person_2:11_public_has_id_has_id_person_fk_constraint_5111}{The generated \sql\ script to create the foreign key constraint ensuring that each row in table~\sqlil{has_id} is associated with one row in table~\sqlil{person}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_2/generated_sql 11_public_has_id_has_id_person_fk_constraint_5111.sql person_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_2/generated_sql 11_public_has_id_has_id_person_fk_constraint_5111.sql person_database}%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{teachingManagement/logical/person_database_2}{insert.sql}{person_database}{}{}{postgres.sh}{person_database_2:insert}{%
 Inserting into the tables in the \sqlil{person_database}.}%

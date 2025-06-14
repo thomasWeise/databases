@@ -16,15 +16,15 @@ The realization of a \crowsFoot{K}{M1}{L}{OM} conceptual relationship.%
 Inserting into and selecting data from the realization of an \crowsFoot{K}{M1}{L}{OM} conceptual relationship given in \cref{lst:KL_tables}.%
 }%
 %
-\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships k kid;x}{cdtrmTableK}%
-\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships l lid;fkkid;y}{cdtrmTableL}%
+\gitExec{cdtrmTableL}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships k kid;x}{cdtrmTableK}%
+\gitExec{cdtrmTableL}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships l lid;fkkid;y}%
 %
 \begin{figure}%
 \centering%
 \floatSep%
-\input{\cdtrmTableK}%
+\input{\gitFile{cdtrmTableK}}%
 \floatSep%
-\input{\cdtrmTableL}%
+\input{\gitFile{cdtrmTableL}}%
 \floatSep%
 \caption{The contents of the the two tables in the implementation of the \crowsFoot{K}{M1}{L}{OM} conceptual relationship after executing \cref{lst:KL_insert_and_select}.}%
 \label{fig:rm:kl:tables}%

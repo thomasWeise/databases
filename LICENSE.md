@@ -9,29 +9,29 @@ For example, all logos and trademarks are under the copyright of their respectiv
 The list of files not under the CC&nbsp;BY&#8209;NC&#8209;SA&nbsp;4.0 license but under their individual owner's copyrights includes, but is not limited to:
 
 + the [LibreOffice](https://www.libreoffice.org) Logo, e.g.,
-  - text/main/introduction/software/libreofficeLogo.pdf
-  - text/main/introduction/software/libreofficeLogo.svg
+    - text/main/introduction/software/libreofficeLogo.pdf
+    - text/main/introduction/software/libreofficeLogo.svg
 + the [MariaDB](https://mariadb.org) Logo, e.g.,
-  - text/main/introduction/software/mariadbLogo.pdf
-  - text/main/introduction/software/mariadbLogo.svg
+    - text/main/introduction/software/mariadbLogo.pdf
+    - text/main/introduction/software/mariadbLogo.svg
 + the [PostgreSQL](https://www.postgresql.org) Logo, e.g.,
-  - text/main/introduction/software/postgresqlLogo.pdf
-  - text/main/introduction/software/postgresqlLogo.svg
+    - text/main/introduction/software/postgresqlLogo.pdf
+    - text/main/introduction/software/postgresqlLogo.svg
 + the [Psycopg](https://www.psycopg.org) Logo: Copyright (c) Gabriella Albano and the Psycopg team, e.g.,
-  - text/main/gettingStarted/psycopgLogo.pdf
-  - text/main/gettingStarted/psycopgLogo.svg
+    - text/main/gettingStarted/psycopgLogo.pdf
+    - text/main/gettingStarted/psycopgLogo.svg
 + the [Python](https://www.python.org) Logo, e.g.,
-  - text/main/gettingStarted/pythonLogo.pdf
-  - text/main/gettingStarted/pythonLogo.svg
+    - text/main/gettingStarted/pythonLogo.pdf
+    - text/main/gettingStarted/pythonLogo.svg
 + the [SQLite](https://sqlite.org) Logo, e.g.,
-  - text/main/introduction/software/sqliteLogo.pdf
-  - text/main/introduction/software/sqliteLogo.svg
+    - text/main/introduction/software/sqliteLogo.pdf
+    - text/main/introduction/software/sqliteLogo.svg
 + the [yEd](https://www.yworks.com/products/yed) Logo: The yEd logo is protected by copyright. yEd is a registered trademark of [yWorks GmbH](https://www.yworks.com). Unauthorized use, reproduction, or distribution is strictly prohibited., e.g.,
-  - text/main/introduction/gettingStarted/yEdLogo.pdf
-  - text/main/introduction/gettingStarted/yEdLogo.svg
+    - text/main/introduction/gettingStarted/yEdLogo.pdf
+    - text/main/introduction/gettingStarted/yEdLogo.svg
 + the [PgModeler](https://pgmodeler.io) Logo: This logo is under the copyright of Raphael Araújo~e~Silva, e.g.,
-  - text/main/introduction/gettingStarted/pgmodelerLogo.pdf
-  - text/main/introduction/gettingStarted/pgmodelerLogo.svg
+    - text/main/introduction/gettingStarted/pgmodelerLogo.pdf
+    - text/main/introduction/gettingStarted/pgmodelerLogo.svg
 
 ## creative commons
 

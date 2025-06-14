@@ -17,18 +17,18 @@ The three-table realization of an \crowsFoot{E}{O1}{F}{OM} conceptual relationsh
 Inserting into and selecting data from the three-table realization of an \crowsFoot{E}{O1}{F}{OM} conceptual relationship given in \cref{lst:EF_1_tables}.%
 }%
 %
-\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships e eid;x}{cdtrmTableEO}%
-\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships f fid;y}{cdtrmTableFO}%
-\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships relate_e_and_f fkeid;fkfid}{cdtrmTableREF}%
+\gitExec{cdtrmTableEO}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships e eid;x}%
+\gitExec{cdtrmTableFO}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships f fid;y}%
+\gitExec{cdtrmTableREF}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships relate_e_and_f fkeid;fkfid}%
 %
 \begin{figure}%
 \centering%
 \floatSep%
-\input{\cdtrmTableEO}%
+\input{\gitFile{cdtrmTableEO}}%
 \floatSep%
-\input{\cdtrmTableFO}%
+\input{\gitFile{cdtrmTableFO}}%
 \floatSep%
-\input{\cdtrmTableREF}%
+\input{\gitFile{cdtrmTableREF}}%
 \floatSep%
 \caption{The contents of the the tables in the three-table implementation of the \crowsFoot{E}{O1}{B}{OM} conceptual relationship after executing \cref{lst:EF_1_insert_and_select}.}%
 \label{fig:rm:ef:1:tables}%
@@ -44,15 +44,15 @@ A two-table realization of an \crowsFoot{E}{O1}{F}{M1} conceptual relationship.%
 Inserting into and selecting data from the two-table realization of an \crowsFoot{E}{O1}{F}{OM} conceptual relationship given in \cref{lst:EF_2_tables}.%
 }%
 %
-\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships e eid;x}{cdtrmTableET}%
-\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships f fid;fkeid;y}{cdtrmTableFT}%
+\gitExec{cdtrmTableET}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships e eid;x}%
+\gitExec{cdtrmTableFT}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships f fid;fkeid;y}%
 %
 \begin{figure}%
 \centering%
 \floatSep%
-\input{\cdtrmTableET}%
+\input{\gitFile{cdtrmTableET}}%
 \floatSep%
-\input{\cdtrmTableFT}%
+\input{\gitFile{cdtrmTableFT}}%
 \floatSep%
 \caption{The contents of the the tables in the two-table implementation of the \crowsFoot{E}{O1}{B}{OM} conceptual relationship after executing \cref{lst:EF_2_insert_and_select}.}%
 \label{fig:rm:ef:2:tables}%

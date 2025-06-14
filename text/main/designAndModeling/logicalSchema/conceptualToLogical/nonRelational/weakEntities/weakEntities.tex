@@ -118,34 +118,35 @@ As illustrated in \cref{fig:pgmodelerSequence4selectSequence}, another dialog op
 In \cref{fig:pgmodelerSequence5selected}, the sequence is now selected and the column will take its default values from it.
 
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/person_database_1/generated_sql/01_person_database_database_2001.sql}{person_1:01_person_database_database_2001}{The generated script to create the \sqlil{person_database}~\db.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_1/generated_sql 01_person_database_database_2001.sql}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_1/generated_sql 01_person_database_database_2001.sql}%
 %
+% ERROR
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/person_database_1/generated_sql/03_public_person_id_counter_sequence_5071.sql}{person_1:03_public_person_id_counter_sequence_5071}{The generated script to create ID~\sqlilIdx{SEQUENCE}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_1/generated_sql 03_public_person_id_counter_sequence_5071.sql person_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_1/generated_sql 03_public_person_id_counter_sequence_5071.sql person_database}%
 %
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/person_database_1/generated_sql/04_public_id_type_table_5072.sql}{person_1:04_public_id_type_table_5072}{The generated script to create the \sqlil{id_type} table.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_1/generated_sql 04_public_id_type_table_5072.sql person_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_1/generated_sql 04_public_id_type_table_5072.sql person_database}%
 %
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/person_database_1/generated_sql/05_public_personal_id_table_5078.sql}{person_1:05_public_personal_id_table_5078}{The generated script to create the \sqlil{personal_id} table.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_1/generated_sql 05_public_personal_id_table_5078.sql person_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_1/generated_sql 05_public_personal_id_table_5078.sql person_database}%
 %
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/person_database_1/generated_sql/06_public_person_table_5087.sql}{person_1:06_public_person_table_5087}{The generated script to create the \sqlil{personal_id} table.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_1/generated_sql 06_public_person_table_5087.sql person_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_1/generated_sql 06_public_person_table_5087.sql person_database}%
 %
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/person_database_1/generated_sql/07_public_personal_id_personal_id_id_type_fk_constraint_5093.sql}{person_1:07_public_personal_id_personal_id_id_type_fk_constraint_5093}{The generated script to create the constraint managing the relationship between the rows in table~\sqlil{personal_id} and those in table~\sqlil{id_type}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_1/generated_sql 07_public_personal_id_personal_id_id_type_fk_constraint_5093.sql person_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_1/generated_sql 07_public_personal_id_personal_id_id_type_fk_constraint_5093.sql person_database}%
 %
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/person_database_1/generated_sql/08_public_personal_id_personal_id_person_fk_constraint_5094.sql}{person_1:08_public_personal_id_personal_id_person_fk_constraint_5094}{The generated script to create the constraint that enforces that each row in table~\sqlil{personal_id} is related to exactly one row in table~\sqlil{person}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_1/generated_sql 08_public_personal_id_personal_id_person_fk_constraint_5094.sql person_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_1/generated_sql 08_public_personal_id_personal_id_person_fk_constraint_5094.sql person_database}%
 %
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/person_database_1/generated_sql/09_public_person_person_id_person_id_fk_constraint_5092.sql}{person_1:09_public_person_person_id_person_id_fk_constraint_5092}{The generated script to create the constraint that enforces that, for each row in table~\sqlil{person}, at least one related row in table~\sqlil{personal_id} exists.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_1/generated_sql 09_public_person_person_id_person_id_fk_constraint_5092.sql person_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_1/generated_sql 09_public_person_person_id_person_id_fk_constraint_5092.sql person_database}%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{teachingManagement/logical/person_database_1}{insert_and_select.sql}{person_database}{}{}{postgres.sh}{person_database_1:insert_and_select}{%
 Inserting into and selecting data from the tables in the \sqlil{person_database}.%
 }%
 %
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_1 cleanup.sql}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_1 cleanup.sql}%
 %
 \Cref{lst:person_1:01_person_database_database_2001,lst:person_1:03_public_person_id_counter_sequence_5071,lst:person_1:04_public_id_type_table_5072,lst:person_1:05_public_personal_id_table_5078,lst:person_1:06_public_person_table_5087,lst:person_1:07_public_personal_id_personal_id_id_type_fk_constraint_5093,lst:person_1:08_public_personal_id_personal_id_person_fk_constraint_5094,lst:person_1:09_public_person_person_id_person_id_fk_constraint_5092} illustrate the generated \sql\ scripts corresponding to this logical model.
 In \cref{lst:person_1:01_person_database_database_2001}, the empty new \db\ \sqlil{person_database} is created.

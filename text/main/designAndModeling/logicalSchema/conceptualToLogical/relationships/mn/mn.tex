@@ -16,15 +16,15 @@ The realization of a \crowsFoot{M}{M1}{N}{MM} conceptual relationship.%
 Inserting into and selecting data from the realization of an \crowsFoot{M}{M1}{N}{MM} conceptual relationship given in \cref{lst:MN_tables}.%
 }%
 %
-\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships m mid;fknid;x}{cdtrmTableM}%
-\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships n nid;fkmid;y}{cdtrmTableN}%
+\gitExec{cdtrmTableM}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships m mid;fknid;x}%
+\gitExec{cdtrmTableN}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships n nid;fkmid;y}%
 %
 \begin{figure}%
 \centering%
 \floatSep%
-\input{\cdtrmTableM}%
+\input{\gitFile{cdtrmTableM}}%
 \floatSep%
-\input{\cdtrmTableN}%
+\input{\gitFile{cdtrmTableN}}%
 \floatSep%
 \caption{The contents of the the two tables in the implementation of the \crowsFoot{M}{M1}{N}{MM} conceptual relationship after executing \cref{lst:MN_insert_and_select}.}%
 \label{fig:rm:mn:tables}%

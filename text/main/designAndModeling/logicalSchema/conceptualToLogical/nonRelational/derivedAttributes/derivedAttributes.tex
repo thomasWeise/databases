@@ -55,7 +55,7 @@ It changes daily.
 Create a view that represents the derived attribute \emph{age} and execute it.%
 }%
 %
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_2 cleanup.sql}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_2 cleanup.sql}%
 
 So regardless of whether we have virtual \sqlilIdx{GENERATED} columns or not, the best way to compute the age of a person is by defining a query, maybe solidified as a \sqlilIdx{VIEW}.
 Still having the \sqlil{person_database} from the previous section lying around, we will do it in there.

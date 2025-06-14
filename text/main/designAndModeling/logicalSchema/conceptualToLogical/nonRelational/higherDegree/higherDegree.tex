@@ -49,40 +49,40 @@ Relating the students to that \sqlil{course} table by using a separate table the
 So we modeled this using \pgmodeler\ and get the logical schema illustrated in \cref{fig:logicalStudentModuleProf}.
 
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/teaching_database_1/generated_sql/01_teaching_database_database_2001.sql}{teaching_1:01_teaching_database_database_2001}{The generated script to create the \sqlil{teaching_database}~\db.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/teaching_database_1/generated_sql 01_teaching_database_database_2001.sql}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/teaching_database_1/generated_sql 01_teaching_database_database_2001.sql}%
 %
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/teaching_database_1/generated_sql/03_public_student_table_5071.sql}{teaching_1:03_public_student_table_5071}{The generated script to create the table~\sqlil{student}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/teaching_database_1/generated_sql 03_public_student_table_5071.sql teaching_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/teaching_database_1/generated_sql 03_public_student_table_5071.sql teaching_database}%
 %
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/teaching_database_1/generated_sql/04_public_professor_table_5087.sql}{teaching_1:04_public_professor_table_5087}{The generated script to create the table~\sqlil{professor}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/teaching_database_1/generated_sql 04_public_professor_table_5087.sql teaching_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/teaching_database_1/generated_sql 04_public_professor_table_5087.sql teaching_database}%
 %
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/teaching_database_1/generated_sql/05_public_module_table_5095.sql}{teaching_1:05_public_module_table_5095}{The generated script to create the table~\sqlil{module}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/teaching_database_1/generated_sql 05_public_module_table_5095.sql teaching_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/teaching_database_1/generated_sql 05_public_module_table_5095.sql teaching_database}%
 %
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/teaching_database_1/generated_sql/06_public_course_table_5105.sql}{teaching_1:06_public_course_table_5105}{The generated script to create the table~\sqlil{course} which relates the tables~\sqlil{professor} and~\sqlil{module}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/teaching_database_1/generated_sql 06_public_course_table_5105.sql teaching_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/teaching_database_1/generated_sql 06_public_course_table_5105.sql teaching_database}%
 %
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/teaching_database_1/generated_sql/07_public_enrolls_table_5131.sql}{teaching_1:07_public_enrolls_table_5131}{The generated script to create the table~\sqlil{enrolls} which relates the tables~\sqlil{student} and~\sqlil{course}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/teaching_database_1/generated_sql 07_public_enrolls_table_5131.sql teaching_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/teaching_database_1/generated_sql 07_public_enrolls_table_5131.sql teaching_database}%
 %
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/teaching_database_1/generated_sql/08_public_course_course_professor_fk_constraint_5116.sql}{teaching_1:08_public_course_course_professor_fk_constraint_5116}{The generated script to create the constraint enforcing that each row in table~\sqlil{course} is related to exactly one row in table~\sqlil{professor}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/teaching_database_1/generated_sql 08_public_course_course_professor_fk_constraint_5116.sql teaching_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/teaching_database_1/generated_sql 08_public_course_course_professor_fk_constraint_5116.sql teaching_database}%
 %
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/teaching_database_1/generated_sql/09_public_course_course_module_fk_constraint_5117.sql}{teaching_1:09_public_course_course_module_fk_constraint_5117}{The generated script to create the constraint enforcing that each row in table~\sqlil{course} is related to exactly one row in table~\sqlil{module}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/teaching_database_1/generated_sql 09_public_course_course_module_fk_constraint_5117.sql teaching_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/teaching_database_1/generated_sql 09_public_course_course_module_fk_constraint_5117.sql teaching_database}%
 %
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/teaching_database_1/generated_sql/10_public_enrolls_enrolls_student_fk_constraint_5145.sql}{teaching_1:10_public_enrolls_enrolls_student_fk_constraint_5145}{The generated script to create the constraint enforcing that each row in table~\sqlil{enrolls} is related to exactly one row in table~\sqlil{student}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/teaching_database_1/generated_sql 10_public_enrolls_enrolls_student_fk_constraint_5145.sql teaching_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/teaching_database_1/generated_sql 10_public_enrolls_enrolls_student_fk_constraint_5145.sql teaching_database}%
 %
 \gitSQL{\databasesCodeRepo}{teachingManagement/logical/teaching_database_1/generated_sql/11_public_enrolls_enrolls_course_fk_constraint_5151.sql}{teaching_1:11_public_enrolls_enrolls_course_fk_constraint_5151}{The generated script to create the constraint enforcing that each row in table~\sqlil{enrolls} is related to exactly one row in table~\sqlil{course}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/teaching_database_1/generated_sql 11_public_enrolls_enrolls_course_fk_constraint_5151.sql teaching_database}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/teaching_database_1/generated_sql 11_public_enrolls_enrolls_course_fk_constraint_5151.sql teaching_database}%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{teachingManagement/logical/teaching_database_1}{insert_and_select.sql}{teaching_database}{}{}{postgres.sh}{teaching_database_1:insert_and_select}{%
 Inserting into and selecting data from the tables in the \sqlil{teaching_database}.%
 }%
 %
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/teaching_database_1 cleanup.sql}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/teaching_database_1 cleanup.sql}%
 %
 
 Exporting this model \sql\ yields ten scripts.

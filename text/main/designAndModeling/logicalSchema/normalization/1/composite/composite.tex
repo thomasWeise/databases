@@ -9,23 +9,23 @@
 \label{fig:anomalyComposite}%
 \end{figure}%
 %
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/anomaly_composite/generated_sql 01_anomalies_database_2001.sql}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/anomaly_composite/generated_sql 01_anomalies_database_2001.sql}%
 %
 \gitSQL{\databasesCodeRepo}{normalization/1nf/anomaly_composite/generated_sql/03_public_address_table_5071.sql}{1nf:anomaly_composite:03_public_address_table_5071}{The generated \sql\ code for creating the \sqlil{address} table that violates the \pgls{1NF} based on \cref{fig:anomalyComposite}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/anomaly_composite/generated_sql 03_public_address_table_5071.sql anomalies}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/anomaly_composite/generated_sql 03_public_address_table_5071.sql anomalies}%
 %
 \gitSQL{\databasesCodeRepo}{normalization/1nf/anomaly_composite/generated_sql/04_public_student_table_5075.sql}{1nf:anomaly_composite:04_public_student_table_5075}{The generated \sql\ code for creating the \sqlil{student} table based on \cref{fig:anomalyComposite}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/anomaly_composite/generated_sql 04_public_student_table_5075.sql anomalies}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/anomaly_composite/generated_sql 05_public_student_student_address_fk_constraint_5080.sql anomalies}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/anomaly_composite/generated_sql 04_public_student_table_5075.sql anomalies}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/anomaly_composite/generated_sql 05_public_student_student_address_fk_constraint_5080.sql anomalies}%
 %
 \gitSQL{\databasesCodeRepo}{normalization/1nf/anomaly_composite/insert.sql}{1nf:anomaly_composite:insert}{%
 Inserting some data into the tables~\sqlil{student} and~\sqlil{address} in violation of the \pgls{1NF} based on \cref{fig:anomalyComposite}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/anomaly_composite insert.sql anomalies}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/anomaly_composite insert.sql anomalies}%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{normalization/1nf/anomaly_composite}{select.sql}{anomalies}{}{}{postgres.sh}{1nf:anomaly_composite:select}{%
 Trying to find all the students with an address in China, which is hard, because table \sqlil{address} violates the \pgls{1NF}.}%
 %
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/anomaly_composite cleanup.sql}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/anomaly_composite cleanup.sql}%
 %
 In \cref{fig:anomalyComposite}, we illustrate a part of a logical model that relates student records to address records.
 In this relationship, each student has exactly one address.
@@ -80,23 +80,23 @@ The address data has been disassembled in several columns, allowing us to extrac
 \label{fig:fixedComposite}%
 \end{figure}%
 %
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/fixed_composite/generated_sql 01_fixed_database_2001.sql}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/fixed_composite/generated_sql 01_fixed_database_2001.sql}%
 %
 \gitSQL{\databasesCodeRepo}{normalization/1nf/fixed_composite/generated_sql/03_public_address_table_5071.sql}{1nf:fixed_composite:03_public_address_table_5071}{The generated \sql\ code for creating the \sqlil{address} table based on \cref{fig:fixedComposite}, which no longer violates the \pgls{1NF}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/fixed_composite/generated_sql 03_public_address_table_5071.sql fixed}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/fixed_composite/generated_sql 03_public_address_table_5071.sql fixed}%
 %
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/fixed_composite/generated_sql 04_public_student_table_5079.sql fixed}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/fixed_composite/generated_sql 05_public_student_student_address_fk_constraint_5084.sql fixed}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/fixed_composite/generated_sql 04_public_student_table_5079.sql fixed}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/fixed_composite/generated_sql 05_public_student_student_address_fk_constraint_5084.sql fixed}%
 %
 \gitSQL{\databasesCodeRepo}{normalization/1nf/fixed_composite/insert.sql}{1nf:fixed_composite:insert}{%
 Inserting some data into the tables~\sqlil{student} and~\sqlil{address} as designed in \cref{fig:fixedComposite}, which now comply with the \pgls{1NF}.}%
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/fixed_composite insert.sql fixed}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/fixed_composite insert.sql fixed}%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{normalization/1nf/fixed_composite}{select.sql}{fixed}{}{}{postgres.sh}{1nf:fixed_composite:select}{%
 Trying to find all the students with an address in China becomes easier now, because \sqlil{county} is its own column. %
 Also, reassembling the full address using the string concatenation operation~\sqlil{||}\sqlIdx{\textbar\textbar}.}%
 %
-\gitExec{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/fixed_composite cleanup.sql}%
+\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/fixed_composite cleanup.sql}%
 %
 Let us now fix this problem.
 A proper solution can only be to model the address as a composite attribute.

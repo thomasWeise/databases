@@ -16,18 +16,18 @@ The realization of a \crowsFoot{O}{OM}{P}{OM} conceptual relationship.%
 Inserting into and selecting data from the realization of an \crowsFoot{O}{OM}{P}{OM} conceptual relationship given in \cref{lst:OP_tables}.%
 }%
 %
-\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships o oid;x}{cdtrmTableO}%
-\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships p pid;y}{cdtrmTableP}%
-\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships relate_o_and_p fkoid;fkpid}{cdtrmTableROP}%
+\gitExec{cdtrmTableO}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships o oid;x}%
+\gitExec{cdtrmTableP}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships p pid;y}%
+\gitExec{cdtrmTableROP}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships relate_o_and_p fkoid;fkpid}%
 %
 \begin{figure}%
 \centering%
 \floatSep%
-\input{\cdtrmTableO}%
+\input{\gitFile{cdtrmTableO}}%
 \floatSep%
-\input{\cdtrmTableP}%
+\input{\gitFile{cdtrmTableP}}%
 \floatSep%
-\input{\cdtrmTableROP}%
+\input{\gitFile{cdtrmTableROP}}%
 \floatSep%
 \caption{The contents of the the three tables in the implementation of the \crowsFoot{O}{OM}{P}{OM} conceptual relationship after executing \cref{lst:OP_insert_and_select}.}%
 \label{fig:rm:op:tables}%

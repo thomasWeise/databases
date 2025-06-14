@@ -15,18 +15,18 @@ The three-table realization of an \crowsFoot{A}{O1}{B}{O1} conceptual relationsh
 Inserting into and selecting data from the three-table realization of an \crowsFoot{A}{O1}{B}{O1} conceptual relationship given in \cref{lst:AB_1_tables}.%
 }%
 %
-\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships a aid;x}{cdtrmTableAO}%
-\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships b bid;y}{cdtrmTableBO}%
-\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships relate_a_and_b fkaid;fkbid}{cdtrmTableRAB}%
+\gitExec{cdtrmTableAO}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships a aid;x}%
+\gitExec{cdtrmTableBO}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships b bid;y}%
+\gitExec{cdtrmTableRAB}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships relate_a_and_b fkaid;fkbid}%
 %
 \begin{figure}%
 \centering%
 \floatSep%
-\centering\input{\cdtrmTableAO}%
+\centering\input{\gitFile{cdtrmTableAO}}%
 \floatSep%
-\centering\input{\cdtrmTableBO}%
+\centering\input{\gitFile{cdtrmTableBO}}%
 \floatSep%
-\centering\input{\cdtrmTableRAB}%
+\centering\input{\gitFile{cdtrmTableRAB}}%
 \floatSep%
 \caption{The contents of the the tables in the three-table implementation of the \crowsFoot{A}{O1}{B}{O1} conceptual relationship after executing \cref{lst:AB_1_insert_and_select}.}%
 \label{fig:rm:ab:1:tables}%
@@ -49,15 +49,15 @@ The two-table realization of an \crowsFoot{A}{O1}{B}{O1} conceptual relationship
 Inserting into and selecting data from the two-table realization of an \crowsFoot{A}{O1}{B}{O1} conceptual relationship given in \cref{lst:AB_2_tables}.%
 }%
 %
-\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships a aid;fkbid;x}{cdtrmTableAT}%
-\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships b bid;y}{cdtrmTableBT}%
+\gitExec{cdtrmTableAT}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships a aid;fkbid;x}%
+\gitExec{cdtrmTableBT}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships b bid;y}%
 %
 \begin{figure}%
 \centering%
 \floatSep%
-\input{\cdtrmTableAT}%
+\input{\gitFile{cdtrmTableAT}}%
 \floatSep%
-\input{\cdtrmTableBT}%
+\input{\gitFile{cdtrmTableBT}}%
 \floatSep%
 \caption{The contents of the the tables in the two-table implementation of the \crowsFoot{A}{O1}{B}{O1} conceptual relationship after executing \cref{lst:AB_2_insert_and_select}.}%
 \label{fig:rm:ab:2:tables}%

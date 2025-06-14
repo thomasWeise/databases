@@ -17,15 +17,15 @@ The realization of an \crowsFoot{G}{O1}{H}{MM} conceptual relationship.%
 Inserting into and selecting data from the realization of an \crowsFoot{G}{O1}{H}{MM} conceptual relationship given in \cref{lst:GH_tables}.%
 }%
 %
-\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships g gid;fkhid;x}{cdtrmTableG}%
-\gitExecPath{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships h hid;fkgid;y}{cdtrmTableH}%
+\gitExec{cdtrmTableG}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships g gid;fkhid;x}%
+\gitExec{cdtrmTableH}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships h hid;fkgid;y}%
 %
 \begin{figure}%
 \centering%
 \floatSep%
-\input{\cdtrmTableG}%
+\input{\gitFile{cdtrmTableG}}%
 \floatSep%
-\input{\cdtrmTableH}%
+\input{\gitFile{cdtrmTableH}}%
 \floatSep%
 \caption{The contents of the the two tables in the implementation of the \crowsFoot{G}{O1}{H}{MM} conceptual relationship after executing \cref{lst:GH_insert_and_select}.}%
 \label{fig:rm:gh:tables}%
