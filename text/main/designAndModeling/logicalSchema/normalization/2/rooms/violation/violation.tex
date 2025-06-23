@@ -24,12 +24,13 @@ However, the other attributes each only depend on one part of this primary key.}
 %
 \gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/2nf/rooms/violation/generated_sql 01_violation_database_2001.sql}%
 %
-\gitSQL{\databasesCodeRepo}{normalization/2nf/rooms/violation/generated_sql/03_public_building_room_table_5071.sql}{2nf:rooms:violation:03_public_building_room_table_5071}{The generated \sql\ code for creating the table \sqlil{building_room} that violates the \pgls{2NF} based on \cref{fig:roomsViolation2nf:model}.}%
-\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/2nf/rooms/violation/generated_sql 03_public_building_room_table_5071.sql violation}%
+\gitLoadAndExecSQL{2nf:rooms:violation:03_public_building_room_table_5071}{}{normalization/2nf/rooms/violation/generated_sql}{/03_public_building_room_table_5071.sql}{violation}{}{}%
+\listingSQL{2nf:rooms:violation:03_public_building_room_table_5071}{%
+he generated \sql\ code for creating the table \sqlil{building_room} that violates the \pgls{2NF} based on \cref{fig:roomsViolation2nf:model}.}%
 %
-\gitSQL{\databasesCodeRepo}{normalization/2nf/rooms/violation/insert.sql}{2nf:rooms:violation:insert}{%
+\gitLoadAndExecSQL{2nf:rooms:violation:insert}{}{normalization/2nf/rooms/violation}{insert.sql}{violation}{}{}%
+\listingSQL{label}{%
 Inserting some data into the table~\sqlil{building_room} in violation of the \pgls{2NF}.}%
-\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/2nf/rooms/violation insert.sql violation}%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{normalization/2nf/rooms/violation}{delete.sql}{violation}{}{}{postgres.sh}{2nf:rooms:violation:delete}{%
 First, we select a list of all buildings from the \db, which yields 4~buildings. %

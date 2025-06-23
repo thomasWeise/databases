@@ -11,18 +11,21 @@ The columns that only depend on the \sqlil{building_number} have been extracted 
 %
 \gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/2nf/rooms/fixed/generated_sql 01_fixed_database_2001.sql}%
 %
-\gitSQL{\databasesCodeRepo}{normalization/2nf/rooms/fixed/generated_sql/04_public_building_table_5080.sql}{2nf:rooms:fixed:04_public_building_table_5080}{The generated \sql\ code for creating the table~\sqlil{building}.}%
-\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/2nf/rooms/fixed/generated_sql 04_public_building_table_5080.sql fixed}%
+\gitLoadAndExecSQL{2nf:rooms:fixed:04_public_building_table_5080}{}{normalization/2nf/rooms/fixed/generated_sql}{04_public_building_table_5080.sql}{fixed}{}{}%
+\listingSQL{2nf:rooms:fixed:04_public_building_table_5080}{%
+The generated \sql\ code for creating the table~\sqlil{building}.}%
 %
-\gitSQL{\databasesCodeRepo}{normalization/2nf/rooms/fixed/generated_sql/03_public_room_table_5071.sql}{2nf:rooms:fixed:03_public_room_table_5071}{The generated \sql\ code for creating the table~\sqlil{room}.}%
-\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/2nf/rooms/fixed/generated_sql 03_public_room_table_5071.sql fixed}%
+\gitLoadAndExecSQL{2nf:rooms:fixed:03_public_room_table_5071}{}{normalization/2nf/rooms/fixed/generated_sql}{03_public_room_table_5071.sql}{fixed}{}{}%
+\listingSQL{2nf:rooms:fixed:03_public_room_table_5071}{%
+The generated \sql\ code for creating the table~\sqlil{room}.}%
 %
-\gitSQL{\databasesCodeRepo}{normalization/2nf/rooms/fixed/generated_sql/05_public_room_building_fk_constraint_5099.sql}{2nf:rooms:fixed:05_public_room_building_fk_constraint_5099}{The generated \sql\ code for creating the foreign key constraint linking the rows in table~\sqlil{room} to the rows in table~\sqlil{building}.}%
-\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/2nf/rooms/fixed/generated_sql 05_public_room_building_fk_constraint_5099.sql fixed}%
+\gitLoadAndExecSQL{2nf:rooms:fixed:05_public_room_building_fk_constraint_5099}{}{normalization/2nf/rooms/fixed/generated_sql}{05_public_room_building_fk_constraint_5099.sql}{fixed}{}{}%
+\listingSQL{2nf:rooms:fixed:05_public_room_building_fk_constraint_5099}{%
+The generated \sql\ code for creating the foreign key constraint linking the rows in table~\sqlil{room} to the rows in table~\sqlil{building}.}%
 %
-\gitSQL{\databasesCodeRepo}{normalization/2nf/rooms/fixed/insert.sql}{2nf:rooms:fixed:insert}{%
+\gitLoadAndExecSQL{2nf:rooms:fixed:insert}{}{normalization/2nf/rooms/fixed}{insert.sql}{fixed}{}{}%
+\listingSQL{2nf:rooms:fixed:insert}{%
 Inserting the very same data as in \cref{lst:2nf:rooms:violation:insert} into the tables~\sqlil{building} and \sqlil{room}.}%
-\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/2nf/rooms/fixed insert.sql fixed}%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{normalization/2nf/rooms/fixed}{delete.sql}{fixed}{}{}{postgres.sh}{2nf:rooms:fixed:delete}{%
 First, we select a list of all buildings from the \db, which yields 4~buildings. %

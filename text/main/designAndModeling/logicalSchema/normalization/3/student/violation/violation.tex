@@ -12,12 +12,13 @@
 %
 \gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/3nf/student/violation/generated_sql 01_violation_database_2002.sql}%
 %
-\gitSQL{\databasesCodeRepo}{normalization/3nf/student/violation/generated_sql/03_public_student_table_5103.sql}{3nf:student:violation:03_public_student_table_5103}{The generated \sql\ code for creating the table \sqlil{student} that violates the \pgls{3NF} based on \cref{fig:studentViolation3nf}.}%
-\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/3nf/student/violation/generated_sql 03_public_student_table_5103.sql violation}%
+\gitLoadAndExecSQL{3nf:student:violation:03_public_student_table_5103}{}{normalization/3nf/student/violation/generated_sql}{03_public_student_table_5103.sql}{violation}{}{}%
+\listingSQL{3nf:student:violation:03_public_student_table_5103}{%
+The generated \sql\ code for creating the table \sqlil{student} that violates the \pgls{3NF} based on \cref{fig:studentViolation3nf}.}%
 %
-\gitSQL{\databasesCodeRepo}{normalization/3nf/student/violation/insert.sql}{3nf:student:violation:insert}{%
+\gitLoadAndExecSQL{3nf:student:violation:insert}{}{normalization/3nf/student/violation}{insert.sql}{violation}{}{}%
+\listingSQL{3nf:student:violation:insert}{%
 Inserting some data into the table~\sqlil{student} in violation of the \pgls{3NF}.}%
-\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/3nf/student/violation insert.sql violation}%
 %
 \gitSQLAndOutput{\databasesCodeRepo}{normalization/3nf/student/violation}{update.sql}{violation}{}{}{postgres.sh}{3nf:student:violation:update}{%
 We noticed that the name of the father of Mr.~Bibbo, Mr.~Bibotto, and Ms.~Bibboba is actually Mr.~B{\"o}dd{\"o}, not Mr.~Boddo. %
