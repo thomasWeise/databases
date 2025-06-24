@@ -10,16 +10,18 @@ Both columns reference addresses to simulate a multivalued attribute.}%
 \label{fig:anomalyMultivalued}%
 \end{figure}%
 %
-\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/anomaly_multivalued/generated_sql 01_anomalies_database_2001.sql}%
-\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/anomaly_multivalued/generated_sql 03_public_address_table_5071.sql anomalies}%
+\gitExecSQLraw{}{}{normalization/1nf/anomaly_multivalued/generated_sql}{01_anomalies_database_2001.sql}{}{}{}%
+%
+\gitExecSQLraw{}{}{normalization/1nf/anomaly_multivalued/generated_sql}{03_public_address_table_5071.sql}{anomalies}{}{}%
 %
 \gitLoadAndExecSQL{1nf:anomaly_multivalued:04_public_student_table_5079}{}{normalization/1nf/anomaly_multivalued/generated_sql}{04_public_student_table_5079.sql}{anomalies}{}{}%
 \listingSQL{1nf:anomaly_multivalued:04_public_student_table_5079}{%
 The generated \sql\ code for creating the \sqlil{student} table with two columns for addresses based on \cref{fig:anomalyMultivalued}, which violates the \pgls{1NF}. %
 The corresponding \sqlilIdx{REFERENCES} constraints have been omitted here for the sake of brevity.}%
 %
-\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/anomaly_multivalued/generated_sql 05_public_student_student_address_1_fk_constraint_5085.sql anomalies}%
-\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/anomaly_multivalued/generated_sql 06_public_student_student_address_2_fk_constraint_5086.sql anomalies}%
+\gitExecSQLraw{}{}{normalization/1nf/anomaly_multivalued/generated_sql}{05_public_student_student_address_1_fk_constraint_5085.sql}{anomalies}{}{}%
+%
+\gitExecSQLraw{}{}{normalization/1nf/anomaly_multivalued/generated_sql}{ 06_public_student_student_address_2_fk_constraint_5086.sql}{anomalies}{}{}%
 %
 \gitLoadAndExecSQL{1nf:anomaly_multivalued:insert}{}{normalization/1nf/anomaly_multivalued}{insert.sql}{anomalies}{}{}%
 \listingSQL{1nf:anomaly_multivalued:insert}{%
@@ -29,7 +31,7 @@ Inserting some data into the tables~\sqlil{student} and~\sqlil{address} in viola
 \listingSQLandOutput{1nf:anomaly_multivalued:select}{select.sql}{%
 Trying to find all the students with at least one address in China, which is harder than necessary, because table \sqlil{student} violates the \pgls{1NF}.}{}%
 %
-\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/anomaly_multivalued cleanup.sql}%
+\gitExecSQLraw{}{}{normalization/1nf/anomaly_multivalued}{cleanup.sql}{}{}{}%
 \afterpage{\clearpage}%
 %
 Let us continue our example from the previous section.
@@ -124,8 +126,9 @@ Refactoring the multivalued attribute that was represented as repeating group in
 \label{fig:fixedMultivalued}%
 \end{figure}%
 %
-\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/fixed_multivalued/generated_sql 01_fixed_database_2001.sql}%
-\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/fixed_multivalued/generated_sql 03_public_address_table_5071.sql fixed}%
+\gitExecSQLraw{}{}{normalization/1nf/fixed_multivalued/generated_sql}{01_fixed_database_2001.sql}{}{}{}%
+%
+\gitExecSQLraw{}{}{normalization/1nf/fixed_multivalued/generated_sql}{03_public_address_table_5071.sql}{fixed}{}{}%
 %
 \gitLoadAndExecSQL{1nf:fixed_multivalued:04_public_student_table_5079}{}{normalization/1nf/fixed_multivalued/generated_sql}{04_public_student_table_5079.sql}{fixed}{}{}%
 \listingSQL{1nf:fixed_multivalued:04_public_student_table_5079}{%
@@ -136,8 +139,9 @@ The generated \sql\ code for creating the \sqlil{student} table, which now only 
 The generated \sql\ code for creating the \sqlil{student_address} table, which has a composite primary key composed of the \sqlil{student} and \sqlil{address} foreign keys. %
 The corresponding \sqlilIdx{REFERENCES} constraints have been omitted here for the sake of brevity.}%
 %
-\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/fixed_multivalued/generated_sql 06_public_student_address_student_fk_constraint_5087.sql fixed}%
-\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/fixed_multivalued/generated_sql 07_public_student_address_address_fk_constraint_5088.sql fixed}%
+\gitExecSQLraw{}{}{normalization/1nf/fixed_multivalued/generated_sql}{06_public_student_address_student_fk_constraint_5087.sql}{fixed}{}{}%
+%
+\gitExecSQLraw{}{}{normalization/1nf/fixed_multivalued/generated_sql}{07_public_student_address_address_fk_constraint_5088.sql}{fixed}{}{}%
 %
 \gitLoadAndExecSQL{1nf:fixed_multivalued:insert}{}{normalization/1nf/fixed_multivalued}{insert.sql}{fixed}{}{}%
 \listingSQL{1nf:fixed_multivalued:insert}{%
@@ -147,7 +151,7 @@ Inserting some data into the tables~\sqlil{student}, \sqlil{address}, and~\sqlil
 \listingSQLandOutput{1nf:fixed_multivalued:select}{select.sql}{%
 Finding all the students with addresses in China is now easier, as no \sqlilIdx{UNION} is required anymore.}{}%
 %
-\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/fixed_multivalued cleanup.sql}%
+\gitExecSQLraw{}{}{normalization/1nf/fixed_multivalued}{cleanup.sql}{}{}{}
 
 So let us fix this problem by extracting the multivalued attribute into a separate table.
 For the sake of simplicity, we will not enforce that each student must have at least one address.

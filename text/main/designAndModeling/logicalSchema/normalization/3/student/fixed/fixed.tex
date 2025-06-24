@@ -10,7 +10,7 @@
 \label{fig:studentFixed3nf}%
 \end{figure}%
 %
-\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/3nf/student/fixed/generated_sql 01_fixed_database_2001.sql}%
+\gitExecSQLraw{}{}{normalization/3nf/student/fixed/generated_sql}{01_fixed_database_2001.sql}{}{}{}
 %
 \gitLoadAndExecSQL{3nf:student:fixed:03_public_student_table_5071}{}{normalization/3nf/student/fixed/generated_sql}{03_public_student_table_5071.sql}{fixed}{}{}%
 \listingSQL{3nf:student:fixed:03_public_student_table_5071}{%

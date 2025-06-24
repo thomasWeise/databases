@@ -10,7 +10,7 @@
 \label{fig:studentViolation3nf}%
 \end{figure}%
 %
-\gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/3nf/student/violation/generated_sql 01_violation_database_2002.sql}%
+\gitExecSQLraw{}{}{normalization/3nf/student/violation/generated_sql}{01_violation_database_2002.sql}{}{}{}%
 %
 \gitLoadAndExecSQL{3nf:student:violation:03_public_student_table_5103}{}{normalization/3nf/student/violation/generated_sql}{03_public_student_table_5103.sql}{violation}{}{}%
 \listingSQL{3nf:student:violation:03_public_student_table_5103}{%
