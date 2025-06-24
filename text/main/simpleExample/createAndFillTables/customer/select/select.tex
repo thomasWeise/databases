@@ -1,8 +1,9 @@
 \hsection{Selecting Data}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{factory}{select_from_table_customer.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:select_from_table_customer}{%
+\gitLoadAndExecSQL{factory:select_from_table_customer}{}{factory}{select_from_table_customer.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{factory:select_from_table_customer}{select_from_table_customer.sql}{%
 Obtaining information from our new table~\sqlil{customer}.%
-}%
+}{}%
 %
 Let us complete this exercise by extracting some data from the new table~\sqlil{customer} in \cref{lst:factory:select_from_table_customer}.
 First, we want to have a list of all customers from France.

@@ -142,9 +142,10 @@ The generated script to create the \sqlil{person_database}~\db.}%
 \gitLoadAndExecSQL{person_1:09_public_person_person_id_person_id_fk_constraint_5092}{}{teachingManagement/logical/person_database_1/generated_sql}{09_public_person_person_id_person_id_fk_constraint_5092.sql}{person_database}{}{}%
 \listingSQL{person_1:09_public_person_person_id_person_id_fk_constraint_5092}{The generated script to create the constraint that enforces that, for each row in table~\sqlil{person}, at least one related row in table~\sqlil{personal_id} exists.}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{teachingManagement/logical/person_database_1}{insert_and_select.sql}{person_database}{}{}{postgres.sh}{person_database_1:insert_and_select}{%
+\gitLoadAndExecSQL{person_database_1:insert_and_select}{}{teachingManagement/logical/person_database_1}{insert_and_select.sql}{person_database}{}{}%
+\listingSQLandOutput{person_database_1:insert_and_select}{insert_and_select.sql}{%
 Inserting into and selecting data from the tables in the \sqlil{person_database}.%
-}%
+}{}%
 %
 \gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_1 cleanup.sql}%
 %

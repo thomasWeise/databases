@@ -29,27 +29,30 @@ However, the other attributes each only depend on one part of this primary key.}
 he generated \sql\ code for creating the table \sqlil{building_room} that violates the \pgls{2NF} based on \cref{fig:roomsViolation2nf:model}.}%
 %
 \gitLoadAndExecSQL{2nf:rooms:violation:insert}{}{normalization/2nf/rooms/violation}{insert.sql}{violation}{}{}%
-\listingSQL{label}{%
+\listingSQL{2nf:rooms:violation:insert}{%
 Inserting some data into the table~\sqlil{building_room} in violation of the \pgls{2NF}.}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{normalization/2nf/rooms/violation}{delete.sql}{violation}{}{}{postgres.sh}{2nf:rooms:violation:delete}{%
+\gitLoadAndExecSQL{2nf:rooms:violation:delete}{}{normalization/2nf/rooms/violation}{delete.sql}{violation}{}{}%
+\listingSQLandOutput{2nf:rooms:violation:delete}{delete.sql}{%
 First, we select a list of all buildings from the \db, which yields 4~buildings. %
 Then we delete the two offices 904a and 904b of Building~53 from our \db. %
 This causes a deletion anomaly~(\cref{def:deletionAnomaly}):~all data about Building~53 to disappear. %
-So when we select the list of all buildings again, now there are only~3.}%
+So when we select the list of all buildings again, now there are only~3.}{}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{normalization/2nf/rooms/violation}{update.sql}{violation}{}{}{postgres.sh}{2nf:rooms:violation:update}{%
+\gitLoadAndExecSQL{2nf:rooms:violation:update}{}{normalization/2nf/rooms/violation}{update.sql}{violation}{}{}%
+\listingSQLandOutput{2nf:rooms:violation:update}{update.sql}{%
 We want to see all rooms in South Campus~2. %
 Due to some inconsistent spelling~(South Campus~II vs.\ South Campus~2), the first query misses some rooms. %
 We then run a modified query, which gives us all the rooms. %
 We can also fix the table by updating the corresponding rows, after which the first query also works correctly.%
-}%
+}{}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{normalization/2nf/rooms/violation}{update2.sql}{violation}{}{}{postgres.sh}{2nf:rooms:violation:update2}{%
+\gitLoadAndExecSQL{2nf:rooms:violation:update2}{}{normalization/2nf/rooms/violation}{update2.sql}{violation}{}{}%
+\listingSQLandOutput{2nf:rooms:violation:update2}{update2.sql}{%
 We want to change the name of Building~36 to \inQuotes{Computer Science Building.} %
 While we only want to change one single piece of information, we actually have to update three rows. %
 This is an update anomaly~(\cref{def:updateAnomaly}) caused by the violation of the \pgls{2NF} of our design.%
-}%
+}{}%
 %
 \gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/2nf/rooms/violation cleanup.sql}%
 %

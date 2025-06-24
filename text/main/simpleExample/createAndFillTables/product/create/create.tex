@@ -69,9 +69,10 @@ The session is terminated and we are back in the normal \pgls{terminal}.%
 \label{fig:createTableProduct:B}%
 \end{figure}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{factory}{create_table_product.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:create_table_product}{%
+\gitLoadAndExecSQL{factory:create_table_product}{}{factory}{create_table_product.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{factory:create_table_product}{create_table_product.sql}{%
 Creating the table \textil{product} to store the products we produce and sell.%
-}%
+}{}%
 %
 So let us create the table~\sqlil{product}.
 As we have already learned, there are two ways for doing this:

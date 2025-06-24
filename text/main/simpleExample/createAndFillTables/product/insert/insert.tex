@@ -2,9 +2,10 @@
 \hsection{Inserting some Data}%
 \afterpage{\clearpage}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{factory}{insert_into_table_product.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:insert_into_table_product}{%
+\gitLoadAndExecSQL{factory:insert_into_table_product}{}{factory}{insert_into_table_product.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{factory:insert_into_table_product}{insert_into_table_product.sql}{%
 Storing some products in the table~\sqlil{product}.%
-}%
+}{}%
 %
 Now the table \sqlil{product} exists, but it is empty.
 Let us fill it with data.

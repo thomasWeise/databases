@@ -1,8 +1,9 @@
 \hsection{Creating the Table}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{factory}{create_table_demand.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:create_table_demand}{%
+\gitLoadAndExecSQL{factory:create_table_demand}{}{factory}{create_table_demand.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{factory:create_table_demand}{create_table_demand.sql}{%
 Creating the table \textil{demand} to store the orders of our customers.%
-}%
+}{}%
 %
 Naturally, we would like to call this table, which stores orders, something like~\sqlil{order}~(as we always use singular table names as stated in \cref{bp:tableName}).
 Unfortunately, we already learned that \sqlil{ORDER}\sqlIdx{ORDER BY} is a reserved keyword in \sql.%

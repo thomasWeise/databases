@@ -9,12 +9,14 @@
 \label{fig:rm:kl}%
 \end{figure}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{KL_tables.sql}{relationships}{}{}{postgres.sh}{KL_tables}{%
+\gitLoadAndExecSQL{KL_tables}{}{conceptualToRelational}{KL_tables.sql}{relationships}{}{}%
+\listingSQLandOutput{KL_tables}{KL_tables.sql}{%
 The realization of a \crowsFoot{K}{M1}{L}{OM} conceptual relationship.%
-}%
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{KL_insert_and_select.sql}{relationships}{}{}{postgres.sh}{KL_insert_and_select}{%
+}{}%
+\gitLoadAndExecSQL{KL_insert_and_select}{}{conceptualToRelational}{KL_insert_and_select.sql}{relationships}{}{}%
+\listingSQLandOutput{KL_insert_and_select}{KL_insert_and_select.sql}{%
 Inserting into and selecting data from the realization of an \crowsFoot{K}{M1}{L}{OM} conceptual relationship given in \cref{lst:KL_tables}.%
-}%
+}{}%
 %
 \gitExec{cdtrmTableL}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships k kid;x}{cdtrmTableK}%
 \gitExec{cdtrmTableL}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships l lid;fkkid;y}%

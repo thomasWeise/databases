@@ -1,9 +1,10 @@
 %
 \hsection{Summary}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{cleanup.sql}{}{}{}{postgres.sh}{conceptualToRelational:cleanup}{%
+\gitLoadAndExecSQL{conceptualToRelational:cleanup}{}{conceptualToRelational}{cleanup.sql}{}{}{}%
+\listingSQLandOutput{conceptualToRelational:cleanup}{cleanup.sql}{%
 We now tear down the example \db\ that we used to play around with when mapping conceptual relationships between entity types to tables in~\sql.%
-}%
+}{}%
 %
 This was quite a journey.
 We have worked our way through every single binary conceptual relationship type that can be expressed with crow's foot notation.

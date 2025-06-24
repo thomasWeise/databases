@@ -1,9 +1,11 @@
 %
 \hsection{Inserting some Data}%
 \label{sec:factory:table:customer:insert}%
-\gitSQLAndOutput{\databasesCodeRepo}{factory}{insert_into_table_customer.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:insert_into_table_customer}{%
+%
+\gitLoadAndExecSQL{factory:insert_into_table_customer}{}{factory}{insert_into_table_customer.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{factory:insert_into_table_customer}{insert_into_table_customer.sql}{%
 Storing some customer records in the table \textil{customer}.%
-}%
+}{}%
 %
 We now enter the data of the four (imaginary) customers of our company.
 We can do this again with the \sqlilIdx{INSERT INTO} command.

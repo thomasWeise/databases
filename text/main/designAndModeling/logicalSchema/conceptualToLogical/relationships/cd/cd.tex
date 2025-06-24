@@ -8,13 +8,15 @@
 \label{fig:rm:cd}%
 \end{figure}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{CD_tables.sql}{relationships}{}{}{postgres.sh}{CD_tables}{%
+\gitLoadAndExecSQL{CD_tables}{}{conceptualToRelational}{CD_tables.sql}{relationships}{}{}%
+\listingSQLandOutput{CD_tables}{CD_tables.sql}{%
 The three-table realization of a \crowsFoot{C}{O1}{D}{M1} conceptual relationship.%
-}%
+}{}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{CD_insert_and_select.sql}{relationships}{}{}{postgres.sh}{CD_insert_and_select}{%
+\gitLoadAndExecSQL{CD_insert_and_select}{}{conceptualToRelational}{CD_insert_and_select.sql}{relationships}{}{}%
+\listingSQLandOutput{CD_insert_and_select}{CD_insert_and_select.sql}{%
 Inserting into and selecting data from the three-table realization of a \crowsFoot{C}{O1}{D}{M1} conceptual relationship given in \cref{lst:CD_tables}.%
-}%
+}{}%
 %
 \gitExec{cdtrmTableC}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships c cid;fkdid;x}%
 \gitExec{cdtrmTableD}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships d did;y}%
@@ -30,9 +32,10 @@ Inserting into and selecting data from the three-table realization of a \crowsFo
 \label{fig:rm:cd:tables}%
 \end{figure}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{CD_insert_error.sql}{relationships}{}{}{postgres.sh}{CD_insert_error}{%
+\gitLoadAndExecSQL{CD_insert_error}{}{conceptualToRelational}{CD_insert_error.sql}{relationships}{}{}%
+\listingSQLandOutput{CD_insert_error}{CD_insert_error.sql}{%
 It is impossible to insert a row into table~\sqlil{c} that references a row in table~\sqlil{d} that is already referenced by another row in table~\sqlil{c}.%
-}%
+}{}%
 %
 We have the two entity types~C and~D.
 Each entity of type~C must be connected to exactly one entity of type~D.

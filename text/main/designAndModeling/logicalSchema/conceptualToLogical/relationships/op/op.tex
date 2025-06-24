@@ -9,12 +9,14 @@
 \label{fig:rm:op}%
 \end{figure}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{OP_tables.sql}{relationships}{}{}{postgres.sh}{OP_tables}{%
+\gitLoadAndExecSQL{OP_tables}{}{conceptualToRelational}{OP_tables.sql}{relationships}{}{}%
+\listingSQLandOutput{OP_tables}{OP_tables.sql}{%
 The realization of a \crowsFoot{O}{OM}{P}{OM} conceptual relationship.%
-}%
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{OP_insert_and_select.sql}{relationships}{}{}{postgres.sh}{OP_insert_and_select}{%
+}{}%
+\gitLoadAndExecSQL{OP_insert_and_select}{}{conceptualToRelational}{OP_insert_and_select.sql}{relationships}{}{}%
+\listingSQLandOutput{OP_insert_and_select}{OP_insert_and_select.sql}{%
 Inserting into and selecting data from the realization of an \crowsFoot{O}{OM}{P}{OM} conceptual relationship given in \cref{lst:OP_tables}.%
-}%
+}{}%
 %
 \gitExec{cdtrmTableO}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships o oid;x}%
 \gitExec{cdtrmTableP}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships p pid;y}%
@@ -33,9 +35,10 @@ Inserting into and selecting data from the realization of an \crowsFoot{O}{OM}{P
 \label{fig:rm:op:tables}%
 \end{figure}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{OP_insert_error.sql}{relationships}{}{}{postgres.sh}{OP_insert_error}{%
+\gitLoadAndExecSQL{OP_insert_error}{}{conceptualToRelational}{OP_insert_error.sql}{relationships}{}{}%
+\listingSQLandOutput{OP_insert_error}{OP_insert_error.sql}{%
 Trying to relate two entities twice, which is of course not permitted in \emph{any} relationship pattern.%
-}%
+}{}%
 %
 We have the two entity types~O and~P.
 Each entity of type~O may be connected to zero, one, or multiple entities of type~P.

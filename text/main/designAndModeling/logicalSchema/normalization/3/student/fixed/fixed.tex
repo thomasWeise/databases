@@ -28,14 +28,16 @@ We add the foreign key constraint to table~\sqlil{student}.}%
 \listingSQL{3nf:student:fixed:insert}{%
 Inserting some data into the tables~\sqlil{parent} and~\sqlil{student}.}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{normalization/3nf/student/fixed}{select.sql}{fixed}{}{}{postgres.sh}{3nf:student:fixed:select}{%
+\gitLoadAndExecSQL{3nf:student:fixed:select}{}{normalization/3nf/student/fixed}{select.sql}{fixed}{}{}%
+\listingSQLandOutput{3nf:student:fixed:select}{select.sql}{%
 If we want to get the names of the parents of the students, we now need an~\sqlilIdx{INNER JOIN}.%
-}%
+}{}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{normalization/3nf/student/fixed}{update.sql}{fixed}{}{}{postgres.sh}{3nf:student:fixed:update}{%
+\gitLoadAndExecSQL{3nf:student:fixed:update}{}{normalization/3nf/student/fixed}{update.sql}{fixed}{}{}%
+\listingSQLandOutput{3nf:student:fixed:update}{update.sql}{%
 We noticed that the name of the father of Mr.~Bibbo, Mr.~Bibotto, and Ms.~Bibboba is actually Mr.~B{\"o}dd{\"o}, not Mr.~Boddo. %
 Since we now observe the \pgls{3NF}, we need to touch only a single records to change this.%
-}%
+}{}%
 %
 %
 In \cref{fig:studentFixed3nf} we illustrate a logical model that no longer violates the \pgls{3NF}.

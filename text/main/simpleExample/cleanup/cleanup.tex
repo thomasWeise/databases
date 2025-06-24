@@ -1,14 +1,16 @@
 %
 \hsection{Cleanup After the Example}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{factory}{cleanup_inside_database.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:cleanup_inside_database}{%
+\gitLoadAndExecSQL{factory:cleanup_inside_database}{}{factory}{cleanup_inside_database.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{factory:cleanup_inside_database}{cleanup_inside_database.sql}{%
 User \textil{boss} deletes all tables and views inside the database, in the inverse order of their creation.%
-}%
+}{}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{factory}{cleanup_database_and_user.sql}{}{}{}{postgres.sh}{factory:cleanup_database_and_user}{%
+\gitLoadAndExecSQL{factory:cleanup_database_and_user}{}{factory}{cleanup_database_and_user.sql}{}{}{}%
+\listingSQLandOutput{factory:cleanup_database_and_user}{cleanup_database_and_user.sql}{%
 Delete the database \textil{factory} and the user \textil{boss}. %
 This must be executed by the administrator account \textil{postgres}.%
-}%
+}{}%
 %
 We are now approaching the end of this brief journey crisscrossing the domain of \pglspl{rdb} to get a rough impression what they are.
 To finish it, let us delete all the things we created.

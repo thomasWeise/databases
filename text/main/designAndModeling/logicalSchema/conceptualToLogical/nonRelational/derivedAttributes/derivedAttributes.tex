@@ -51,9 +51,10 @@ To compute the age of a person, we need the \pgls{dateOfBirth} and we will someh
 \sqlil{CURRENT_DATE}\sqlIdx{CURRENT\_DATE} certainly is not an immutable or constant function.
 It changes daily.
 %
-\gitSQLAndOutput{\databasesCodeRepo}{teachingManagement/logical/person_database_2}{view_person_age.sql}{person_database}{}{}{postgres.sh}{person_database_2:view_person_age}{%
+\gitLoadAndExecSQL{person_database_2:view_person_age}{}{teachingManagement/logical/person_database_2}{view_person_age.sql}{person_database}{}{}%
+\listingSQLandOutput{person_database_2:view_person_age}{view_person_age.sql}{%
 Create a view that represents the derived attribute \emph{age} and execute it.%
-}%
+}{}%
 %
 \gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/person_database_2 cleanup.sql}%
 

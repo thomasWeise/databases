@@ -55,6 +55,7 @@ So we modeled this using \pgmodeler\ and get the logical schema illustrated in \
 \listingSQL{teaching_1:03_public_student_table_5071}{The generated script to create the table~\sqlil{student}.}%
 %
 \gitLoadAndExecSQL{teaching_1:04_public_professor_table_5087}{}{teachingManagement/logical/teaching_database_1/generated_sql}{04_public_professor_table_5087.sql}{teaching_database}{}{}%
+\listingSQL{teaching_1:04_public_professor_table_5087}{The generated script to create the table~\sqlil{professor}.}%
 %
 \gitLoadAndExecSQL{teaching_1:05_public_module_table_5095}{}{teachingManagement/logical/teaching_database_1/generated_sql}{05_public_module_table_5095.sql}{teaching_database}{}{}%
 \listingSQL{teaching_1:05_public_module_table_5095}{The generated script to create the table~\sqlil{module}.}%
@@ -77,9 +78,10 @@ So we modeled this using \pgmodeler\ and get the logical schema illustrated in \
 \gitLoadAndExecSQL{teaching_1:11_public_enrolls_enrolls_course_fk_constraint_5151}{}{teachingManagement/logical/teaching_database_1/generated_sql}{11_public_enrolls_enrolls_course_fk_constraint_5151.sql}{teaching_database}{}{}%
 \listingSQL{teaching_1:11_public_enrolls_enrolls_course_fk_constraint_5151}{The generated script to create the constraint enforcing that each row in table~\sqlil{enrolls} is related to exactly one row in table~\sqlil{course}.}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{teachingManagement/logical/teaching_database_1}{insert_and_select.sql}{teaching_database}{}{}{postgres.sh}{teaching_database_1:insert_and_select}{%
+\gitLoadAndExecSQL{teaching_database_1:insert_and_select}{}{teachingManagement/logical/teaching_database_1}{insert_and_select.sql}{teaching_database}{}{}%
+\listingSQLandOutput{teaching_database_1:insert_and_select}{insert_and_select.sql}{%
 Inserting into and selecting data from the tables in the \sqlil{teaching_database}.%
-}%
+}{}%
 %
 \gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh teachingManagement/logical/teaching_database_1 cleanup.sql}%
 %

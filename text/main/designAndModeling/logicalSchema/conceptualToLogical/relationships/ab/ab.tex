@@ -8,12 +8,14 @@
 \label{fig:rm:ab}%
 \end{figure}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{AB_1_tables.sql}{relationships}{}{}{postgres.sh}{AB_1_tables}{%
+\gitLoadAndExecSQL{AB_1_tables}{}{conceptualToRelational}{AB_1_tables.sql}{relationships}{}{}%
+\listingSQLandOutput{AB_1_tables}{AB_1_tables.sql}{%
 The three-table realization of an \crowsFoot{A}{O1}{B}{O1} conceptual relationship.%
-}%
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{AB_1_insert_and_select.sql}{relationships}{}{}{postgres.sh}{AB_1_insert_and_select}{%
+}{}%
+\gitLoadAndExecSQL{AB_1_insert_and_select}{}{conceptualToRelational}{AB_1_insert_and_select.sql}{relationships}{}{}%
+\listingSQLandOutput{AB_1_insert_and_select}{AB_1_insert_and_select.sql}{%
 Inserting into and selecting data from the three-table realization of an \crowsFoot{A}{O1}{B}{O1} conceptual relationship given in \cref{lst:AB_1_tables}.%
-}%
+}{}%
 %
 \gitExec{cdtrmTableAO}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships a aid;x}%
 \gitExec{cdtrmTableBO}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships b bid;y}%
@@ -32,22 +34,27 @@ Inserting into and selecting data from the three-table realization of an \crowsF
 \label{fig:rm:ab:1:tables}%
 \end{figure}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{AB_1_insert_error_1.sql}{relationships}{}{}{postgres.sh}{AB_1_insert_error_1}{%
+\gitLoadAndExecSQL{AB_1_insert_error_1}{}{conceptualToRelational}{AB_1_insert_error_1.sql}{relationships}{}{}%
+\listingSQLandOutput{AB_1_insert_error_1}{AB_1_insert_error_1.sql}{%
 The schema illustrated in \cref{lst:AB_1_tables} prevents entities of type~A to be related to more than one entity of type~B.%
-}%
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{AB_1_insert_error_2.sql}{relationships}{}{}{postgres.sh}{AB_1_insert_error_2}{%
+}{}%
+\gitLoadAndExecSQL{AB_1_insert_error_2}{}{conceptualToRelational}{AB_1_insert_error_2.sql}{relationships}{}{}%
+\listingSQLandOutput{AB_1_insert_error_2}{AB_1_insert_error_2.sql}{%
 The schema illustrated in \cref{lst:AB_1_tables} prevents entities of type~B to be related to more than one entity of type~A.%
-}%
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{AB_1_cleanup.sql}{relationships}{}{}{postgres.sh}{AB_1_cleanup}{%
+}{}%
+\gitLoadAndExecSQL{AB_1_cleanup}{}{conceptualToRelational}{AB_1_cleanup.sql}{relationships}{}{}%
+\listingSQLandOutput{AB_1_cleanup}{AB_1_cleanup.sql}{%
 Deleting the three tables again, because we want to try another realization of the \crowsFoot{A}{O1}{B}{O1} conceptual relationship.%
-}%
+}{}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{AB_2_tables.sql}{relationships}{}{}{postgres.sh}{AB_2_tables}{%
+\gitLoadAndExecSQL{AB_2_tables}{}{conceptualToRelational}{AB_2_tables.sql}{relationships}{}{}%
+\listingSQLandOutput{AB_2_tables}{AB_2_tables.sql}{%
 The two-table realization of an \crowsFoot{A}{O1}{B}{O1} conceptual relationship.%
-}%
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{AB_2_insert_and_select.sql}{relationships}{}{}{postgres.sh}{AB_2_insert_and_select}{%
+}{}%
+\gitLoadAndExecSQL{AB_2_insert_and_select}{}{conceptualToRelational}{AB_2_insert_and_select.sql}{relationships}{}{}%
+\listingSQLandOutput{AB_2_insert_and_select}{AB_2_insert_and_select.sql}{%
 Inserting into and selecting data from the two-table realization of an \crowsFoot{A}{O1}{B}{O1} conceptual relationship given in \cref{lst:AB_2_tables}.%
-}%
+}{}%
 %
 \gitExec{cdtrmTableAT}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships a aid;fkbid;x}%
 \gitExec{cdtrmTableBT}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships b bid;y}%
@@ -63,10 +70,11 @@ Inserting into and selecting data from the two-table realization of an \crowsFoo
 \label{fig:rm:ab:2:tables}%
 \end{figure}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{AB_2_insert_error_2.sql}{relationships}{}{}{postgres.sh}{AB_2_insert_error_2}{%
+\gitLoadAndExecSQL{AB_2_insert_error_2}{}{conceptualToRelational}{AB_2_insert_error_2.sql}{relationships}{}{}%
+\listingSQLandOutput{AB_2_insert_error_2}{AB_2_insert_error_2.sql}{%
 The schema illustrated in \cref{lst:AB_2_tables} prevents entities of type~B to be related to more than one entity of type~A via constraints. %
 The entities of type~A can only be associated with one entity of type~B because of the table structure.%
-}%
+}{}%
 %
 We have the two entity types~A and~B.
 Each entity of type~A is connected to zero or one entity of type~B.

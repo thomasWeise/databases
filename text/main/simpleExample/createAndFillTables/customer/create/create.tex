@@ -1,8 +1,10 @@
 %
 \hsection{Creating the Table}%
-\gitSQLAndOutput{\databasesCodeRepo}{factory}{create_table_customer.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:create_table_customer}{%
+%
+\gitLoadAndExecSQL{factory:create_table_customer}{}{factory}{create_table_customer.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{factory:create_table_customer}{create_table_customer.sql}{%
 Creating the table \textil{customer} to store the information about our factory's customers.%
-}%
+}{}%
 %
 \begin{sloppypar}%
 We create the table \sqlil{customer} using the \sqlil{CREATE TABLE}\sqlIdx{CREATE!TABLE}\sqlIdx{TABLE} command in \cref{lst:factory:create_table_customer}.

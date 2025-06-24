@@ -9,13 +9,15 @@
 \label{fig:rm:ef}%
 \end{figure}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{EF_1_tables.sql}{relationships}{}{}{postgres.sh}{EF_1_tables}{%
+\gitLoadAndExecSQL{EF_1_tables}{}{conceptualToRelational}{EF_1_tables.sql}{relationships}{}{}%
+\listingSQLandOutput{EF_1_tables}{EF_1_tables.sql}{%
 The three-table realization of an \crowsFoot{E}{O1}{F}{OM} conceptual relationship.%
-}%
+}{}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{EF_1_insert_and_select.sql}{relationships}{}{}{postgres.sh}{EF_1_insert_and_select}{%
+\gitLoadAndExecSQL{EF_1_insert_and_select}{}{conceptualToRelational}{EF_1_insert_and_select.sql}{relationships}{}{}%
+\listingSQLandOutput{EF_1_insert_and_select}{EF_1_insert_and_select.sql}{%
 Inserting into and selecting data from the three-table realization of an \crowsFoot{E}{O1}{F}{OM} conceptual relationship given in \cref{lst:EF_1_tables}.%
-}%
+}{}%
 %
 \gitExec{cdtrmTableEO}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships e eid;x}%
 \gitExec{cdtrmTableFO}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships f fid;y}%
@@ -34,15 +36,19 @@ Inserting into and selecting data from the three-table realization of an \crowsF
 \label{fig:rm:ef:1:tables}%
 \end{figure}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{EF_1_cleanup.sql}{relationships}{}{}{postgres.sh}{EF_1_cleanup}{Deleting the tables created in \cref{lst:EF_1_tables}.}%
+\gitLoadAndExecSQL{EF_1_cleanup}{}{conceptualToRelational}{EF_1_cleanup.sql}{relationships}{}{}%
+\listingSQLandOutput{EF_1_cleanup}{EF_1_cleanup.sql}{%
+Deleting the tables created in \cref{lst:EF_1_tables}.}{}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{EF_2_tables.sql}{relationships}{}{}{postgres.sh}{EF_2_tables}{%
+\gitLoadAndExecSQL{EF_2_tables}{}{conceptualToRelational}{EF_2_tables.sql}{relationships}{}{}%
+\listingSQLandOutput{EF_2_tables}{EF_2_tables.sql}{%
 A two-table realization of an \crowsFoot{E}{O1}{F}{M1} conceptual relationship.%
-}%
+}{}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{EF_2_insert_and_select.sql}{relationships}{}{}{postgres.sh}{EF_2_insert_and_select}{%
+\gitLoadAndExecSQL{EF_2_insert_and_select}{}{conceptualToRelational}{EF_2_insert_and_select.sql}{relationships}{}{}%
+\listingSQLandOutput{EF_2_insert_and_select}{EF_2_insert_and_select.sql}{%
 Inserting into and selecting data from the two-table realization of an \crowsFoot{E}{O1}{F}{OM} conceptual relationship given in \cref{lst:EF_2_tables}.%
-}%
+}{}%
 %
 \gitExec{cdtrmTableET}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships e eid;x}%
 \gitExec{cdtrmTableFT}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships f fid;fkeid;y}%

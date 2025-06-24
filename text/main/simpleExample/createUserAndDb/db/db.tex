@@ -99,11 +99,11 @@ We are back in the normal \pgls{terminal}.%
 %
 \caption{Creating a new \db, adding a comment to it, and checking whether it really was created, all via \psql.~(Continued)}%
 \end{figure}%
-
 %
-\gitSQLAndOutput{\databasesCodeRepo}{factory}{create_database.sql}{}{}{}{postgres.sh}{factory:create_database}{%
+\gitLoadAndExecSQL{factory:create_database}{}{factory}{create_database.sql}{}{}{}%
+\listingSQLandOutput{factory:create_database}{create_database.sql}{%
 Using \sql\ to create a database for user \textil{boss}.%
-}%
+}{}%
 %
 Having created the new user~\inQuotes{boss}, we can now create the \db\ \inQuotes{factory} to be owned and worked on by that user~\sqlil{boss}.
 For this, we first open a new \psql\ session in~\cref{fig:createDB01start,fig:createDB02started}.

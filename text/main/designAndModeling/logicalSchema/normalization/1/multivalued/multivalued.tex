@@ -25,8 +25,9 @@ The corresponding \sqlilIdx{REFERENCES} constraints have been omitted here for t
 \listingSQL{1nf:anomaly_multivalued:insert}{%
 Inserting some data into the tables~\sqlil{student} and~\sqlil{address} in violation of the \pgls{1NF} based on \cref{fig:anomalyMultivalued}.}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{normalization/1nf/anomaly_multivalued}{select.sql}{anomalies}{}{}{postgres.sh}{1nf:anomaly_multivalued:select}{%
-Trying to find all the students with at least one address in China, which is harder than necessary, because table \sqlil{student} violates the \pgls{1NF}.}%
+\gitLoadAndExecSQL{1nf:anomaly_multivalued:select}{}{normalization/1nf/anomaly_multivalued}{select.sql}{anomalies}{}{}%
+\listingSQLandOutput{1nf:anomaly_multivalued:select}{select.sql}{%
+Trying to find all the students with at least one address in China, which is harder than necessary, because table \sqlil{student} violates the \pgls{1NF}.}{}%
 %
 \gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/anomaly_multivalued cleanup.sql}%
 \afterpage{\clearpage}%
@@ -142,8 +143,9 @@ The corresponding \sqlilIdx{REFERENCES} constraints have been omitted here for t
 \listingSQL{1nf:fixed_multivalued:insert}{%
 Inserting some data into the tables~\sqlil{student}, \sqlil{address}, and~\sqlil{student_address}.}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{normalization/1nf/fixed_multivalued}{select.sql}{fixed}{}{}{postgres.sh}{1nf:fixed_multivalued:select}{%
-Finding all the students with addresses in China is now easier, as no \sqlilIdx{UNION} is required anymore.}%
+\gitLoadAndExecSQL{1nf:fixed_multivalued:select}{}{normalization/1nf/fixed_multivalued}{select.sql}{fixed}{}{}%
+\listingSQLandOutput{1nf:fixed_multivalued:select}{select.sql}{%
+Finding all the students with addresses in China is now easier, as no \sqlilIdx{UNION} is required anymore.}{}%
 %
 \gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/1nf/fixed_multivalued cleanup.sql}%
 

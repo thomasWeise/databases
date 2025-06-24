@@ -1,9 +1,10 @@
 %
 \hsection{Updating and Deleting Records}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{factory}{update_table_product.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:update_table_product}{%
+\gitLoadAndExecSQL{factory:update_table_product}{}{factory}{update_table_product.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{factory:update_table_product}{update_table_product.sql}{%
 Modifying some records in the table \sqlil{product}.%
-}%
+}{}%
 %
 \hsection{Updating Records}%
 %
@@ -36,9 +37,11 @@ Their \sqlil{height} indeed changed to~\sqlil{245}.
 \endhsection%
 %
 \hsection{Deleting Records}%
-\gitSQLAndOutput{\databasesCodeRepo}{factory}{delete_from_table_product.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:delete_from_table_product}{%
+%
+\gitLoadAndExecSQL{factory:delete_from_table_product}{}{factory}{delete_from_table_product.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{factory:delete_from_table_product}{delete_from_table_product.sql}{%
 Deleting a row from the table \sqlil{product}.%
-}%
+}{}%
 %
 After running our company for some time, we realized that our stock of \inQuotes{Shoe, Size 36} is never declining.
 Indeed, nobody ever purchased these smallest-size shoes.

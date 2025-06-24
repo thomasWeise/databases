@@ -87,11 +87,13 @@ For these, we again use the proper foreign key \sqlilIdx{REFERENCES} constraints
 \gitLoadAndExecSQL{person_2:11_public_has_id_has_id_person_fk_constraint_5111}{}{teachingManagement/logical/person_database_2/generated_sql}{11_public_has_id_has_id_person_fk_constraint_5111.sql}{person_database}{}{}%
 \listingSQL{person_2:11_public_has_id_has_id_person_fk_constraint_5111}{The generated \sql\ script to create the foreign key constraint ensuring that each row in table~\sqlil{has_id} is associated with one row in table~\sqlil{person}.}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{teachingManagement/logical/person_database_2}{insert.sql}{person_database}{}{}{postgres.sh}{person_database_2:insert}{%
-Inserting into the tables in the \sqlil{person_database}.}%
+\gitLoadAndExecSQL{person_database_2:insert}{}{teachingManagement/logical/person_database_2}{insert.sql}{person_database}{}{}%
+\listingSQLandOutput{person_database_2:insert}{insert.sql}{%
+Inserting into the tables in the \sqlil{person_database}.}{}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{teachingManagement/logical/person_database_2}{select.sql}{person_database}{}{}{postgres.sh}{person_database_2:select}{%
-Selecting data from the tables in the \sqlil{person_database}.}%
+\gitLoadAndExecSQL{person_database_2:select}{}{teachingManagement/logical/person_database_2}{select.sql}{person_database}{}{}%
+\listingSQLandOutput{person_database_2:select}{select.sql}{%
+Selecting data from the tables in the \sqlil{person_database}.}{}%
 
 We can export the logical model created with \pgmodeler\ and we get \cref{lst:person_2:01_person_database_database_2001,lst:person_2:03_public_person_table_5071,lst:person_2:04_public_name_table_5075,lst:person_2:05_public_address_table_5084,lst:person_2:06_public_id_type_table_5094,lst:person_2:07_public_has_id_table_5100,lst:person_2:08_public_name_name_person_fk_constraint_5108,lst:person_2:09_public_address_address_person_fk_constraint_5109,lst:person_2:10_public_has_id_has_id_id_type_fk_constraint_5110,lst:person_2:11_public_has_id_has_id_person_fk_constraint_5111}.
 \Cref{lst:person_2:01_person_database_database_2001} creates the \db\ \sqlil{person_database}.

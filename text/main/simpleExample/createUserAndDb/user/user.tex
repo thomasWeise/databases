@@ -69,9 +69,10 @@ The \psql\ session has ended and we are back in the \pgls{terminal}.%
 \caption{Creating the new user/role \textil{boss} with password \textil{superboss123} on the \postgresql\ \pgls{server} via the \psql\ \pgls{client}.~(Continued)}%
 \end{figure}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{factory}{create_user.sql}{}{}{}{postgres.sh}{factory:create_user}{%
+\gitLoadAndExecSQL{factory:create_user}{}{factory}{create_user.sql}{}{}{}%
+\listingSQLandOutput{factory:create_user}{create_user.sql}{%
 Using \sql\ to create a the user \textil{boss} with password \textil{superboss123}.%
-}%
+}{}%
 
 For the sake of simplicity, assume that we are locally logged in the \db~\server\ computer and that the password to the administrator user \textil{postgres} is set to~\textil{XXX}.
 As illustrated in \cref{fig:psqlNewUser1starting}, we first open a \pgls{terminal}~(console).

@@ -9,12 +9,14 @@
 \label{fig:rm:mn}%
 \end{figure}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{MN_tables.sql}{relationships}{}{}{postgres.sh}{MN_tables}{%
+\gitLoadAndExecSQL{MN_tables}{}{conceptualToRelational}{MN_tables.sql}{relationships}{}{}%
+\listingSQLandOutput{MN_tables}{MN_tables.sql}{%
 The realization of a \crowsFoot{M}{M1}{N}{MM} conceptual relationship.%
-}%
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{MN_insert_and_select.sql}{relationships}{}{}{postgres.sh}{MN_insert_and_select}{%
+}{}%
+\gitLoadAndExecSQL{MN_insert_and_select}{}{conceptualToRelational}{MN_insert_and_select.sql}{relationships}{}{}%
+\listingSQLandOutput{MN_insert_and_select}{MN_insert_and_select.sql}{%
 Inserting into and selecting data from the realization of an \crowsFoot{M}{M1}{N}{MM} conceptual relationship given in \cref{lst:MN_tables}.%
-}%
+}{}%
 %
 \gitExec{cdtrmTableM}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships m mid;fknid;x}%
 \gitExec{cdtrmTableN}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships n nid;fkmid;y}%
@@ -30,25 +32,30 @@ Inserting into and selecting data from the realization of an \crowsFoot{M}{M1}{N
 \label{fig:rm:mn:tables}%
 \end{figure}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{MN_insert_error_1.sql}{relationships}{}{}{postgres.sh}{MN_insert_error_1}{%
+\gitLoadAndExecSQL{MN_insert_error_1}{}{conceptualToRelational}{MN_insert_error_1.sql}{relationships}{}{}%
+\listingSQLandOutput{MN_insert_error_1}{MN_insert_error_1.sql}{%
 Trying to create a row into table~\sqlil{m} that is not related to any row in table~\sqlil{n} is not possible.%
-}%
+}{}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{MN_insert_error_2.sql}{relationships}{}{}{postgres.sh}{MN_insert_error_2}{%
+\gitLoadAndExecSQL{MN_insert_error_2}{}{conceptualToRelational}{MN_insert_error_2.sql}{relationships}{}{}%
+\listingSQLandOutput{MN_insert_error_2}{MN_insert_error_2.sql}{%
 Trying to create a row into table~\sqlil{n} that is not related to any row in table~\sqlil{m} is not possible.%
-}%
+}{}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{MN_insert_error_3.sql}{relationships}{}{}{postgres.sh}{MN_insert_error_3}{%
+\gitLoadAndExecSQL{MN_insert_error_3}{}{conceptualToRelational}{MN_insert_error_3.sql}{relationships}{}{}%
+\listingSQLandOutput{MN_insert_error_3}{MN_insert_error_3.sql}{%
 Trying to create a row in table~\sqlil{m} that references a row in table~\sqlil{n} which is referencing another row in table~\sqlil{m} is not possible.%
-}%
+}{}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{MN_insert_error_4.sql}{relationships}{}{}{postgres.sh}{MN_insert_error_4}{%
+\gitLoadAndExecSQL{MN_insert_error_4}{}{conceptualToRelational}{MN_insert_error_4.sql}{relationships}{}{}%
+\listingSQLandOutput{MN_insert_error_4}{MN_insert_error_4.sql}{%
 Trying the same thing as in \cref{lst:MN_insert_error_3}, but this time also attempting to re-adjusting the row in~\sqlil{n} with an~\sqlil{UPDATE} instruction to make reference the new row in table~\sqlil{m}, is also not possible.%
-}%
+}{}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{conceptualToRelational}{MN_insert_error_5.sql}{relationships}{}{}{postgres.sh}{MN_insert_error_5}{%
+\gitLoadAndExecSQL{MN_insert_error_5}{}{conceptualToRelational}{MN_insert_error_5.sql}{relationships}{}{}%
+\listingSQLandOutput{MN_insert_error_5}{MN_insert_error_5.sql}{%
 Changing a row in table~\sqlil{n} that references a row in table~\sqlil{m} to now reference another row in table~\sqlil{m} is not possible.
-}%
+}{}%
 %
 We have the two entity types~M and~N.
 Each entity of type~M must be linked to at least one entity of type~N, but can also be linked to many of them.

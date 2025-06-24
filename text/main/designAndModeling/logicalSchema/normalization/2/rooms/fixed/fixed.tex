@@ -27,15 +27,17 @@ The generated \sql\ code for creating the foreign key constraint linking the row
 \listingSQL{2nf:rooms:fixed:insert}{%
 Inserting the very same data as in \cref{lst:2nf:rooms:violation:insert} into the tables~\sqlil{building} and \sqlil{room}.}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{normalization/2nf/rooms/fixed}{delete.sql}{fixed}{}{}{postgres.sh}{2nf:rooms:fixed:delete}{%
+\gitLoadAndExecSQL{2nf:rooms:fixed:delete}{}{normalization/2nf/rooms/fixed}{delete.sql}{fixed}{}{}%
+\listingSQLandOutput{2nf:rooms:fixed:delete}{delete.sql}{%
 First, we select a list of all buildings from the \db, which yields 4~buildings. %
 (Notice that we do no longer need the \sqlilIdx{DISTINCT} keyword, since each building ist listed only once in tale~\sqlil{building}.) %
 Then we delete the two offices 904a and 904b of Building~53 from our \db. %
 This no longer causes a deletion anomaly, as the data of Building~53 is not deleted. %
 So when we select the list of all buildings again, it is still there. %
-This is different from the situation in \cref{exec:2nf:rooms:violation:delete}, where it disappeared.}%
+This is different from the situation in \cref{exec:2nf:rooms:violation:delete}, where it disappeared.}{}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{normalization/2nf/rooms/fixed}{update.sql}{fixed}{}{}{postgres.sh}{2nf:rooms:fixed:update}{%
+\gitLoadAndExecSQL{2nf:rooms:fixed:update}{}{normalization/2nf/rooms/fixed}{update.sql}{fixed}{}{}%
+\listingSQLandOutput{2nf:rooms:fixed:update}{update.sql}{%
 We want to see all rooms in South Campus~2. %
 Compared to \cref{lst:2nf:rooms:violation:update}, the query is more complex as we now need an \sqlilIdx{INNER JOIN}. %
 Due to the inconsistent spelling~(South Campus~II vs.\ South Campus~2), the first query finds nothing. %
@@ -43,12 +45,13 @@ We then run a modified query, which gives us all the rooms. %
 We can also fix the table~\sqlil{building} by updating the corresponding rows, after which the first query also works correctly. %
 Notice that here, only one row is updated. %
 In \cref{exec:2nf:rooms:violation:update}, two rows were affected.%
-}%
+}{}%
 %
-\gitSQLAndOutput{\databasesCodeRepo}{normalization/2nf/rooms/fixed}{update2.sql}{fixed}{}{}{postgres.sh}{2nf:rooms:fixed:update2}{%
+\gitLoadAndExecSQL{2nf:rooms:fixed:update2}{}{normalization/2nf/rooms/fixed}{update2.sql}{fixed}{}{}%
+\listingSQLandOutput{2nf:rooms:fixed:update2}{update2.sql}{%
 We want to change the name of Building~36 to \inQuotes{Computer Science Building.} %
 Different from the situation in \cref{exec:2nf:rooms:violation:update2}, only a single row needs to be changed.%
-}%
+}{}%
 %
 \gitExec{}{\databasesCodeRepo}{.}{_scripts_/postgres.sh normalization/2nf/rooms/fixed cleanup.sql}%
 %

@@ -19,9 +19,11 @@ Indeed, the meaning of the \sqlil{demand} data shown in \cref{exec:factory:inser
 Now we will see that we can also \emph{use} these contents of other tables directly in our queries, to produce clear and human-readable output.%
 %
 \hsection{Joining Tables}%
-\gitSQLAndOutput{\databasesCodeRepo}{factory}{select_customer_demand.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:select_customer_demand}{%
+%
+\gitLoadAndExecSQL{factory:select_customer_demand}{}{factory}{select_customer_demand.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{factory:select_customer_demand}{select_customer_demand.sql}{%
 Get the per-customer demands.%
-}%
+}{}%
 %
 We now want to have a list of all of our customers, and for each customer we want to see the \sqlil{id} values of all of the demands~(orders) they have issued.
 We now step-by-step build the query used in \cref{lst:factory:select_customer_demand}.
@@ -95,9 +97,11 @@ However, we can just join tables pull all the information together in a query.%
 \endhsection%
 %
 \hsection{Views as Virtual Tables}%
-\gitSQLAndOutput{\databasesCodeRepo}{factory}{create_view_sale.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:create_view_sale}{%
+%
+\gitLoadAndExecSQL{factory:create_view_sale}{}{factory}{create_view_sale.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{factory:create_view_sale}{create_view_sale.sql}{%
 Creating a view, i.e., a stored \sql\ query that can be treated like a table, to list the demands in human-readable form.%
-}%
+}{}%
 %
 We are now able to cross-reference different tables and to pull data together.
 What we want to do is to create a query where, for each demand, we see the customer name, the product name, the product price, the ordered amount, and the order date.
@@ -217,12 +221,16 @@ Eight beautiful human readable rows of data.%
 \endhsection%
 %
 \hsection{Using our View}%
-\gitSQLAndOutput{\databasesCodeRepo}{factory}{select_from_view_sale_1.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:select_from_view_sale_1}{%
+%
+\gitLoadAndExecSQL{factory:select_from_view_sale_1}{}{factory}{select_from_view_sale_1.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{factory:select_from_view_sale_1}{select_from_view_sale_1.sql}{%
 Compute the per-customer and per-product sales based on the view \textil{sale}.%
-}%
-\gitSQLAndOutput{\databasesCodeRepo}{factory}{select_from_view_sale_2.sql}{factory}{boss}{superboss123}{postgres.sh}{factory:select_from_view_sale_2}{%
+}{}%
+%
+\gitLoadAndExecSQL{factory:select_from_view_sale_2}{}{factory}{select_from_view_sale_2.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{factory:select_from_view_sale_2}{select_from_view_sale_2.sql}{%
 Compute the per-customer and per-product sales based on the view \textil{sale}.%
-}%
+}{}%
 %
 Above, we said that the view \sqlil{sale} can be used like a table.
 \sqlil{SELECT * FROM sale;} looks very much like that.
