@@ -24,7 +24,7 @@
 Inserting some data into the tables~\sqlil{student} and~\sqlil{address} in violation of the \pgls{1NF} based on \cref{fig:anomalyComposite}.}%
 %
 \gitLoadAndExecSQL{1nf:anomaly_composite:select}{}{normalization/1nf/anomaly_composite}{select.sql}{anomalies}{}{}%
-\listingSQLandOutput{1nf:anomaly_composite:select}{select.sql}{%
+\listingSQLandOutput{1nf:anomaly_composite:select}{%
 Trying to find all the students with an address in China, which is hard, because table \sqlil{address} violates the \pgls{1NF}.}{}%
 %
 \gitExecSQLraw{}{}{normalization/1nf/anomaly_composite}{cleanup.sql}{}{}{}%
@@ -95,7 +95,7 @@ The generated \sql\ code for creating the \sqlil{address} table based on \cref{f
 Inserting some data into the tables~\sqlil{student} and~\sqlil{address} as designed in \cref{fig:fixedComposite}, which now comply with the \pgls{1NF}.}%
 %
 \gitLoadAndExecSQL{1nf:fixed_composite:select}{}{normalization/1nf/fixed_composite}{select.sql}{fixed}{}{}%
-\listingSQLandOutput{1nf:fixed_composite:select}{select.sql}{%
+\listingSQLandOutput{1nf:fixed_composite:select}{%
 Trying to find all the students with an address in China becomes easier now, because \sqlil{county} is its own column. %
 Also, reassembling the full address using the string concatenation operation~\sqlil{||}\sqlIdx{\textbar\textbar}.}{}%
 %

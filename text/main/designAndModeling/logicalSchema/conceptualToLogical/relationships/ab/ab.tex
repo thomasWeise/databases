@@ -9,11 +9,11 @@
 \end{figure}%
 %
 \gitLoadAndExecSQL{AB_1_tables}{}{conceptualToRelational}{AB_1_tables.sql}{relationships}{}{}%
-\listingSQLandOutput{AB_1_tables}{AB_1_tables.sql}{%
+\listingSQLandOutput{AB_1_tables}{%
 The three-table realization of an \crowsFoot{A}{O1}{B}{O1} conceptual relationship.%
 }{}%
 \gitLoadAndExecSQL{AB_1_insert_and_select}{}{conceptualToRelational}{AB_1_insert_and_select.sql}{relationships}{}{}%
-\listingSQLandOutput{AB_1_insert_and_select}{AB_1_insert_and_select.sql}{%
+\listingSQLandOutput{AB_1_insert_and_select}{%
 Inserting into and selecting data from the three-table realization of an \crowsFoot{A}{O1}{B}{O1} conceptual relationship given in \cref{lst:AB_1_tables}.%
 }{}%
 %
@@ -35,24 +35,24 @@ Inserting into and selecting data from the three-table realization of an \crowsF
 \end{figure}%
 %
 \gitLoadAndExecSQL{AB_1_insert_error_1}{}{conceptualToRelational}{AB_1_insert_error_1.sql}{relationships}{}{}%
-\listingSQLandOutput{AB_1_insert_error_1}{AB_1_insert_error_1.sql}{%
+\listingSQLandOutput{AB_1_insert_error_1}{%
 The schema illustrated in \cref{lst:AB_1_tables} prevents entities of type~A to be related to more than one entity of type~B.%
 }{}%
 \gitLoadAndExecSQL{AB_1_insert_error_2}{}{conceptualToRelational}{AB_1_insert_error_2.sql}{relationships}{}{}%
-\listingSQLandOutput{AB_1_insert_error_2}{AB_1_insert_error_2.sql}{%
+\listingSQLandOutput{AB_1_insert_error_2}{%
 The schema illustrated in \cref{lst:AB_1_tables} prevents entities of type~B to be related to more than one entity of type~A.%
 }{}%
-\gitLoadAndExecSQL{AB_1_cleanup}{}{conceptualToRelational}{AB_1_cleanup.sql}{relationships}{}{}%
-\listingSQLandOutput{AB_1_cleanup}{AB_1_cleanup.sql}{%
+\gitLoadAndExecSQL{AB_cleanup}{}{conceptualToRelational}{AB_cleanup.sql}{relationships}{}{}%
+\listingSQLandOutput{AB_cleanup}{%
 Deleting the three tables again, because we want to try another realization of the \crowsFoot{A}{O1}{B}{O1} conceptual relationship.%
 }{}%
 %
 \gitLoadAndExecSQL{AB_2_tables}{}{conceptualToRelational}{AB_2_tables.sql}{relationships}{}{}%
-\listingSQLandOutput{AB_2_tables}{AB_2_tables.sql}{%
+\listingSQLandOutput{AB_2_tables}{%
 The two-table realization of an \crowsFoot{A}{O1}{B}{O1} conceptual relationship.%
 }{}%
 \gitLoadAndExecSQL{AB_2_insert_and_select}{}{conceptualToRelational}{AB_2_insert_and_select.sql}{relationships}{}{}%
-\listingSQLandOutput{AB_2_insert_and_select}{AB_2_insert_and_select.sql}{%
+\listingSQLandOutput{AB_2_insert_and_select}{%
 Inserting into and selecting data from the two-table realization of an \crowsFoot{A}{O1}{B}{O1} conceptual relationship given in \cref{lst:AB_2_tables}.%
 }{}%
 %
@@ -71,7 +71,7 @@ Inserting into and selecting data from the two-table realization of an \crowsFoo
 \end{figure}%
 %
 \gitLoadAndExecSQL{AB_2_insert_error_2}{}{conceptualToRelational}{AB_2_insert_error_2.sql}{relationships}{}{}%
-\listingSQLandOutput{AB_2_insert_error_2}{AB_2_insert_error_2.sql}{%
+\listingSQLandOutput{AB_2_insert_error_2}{%
 The schema illustrated in \cref{lst:AB_2_tables} prevents entities of type~B to be related to more than one entity of type~A via constraints. %
 The entities of type~A can only be associated with one entity of type~B because of the table structure.%
 }{}%
@@ -154,7 +154,7 @@ Also, if all entities of type~A were related to an entity of type~B, then we cou
 Actually, in that case, using the third table would just be a waste of space and query time.
 
 Thus, if many or most A~entities are related to B~entities, then instead of using a third table, we could alternatively add a column~\sqlil{fkbid} to the table for~A and store the primary keys of the related B~entities in that column.
-We delete the tables we just created in \cref{lst:AB_1_cleanup} to explore the two-table solution in \cref{lst:AB_1_tables}.
+We delete the tables we just created in \cref{lst:AB_cleanup} to explore the two-table solution in \cref{lst:AB_1_tables}.
 The new column~\sqlil{fkbid} added to the table~\sqlil{a} can be allowed to be~\sqlil{NULL}, because not all entities of type~A need to be related to an entity of type~B.
 It must be marked as \sqlilIdx{UNIQUE}, though, because no entity of type~B can be related to more than one entity of type~A.
 This constraint only applies to values that are \emph{not}~\sqlil{NULL}.

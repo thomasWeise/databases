@@ -565,22 +565,22 @@ We do this in \cref{exec:logical:teachingManagment:student_database_1:01_student
 \end{figure}%
 %
 \gitLoadAndExecSQL{logical:teachingManagment:student_database_1:01_student_database_database_2001}{}{teachingManagement/logical/student_database_1/generated_sql}{01_student_database_database_2001.sql}{}{}{}%
-\listingSQLandOutput{logical:teachingManagment:student_database_1:01_student_database_database_2001}{01_student_database_database_2001.sql}{%
+\listingSQLandOutput{logical:teachingManagment:student_database_1:01_student_database_database_2001}{%
 This auto-generated \sql\ script creates the \db~\sqlil{student_database}.%
 }{}%
 %
 \gitLoadAndExecSQL{logical:teachingManagment:student_database_1:03_public_student_table_5071}{}{teachingManagement/logical/student_database_1/generated_sql}{03_public_student_table_5071.sql}{student_database}{}{}%
-\listingSQLandOutput{logical:teachingManagment:student_database_1:03_public_student_table_5071}{03_public_student_table_5071.sql}{%
+\listingSQLandOutput{logical:teachingManagment:student_database_1:03_public_student_table_5071}{%
 This auto-generated \sql\ script creates the table~\sqlil{student} inside the \db~\sqlil{student_database}.%
 }{}%
 %
 \gitLoadAndExecSQL{logical:teachingManagment:student_database_1:insert}{}{teachingManagement/logical/student_database_1}{insert.sql}{student_database}{}{}%
-\listingSQLandOutput{logical:teachingManagment:student_database_1:insert}{insert.sql}{%
+\listingSQLandOutput{logical:teachingManagment:student_database_1:insert}{%
 We can insert some records into the table~\sqlil{student}.%
 }{}%
 %
 \gitLoadAndExecSQL{logical:teachingManagement:student_database_1:cleanup}{}{teachingManagement/logical/student_database_1}{cleanup.sql}{}{}{}%
-\listingSQLandOutput{logical:teachingManagement:student_database_1:cleanup}{cleanup.sql}{%
+\listingSQLandOutput{logical:teachingManagement:student_database_1:cleanup}{%
 Cleaning up after the student \db\ example.%
 }{}%
 %
@@ -1133,32 +1133,32 @@ This graphic now contains more details as well.%
 \end{figure}%
 %
 \gitLoadAndExecSQL{logical:teachingManagment:student_database_2:01_student_database_database_2001}{}{teachingManagement/logical/student_database_2/generated_sql}{01_student_database_database_2001.sql}{}{}{}%
-\listingSQLandOutput{logical:teachingManagment:student_database_2:01_student_database_database_2001}{01_student_database_database_2001.sql}{%
+\listingSQLandOutput{logical:teachingManagment:student_database_2:01_student_database_database_2001}{%
 This auto-generated \sql\ script creates the \db~\sqlil{student_database}.%
 }{}%
 %
 \gitLoadAndExecSQL{logical:teachingManagment:student_database_2:03_public_student_table_5071}{}{teachingManagement/logical/student_database_2/generated_sql}{03_public_student_table_5071.sql}{student_database}{}{}%
-\listingSQLandOutput{logical:teachingManagment:student_database_2:03_public_student_table_5071}{03_public_student_table_5071.sql}{%
+\listingSQLandOutput{logical:teachingManagment:student_database_2:03_public_student_table_5071}{%
 This auto-generated \sql\ script creates the table~\sqlil{student}.%
 }{}%
 %
 \gitLoadAndExecSQL{logical:teachingManagment:student_database_2:04_public_mobile_table_5081}{}{teachingManagement/logical/student_database_2/generated_sql}{04_public_mobile_table_5081.sql}{student_database}{}{}%
-\listingSQLandOutput{logical:teachingManagment:student_database_2:04_public_mobile_table_5081}{04_public_mobile_table_5081.sql}{%
+\listingSQLandOutput{logical:teachingManagment:student_database_2:04_public_mobile_table_5081}{%
 This auto-generated \sql\ script creates the table~\sqlil{mobile}.%
 }{}%
 %
 \gitLoadAndExecSQL{logical:teachingManagment:student_database_2:05_public_mobile_mobile_student_id_fk_constraint_5087}{}{teachingManagement/logical/student_database_2/generated_sql}{05_public_mobile_mobile_student_id_fk_constraint_5087.sql}{student_database}{}{}%
-\listingSQLandOutput{logical:teachingManagment:student_database_2:05_public_mobile_mobile_student_id_fk_constraint_5087}{05_public_mobile_mobile_student_id_fk_constraint_5087.sql}{%
+\listingSQLandOutput{logical:teachingManagment:student_database_2:05_public_mobile_mobile_student_id_fk_constraint_5087}{%
 This auto-generated \sql\ script adds the foreign key constraint to the table~\sqlil{mobile}.%
 }{}%
 %
 \gitLoadAndExecSQL{logical:teachingManagment:student_database_2:insert_and_select}{}{teachingManagement/logical/student_database_2}{insert_and_select.sql}{student_database}{}{}%
-\listingSQLandOutput{logical:teachingManagment:student_database_2:insert_and_select}{insert_and_select.sql}{%
+\listingSQLandOutput{logical:teachingManagment:student_database_2:insert_and_select}{%
 We now insert some data into the \sqlil{student} and \sqlil{mobile} tables and use a \sqlilIdx{JOIN} to select data from both.%
 }{}%
 %
 \gitLoadAndExecSQL{logical:teachingManagment:student_database_2:cleanup}{}{teachingManagement/logical/student_database_2}{cleanup.sql}{}{}{}%
-\listingSQLandOutput{logical:teachingManagment:student_database_2:cleanup}{cleanup.sql}{%
+\listingSQLandOutput{logical:teachingManagment:student_database_2:cleanup}{%
 We delete the \db\ again, so we can start with a clean slate in the next experiment.%
 }{}%
 %

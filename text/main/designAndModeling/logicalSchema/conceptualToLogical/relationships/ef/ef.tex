@@ -10,12 +10,12 @@
 \end{figure}%
 %
 \gitLoadAndExecSQL{EF_1_tables}{}{conceptualToRelational}{EF_1_tables.sql}{relationships}{}{}%
-\listingSQLandOutput{EF_1_tables}{EF_1_tables.sql}{%
+\listingSQLandOutput{EF_1_tables}{%
 The three-table realization of an \crowsFoot{E}{O1}{F}{OM} conceptual relationship.%
 }{}%
 %
 \gitLoadAndExecSQL{EF_1_insert_and_select}{}{conceptualToRelational}{EF_1_insert_and_select.sql}{relationships}{}{}%
-\listingSQLandOutput{EF_1_insert_and_select}{EF_1_insert_and_select.sql}{%
+\listingSQLandOutput{EF_1_insert_and_select}{%
 Inserting into and selecting data from the three-table realization of an \crowsFoot{E}{O1}{F}{OM} conceptual relationship given in \cref{lst:EF_1_tables}.%
 }{}%
 %
@@ -36,17 +36,17 @@ Inserting into and selecting data from the three-table realization of an \crowsF
 \label{fig:rm:ef:1:tables}%
 \end{figure}%
 %
-\gitLoadAndExecSQL{EF_1_cleanup}{}{conceptualToRelational}{EF_1_cleanup.sql}{relationships}{}{}%
-\listingSQLandOutput{EF_1_cleanup}{EF_1_cleanup.sql}{%
+\gitLoadAndExecSQL{EF_cleanup}{}{conceptualToRelational}{EF_cleanup.sql}{relationships}{}{}%
+\listingSQLandOutput{EF_cleanup}{%
 Deleting the tables created in \cref{lst:EF_1_tables}.}{}%
 %
 \gitLoadAndExecSQL{EF_2_tables}{}{conceptualToRelational}{EF_2_tables.sql}{relationships}{}{}%
-\listingSQLandOutput{EF_2_tables}{EF_2_tables.sql}{%
+\listingSQLandOutput{EF_2_tables}{%
 A two-table realization of an \crowsFoot{E}{O1}{F}{M1} conceptual relationship.%
 }{}%
 %
 \gitLoadAndExecSQL{EF_2_insert_and_select}{}{conceptualToRelational}{EF_2_insert_and_select.sql}{relationships}{}{}%
-\listingSQLandOutput{EF_2_insert_and_select}{EF_2_insert_and_select.sql}{%
+\listingSQLandOutput{EF_2_insert_and_select}{%
 Inserting into and selecting data from the two-table realization of an \crowsFoot{E}{O1}{F}{OM} conceptual relationship given in \cref{lst:EF_2_tables}.%
 }{}%
 %

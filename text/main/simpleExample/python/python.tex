@@ -67,7 +67,7 @@ This package is called \psycopg~\cite{VDGE2010P}.
 We briefly outline how to install and use this package in~\cref{sec:installPsycopg}.
 
 \gitLoadAndExecPython{factory:connect_insert_and_select}{\databasesCodeRepo}{factory}{connect_insert_and_select.py}{}%
-\listingPythonAndOutput{factory:connect_insert_and_select}{connect_insert_and_select.py}{A \python\ program connecting to our factory \pgls{db}, using \sqlilIdx{INSERT INTO} to add some records, and executing a \sqlIdx{SELECT{\idxdots}FROM}\sqlil{SELECT} statement.}{}%
+\listingPythonAndOutput{factory:connect_insert_and_select}{A \python\ program connecting to our factory \pgls{db}, using \sqlilIdx{INSERT INTO} to add some records, and executing a \sqlIdx{SELECT{\idxdots}FROM}\sqlil{SELECT} statement.}{}%
 
 From here on, let us assume that \psycopg\ is installed and you have opened \cref{lst:factory:connect_insert_and_select} in the \pycharm\ \pgls{ide}.
 When you read this listing, you notice a lot of interesting or strange things.
@@ -152,7 +152,7 @@ Then, the \pythonilIdx{with} block is over, too, which means that first the curs
 You can find the output of our program in \cref{exec:factory:connect_insert_and_select}.
 
 \gitLoadAndExecSQL{factory:select_from_view_sale_3}{}{factory}{select_from_view_sale_3.sql}{factory}{boss}{superboss123}%
-\listingSQLandOutput{factory:select_from_view_sale_3}{select_from_view_sale_3.sql}{%
+\listingSQLandOutput{factory:select_from_view_sale_3}{%
 Repeating the query from \cref{lst:factory:select_from_view_sale_1} after inserting the records using our \python\ program from \cref{lst:factory:connect_insert_and_select}.%
 }{}%
 %

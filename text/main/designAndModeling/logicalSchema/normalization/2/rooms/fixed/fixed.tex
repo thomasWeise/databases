@@ -28,7 +28,7 @@ The generated \sql\ code for creating the foreign key constraint linking the row
 Inserting the very same data as in \cref{lst:2nf:rooms:violation:insert} into the tables~\sqlil{building} and \sqlil{room}.}%
 %
 \gitLoadAndExecSQL{2nf:rooms:fixed:delete}{}{normalization/2nf/rooms/fixed}{delete.sql}{fixed}{}{}%
-\listingSQLandOutput{2nf:rooms:fixed:delete}{delete.sql}{%
+\listingSQLandOutput{2nf:rooms:fixed:delete}{%
 First, we select a list of all buildings from the \db, which yields 4~buildings. %
 (Notice that we do no longer need the \sqlilIdx{DISTINCT} keyword, since each building ist listed only once in tale~\sqlil{building}.) %
 Then we delete the two offices 904a and 904b of Building~53 from our \db. %
@@ -37,7 +37,7 @@ So when we select the list of all buildings again, it is still there. %
 This is different from the situation in \cref{exec:2nf:rooms:violation:delete}, where it disappeared.}{}%
 %
 \gitLoadAndExecSQL{2nf:rooms:fixed:update}{}{normalization/2nf/rooms/fixed}{update.sql}{fixed}{}{}%
-\listingSQLandOutput{2nf:rooms:fixed:update}{update.sql}{%
+\listingSQLandOutput{2nf:rooms:fixed:update}{%
 We want to see all rooms in South Campus~2. %
 Compared to \cref{lst:2nf:rooms:violation:update}, the query is more complex as we now need an \sqlilIdx{INNER JOIN}. %
 Due to the inconsistent spelling~(South Campus~II vs.\ South Campus~2), the first query finds nothing. %
@@ -48,7 +48,7 @@ In \cref{exec:2nf:rooms:violation:update}, two rows were affected.%
 }{}%
 %
 \gitLoadAndExecSQL{2nf:rooms:fixed:update2}{}{normalization/2nf/rooms/fixed}{update2.sql}{fixed}{}{}%
-\listingSQLandOutput{2nf:rooms:fixed:update2}{update2.sql}{%
+\listingSQLandOutput{2nf:rooms:fixed:update2}{%
 We want to change the name of Building~36 to \inQuotes{Computer Science Building.} %
 Different from the situation in \cref{exec:2nf:rooms:violation:update2}, only a single row needs to be changed.%
 }{}%

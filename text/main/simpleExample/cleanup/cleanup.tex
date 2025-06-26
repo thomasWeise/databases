@@ -2,12 +2,12 @@
 \hsection{Cleanup After the Example}%
 %
 \gitLoadAndExecSQL{factory:cleanup_inside_database}{}{factory}{cleanup_inside_database.sql}{factory}{boss}{superboss123}%
-\listingSQLandOutput{factory:cleanup_inside_database}{cleanup_inside_database.sql}{%
+\listingSQLandOutput{factory:cleanup_inside_database}{%
 User \textil{boss} deletes all tables and views inside the database, in the inverse order of their creation.%
 }{}%
 %
 \gitLoadAndExecSQL{factory:cleanup_database_and_user}{}{factory}{cleanup_database_and_user.sql}{}{}{}%
-\listingSQLandOutput{factory:cleanup_database_and_user}{cleanup_database_and_user.sql}{%
+\listingSQLandOutput{factory:cleanup_database_and_user}{%
 Delete the database \textil{factory} and the user \textil{boss}. %
 This must be executed by the administrator account \textil{postgres}.%
 }{}%

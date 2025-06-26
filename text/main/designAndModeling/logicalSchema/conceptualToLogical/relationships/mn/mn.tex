@@ -10,11 +10,11 @@
 \end{figure}%
 %
 \gitLoadAndExecSQL{MN_tables}{}{conceptualToRelational}{MN_tables.sql}{relationships}{}{}%
-\listingSQLandOutput{MN_tables}{MN_tables.sql}{%
+\listingSQLandOutput{MN_tables}{%
 The realization of a \crowsFoot{M}{M1}{N}{MM} conceptual relationship.%
 }{}%
 \gitLoadAndExecSQL{MN_insert_and_select}{}{conceptualToRelational}{MN_insert_and_select.sql}{relationships}{}{}%
-\listingSQLandOutput{MN_insert_and_select}{MN_insert_and_select.sql}{%
+\listingSQLandOutput{MN_insert_and_select}{%
 Inserting into and selecting data from the realization of an \crowsFoot{M}{M1}{N}{MM} conceptual relationship given in \cref{lst:MN_tables}.%
 }{}%
 %
@@ -33,27 +33,27 @@ Inserting into and selecting data from the realization of an \crowsFoot{M}{M1}{N
 \end{figure}%
 %
 \gitLoadAndExecSQL{MN_insert_error_1}{}{conceptualToRelational}{MN_insert_error_1.sql}{relationships}{}{}%
-\listingSQLandOutput{MN_insert_error_1}{MN_insert_error_1.sql}{%
+\listingSQLandOutput{MN_insert_error_1}{%
 Trying to create a row into table~\sqlil{m} that is not related to any row in table~\sqlil{n} is not possible.%
 }{}%
 %
 \gitLoadAndExecSQL{MN_insert_error_2}{}{conceptualToRelational}{MN_insert_error_2.sql}{relationships}{}{}%
-\listingSQLandOutput{MN_insert_error_2}{MN_insert_error_2.sql}{%
+\listingSQLandOutput{MN_insert_error_2}{%
 Trying to create a row into table~\sqlil{n} that is not related to any row in table~\sqlil{m} is not possible.%
 }{}%
 %
 \gitLoadAndExecSQL{MN_insert_error_3}{}{conceptualToRelational}{MN_insert_error_3.sql}{relationships}{}{}%
-\listingSQLandOutput{MN_insert_error_3}{MN_insert_error_3.sql}{%
+\listingSQLandOutput{MN_insert_error_3}{%
 Trying to create a row in table~\sqlil{m} that references a row in table~\sqlil{n} which is referencing another row in table~\sqlil{m} is not possible.%
 }{}%
 %
 \gitLoadAndExecSQL{MN_insert_error_4}{}{conceptualToRelational}{MN_insert_error_4.sql}{relationships}{}{}%
-\listingSQLandOutput{MN_insert_error_4}{MN_insert_error_4.sql}{%
+\listingSQLandOutput{MN_insert_error_4}{%
 Trying the same thing as in \cref{lst:MN_insert_error_3}, but this time also attempting to re-adjusting the row in~\sqlil{n} with an~\sqlil{UPDATE} instruction to make reference the new row in table~\sqlil{m}, is also not possible.%
 }{}%
 %
 \gitLoadAndExecSQL{MN_insert_error_5}{}{conceptualToRelational}{MN_insert_error_5.sql}{relationships}{}{}%
-\listingSQLandOutput{MN_insert_error_5}{MN_insert_error_5.sql}{%
+\listingSQLandOutput{MN_insert_error_5}{%
 Changing a row in table~\sqlil{n} that references a row in table~\sqlil{m} to now reference another row in table~\sqlil{m} is not possible.
 }{}%
 %

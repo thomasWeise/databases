@@ -10,12 +10,12 @@
 \end{figure}%
 %
 \gitLoadAndExecSQL{GH_tables}{}{conceptualToRelational}{GH_tables.sql}{relationships}{}{}%
-\listingSQLandOutput{GH_tables}{GH_tables.sql}{%
+\listingSQLandOutput{GH_tables}{%
 The realization of an \crowsFoot{G}{O1}{H}{MM} conceptual relationship.%
 }{}%
 %
 \gitLoadAndExecSQL{GH_insert_and_select}{}{conceptualToRelational}{GH_insert_and_select.sql}{relationships}{}{}%
-\listingSQLandOutput{GH_insert_and_select}{GH_insert_and_select.sql}{%
+\listingSQLandOutput{GH_insert_and_select}{%
 Inserting into and selecting data from the realization of an \crowsFoot{G}{O1}{H}{MM} conceptual relationship given in \cref{lst:GH_tables}.%
 }{}%
 %
@@ -34,27 +34,27 @@ Inserting into and selecting data from the realization of an \crowsFoot{G}{O1}{H
 \end{figure}%
 %
 \gitLoadAndExecSQL{GH_insert_error_1}{}{conceptualToRelational}{GH_insert_error_1.sql}{relationships}{}{}%
-\listingSQLandOutput{GH_insert_error_1}{GH_insert_error_1.sql}{%
+\listingSQLandOutput{GH_insert_error_1}{%
 Trying to create a row into table~\sqlil{g} that is not related to any row in table~\sqlil{h} is not possible.%
 }{}%
 %
 \gitLoadAndExecSQL{GH_insert_error_2}{}{conceptualToRelational}{GH_insert_error_2.sql}{relationships}{}{}%
-\listingSQLandOutput{GH_insert_error_2}{GH_insert_error_2.sql}{%
+\listingSQLandOutput{GH_insert_error_2}{%
 Trying to create a row in table~\sqlil{g} that references a row in table~\sqlil{h} which is not referencing any row in table~\sqlil{g} is not possible.%
 }{}%
 %
 \gitLoadAndExecSQL{GH_insert_error_3}{}{conceptualToRelational}{GH_insert_error_3.sql}{relationships}{}{}%
-\listingSQLandOutput{GH_insert_error_3}{GH_insert_error_3.sql}{%
+\listingSQLandOutput{GH_insert_error_3}{%
 Trying to create a row in table~\sqlil{g} that references a row in table~\sqlil{h} which is already referencing another row in table~\sqlil{g} is not possible.%
 }{}%
 %
 \gitLoadAndExecSQL{GH_insert_error_4}{}{conceptualToRelational}{GH_insert_error_4.sql}{relationships}{}{}%
-\listingSQLandOutput{GH_insert_error_4}{GH_insert_error_4.sql}{%
+\listingSQLandOutput{GH_insert_error_4}{%
 Trying the same thing as in \cref{lst:GH_insert_error_3}, but this time also attempting to re-adjusting the row in~\sqlil{h} with an~\sqlil{UPDATE} instruction to make it reference the new row in table~\sqlil{g}, is also not possible.%
 }{}%
 %
 \gitLoadAndExecSQL{GH_insert_error_5}{}{conceptualToRelational}{GH_insert_error_5.sql}{relationships}{}{}%
-\listingSQLandOutput{GH_insert_error_5}{GH_insert_error_5.sql}{%
+\listingSQLandOutput{GH_insert_error_5}{%
 Changing a row in table~\sqlil{h} that references a row in table~\sqlil{g} to now reference another row in table~\sqlil{g} is not possible.%
 }{}%
 %

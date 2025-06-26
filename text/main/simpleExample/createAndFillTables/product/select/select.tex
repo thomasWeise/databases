@@ -44,12 +44,12 @@ The query \sqlil{SELECT name, weight / price AS g_per_yuan from product;} would 
 \end{sloppypar}%
 %
 \gitLoadAndExecSQL{factory:insert_into_table_product_error}{}{factory}{insert_into_table_product_error.sql}{factory}{boss}{superboss123}%
-\listingSQLandOutput{factory:insert_into_table_product_error}{insert_into_table_product_error.sql}{%
+\listingSQLandOutput{factory:insert_into_table_product_error}{%
 Showing how the \sqlilIdx{UNIQUE} constraint on column \sqlil{name} prevents us from inserting a product with the same name as an already existing one into table \sqlil{product}.%
 }{}%
 %
 \gitLoadAndExecSQL{factory:select_from_table_product}{}{factory}{select_from_table_product.sql}{factory}{boss}{superboss123}%
-\listingSQLandOutput{factory:select_from_table_product}{select_from_table_product.sql}{%
+\listingSQLandOutput{factory:select_from_table_product}{%
 Selecting information from the table \textil{product}.}{}%
 %
 Suppose that our table \sqlil{product} contains hundreds of entries.

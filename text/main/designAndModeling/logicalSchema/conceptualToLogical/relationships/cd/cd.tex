@@ -9,12 +9,12 @@
 \end{figure}%
 %
 \gitLoadAndExecSQL{CD_tables}{}{conceptualToRelational}{CD_tables.sql}{relationships}{}{}%
-\listingSQLandOutput{CD_tables}{CD_tables.sql}{%
+\listingSQLandOutput{CD_tables}{%
 The three-table realization of a \crowsFoot{C}{O1}{D}{M1} conceptual relationship.%
 }{}%
 %
 \gitLoadAndExecSQL{CD_insert_and_select}{}{conceptualToRelational}{CD_insert_and_select.sql}{relationships}{}{}%
-\listingSQLandOutput{CD_insert_and_select}{CD_insert_and_select.sql}{%
+\listingSQLandOutput{CD_insert_and_select}{%
 Inserting into and selecting data from the three-table realization of a \crowsFoot{C}{O1}{D}{M1} conceptual relationship given in \cref{lst:CD_tables}.%
 }{}%
 %
@@ -33,7 +33,7 @@ Inserting into and selecting data from the three-table realization of a \crowsFo
 \end{figure}%
 %
 \gitLoadAndExecSQL{CD_insert_error}{}{conceptualToRelational}{CD_insert_error.sql}{relationships}{}{}%
-\listingSQLandOutput{CD_insert_error}{CD_insert_error.sql}{%
+\listingSQLandOutput{CD_insert_error}{%
 It is impossible to insert a row into table~\sqlil{c} that references a row in table~\sqlil{d} that is already referenced by another row in table~\sqlil{c}.%
 }{}%
 %

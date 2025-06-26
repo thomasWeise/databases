@@ -29,12 +29,12 @@ We add the foreign key constraint to table~\sqlil{student}.}%
 Inserting some data into the tables~\sqlil{parent} and~\sqlil{student}.}%
 %
 \gitLoadAndExecSQL{3nf:student:fixed:select}{}{normalization/3nf/student/fixed}{select.sql}{fixed}{}{}%
-\listingSQLandOutput{3nf:student:fixed:select}{select.sql}{%
+\listingSQLandOutput{3nf:student:fixed:select}{%
 If we want to get the names of the parents of the students, we now need an~\sqlilIdx{INNER JOIN}.%
 }{}%
 %
 \gitLoadAndExecSQL{3nf:student:fixed:update}{}{normalization/3nf/student/fixed}{update.sql}{fixed}{}{}%
-\listingSQLandOutput{3nf:student:fixed:update}{update.sql}{%
+\listingSQLandOutput{3nf:student:fixed:update}{%
 We noticed that the name of the father of Mr.~Bibbo, Mr.~Bibotto, and Ms.~Bibboba is actually Mr.~B{\"o}dd{\"o}, not Mr.~Boddo. %
 Since we now observe the \pgls{3NF}, we need to touch only a single records to change this.%
 }{}%

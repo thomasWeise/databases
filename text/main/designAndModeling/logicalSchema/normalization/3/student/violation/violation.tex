@@ -21,7 +21,7 @@ The generated \sql\ code for creating the table \sqlil{student} that violates th
 Inserting some data into the table~\sqlil{student} in violation of the \pgls{3NF}.}%
 %
 \gitLoadAndExecSQL{3nf:student:violation:update}{}{normalization/3nf/student/violation}{update.sql}{violation}{}{}%
-\listingSQLandOutput{3nf:student:violation:update}{update.sql}{%
+\listingSQLandOutput{3nf:student:violation:update}{%
 We noticed that the name of the father of Mr.~Bibbo, Mr.~Bibotto, and Ms.~Bibboba is actually Mr.~B{\"o}dd{\"o}, not Mr.~Boddo. %
 To change it, we need to touch three records, which is a typical update anomaly.%
 }{}%

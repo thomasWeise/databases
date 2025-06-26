@@ -10,12 +10,12 @@
 \end{figure}%
 %
 \gitLoadAndExecSQL{ST_tables}{}{conceptualToRelational}{ST_tables.sql}{relationships}{}{}%
-\listingSQLandOutput{ST_tables}{ST_tables.sql}{%
+\listingSQLandOutput{ST_tables}{%
 The realization of a \crowsFoot{S}{MM}{T}{MM} conceptual relationship.%
 }{}%
 %
 \gitLoadAndExecSQL{ST_insert_and_select}{}{conceptualToRelational}{ST_insert_and_select.sql}{relationships}{}{}%
-\listingSQLandOutput{ST_insert_and_select}{ST_insert_and_select.sql}{%
+\listingSQLandOutput{ST_insert_and_select}{%
 Inserting into and selecting data from the realization of an \crowsFoot{S}{MM}{T}{MM} conceptual relationship given in \cref{lst:ST_tables}.%
 }{}%
 %
@@ -37,12 +37,12 @@ Inserting into and selecting data from the realization of an \crowsFoot{S}{MM}{T
 \end{figure}%
 %
 \gitLoadAndExecSQL{ST_insert_error_1}{}{conceptualToRelational}{ST_insert_error_1.sql}{relationships}{}{}%
-\listingSQLandOutput{ST_insert_error_1}{ST_insert_error_1.sql}{%
+\listingSQLandOutput{ST_insert_error_1}{%
 Trying to insert new related rows into tables~\sqlil{s} and~\sqlil{t} without updating table~\sqlil{relate_s_and_t} does not work.%
 }{}%
 %
 \gitLoadAndExecSQL{ST_insert_error_2}{}{conceptualToRelational}{ST_insert_error_2.sql}{relationships}{}{}%
-\listingSQLandOutput{ST_insert_error_2}{ST_insert_error_2.sql}{%
+\listingSQLandOutput{ST_insert_error_2}{%
 Trying to insert a new row into tables~\sqlil{s} and relate it to an existing row in table~\sqlil{t} without updating table~\sqlil{relate_s_and_t} does not work either.%
 }{}%
 %

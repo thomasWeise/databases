@@ -10,11 +10,11 @@
 \end{figure}%
 %
 \gitLoadAndExecSQL{OP_tables}{}{conceptualToRelational}{OP_tables.sql}{relationships}{}{}%
-\listingSQLandOutput{OP_tables}{OP_tables.sql}{%
+\listingSQLandOutput{OP_tables}{%
 The realization of a \crowsFoot{O}{OM}{P}{OM} conceptual relationship.%
 }{}%
 \gitLoadAndExecSQL{OP_insert_and_select}{}{conceptualToRelational}{OP_insert_and_select.sql}{relationships}{}{}%
-\listingSQLandOutput{OP_insert_and_select}{OP_insert_and_select.sql}{%
+\listingSQLandOutput{OP_insert_and_select}{%
 Inserting into and selecting data from the realization of an \crowsFoot{O}{OM}{P}{OM} conceptual relationship given in \cref{lst:OP_tables}.%
 }{}%
 %
@@ -36,7 +36,7 @@ Inserting into and selecting data from the realization of an \crowsFoot{O}{OM}{P
 \end{figure}%
 %
 \gitLoadAndExecSQL{OP_insert_error}{}{conceptualToRelational}{OP_insert_error.sql}{relationships}{}{}%
-\listingSQLandOutput{OP_insert_error}{OP_insert_error.sql}{%
+\listingSQLandOutput{OP_insert_error}{%
 Trying to relate two entities twice, which is of course not permitted in \emph{any} relationship pattern.%
 }{}%
 %

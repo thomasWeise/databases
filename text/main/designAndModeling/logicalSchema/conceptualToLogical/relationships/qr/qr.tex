@@ -10,12 +10,12 @@
 \end{figure}%
 %
 \gitLoadAndExecSQL{QR_tables}{}{conceptualToRelational}{QR_tables.sql}{relationships}{}{}%
-\listingSQLandOutput{QR_tables}{QR_tables.sql}{%
+\listingSQLandOutput{QR_tables}{%
 The realization of a \crowsFoot{Q}{OM}{R}{MM} conceptual relationship.%
 }{}%
 %
 \gitLoadAndExecSQL{QR_insert_and_select}{}{conceptualToRelational}{QR_insert_and_select.sql}{relationships}{}{}%
-\listingSQLandOutput{QR_insert_and_select}{QR_insert_and_select.sql}{%
+\listingSQLandOutput{QR_insert_and_select}{%
 Inserting into and selecting data from the realization of an \crowsFoot{Q}{OM}{R}{MM} conceptual relationship given in \cref{lst:QR_tables}.%
 }{}%
 %
@@ -37,17 +37,17 @@ Inserting into and selecting data from the realization of an \crowsFoot{Q}{OM}{R
 \end{figure}%
 %
 \gitLoadAndExecSQL{QR_insert_error_1}{}{conceptualToRelational}{QR_insert_error_1.sql}{relationships}{}{}%
-\listingSQLandOutput{QR_insert_error_1}{QR_insert_error_1.sql}{%
+\listingSQLandOutput{QR_insert_error_1}{%
 Trying to create a row into table~\sqlil{q} without providing a foreign key to a row in~\sqlil{r} fails.%
 }{}%
 %
 \gitLoadAndExecSQL{QR_insert_error_2}{}{conceptualToRelational}{QR_insert_error_2.sql}{relationships}{}{}%
-\listingSQLandOutput{QR_insert_error_2}{QR_insert_error_2.sql}{%
+\listingSQLandOutput{QR_insert_error_2}{%
 Trying to create a row into table~\sqlil{q} with creating a corresponding row in table~\sqlil{relate_q_and_r} also fails.%
 }{}%
 %
 \gitLoadAndExecSQL{QR_insert_error_3}{}{conceptualToRelational}{QR_insert_error_3.sql}{relationships}{}{}%
-\listingSQLandOutput{QR_insert_error_3}{QR_insert_error_3.sql}{%
+\listingSQLandOutput{QR_insert_error_3}{%
 Even if we can choose the primary key for the new row in table~\sqlil{q}, we cannot create the associated row in table~\sqlil{relate_q_and_r} first.%
 }{}%
 %

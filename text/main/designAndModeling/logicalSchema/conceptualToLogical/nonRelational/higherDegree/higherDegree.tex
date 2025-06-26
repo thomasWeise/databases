@@ -79,7 +79,7 @@ So we modeled this using \pgmodeler\ and get the logical schema illustrated in \
 \listingSQL{teaching_1:11_public_enrolls_enrolls_course_fk_constraint_5151}{The generated script to create the constraint enforcing that each row in table~\sqlil{enrolls} is related to exactly one row in table~\sqlil{course}.}%
 %
 \gitLoadAndExecSQL{teaching_database_1:insert_and_select}{}{teachingManagement/logical/teaching_database_1}{insert_and_select.sql}{teaching_database}{}{}%
-\listingSQLandOutput{teaching_database_1:insert_and_select}{insert_and_select.sql}{%
+\listingSQLandOutput{teaching_database_1:insert_and_select}{%
 Inserting into and selecting data from the tables in the \sqlil{teaching_database}.%
 }{}%
 %
