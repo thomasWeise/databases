@@ -1,10 +1,21 @@
 %
 \hsection{Creating the Table}%
 %
+\begin{figure}%
+\centering%
+\includegraphics[width=0.72\linewidth]{\currentDir/dbStructureCustomer}%
+\caption{How our table~\sqlil{customer} could look like if we designed it in a spreadsheet software like \microsoftExcel\ or \libreofficeCalc.}%
+\label{fig:dbStructureCustomer}%
+\end{figure}%
+%
 \gitLoadAndExecSQL{factory:create_table_customer}{}{factory}{create_table_customer.sql}{factory}{boss}{superboss123}%
 \listingSQLandOutput{factory:create_table_customer}{%
 Creating the table \textil{customer} to store the information about our factory's customers.%
 }{}%
+%
+We will fittingly call the table for customers~\sqlil{customer}.
+The structure of the table could look a bit like \cref{fig:dbStructureCustomer}~(if it was a \microsoftExcel\ or \libreofficeCalc\ spreadsheet):
+For the minimalistic example here, it will be sufficient to store the name, mobile phone number, and address of the customers.%
 %
 \begin{sloppypar}%
 We create the table \sqlil{customer} using the \sqlil{CREATE TABLE}\sqlIdx{CREATE!TABLE}\sqlIdx{TABLE} command in \cref{lst:factory:create_table_customer}.

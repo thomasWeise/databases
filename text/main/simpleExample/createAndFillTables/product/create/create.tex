@@ -3,6 +3,13 @@
 %
 \begin{figure}%
 \centering%
+\includegraphics[width=0.65\linewidth]{\currentDir/dbStructureProduct}%
+\caption{How our table~\sqlil{product} could look like if we designed it in a spreadsheet software like \microsoftExcel\ or \libreofficeCalc.}%
+\label{fig:dbStructureProduct}%
+\end{figure}%
+%
+\begin{figure}%
+\centering%
 %
 \subfloat[][%
 We open a console via \ubuntuTerminal\ under \ubuntu\ \linux\ or by \windowsTerminal\ under \microsoftWindows. %
@@ -23,6 +30,13 @@ The session has started.%
 We enter the \sqlil{CREATE TABLE}\sqlIdx{CREATE!TABLE} command for the new table \sqlil{product} with all the column specifications and press~\keys{\enter}.%
 \label{fig:createTable3command}%
 ]{\parbox[t]{0.99\linewidth}{\centering\includegraphics[width=0.67\linewidth]{\currentDir/createTable3command}}}%
+%
+\FloatBarrier%
+%
+\subfloat[][%
+The components of the command are highlighted for illustration purposes.%
+\label{fig:createTable3commandCols}%
+]{\parbox[t]{0.99\linewidth}{\centering\includegraphics[width=0.67\linewidth]{\currentDir/createTable3commandCols}}}%
 %
 \FloatBarrier%
 %
@@ -75,13 +89,26 @@ Creating the table \textil{product} to store the products we produce and sell.%
 }{}%
 %
 So let us create the table~\sqlil{product}.
-As we have already learned, there are two ways for doing this:
+Let's start by thinking about what columns does this table need?
+Well, first of all, each product has a \emph{name}.
+The name is text, so there should be one column that can host text.
+Each unit of a product also has a price.
+So there needs to be a column that can hold the price, i.e., a currency value.
+In order to deliver products, we need to put them into boxes that have a certain width, height, and depth as well as a weight.
+These are clearly numbers, too.
+
+This fairly straightforward structure is illustrated in \cref{fig:dbStructureProduct}.
+All we need to do now is to translate this design to \sql\ commands.
+Then we can send the \sql\ commands to our \postgresql\ \dbms\ and we will have a fresh and nice \sqlil{product}~table.
+To do this, we need to chose a name and datatype for each of the above columns and then we can compile the overall command.
+
+Once we have the commands, there are two ways to execute it:
 We can either start a \psql\ session and type in the necessary commands one by one, which is illustrated in \cref{fig:createTableProduct:A}%.
 Or we can send a \sql\ script with all the commands to the \postgresql\ server directly via \psql.
 The script that we would use for this is shown in \cref{lst:factory:create_table_product} and its output is given in \cref{exec:factory:create_table_product}.
 For the last time in this book, we will discuss both methods side-by-side and afterwards, we will only work with the script-based approach.
 
-If we chose the manual step-by-step method, then we first start a new \psql\ session in \cref{fig:createTable1psql}.
+If we chose the manual method, then we first start a new \psql\ session in \cref{fig:createTable1psql}.
 This time we do this as user~\sqlil{boss} with password~\sql{superboss123}.
 This user is the owner of our \db\ \sqlil{factory} and has the right to create tables and insert data.
 
@@ -91,17 +118,26 @@ As you can see, this is a bit cumbersome, because the command is long.
 Writing it as a script and then sending this to the \postgresql\ \dbms\ is more convenient, which is why we will prefer this method later on.
 Anyway, the command is a bit long, because it contains the whole description of the data that we will store in the table later.
 
-For example, each product must have a name.
+So what does the \sqlil{CREATE TABLE}\sqlIdx{CREATE!TABLE} command in \cref{fig:createTable3command} look like and why does it look like that?
+When we highlight its components in \cref{fig:createTable3commandCols}, things get a little bit clearer:
+The command contains all the column names, the column datatypes, as well as constraints that ensure that the data entered is valid.
+Let's build the command step-by-step and discuss the meaning of each of its elements.
+
+We begin with the column \sqlil{name}.
+As already said, each product must have a name.
 The names could be long or short, but 100~characters per product should suffice.
-\sql\ provides the datatype \sqlilIdx{VARCHAR}, which refers to a variable-length string, whose maximum length is specified in parentheses~\cite{PGDG:PD:CT}.
+\sql\ provides the datatype \sqlilIdx{VARCHAR}, which is used for variable-length strings, whose maximum length is specified in parentheses~\cite{PGDG:PD:CT}.
 We could thus choose \sqlil{VARCHAR(100)}\sqlIdx{VARCHAR} for the column \sqlil{name} for our table~\pythonil{product}.
 We thus write~\sqlil{name VARCHAR(100)}\sqlIdx{VARCHAR} when defining this column.
-The names must also be unique.
+
+When creating a column, we can also add certain \emph{constraints} for their values right away.
+For example, product names must be unique.
 We can never have two different products with the same name.
 So we add the keyword~\sqlil{UNIQUE}~\cite{PGDG:PD:C}.
 If, later, someone tries to enter a record into our table whose \sqlil{name} value already exists in another record, then this will fail with an error.
-We also want to enforce that every single record indeed has a \sqlil{name} value set.
-There must never be any row in the table without a properly set name.
+We also want to enforce that every single product record indeed has a \sqlil{name} value set.
+There cannot be a product without a name.
+Thus, there must never be any row in the table without a properly set name.
 Therefore, we add the \sqlilIdx{NOT NULL} specification and write \sqlil{name VARCHAR(100)\ UNIQUE NOT NULL}\sqlIdx{VARCHAR}\sqlIdx{NOT NULL}\sqlIdx{UNIQUE}~\cite{PGDG:PD:C}.
 Nice, we just defined our very first own column.
 
@@ -111,8 +147,8 @@ Computers usually provide two fundamental types of numbers on the hardware level
 These types also exist in many programming languages.
 \python~\cite{programmingWithPython}, for example, offers us the two very basic datatypes \pythonilIdx{int} and \pythonilIdx{float} corresponding to integers and floating point numbers, respectively.
 Which one should we use?
-Now prices naturally are values with fractions, something like \$99.99 or 17.75元, so at first glance, the \sql\ equivalent of \python's \pythonilIdx{float} seems a reasonable choice here.
-However, it is actually not, because in \cite{programmingWithPython}, we write:%
+Now prices naturally are values with fractions, something like \$99.99 or 17.75元 or 3.79€, so at first glance, the \sql\ equivalent of \python's \pythonilIdx{float} seems a reasonable choice here.
+However, it is actually not, because in our companion book \citetitle{programmingWithPython}~\cite{programmingWithPython}, we can find the following information:%
 %
 \bestPractice{floatImprecise}{%
 Always assume that any \pythonilIdx{float} value is imprecise. %
@@ -121,14 +157,16 @@ Never expect it to be exact~\cite{PTVF2007NRTAOSC:EAAS,BHK2006CNFCMEARFCS:NS,pro
 %
 \begin{sloppypar}%
 Indeed, using double precision IEEE~Standard 754 floating point numbers~\cite{IEEE2019ISFFPA,H1997IS7FPN}, the expression~\pythonil{0.1 + 0.1 + 0.1 - 0.3} may yield~\pythonil{5.551115123125783e-17} as result.
-Thus, if we stored~0.3元 as a price in our \db\ using floating point numbers and a customer transferred three times~一毛钱, then the bank may encounter problems if we want to transfer $5.551115123125783*10^{-17}$元 back as change\dots
+Let say that we would store~0.3元 as a price in our \db\ by using floating point numbers and that a customer transferred three times~一毛钱, i.e., three single dimes, to our account.
+Then the bank may encounter problems if our system would automatically try to transfer $5.551115123125783*10^{-17}$元 back as change\dots
+We therefore learn that:%
 \end{sloppypar}%
 %
 \bestPractice{moneyNotFloat}{%
 Never represent monetary data with floating point numbers~\cite{SE:SO:WNUDOFTRC,W2020HSISCVISS}.%
 }%
 %
-We could use integer numbers representing the number of cents instead, but then we would always need to use some arithmetics to properly display prices, which also creates a potential for errors~\cite{W2020HSISCVISS}.
+We could use integer numbers representing the number of cents instead, but then we would always need to use some arithmetics to properly display prices~(divide by~100), which also creates a potential for errors~\cite{W2020HSISCVISS}.
 Actually neither integers nor floating point numbers are the right choice!
 Instead, we will use the datatype~\sqlilIdx{DECIMAL}, which can represent a fractional number with a pre-defined number of digits exactly.
 Writing \sqlil{price DECIMAL(10, 2)} allows us to store values with 10~digits, 2~of these 10~digits are after the comma~\cite{PGDG:PD:NT}.
@@ -140,10 +178,15 @@ Of course, each product must have a price, so we add again the \sqlilIdx{NOT NUL
 Store monetary data using the \sqlilIdx{DECIMAL} datatype~\cite{C2024SCVDTCBP,W2020HSISCVISS}.%
 }%
 %
-We will sell each product in a box.
+Of course, every product must have a price.
+We therefore annotate the column \sqlil{price} with the \sqlilIdx{NOT NULL} constraint.
+
+We also already explained that we will sell each unit of a product in a box.
 Therefore, we also want to store the width, height, and depth as well as the weight of the packaged box.
 For the height, width, and depth, we will use millimeter as unit and for the weight we use grams.
-We can store values using the datatype \sqlilIdx{INT}, which is a shorthand for \sqlilIdx{INTEGER} and can hold values from -2\decSep147\decSep483\decSep648 to +2\decSep147\decSep483\decSep647.
+We can store values using the datatype \sqlilIdx{INT}, which is a shorthand for \sqlilIdx{INTEGER}.
+It can hold values from -2\decSep147\decSep483\decSep648 to +2\decSep147\decSep483\decSep647.
+This is more than enough for us, as it allows the dimensions of our boxes to range from~1mm to over~2000km and the weights to be up to~2000t.
 Each product must have values specified for all four dimensions, so we again mark them as~\sqlilIdx{NOT NULL}.
 
 Tables in a \db\ do not exist in an isolated manner.

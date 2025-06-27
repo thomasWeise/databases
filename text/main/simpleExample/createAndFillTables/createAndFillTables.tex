@@ -3,16 +3,20 @@
 \label{sec:factoryCreatingTableAndInsertingData}%
 %
 Let us now design the actual \db.
-Normally, you would do this in a fancy process where you would draw \pglspl{ERD} and deeply think about the structure of the data, the performance requirements, and so on.
+Normally, you would do this in a fancy process where you would draw \pglspl{ERD} and deeply think about the structure of the data, the performance requirements, and so on~(see \cref{sec:dbLifecycle} for details).
 Be that as it may, we are here operating on a learning-by-doing level.
 We will just go ahead and build something that looks reasonable, without worrying too much about design principles.
 
 In a \pgls{rdb}, all the data is stored in \emph{tables}.
-You are maybe familiar with spreadsheet software such as \microsoftExcel.
+You are maybe familiar with spreadsheet software such as \microsoftExcel~\cite{P2020MSS2ABG,A2024TSAFMSS2,W2018MSSDB} or \libreofficeCalc~\cite{DF2024LTDF,GL2012LTSOOSSCBAFACSOL,S2022L7PFEUU}.
 There, data is organized in tables, too.
 In a \pgls{rdb}, however, the columns are strongly typed, i.e., you cannot \inQuotes{write} a text into a field for numbers.
 Also, there can be multiple tables, where a record~(row) in one table can be linked to one or multiple records in other tables.
-This format allows us to nicely divide into our data according to different semantic aspects.%
+This format allows us to nicely divide into our data according to different semantic aspects:
+
+We will create a table for the products that our factory produces.
+We will create a table for the customers that order these products.
+And we will create a table for the orders that these customers issue.%
 %
 \hinput{product}{product.tex}%
 \hinput{customer}{customer.tex}%

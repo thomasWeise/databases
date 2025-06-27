@@ -56,3 +56,22 @@ It is widely adopted and was the most popular \pgls{dbms} in the \citetitle{SE:S
 It is free and open source and the basis for all hands-on examples in our course.%
 }%
 %
+In this example, you will learn several things.
+You will learn about the general structure and primitives of \pglspl{rdb}.
+You will learn that a \db\ consists of tables, that tables have columns and rows.
+The rows represent the single records that are stored.
+All the records in a table have the same attributes, each of which corresponds to a column.
+You will learn how to create such tables, how to store records in them, and how to query the records from the tables.
+This is the core of \pglspl{rdb}.
+
+Talking about creating tables, storing records, and querrying them immediately leads to the question \emph{\inQuotes{How?}}
+We said that we will use \postgresql.
+Will the \emph{\inQuotes{How?}} that we learn be limited to this system and useless for other \pglspl{db}?
+Or will it also work for \mariadb, \microsoftSqlServer, \oracleDB, \mysql, \sqlite, and so on?
+Yes it will.
+Because we will interact with the \db\ using the language~\sql, which basically is a programming language for \pglspl{rdb}~\cite{C20245YOQ,MS2001S1URLC,PGDG:PD:SC,SP2002STYSI2D,SPMP1998SI2TDDASVEI12T,T2018ISARD,ANSIX3135,DB2019HTTPS,ISO90751987,ISOIEC9707112023E}.
+Of course, we cannot exhausively discuss \sql\ in the framework for a simple example.
+But you will see some, well, examples of its use.
+
+Finally, we will briefly touch the other topics mentioned earlier, i.e., forms, reports, and access from a programming language.
+So, without further ado, here we go.
