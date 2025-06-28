@@ -145,7 +145,19 @@ The second part, \sqlil{WITH ENCRYPTED PASSWORD 'abc'}\sqlIdx{WITH!ENCRYPTED PAS
 %
 Passwords are always stored in an encrypted way anyway in \postgresql, but it never hurts to specify this clearly.
 Maybe we want to run the same commands later on another \dbms\ where it is necessary to explicitly say that passwords shall be encrypted.
-You can read more about \sql\ commands in the \postgresql\ reference~\cite{PGDG:PD:SC}.%
+You can read more about \sql\ commands in the \postgresql\ reference~\cite{PGDG:PD:SC}.
+%
+\bestPractice{codeStyle}{%
+Regardless which programming language you are using~(and we can count \sql\ as a programming language for \pglspl{db}),~it is important to write code and scripts in a consistent style, to use a consistent naming scheme for all things that can be named, and to follow the generally established best practices and norms for that language.%
+}%
+%
+For many programming languages, there exist comprehensive and clear style guides.
+Since we usually work collaboratively on larger projects, writing code in a consistent style is very important.
+Ideally, all collaborators can open a source code file and easily read and understand our code.
+If everybody writes code in different styles, maybe using different indentations or different naming conventions, reading code can become harder and even confusing.
+Therefore, style guides often tell us how to name things and how to structure code consistently.
+For \sql, there does not exist one generally accepted best practice standard style guide.
+We will still try to define some general rules.%
 %
 \bestPractice{keywords}{%
 Keywords in \sql\ may always be written completely in uppercase~\cite{DB2019HTTPS:SC}. %
@@ -153,7 +165,7 @@ Well, technically, \sql\ keywords are not case sensitive, so \sqlilIdx{WHERE} an
 It is most important to be consistent in your casing, regardless whether you prefer upper- or lowercase~\cite{B2025DS:SBPASG}. %
 Nevertheless, I prefer uppercase and the \postgresql\ documentation does so too~\cite{PGDG:PD}.%
 }%
-%
+
 Anyway, we type in the command and hit~\keys{\enter}.
 The command is executed successfully.
 The system signals this to us with the output \sqlilIdx{CREATE ROLE}\sqlIdx{CREATE!ROLE} in \cref{fig:psqlNewUser4executed}.
