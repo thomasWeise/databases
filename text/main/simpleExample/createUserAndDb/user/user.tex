@@ -140,8 +140,13 @@ The boss will have to change it as soon as possible.%
 \begin{sloppypar}%
 As illustrated in \cref{fig:psqlNewUser3command}, in order to create the new user with that password, we write \sqlil{CREATE USER boss WITH ENCRYPTED PASSWORD 'superboss123';}\sqlIdx{CREATE USER}.
 The first part of the command, \sqlIdx{CREATE!USER}\sqlIdx{USER}\sqlil{CREATE USER xyz}, tells the \server\ to create a new user account under the name \textil{xyz}.
-The second part, \sqlil{WITH ENCRYPTED PASSWORD 'abc'}\sqlIdx{WITH!ENCRYPTED PASSWORD}\sqlIdx{PASSWORD}\sqlIdx{ENCRYPTED}, tells the \server\ that the password \textil{abc} should be used for this user.%
-\end{sloppypar}%
+The second part, \sqlil{WITH ENCRYPTED PASSWORD 'abc'}\sqlIdx{WITH!ENCRYPTED PASSWORD}\sqlIdx{PASSWORD}\sqlIdx{ENCRYPTED}, tells the \server\ that the password \textil{abc} should be used for this user.
+So we learned our first \sql-command\sqlIdx{CREATE!USER}\sqlIdx{USER}\sqlIdx{WITH!ENCRYPTED PASSWORD}\sqlIdx{PASSWORD}\sqlIdx{ENCRYPTED}:%
+\end{sloppypar}%%
+%
+\begin{sqlSyntax}
+CREATE USER username WITH WITH ENCRYPTED PASSWORD 'password';
+\end{sqlSyntax}
 %
 Passwords are always stored in an encrypted way anyway in \postgresql, but it never hurts to specify this clearly.
 Maybe we want to run the same commands later on another \dbms\ where it is necessary to explicitly say that passwords shall be encrypted.
@@ -160,11 +165,13 @@ For \sql, there does not exist one generally accepted best practice standard sty
 We will still try to define some general rules.%
 %
 \bestPractice{keywords}{%
-Keywords in \sql\ may always be written completely in uppercase~\cite{DB2019HTTPS:SC}. %
-Well, technically, \sql\ keywords are not case sensitive, so \sqlilIdx{WHERE} and \sqlil{where} work the same. %
-It is most important to be consistent in your casing, regardless whether you prefer upper- or lowercase~\cite{B2025DS:SBPASG}. %
-Nevertheless, I prefer uppercase and the \postgresql\ documentation does so too~\cite{PGDG:PD}.%
+Keywords in \sql\ should always be written completely in uppercase~\cite{DB2019HTTPS:SC}.%
 }%
+%
+Well, technically, \sql\ keywords are not case-sensitive, so \sqlilIdx{WHERE} and \sqlil{where} work the same.
+It is most important to be consistent in your casing, regardless whether you prefer upper- or lowercase~\cite{B2025DS:SBPASG}.
+Nevertheless, I prefer uppercase and the \postgresql\ documentation does so too~\cite{PGDG:PD}.
+So we will use uppercase throughout this book and I consider this a best practice.
 
 Anyway, we type in the command and hit~\keys{\enter}.
 The command is executed successfully.
@@ -186,6 +193,17 @@ We type it in \cref{fig:psqlNewUser5getUsers} and hit~\keys{\enter}.
 If we had run this command \emph{before} creating the user, on a fresh \postgresql\ installation, it would only list the single user \textil{postgres}, i.e., the administrator of the whole \dbms.
 But if we run it again now, \emph{after} creating the new user, it will also list~\textil{boss}.
 You can see this in \cref{fig:psqlNewUser6gotUsers}.
+
+With this, we just learned the second \sql-command, which will be a very important asset in our following experiments.
+In relational \pglspl{db}, \emph{everything} is stored in tables~(even the list of existing users and tables!).
+While we do not yet know how to store things, we now know how to read -- with \sqlil{SELECT...FROM}\sqlIdx{SELECT{\idxdots}FROM}.%
+The query%
+%
+\begin{sqlSyntax}
+SELECT column1, column2, ... FROM tableName;
+\end{sqlSyntax}
+%
+gives us a tabular representation of the values of the columns \sqlil{column1}, \sqlil{column2}, and so on, for all the rows in table~\sqlil{tableName}.
 
 We can now close this \psql\ session by typing~\sqlil{\\q}\sqlIdx{{\textbackslash}q} and hitting~\keys{\enter}.
 As shown in \cref{fig:psqlNewUser7typeQuit}, this takes us back to our normal \pgls{OS} \pgls{terminal} shown in~\cref{fig:psqlNewUser8quit}.

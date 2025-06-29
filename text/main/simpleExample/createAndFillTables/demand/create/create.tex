@@ -41,7 +41,7 @@ We can now define a column which also is of type \sqlilIdx{INT} and that referen
 Much later, we will formalize the concept of foreign keys in \cref{def:foreignKey}.%
 }
 
-We can write \sqlil{customer INT NOT NULL REFERENCES customer(id)}\sqlIdx{REFERENCES} to define such a file.
+We can write \sqlil{customer INT NOT NULL REFERENCES customer(id)}\sqlIdx{REFERENCES} to define such a reference.
 The name of this new column in our table \sqlil{demand} will be \sqlil{customer}.
 We declare it as an \sqlilIdx{INT} which must be \sqlilIdx{NOT NULL}.
 Now we write \sqlil{REFERENCES customer(id)}\sqlIdx{REFERENCES}, which basically is a constraint.
