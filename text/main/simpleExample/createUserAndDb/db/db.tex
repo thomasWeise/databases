@@ -112,9 +112,7 @@ Also, we can put the connection~\pgls{URI} inside of quotes~(\bashil{"..."}), wh
 This user has the right to create \pglspl{db} for other users which can then work with them.
 We then need to execute a single \sql-command, namely\sqlIdx{CREATE!DATABASE}\sqlIdx{DATABASE}\sqlIdx{OWNER}:
 %
-\begin{sqlSyntax}
-CREATE DATABASE databaseName OWNER userName;
-\end{sqlSyntax}
+\sqlSyntax{syntax:create_database}{syntax/create_database.sql}%
 %
 Thus, all we have to do is to type the \sql\ command \sqlil{CREATE DATABASE factory OWNER boss;}\sqlIdx{CREATE!DATABASE}\sqlIdx{DATABASE}\sqlIdx{OWNER} in \cref{fig:createDB03createDatabase}.
 This command pretty much explains itself.

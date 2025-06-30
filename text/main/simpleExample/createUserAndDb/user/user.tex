@@ -144,9 +144,7 @@ The second part, \sqlil{WITH ENCRYPTED PASSWORD 'abc'}\sqlIdx{WITH!ENCRYPTED PAS
 So we learned our first \sql-command\sqlIdx{CREATE!USER}\sqlIdx{USER}\sqlIdx{WITH!ENCRYPTED PASSWORD}\sqlIdx{PASSWORD}\sqlIdx{ENCRYPTED}:%
 \end{sloppypar}%%
 %
-\begin{sqlSyntax}
-CREATE USER username WITH WITH ENCRYPTED PASSWORD 'password';
-\end{sqlSyntax}
+\sqlSyntax{syntax:create_user}{syntax/create_user.sql}%
 %
 Passwords are always stored in an encrypted way anyway in \postgresql, but it never hurts to specify this clearly.
 Maybe we want to run the same commands later on another \dbms\ where it is necessary to explicitly say that passwords shall be encrypted.
@@ -196,15 +194,11 @@ You can see this in \cref{fig:psqlNewUser6gotUsers}.
 
 With this, we just learned the second \sql-command, which will be a very important asset in our following experiments.
 In relational \pglspl{db}, \emph{everything} is stored in tables~(even the list of existing users and tables!).
-While we do not yet know how to store things, we now know how to read -- with \sqlil{SELECT...FROM}\sqlIdx{SELECT{\idxdots}FROM}.%
-The query%
+While we do not yet know how to store things, we now know how to read -- with \sqlil{SELECT...FROM}\sqlIdx{SELECT{\idxdots}FROM}.
+This type of query is structured as follows:%
 %
-\begin{sqlSyntax}
-SELECT column1, column2, ... FROM tableName;
-\end{sqlSyntax}
+\sqlSyntax{syntax:select_from}{syntax/select_from.sql}%
 %
-gives us a tabular representation of the values of the columns \sqlil{column1}, \sqlil{column2}, and so on, for all the rows in table~\sqlil{tableName}.
-
 We can now close this \psql\ session by typing~\sqlil{\\q}\sqlIdx{{\textbackslash}q} and hitting~\keys{\enter}.
 As shown in \cref{fig:psqlNewUser7typeQuit}, this takes us back to our normal \pgls{OS} \pgls{terminal} shown in~\cref{fig:psqlNewUser8quit}.
 
