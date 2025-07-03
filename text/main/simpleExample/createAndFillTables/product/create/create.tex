@@ -34,7 +34,9 @@ We enter the \sqlil{CREATE TABLE}\sqlIdx{CREATE!TABLE} command for the new table
 \FloatBarrier%
 %
 \subfloat[][%
-The components of the command are highlighted for illustration purposes.%
+The components of the command are highlighted for illustration purposes. %
+When creating a table, we provide its name and then all the columns that it should have in parentheses, separated by commas. %
+For each column, we must provide the name and datatype and my provide constraints.%
 \label{fig:createTable3commandCols}%
 ]{\parbox[t]{0.99\linewidth}{\centering\includegraphics[width=0.67\linewidth]{\currentDir/createTable3commandCols}}}%
 %
@@ -83,13 +85,8 @@ The session is terminated and we are back in the normal \pgls{terminal}.%
 \label{fig:createTableProduct:B}%
 \end{figure}%
 %
-\gitLoadAndExecSQL{factory:create_table_product}{}{factory}{create_table_product.sql}{factory}{boss}{superboss123}%
-\listingSQLandOutput{factory:create_table_product}{%
-Creating the table \textil{product} to store the products we produce and sell.%
-}{}%
-%
 So let us create the table~\sqlil{product}.
-Let's start by thinking about what columns does this table need?
+We start by thinking about what columns does this table need?
 Well, first of all, each product has a \emph{name}.
 The name is text, so there should be one column that can host text.
 Each unit of a product also has a price.
@@ -98,35 +95,30 @@ In order to deliver products, we need to put them into boxes that have a certain
 These are clearly numbers, too.
 
 This fairly straightforward structure is illustrated in \cref{fig:dbStructureProduct}.
-All we need to do now is to translate this design to \sql\ commands.
-Then we can send the \sql\ commands to our \postgresql\ \dbms\ and we will have a fresh and nice \sqlil{product}~table.
-To do this, we need to chose a name and datatype for each of the above columns and then we can compile the overall command.
-
-Once we have the commands, there are two ways to execute it:
-We can either start a \psql\ session and type in the necessary commands one by one, which is illustrated in \cref{fig:createTableProduct:A}%.
-Or we can send a \sql\ script with all the commands to the \postgresql\ server directly via \psql.
-The script that we would use for this is shown in \cref{lst:factory:create_table_product} and its output is given in \cref{exec:factory:create_table_product}.
-For the last time in this book, we will discuss both methods side-by-side and afterwards, we will only work with the script-based approach.
-
-If we chose the manual method, then we first start a new \psql\ session in \cref{fig:createTable1psql}.
-This time we do this as user~\sqlil{boss} with password~\sql{superboss123}.
+All we need to do now is to translate this design to \sql\ commands, which includes choosing names and \sql-datatypes for the columns.
+Fittingly, the command for creating tables is called \sqlil{CREATE TABLE}\sqlIdx{CREATE!TABLE}\sqlIdx{TABLE}.
+As illustrated below, the command is followed by the table name and then, in parentheses, the list of attributes, i.e., columns, which are separated by commas.
+Each collumn has a datatype and may be annotated with some validity constraints~\cite{PGDG:PD:CT2}.
+The structure of the command looks like this:%
+%
+\sqlSyntax{syntax/create_table.sql}%
+%
+Here, we will first write down the whole command for creating our table~\sqlil{product} and execute it.
+Then we discuss all of its parameters and their meanings.
+We start an interactive \psql\ session and type in the commands in \cref{fig:createTable1psql}.
+Importantly, we do this as user~\sqlil{boss} with password~\sql{superboss123}.
 This user is the owner of our \db\ \sqlil{factory} and has the right to create tables and insert data.
 
-We can create a new table using the command \sqlil{CREATE TABLE}\sqlIdx{CREATE!TABLE}\sqlIdx{TABLE}, followed by the table name, followed by the attributes that we want to store~\cite{PGDG:PD:CT2}.
-We typed this command in \cref{fig:createTable3command}.
-As you can see, this is a bit cumbersome, because the command is long.
-Writing it as a script and then sending this to the \postgresql\ \dbms\ is more convenient, which is why we will prefer this method later on.
-Anyway, the command is a bit long, because it contains the whole description of the data that we will store in the table later.
+We type the full \sqlil{CREATE TABLE}\sqlIdx{CREATE!TABLE} command in \cref{fig:createTable3command}.
+It is also not very easy to understand, because we are not yet familiar with \sql.
+When we highlight the components of the commands in \cref{fig:createTable3commandCols}, things get a little bit clearer:
+The command indeed contains the column names and the column datatypes as well as constraints that ensure that the data entered is valid.
+We will now build the command step-by-step and discuss the meaning of each of its elements.
 
-So what does the \sqlil{CREATE TABLE}\sqlIdx{CREATE!TABLE} command in \cref{fig:createTable3command} look like and why does it look like that?
-When we highlight its components in \cref{fig:createTable3commandCols}, things get a little bit clearer:
-The command contains all the column names, the column datatypes, as well as constraints that ensure that the data entered is valid.
-Let's build the command step-by-step and discuss the meaning of each of its elements.
-
-We begin with the column \sqlil{name}.
+We begin with the column for the product name, which we will call~\sqlil{name}.
 As already said, each product must have a name.
 The names could be long or short, but 100~characters per product should suffice.
-\sql\ provides the datatype \sqlilIdx{VARCHAR}, which is used for variable-length strings, whose maximum length is specified in parentheses~\cite{PGDG:PD:CT}.
+\sql\ provides the datatype \sqlilIdx{VARCHAR}, which is used for variable-length text strings, whose maximum length is specified in parentheses~\cite{PGDG:PD:CT}.
 We could thus choose \sqlil{VARCHAR(100)}\sqlIdx{VARCHAR} for the column \sqlil{name} for our table~\pythonil{product}.
 We thus write~\sqlil{name VARCHAR(100)}\sqlIdx{VARCHAR} when defining this column.
 
@@ -134,29 +126,47 @@ When creating a column, we can also add certain \emph{constraints} for their val
 For example, product names must be unique.
 We can never have two different products with the same name.
 So we add the keyword~\sqlil{UNIQUE}~\cite{PGDG:PD:C}.
-If, later, someone tries to enter a record into our table whose \sqlil{name} value already exists in another record, then this will fail with an error.
-We also want to enforce that every single product record indeed has a \sqlil{name} value set.
-There cannot be a product without a name.
-Thus, there must never be any row in the table without a properly set name.
-Therefore, we add the \sqlilIdx{NOT NULL} specification and write \sqlil{name VARCHAR(100)\ UNIQUE NOT NULL}\sqlIdx{VARCHAR}\sqlIdx{NOT NULL}\sqlIdx{UNIQUE}~\cite{PGDG:PD:C}.
-Nice, we just defined our very first own column.
+If, at some point in time, someone tries to enter a record into our table whose \sqlil{name} value already exists in another record, then this will fail with an error.
+The \dbms\ will simply not allow that two rows in table~\sqlil{product} have the same value in column~\sqlil{name}.
+Nice.
 
-Additionally, we should store the price at which we sell the product.
+We also want to enforce that every single product record indeed has a~\sqlil{name} value set.
+There cannot be a product without a name.
+If this was an \microsoftExcel\ or \libreofficeCalc\ table, we would not have any means from stopping a user from leaving a cell empty.
+However, this is a table in a \pgls{rdb}, and we \emph{can} specify that there must never be any row without a proper value in column~\sqlil{name}.
+To this end, we add the \sqlilIdx{NOT NULL} constraint.
+All in all, we write \sqlil{name VARCHAR(100)\ UNIQUE NOT NULL}\sqlIdx{VARCHAR}\sqlIdx{NOT NULL}\sqlIdx{UNIQUE}~\cite{PGDG:PD:C}.
+Very nice.
+We just defined our very first column.
+
+Next we should create a column for price at which we sell the product.
+We will call it~\sqlil{price}.
 The price is clearly a number.
+Sadly, this early in our first example, we already encounter a bit of a tricky situation.
+But well, tricky situations are not unusual and it never hurts if you know that, well, sometimes solutions are a bit complicated.
+
 Computers usually provide two fundamental types of numbers on the hardware level, integer numbers and floating point numbers~(a subset of~\realNumbers).
 These types also exist in many programming languages.
 \python~\cite{programmingWithPython}, for example, offers us the two very basic datatypes \pythonilIdx{int} and \pythonilIdx{float} corresponding to integers and floating point numbers, respectively.
 Which one should we use?
-Now prices naturally are values with fractions, something like \$99.99 or 17.75元 or 3.79€, so at first glance, the \sql\ equivalent of \python's \pythonilIdx{float} seems a reasonable choice here.
-However, it is actually not, because in our companion book \citetitle{programmingWithPython}~\cite{programmingWithPython}, we can find the following information:%
+Prices naturally are values with fractions, something like \$99.99 or 17.75元 or 3.79€, so at first glance, the \sql\ equivalent of \python's \pythonilIdx{float} seems to be a reasonable choice here.
+It is actually not, though, because in our companion book \citetitle{programmingWithPython}~\cite{programmingWithPython}, we can find the following information:%
 %
 \bestPractice{floatImprecise}{%
 Always assume that any \pythonilIdx{float} value is imprecise. %
 Never expect it to be exact~\cite{PTVF2007NRTAOSC:EAAS,BHK2006CNFCMEARFCS:NS,programmingWithPython}.%
 }%
 %
+Taking this sentence at face value already means that floating point numbers are not a suitable choice.
+Money values must be exact.
+Always.
+Bookkeeping and billing are two of the things where you must never ever mess up.
+Send a wrong shoe to a customer, ship an order to a wrong destinaton -- that may be annoyances that you can recover from.
+But making mistakes in tax payment to the government because of inconsistencies in your financial records {\dots} that can become really nasty.
+That being said, let's take a closer look at the issue:%
+%
 \begin{sloppypar}%
-Indeed, using double precision IEEE~Standard 754 floating point numbers~\cite{IEEE2019ISFFPA,H1997IS7FPN}, the expression~\pythonil{0.1 + 0.1 + 0.1 - 0.3} may yield~\pythonil{5.551115123125783e-17} as result.
+Using double precision IEEE~Standard 754 floating point numbers~\cite{IEEE2019ISFFPA,H1997IS7FPN}, the expression~\pythonil{0.1 + 0.1 + 0.1 - 0.3} may yield~\pythonil{5.551115123125783e-17} as result.
 Let say that we would store~0.3元 as a price in our \db\ by using floating point numbers and that a customer transferred three times~一毛钱, i.e., three single dimes, to our account.
 Then the bank may encounter problems if our system would automatically try to transfer $5.551115123125783*10^{-17}$元 back as change\dots
 We therefore learn that:%
@@ -166,7 +176,11 @@ We therefore learn that:%
 Never represent monetary data with floating point numbers~\cite{SE:SO:WNUDOFTRC,W2020HSISCVISS}.%
 }%
 %
-We could use integer numbers representing the number of cents instead, but then we would always need to use some arithmetics to properly display prices~(divide by~100), which also creates a potential for errors~\cite{W2020HSISCVISS}.
+So floating point numbers are out.
+How about integer numbers?
+We could use integer numbers representing the number of cents instead, but then we would always need to use some arithmetics to properly display prices~(divide by~100).
+This also creates a potential for errors~\cite{W2020HSISCVISS}.
+
 Actually neither integers nor floating point numbers are the right choice!
 Instead, we will use the datatype~\sqlilIdx{DECIMAL}, which can represent a fractional number with a pre-defined number of digits exactly.
 Writing \sqlil{price DECIMAL(10, 2)} allows us to store values with 10~digits, 2~of these 10~digits are after the comma~\cite{PGDG:PD:NT}.
@@ -178,17 +192,22 @@ Of course, each product must have a price, so we add again the \sqlilIdx{NOT NUL
 Store monetary data using the \sqlilIdx{DECIMAL} datatype~\cite{C2024SCVDTCBP,W2020HSISCVISS}.%
 }%
 %
-Of course, every product must have a price.
-We therefore annotate the column \sqlil{price} with the \sqlilIdx{NOT NULL} constraint.
-
-We also already explained that we will sell each unit of a product in a box.
+With this, we can move on to the next set of product attributes.
+We already explained that we will sell each unit of a product in a box.
 Therefore, we also want to store the width, height, and depth as well as the weight of the packaged box.
+So we create four columns, called \sqlil{width}, \sqlil{height}, \sqlil{depth}, and \sqlil{weight}, respectively.
 For the height, width, and depth, we will use millimeter as unit and for the weight we use grams.
 We can store values using the datatype \sqlilIdx{INT}, which is a shorthand for \sqlilIdx{INTEGER}.
 It can hold values from -2\decSep147\decSep483\decSep648 to +2\decSep147\decSep483\decSep647.
 This is more than enough for us, as it allows the dimensions of our boxes to range from~1mm to over~2000km and the weights to be up to~2000t.
-Each product must have values specified for all four dimensions, so we again mark them as~\sqlilIdx{NOT NULL}.
-
+Each product must have values specified for all four dimensions, so we again mark each of them as~\sqlilIdx{NOT NULL}.%
+%
+\begin{sloppypar}%
+The keen reader has noticed that we did not mention the oddest-looking path of the command in \cref{fig:createTable3command}.
+\inQuotes{\sqlil{id INT GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY}\sqlIdx{INT}\sqlIdx{GENERATED}\sqlIdx{BY DEFAULT}\sqlIdx{PRIMARY KEY}\sqlIdx{IDENTITY}}.
+What the heck is that?%
+\end{sloppypar}%
+%
 Tables in a \db\ do not exist in an isolated manner.
 Instead, they will reference each other.
 For example, later we will want to store which customer bought which product.
@@ -197,25 +216,30 @@ A table of customers~(which we do not yet have), the table of products (that we 
 Each record in that last table will reference one row in the customers table and one row in the products table.
 
 For allowing the latter, we need a unique way to identify each row in our table.
-Now our table already has a column with unique values, namely~\sqlil{name}.
-However, these are of type \sqlilIdx{VARCHAR}, i.e., they are potentially long strings.
-This would mean that each record in the orders table would also need to store the long \sqlil{name} string.
-This would probably be inefficient~\cite{SE:DA:2014VPKM}.
-Also, maybe later we have many other records referencing a certain product by its name {\dots} but the marketing department chooses to change the name of the product.
+It must be possible to know exactly which product was ordered.
+There must not be any ambiguity.
+
+On the plus side, our table already has a column with unique values, namely~\sqlil{name}.
+While these values are unique, they may not necessarily be stable.
+Maybe we now have a \inQuotes{Shoe, Size 36} but at some time, the marketing department wants to rebrand our products and change the name to \inQuotes{Super-Speed Sneaker, Size 36.}
+Then we maybe have many other records referencing the product under its old name which no longer exists.
 This could wreak havoc to our \db.
-It is better to use an automatically generated unique value as key that will never change even if we change the name of a product~\cite{B2025DS:SBPASG}.%
+Additionally, there also is the issue that the column \sqlil{name} is type \sqlilIdx{VARCHAR}.
+The product names could be long strings.
+This would mean that each record in the orders table would also need to store the long \sqlil{name} string to reference the product.
+This would probably be a waste of space~\cite{SE:DA:2014VPKM}.
+
+It is better to use an automatically generated unique small value as key that will never change even if we change the name of a product~\cite{B2025DS:SBPASG}.%
 %
 \begin{sloppypar}%
 We therefore add another column that we are going to call~\sqlil{id}, which should hold a unique integer value.
 We define it as \sqlil{id INT GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY}\sqlIdx{INT}\sqlIdx{GENERATED}\sqlIdx{BY DEFAULT}\sqlIdx{PRIMARY KEY}\sqlIdx{IDENTITY}.
 The \sqlil{GENERATED BY DEFAULT AS IDENTITY}\sqlIdx{GENERATED{\idxdots}AS IDENTITY}~\cite{PGDG:PD:IC,PGDG:PD:GC} means that we do not need to specify values for this column when storing data.
-The system will automatically choose the next integer value that was not yet used.
-Here, \sqlIdx{GENERATED{\idxdots}AS IDENTITY!BY DEFAULT}\sqlil{BY DEFAULT} tell the system that we \emph{can} specify values for \sqlil{id} if we want to, which then take precedence over the generated values.
-This could be useful if we want to keep the values of \sqlil{id} if backup parts of the table elsewhere and then want to reinsert them.
-Alternatively, we could also have written \sqlIdx{GENERATED{\idxdots}AS IDENTITY!ALWAYS}\sqlil{ALWAYS}, in which case the \sqlil{id} values will always be generated automatically.
+The system will automatically choose the next integer value that was not yet used.%
+\end{sloppypar}%
+%
 We will use this column as the so called \sqlilIdx{PRIMARY KEY}, i.e., as the value that should be used by other tables to reference rows in our \sqlil{product} table.
 The annotation with \sqlilIdx{PRIMARY KEY} also automatically enforces that only unique values can be stored.%
-\end{sloppypar}%
 %
 \bestPractice{surrogatePrimaryKey}{%
 Prefer using surrogate primary keys based on automatically incremented integers~\cite{B2025DS:SBPASG}. %
@@ -229,6 +253,11 @@ While there is some controversy about this topic~\cite{SE:SE:WINATPKCICBPC}, any
 %
 This completes the \sql\ command for creating our very first table.
 If we had typed it into the \psql\ console, then it would succeed and print \sqlil{CREATE TABLE} back to us, as shown in \cref{fig:createTable4created}.
+
+\gitLoadAndExecSQL{factory:create_table_product}{}{factory}{create_table_product.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{factory:create_table_product}{%
+Creating the table \textil{product} to store the products we produce and sell.%
+}{}%
 
 If instead we had written the command into a script, then we would also fire up \psql\ again.
 Since the \db\ belongs to the user \sqlil{boss}, we now log in as \sqlil{boss} using their password \sqlil{superboss123}.
@@ -251,6 +280,7 @@ As you can see, before executing the \sqlil{CREATE TABLE}\sqlIdx{CREATE!TABLE}\s
 Afterwards, one new table exists, namely~\sqlil{product}.
 This output is also illustrated in \cref{fig:createTable5select,fig:createTable6selected}.%
 \end{sloppypar}%
+%
 \FloatBarrier%
 \endhsection%
 %

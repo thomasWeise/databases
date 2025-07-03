@@ -1,11 +1,5 @@
 %
 \hsection{Inserting some Data}%
-\afterpage{\clearpage}%
-%
-\gitLoadAndExecSQL{factory:insert_into_table_product}{}{factory}{insert_into_table_product.sql}{factory}{boss}{superboss123}%
-\listingSQLandOutput{factory:insert_into_table_product}{%
-Storing some products in the table~\sqlil{product}.%
-}{}%
 %
 Now the table \sqlil{product} exists, but it is empty.
 Let us fill it with data.
@@ -25,8 +19,16 @@ We will store values for the fields \sqlil{name}, \sqlil{price}, \sqlil{weight},
 We do not need to store values for~\sqlil{id}, because they will be automatically generated for us.
 After saying what we want to store, we specify the \sqlilIdx{VALUES} to store.
 Each row is written in parentheses, values and rows are separated by commas.
+The command follows the syntax given below.%
+%
+\sqlSyntax{syntax/insert_into.sql}%
+%
+\gitLoadAndExecSQL{factory:insert_into_table_product}{}{factory}{insert_into_table_product.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{factory:insert_into_table_product}{%
+Storing some products in the table~\sqlil{product}.%
+}{}%
+%
 The complete command for storing all the data is shown in \cref{lst:factory:insert_into_table_product}.
-
 There, we first print all the data currently in the table by typing \sqlil{SELECT * FROM product;}\sqlIdx{SELECT{\idxdots}FROM}\sqlIdx{WHERE}\sqlIdx{*}~\cite{PGDG:PD:SC:S}.
 This prints nothing, because the table is empty.
 Then we insert the eleven products via one single \sqlilIdx{INSERT INTO} command.
@@ -39,5 +41,6 @@ Because we already have a row with this value.
 We test this in \cref{lst:factory:insert_into_table_product_error}.
 Indeed, \cref{exec:factory:insert_into_table_product_error} shows that this fails with an error and the data remains unchanged.%
 %
+\FloatBarrier%
 \endhsection%
 %

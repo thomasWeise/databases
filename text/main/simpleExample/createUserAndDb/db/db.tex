@@ -110,7 +110,7 @@ For this, we first open a new \psql\ session in~\cref{fig:createDB01start,fig:cr
 Notice that we still need to execute this command under the \pgls{dba} role \textil{postgres}.
 Also, we can put the connection~\pgls{URI} inside of quotes~(\bashil{"..."}), which is useful if, for example, the password contains strange characters.
 This user has the right to create \pglspl{db} for other users which can then work with them.
-We then need to execute a single \sql-command, namely\sqlIdx{CREATE!DATABASE}\sqlIdx{DATABASE}\sqlIdx{OWNER}:
+We then need to execute a single \sql-command, namely\sqlIdx{CREATE!DATABASE}\sqlIdx{DATABASE}\sqlIdx{OWNER}:%
 %
 \sqlSyntax{syntax/create_database.sql}%
 %
