@@ -43,6 +43,7 @@ The slides in German language can be found at <https://thomasweise.github.io/dat
 7. [Beispiele Herunterladen](https://thomasweise.github.io/databasesSlidesDE/07_beispiele_herunterladen.pdf)
 8. [Fabrik-Datenbank: Benutzer und Datenbank](https://thomasweise.github.io/databasesSlidesDE/08_fabrik_datenbank_benutzer_und_db.pdf)
 9. [Fabrik-Datenbank: Tabelle `product`](https://thomasweise.github.io/databasesSlidesDE/08_fabrik_datenbank_tabelle_product.pdf)
+10. [Fabrik-Datenbank: Tabelle `customer`](https://thomasweise.github.io/databasesSlidesDE/10_fabrik_datenbank_tabelle_customer.pdf)
 
 ### 2.3. The Examples
 This is a practice-oriented course on databases.

@@ -28,18 +28,30 @@ The command follows the syntax given below.%
 Storing some products in the table~\sqlil{product}.%
 }{}%
 %
+\gitLoadAndExecSQL{factory:insert_into_table_product_error}{}{factory}{insert_into_table_product_error.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{factory:insert_into_table_product_error}{%
+Showing how the \sqlilIdx{UNIQUE} constraint on column \sqlil{name} prevents us from inserting a product with the same name as an already existing one into table \sqlil{product}.%
+}{}%
+%
 The complete command for storing all the data is shown in \cref{lst:factory:insert_into_table_product}.
 There, we first print all the data currently in the table by typing \sqlil{SELECT * FROM product;}\sqlIdx{SELECT{\idxdots}FROM}\sqlIdx{WHERE}\sqlIdx{*}~\cite{PGDG:PD:SC:S}.
 This prints nothing, because the table is empty.
 Then we insert the eleven products via one single \sqlilIdx{INSERT INTO} command.
 Afterwards, we try \sqlil{SELECT * FROM product;}\sqlIdx{SELECT{\idxdots}FROM}\sqlIdx{WHERE}\sqlIdx{*} again -- and now it prints 11~rows.
 
-Before we continue, let us briefly check what the \sqlilIdx{UNIQUE} constraint that we have defined on column~\sqlil{name} does.
-Basically, it says that there cannot be two records in our table with the same value of~\sqlil{name}.
+We can invoke \sqlilIdx{INSERT INTO}-commands arbitrarily often.
+For example, instead of inserting all eleven rows at once, as we did above, we could have issued eleven separate \sqlilIdx{INSERT INTO} statements inserting one row each.
+And of course we can also call \sqlilIdx{INSERT INTO} later on to append more rows.
+Since this is easy and works in an obvious way, we will not explicitly try this out here.
+
+Before we continue, though, let us briefly check what the \sqlilIdx{UNIQUE} constraint that we have defined on column~\sqlil{name} does.
+We wrote \sqlil{name VARCHAR(100) NOT NULL UNIQUE}, meaning that column \sqlil{name} should be a variable-length text string of no more than 100 characters, that it must always be specified, and that it is~\sqlil{UNIQUE}.
+Basically, the \sqlil{UNIQUE} here means that there cannot be two records in our table with the same value of~\sqlil{name}.
 Therefore, if we would try to insert another product with name \sqlil{'Shoe, Size 36'} into the table, this should fail.
 Because we already have a row with this value.
 We test this in \cref{lst:factory:insert_into_table_product_error}.
-Indeed, \cref{exec:factory:insert_into_table_product_error} shows that this fails with an error and the data remains unchanged.%
+Indeed, \cref{exec:factory:insert_into_table_product_error} shows that this fails with an error and the data remains unchanged.
+There would have no good way to prevent such errors in \microsoftExcel\ or \libreofficeCalc, but in a \dbms, we can protect the integrity of our data.%
 %
 \FloatBarrier%
 \endhsection%
