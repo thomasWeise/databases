@@ -6,6 +6,16 @@
 Storing some order records in the table \textil{demand}.%
 }{}%
 %
+\gitLoadAndExecSQL{factory:insert_into_table_demand_error_1}{}{factory}{insert_into_table_demand_error_1.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{factory:insert_into_table_demand_error_1}{%
+The attempt to store an order with an invalid product~\sqlil{id} fails.%
+}{}%
+%
+\gitLoadAndExecSQL{factory:insert_into_table_demand_error_2}{}{factory}{insert_into_table_demand_error_2.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{factory:insert_into_table_demand_error_2}{%
+The attempt to store an order with typo in the order date fails as well.%
+}{}%
+%
 Inserting data into our new table~\sqlil{demand}, however, is a bit annoying.
 We need to refer to the customers and the products by their~\sqlil{id}.
 In \cref{lst:factory:insert_into_table_demand}, we use an \sqlilIdx{INSERT INTO} command to insert eight orders into the table.
@@ -21,8 +31,18 @@ For instance, row \sqlil{(3, 11, 10, '2025-01-16')} identifies Mrs.~Bebba~(custo
 \Cref{lst:factory:insert_into_table_demand} shows the effect of this command.
 Querying \sqlil{SELECT * FROM demand;}\sqlIdx{SELECT{\idxdots}FROM} will show us all the rows of this table.
 Making sense of this data is, however, not straightforward.
-Luckily, \sql\ does not just offer us the ability to link records between tables in order to maintain data integrity.
-It also provides us means to connect the information from different tables together.%
+Luckily, \sql\ does not just offer us the ability to link records between tables in order to maintain data integrity:
+It also provides us means to connect the information from different tables together.
+
+Before we explore pulling data from different tables together, let us briefly check whether our \dbms\ really protects the integrity of our data.
+In \cref{lst:factory:insert_into_table_demand_error_1}, we attempt to insert an order record with the invalid product~\sqlil{id}~77 into the \sqlil{demand}~Table.
+Maybe the data entry clerk wanted to enter an order for product~7, but accidentally hit the \keys{7}~key twice.
+The \sql\ query therefore fails with an error in \cref{exec:factory:insert_into_table_demand_error_2}.
+
+A similar mistake happens in \cref{lst:factory:insert_into_table_demand_error_2}:
+Here, the order data was accidentally typed out as \sqlil{'1024-11-21'} instead of \sqlil{'2024-11-21'}.
+This violates our constraint \sqlil{ordered_date_ok} and, hence, fails in \cref{exec:factory:insert_into_table_demand_error_2}.%
 %
+\FloatBarrier%
 \endhsection%
 %

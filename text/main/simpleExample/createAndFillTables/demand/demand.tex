@@ -5,8 +5,11 @@
 We now have two tables.
 In the first table, we have the products that we can sell.
 In the second table, we have a list of customers.
-Now we want to store the actual orders, the sales of our company:
-A customer can buy a certain amount of one product.%
+Now we want to store the actual orders, the sales of our company.
+We here only consider a very simplistic approach to order management:
+With each issued order, a customer can buy a certain amount of exactly one product.
+From the real world, you know that usually you can order multiple products in each purchase in an online shop, decide for a payment option, and maybe specify a shipping address different from the address associated with your account.
+However, we here keep it plain and simple.%
 %
 \hinput{create}{create.tex}%
 \hinput{insert_and_select}{insert_and_select.tex}%

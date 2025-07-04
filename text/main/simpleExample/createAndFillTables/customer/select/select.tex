@@ -17,29 +17,39 @@ Notice that we this time wrote \sqlilIdx{ILIKE} instead of \sqlilIdx{LIKE}.
 \sqlilIdx{ILIKE} works basically the same as \sqlilIdx{LIKE}, with the exception that it compares text case-insensitive.
 For \sqlilIdx{LIKE}, \textil{China} and \textil{china} are two different strings.
 For \sqlilIdx{ILIKE}, they are the same.
-By writing \sqlil{SELECT address ILIKE '\%china\%' as domestic from customer;}, we would get a one-column result which contains the value \sqlilIdx{TRUE} for every customer from China and \sqlilIdx{FALSE} for every customer from abroad.%
+By writing \sqlil{SELECT address ILIKE '\%china\%' as domestic from customer;}, we would get a one-column result which contains the value \sqlilIdx{TRUE} for every customer from China and \sqlilIdx{FALSE} for every customer from abroad.
+In a first step, we select the names of all customers together with the value for our synthetic attribute~\sqlil{domestic}.
+We find that the only domestic customer is Mr.~Bibbo.
+Only he has~\sqlilIdx{t}, which means~\sqlilIdx{TRUE}, as value of~\sqlil{domestic}.
+All other customers have~\sqlilIdx{f}, which means~\sqlilIdx{FALSE}, as value of~\sqlil{domestic}.%
 %
 \begin{sloppypar}%
-We can now divide the customers into groups based on this column \sqlil{domestic} by adding \sqlil{GROUP BY domestic}\sqlIdx{GROUP BY} to the query.
+We just want to know the numbers of domestic and non-domestic, i.e., foreign, customers.
+To get these numbers, we can divide the customers into groups based on this column \sqlil{domestic} by adding \sqlil{GROUP BY domestic}\sqlIdx{GROUP BY} to the query.
 We count the number of customers in each group by also selecting the new value \sqlil{COUNT(*)}\sqlIdx{COUNT}.
-\sqlil{COUNT(*)}\sqlIdx{COUNT} counts the rows in the current group and returns the result as integer number.
+\sqlilIdx{COUNT}~is another aggregate statistic function, just like~\sqlilIdx{AVG}, which we already used before.
+\sqlil{COUNT(*)}\sqlIdx{COUNT}~counts the rows in the current group and returns the result as integer number.
 The complete query is \sqlil{SELECT COUNT(*), address ILIKE '\%china\%' as domestic FROM customer GROUP BY domestic;}.
-It produces two rows.
-The first row has \sqlil{domestic} as \sqlil{f}, which means \sqlilIdx{FALSE}.
-In its \sqlil{count} column, we see the value~3.
-The second row has \sqlil{domestic} as \sqlil{t}, which means \sqlilIdx{TRUE}.
-In its \sqlil{count} column, we see the value~1.
-Indeed, there are three foreign customers and one domestic one in our \db.%
 \end{sloppypar}%
 %
+It produces two rows.
+The first row has \sqlil{domestic} as \sqlilIdx{f}, which, again, means~\sqlilIdx{FALSE}.
+In its \sqlil{count} column, we see the value~3.
+The second row has \sqlil{domestic} as \sqlilIdx{t}, which stands for~\sqlilIdx{TRUE}.
+In its \sqlil{count} column, we see the value~1.
+Indeed, there are three foreign customers and only one domestic one in our \db.
+
 If you looked at this example carefully, then you noticed that the method of deciding whether a customer is from China or not, as well as the method of detecting french customers, are not very precise.
 For example, if a customer would have specified their country as 中国, i.e., China written in Chinese, we would have considered them a foreigner.
-Then again, if the director of the imaginary \emph{Donut Factory Vive la France} in Shanghai would order shoes from us, we would consider his address to be french and domestic at the same time.\footnote{%
+Then again, if the director of the imaginary \emph{Donut Factory Vive la France} in Shanghai, China would order shoes from us, we would consider his address to be french and domestic at the same time.\footnote{%
 This situation arises because we here violate the \glsreset{1NF}\pgls{1NF}, which we will discuss much much later, in \cref{sec:normalForm:1}. %
 Indeed, dividing the \sqlil{address} column into multiple columns would be part of the solution.}
 Maybe we should have had another column \sqlil{country}?
-In this case, we would most likely need a table with countries and link that table to our \sqlil{customer} table\dots
+This would at least solve the problem with the donut factory.
+We would still have the problem that people could use different spellings for the same country, say China, china, 中国, People's Republic of China, PRC, P.R.C., 中华人民共和国, République populaire de Chine, Chine, and so on, though.
+To solve this problem, we would most likely need a table with countries and link that table to our \sqlil{customer} table\dots
 Next, we will explore how tables can be \inQuotes{linked} together.%
 %
+\FloatBarrier%
 \endhsection%
 %

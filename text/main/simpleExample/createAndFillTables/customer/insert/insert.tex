@@ -4,22 +4,32 @@
 %
 \gitLoadAndExecSQL{factory:insert_into_table_customer}{}{factory}{insert_into_table_customer.sql}{factory}{boss}{superboss123}%
 \listingSQLandOutput{factory:insert_into_table_customer}{%
-Storing some customer records in the table \textil{customer}.%
+Storing some customer records in the table~\textil{customer}.%
+}{}%
+%
+\gitLoadAndExecSQL{factory:insert_into_table_customer_error}{}{factory}{insert_into_table_customer_error.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{factory:insert_into_table_customer_error}{%
+Trying to store a faulty customer record. Can you spot the error?%
 }{}%
 %
 We now enter the data of the four (imaginary) customers of our company.
 We can do this again with the \sqlilIdx{INSERT INTO} command.
 We first need to specify the table, which is \sqlil{customer}, and then the columns, namely \sqlil{name}, \sqlil{phone}, and \sqlil{address}.
 We do not need to provide values for the \sqlil{id} column, because it will automatically be set.
-The customer names are Bibbo, Bebbo, Bebba, and Bobbo.
+The customer names are Mr.~Bibbo, Mr.~Bebbo, Mrs.~Bebba, and Mr.~Bobbo.
 Bibbo lives in the south campus of our Hefei University~(合肥大学), Bebbo lives in the town hall of Chemnitz city in Germany, Bebba lives on Times Square in New York, and Bobbo resides on top of the Eiffel Tower in Paris, France.
-Their phone numbers are similarly probable.
+Their phone numbers are, by sheer chance, all composed of eleven repetitions of a single digit.
 Either way, we can insert these values by specifying them row-for-row, using commas to separate rows.
 Each row is given in parentheses and the values are listed in the same sequence as we specified the columns and separated by comas as well.
 
 \Cref{lst:factory:insert_into_table_customer} and the corresponding \psql\ output in \cref{exec:factory:insert_into_table_customer} show that, first, the table is empty.
 \sqlil{SELECT * from customer;} yields 0~rows.
 Then we execute the \sqlilIdx{INSERT INTO} command.
-Afterwards \sqlil{SELECT * from customer;} prints the four expected rows.%
+Afterwards \sqlil{SELECT * from customer;} prints the four expected rows.
+
+Of course, we also need to test whether our constraints work or not.
+In \cref{lst:factory:insert_into_table_customer_error}, we attempt to store a faulty customer record.
+Can you spot the error before looking at the \psql\ output in \cref{exec:factory:insert_into_table_customer_error}?%
+\FloatBarrier%
 \endhsection%
 %
