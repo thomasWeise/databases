@@ -35,6 +35,8 @@ A \sqlil{SELECT name FROM customer;} would do this for us.
 Now we need to cross-reference the customer \sqlil{id} values in table \sqlil{customer} with the column \sqlil{customer} in table \sqlil{demand}.
 We also want to list the customers who did not issue any order.%
 %
+\hsection{\texttt{LEFT JOIN}}%
+%
 \begin{sloppypar}%
 What we want to do is to apply a so-called \sqlil{LEFT JOIN}\sqlIdx{JOIN!LEFT}, also called \sqlIdx{LEFT OUTER JOIN}\sqlIdx{JOIN!LEFT OUTER}, of the table \sqlil{customer} to the table \sqlil{demand}~\cite{PGDG:PD:JT}.
 The syntax of a \sqlil{LEFT JOIN}\sqlIdx{JOIN!LEFT} is as follows:%
@@ -55,14 +57,13 @@ Column~\sqlil{customer} in table~\sqlil{demand} then corresponds to~\sqlil{Table
 Notice that we can prefix column names with table names to add clarity:
 \sqlil{Table_1.a} is the same as column~\sqlil{a} of table~\sqlil{Table_1}.
 
-The columns from \sqlil{table_2} that we want need to be prefixed by \sqlil{table_2.}.
 The important part of the \sqlil{LEFT JOIN}\sqlIdx{JOIN!LEFT} is the \sqlilIdx{ON} condition.
 It can be an arbitrarily complex condition, involving \sqlilIdx{AND} and \sqlil{OR} and whatnot.
 However, in the simplest form, it just picks a column from \sqlil{Table_1}, here \sqlil{Table_1.a} and says that its value must be the same as a column in \sqlil{Table_2}, here \sqlil{Table_2.b}.%
 This condition then applies to the rows that are returned, with the only exception that, if there is no entry in \sqlil{Table_2} for some value of \sqlil{Table_1.a}, then \sqlil{NULL} will be returned for all fields used from \sqlil{Table_2} in the corresponding result row.
 
 We apply this to our situation.
-As aid, \sqlil{Table_1} is obviously \sqlil{customer} and \sqlil{Table_2} is \sqlil{demand}.
+As said, \sqlil{Table_1} is obviously \sqlil{customer} and \sqlil{Table_2} is \sqlil{demand}.
 The thing that we want to select is \sqlil{customer.name} and the corresponding values of \sqlil{demand.id}.
 The fields that need to match are \sqlil{customer.id} and \sqlil{demand.customer}.%
 %
@@ -77,7 +78,7 @@ This means that we get the demands associated with each customer name.
 We also see which customer did not make any purchase.%
 \end{sloppypar}%
 %
-To clean up the output, we rename \sqlil{customer.name AS name}\sqlIdx{AS} and \sqlil{demand.id AS demand_id}\sqlIdx{AS} to make it clearer which name and id values will be displayed.
+To clean up the output, we rename \sqlil{customer.name AS name}\sqlIdx{AS} and \sqlil{demand.id AS demand_id}\sqlIdx{AS} to make it clearer which name and ID~values will be displayed.
 We also add an \sqlil{ORDER BY name}\sqlIdx{ORDER BY} to sort the output by customer name.
 
 The result of this query, shown in \cref{exec:factory:select_customer_demand}, has nine rows.
@@ -106,44 +107,18 @@ However, we can just join tables pull all the information together in a query.%
 \FloatBarrier%
 \endhsection%
 %
-\hsection{Views as Virtual Tables}%
-%
-\gitLoadAndExecSQL{factory:create_view_sale}{}{factory}{create_view_sale.sql}{factory}{boss}{superboss123}%
-\listingSQLandOutput{factory:create_view_sale}{%
-Creating a view, i.e., a stored \sql\ query that can be treated like a table, to list the demands in human-readable form.%
-}{}%
+\hsection{\texttt{INNER JOIN}}%
 %
 We are now able to cross-reference different tables and to pull data together.
-What we want to do is to create a query where, for each demand, we see the customer name, the product name, the product price, the ordered amount, and the order date.
+Let us create a query where, for each demand, we see the customer name, the product name, the product price, the ordered amount, and the order date.
 The result of this query would then be a clear and human readable overview of the business transactions of our company.
 Based on the previous example, where we joined the table \sqlil{customer} with the table \sqlil{demand}, we anticipate that we will need two \inQuotes{joins} now.
 We will need to combine the \sqlil{demand} table with the \sqlil{customer} table and with the \sqlil{product} table.
 The query will therefore probably be more complicated.
 
-Moreover, it is likely that we will need this query structure several times.
-For example, we probably want to be able to query all the orders that were made in a specific year.
-This would basically extend the same query with a \sqlilIdx{WHERE} clause where we limit the demand dates.
-Or maybe we want to sum up the cash flow per customer, to see who our most lucrative customers are and to maybe make them some special offers
-Or maybe we want to summarize the total sales per product.
-This would tell us which of our products sell well and which don't.
-
-Every time we would re-write the query, just a bit differently.
-Of course, this is not a good approach.
-On one hand, every time we write a query, there is a chance that we introduce a mistake.
-On the other hand, if we ever decided to change the structure of \db, maybe by allowing multiple items per demand, then we are stuck with a heap of queries that all need to be changed.
-
-Luckily, the \sql\ language and \pglspl{rdb} offer us a tool for this situation:
-We can store the query as so-valled \emph{view}~\cite{PGDG:PD:CV}.
-A view is basically a stored query that we can work with exactly as if it was a table.
-We can apply other \sqlil{SELECT}\sqlIdx{SELECT{\idxdots}FROM} queries on top of it.
-
-Thus, we now will perform two steps:
-First, we design the new query that joins three tables.
-Second, we store this query as view so that we can re-use it whenever it pleases us.
-
 Let us construct the new query.
-We first define what we want in a way more close to \sql.
-\inQuotes{For each row in \sqlil{demand}, we need the corresponding row in \sqlil{customer} and the corresponding row in \sqlil{product}.}
+We first define what we want in a way more close to \sql:
+\emph{\inQuotes{For each row in \sqlil{demand}, we need the corresponding row in \sqlil{customer} and the corresponding row in \sqlil{product}.}}
 We know that there always exists exactly one \sqlil{customer} row, because we defined the foreign key \sqlilIdx{REFERENCES} constraint that enforces this.
 We also know that there always exists exactly one \sqlil{product} row, because we defined the foreign key \sqlilIdx{REFERENCES} constraint that enforces this.
 So it cannot be that we have a row \sqlil{demand} but no corresponding row in \sqlil{customer} or \sqlil{product}.
@@ -152,55 +127,46 @@ We already know that it is totally possible the other way around, i.e., that the
 Given this information, we \emph{could} use the \sqlil{LEFT JOIN}\sqlIdx{JOIN!LEFT} from before.
 It would generate rows also for rows of \sqlil{demand} that do not match to any \sqlil{customer} or \sqlil{product}.
 But such rows do not exist anyway.
-However, what we actually would like to use here is an \sqlil{INNER JOIN}\sqlIdx{JOIN!INNER}.
-The \sqlil{INNER JOIN} only creates output rows when the rows of all involved tables match each other.%
+However, what we actually would like to use here is an \sqlil{INNER JOIN}\sqlIdx{JOIN!INNER}~\cite{PGDG:PD:JT}.
+The \sqlil{INNER JOIN} only creates output rows when the rows of all involved tables match each other.
+While this is not an issue here, it is an important aspect in many other situations.%
+%
+\sqlSyntax{syntax/inner_join.sql}%
+%
+But how do we go about joining \emph{three} tables?
+We can chain arbitrary join expressions.
+Thus, to merge data from three tables, we simply chaining two \sqlil{INNER JOIN} expressions:%
+%
+\sqlSyntax{syntax/inner_join_2.sql}%
+%
+\gitLoadAndExecSQL{factory:select_sale_data}{}{factory}{select_sale_data.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{factory:select_sale_data}{%
+Selecting the sales data by joining the three tables~\sqlil{demand}, \sqlil{customer}, and \sqlil{product}.%
+}{}%
 %
 \begin{sloppypar}%
-But how do we go about joining \emph{three} tables?
-Well, let's begin by doing basically the same thing as before:
+Equipped with the understanding of this concept, we begin by doing basically the same thing as before:
 We \sqlil{SELECT <something> FROM demand} and then \sqlil{INNER JOIN customer ON (customer.id = demand.customer)}.
 For each row in \sqlil{demand}, this gives us the corresponding row in \sqlil{customer}.
 It also would drop each row in \sqlil{demand} for which no row in \sqlil{customer} exists from the output, but that cannot happen anyway.
+\end{sloppypar}%
+%
+\begin{sloppypar}%
 Now we simply \emph{chain} the next \sqlil{INNER JOIN} by writing it directly after that!
 We write \sqlil{INNER JOIN product ON (product.id = demand.product)}.
 This will also select the corresponding row from table \sqlil{product}.
 If such a row does not exist, then the whole current combined row from \sqlil{demand} and \sqlil{product} would be dropped from the output.
-Thanks to our \sqlilIdx{REFERENCES} constraints in table \sqlil{demand}, this can never happen anyway.%
+Thanks to our \sqlilIdx{REFERENCES} constraints in table \sqlil{demand}, this, again, can never happen anyway.%
 \end{sloppypar}%
 %
-We now have nicely pulled the customer and product data for each demand order.
-We now choose the columns that we want to output and replace the \sqlil{<something>} we first nonchalantly wrote when beginning to design the query.
-First, we want to get the customer name, so we write \sqlil{customer.name AS customer_name}.
-Like we did in the the last query we designed.
-
-However, this time, suddenly a problem occurs to us:
-As we discussed before, customer names are not necessarily \sqlilIdx{UNIQUE} in our \db\ design.
-This would be a flaw of this query, as it does not distinguish two different customers with the same name.
-In real systems, you have customer numbers, unique usernames, or phone numbers to avoid this issue.
-Actually, we \emph{do} have phone numbers here, too, and they \emph{are} \sqlilIdx{UNIQUE}.
-Then again, just displaying the phone number is probably confusing to whoever reads the result of the view.
-
-So what are we going to do?
-Shall we display the customer names, which are not unique?
-Then, if we add up sales per customer \emph{name}, people with the same name will be grouped together and the result may be wrong.
-Or should we display phone numbers?
-This would render the output close to unreadable for human operators.
-
-Let's go all the way:
-We simply concatenate the customer name and their phone number.
-We do \sqlil{SELECT customer.name || ', ' || customer.phone as customer_name ...}.
-The \sqlil{a || b}\sqlIdx{\textbar\textbar} operator concatenates two strings \sqlil{a} and \sqlil{b}~\cite{PGDG:PD:SFAO}.
-Thus \sqlil{'Hello ' || 'Word!'} will result in the string \sqlil{'Hello World!'}.
-Our third customer, Mrs.~Bebba, would be displayed as \sqlil{'Bebba, 33333333333'}.
-Since the phone numbers are \sqlilIdx{UNIQUE} in our \db, names plus phone numbers must also necessarily be unique.
-As the result, the data is readable, because the operator can see the names.
-And if ever another Mrs.~Bebba would become our customer, maybe she has phone number 77777777777, then it would be impossible to mix up the two Bebbas.
-One would show up as \sqlil{'Bebba, 33333333333'} and the other one as \sqlil{'Bebba, 77777777777'}.
-
-We also want to get the product name, so we write \sqlil{product.name AS product_name}.
-Product names are \sqlilIdx{UNIQUE}, so we can use them as-is.
+We have nicely pulled the customer and product data for each demand order.
+Having all the data at hand, we can choose the columns that we want to output and replace the \sqlil{<something>} we first nonchalantly wrote when beginning to design the query.
+We want to get the customer name and product name.
 Notice how both the table \sqlil{customer} and the table \sqlil{product} have a column called~\sqlil{name}.
-However, there can never be any confusion here, because we refer to these columns as \sqlil{customer.name} and \sqlil{product.name}, respectively.
+To be able to tell them apart, we will not write \sqlil{name} for the customer name like in the previous big query that we designed.
+Instead, we will select the customer name as \sqlil{customer.name AS customer_name}.
+For the product name, we write \sqlil{product.name AS product_name}.
+Thus, there can never be any confusion here, because we refer to these columns as \sqlil{customer.name} and \sqlil{product.name}, respectively.
 Next we want the list product price and amount associated with an order, i.e., \sqlil{product.price AS price} and \sqlil{demand.amount AS amount}.
 Finally, we also return the order date and therefore add column \sqlil{demand.ordered as ordered}.
 
@@ -209,7 +175,70 @@ If two entries have the same \sqlil{customer_name}, then we sort the one with th
 If two entries have the same \sqlil{customer_name} \emph{and} \sqlil{ordered} date, then we sort the one with the lexicographically smaller \sqlil{product_name} first.
 We try to resolve further draws by \sqlil{price} and \sqlil{amount}.
 
-The second thing we wanted to do was to save this query into the \db\ as a \emph{view}.
+The full query is shown in \cref{lst:factory:select_sale_data}.
+The output in \cref{exec:factory:select_sale_data} shows the eight orders issued.
+However, unlike the raw data from table~\sqlil{demand}, the output is now clear and easy to read.%
+%
+\FloatBarrier%
+\endhsection%
+%
+\endhsection%
+%
+\hsection{Views as Virtual Tables}%
+%
+\gitLoadAndExecSQL{factory:create_view_sale}{}{factory}{create_view_sale.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{factory:create_view_sale}{%
+Creating a view, i.e., a stored \sql\ query that can be treated like a table, to list the demands in human-readable form.%
+}{}%
+%
+The very clear sales information that we just saw is very useful for our factory.
+Indeed, it is likely that we will need this query structure several times.
+For example, we probably want to be able to query all the orders that were made in a specific year.
+This would basically extend the same query with a \sqlilIdx{WHERE} clause attached that limits the demand dates.
+Or maybe we want to sum up the cash flow per customer, to see who our most lucrative customers are and to maybe make them some special offers
+Or maybe we want to summarize the total sales per product.
+This would tell us which of our products sell well and which don't.
+
+Every time we would re-write the query, just a bit differently.
+Of course, this is not a good approach.
+On the one hand, every time we write a query, there is a chance that we introduce a mistake.
+On the other hand, if we ever decided to change the structure of \db, maybe by allowing multiple items per demand, then we are stuck with a heap of queries that all need to be changed.
+
+Luckily, the \sql\ language and \pglspl{rdb} offer us a tool for this situation:
+We can store the query as so-valled \emph{view}~\cite{PGDG:PD:CV}.
+A view is basically a stored query that we can work with exactly as if it was a table.
+We can apply other \sqlil{SELECT}\sqlIdx{SELECT{\idxdots}FROM} queries on top of it.
+Thus, all we have to do is to store this query as view so that we can re-use it whenever it pleases us.
+
+However, this time, suddenly a problem occurs to us:
+As we discussed before, customer names are not necessarily \sqlilIdx{UNIQUE} in our \db\ design.
+Product names are \sqlil{UNIQUE}, but eventually, we may have two customers with the same name.
+This would be a flaw of this query, as it does not give us any means to distinguish two different customers with the same name.
+In real systems, you have customer numbers, unique usernames, or phone numbers to avoid this issue.
+Actually, we \emph{do} have phone numbers here, too, and they \emph{are} \sqlilIdx{UNIQUE}.
+Then again, just displaying the phone number is probably confusing to whoever reads the result of the view.
+
+So what are we going to do?
+Shall we display the customer names, which are not unique?
+Then, if we add up sales per customer \emph{name}, people with the same name will be grouped together and the result may be wrong.
+Or should we display phone numbers?
+This would render the output close to unreadable for human operators.%
+%
+\begin{sloppypar}%
+Let's split the difference:
+We simply concatenate the customer name and their phone number.
+We not just select \sqlil{customer.name AS customer_name}.
+Instead, we write \sqlil{customer.name || ', ' || customer.phone AS customer_name}.
+The \sqlil{a || b}\sqlIdx{\textbar\textbar} operator concatenates two strings \sqlil{a} and \sqlil{b}~\cite{PGDG:PD:SFAO}.
+Thus \sqlil{'Hello ' || 'Word!'} will result in the string \sqlil{'Hello World!'}.
+Our third customer, Mrs.~Bebba, would be displayed as \sqlil{'Bebba, 33333333333'}.
+Since the phone numbers are \sqlilIdx{UNIQUE} in our \db, customer names plus phone numbers must also necessarily be unique.
+As the result, the data is readable, because the human operator can see the names.
+And if ever another Mrs.~Bebba would become our customer, maybe she has phone number~77777777777, then it would be impossible to mix up the two Bebbas.
+One would show up as \sqlil{'Bebba, 33333333333'} and the other one as \sqlil{'Bebba, 77777777777'}.%
+\end{sloppypar}%
+%
+We now can confidently save this improved query into the \db\ as a \emph{view}.
 This way, we can re-use it whenever we want.
 Storing it as a view is very very simple.
 We first need to pick a name for it.
@@ -219,8 +248,8 @@ If we do this, the query is not actually executed.
 It is stored under the name \sqlil{sale} as a view.
 We do this in \cref{lst:factory:create_view_sale}.
 
-What if we want to actually execute the query?
-Well, we treat \sqlil{sale} as if it was a table.
+Then how do we actually execute the query?
+Simple:~We can treat \sqlil{sale} as if it was a table.
 We write \sqlil{SELECT * FROM sale;}.
 We do this as well in \cref{lst:factory:create_view_sale}.
 
