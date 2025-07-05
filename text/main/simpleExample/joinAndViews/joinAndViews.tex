@@ -110,7 +110,7 @@ However, we can just join tables pull all the information together in a query.%
 \hsection{\texttt{INNER JOIN}}%
 %
 We are now able to cross-reference different tables and to pull data together.
-Let us create a query where, for each demand, we see the customer name, the product name, the product price, the ordered amount, and the order date.
+Let us create a query where, for each demand record, we see the customer name, the product name, the product price, the ordered amount, and the order date.
 The result of this query would then be a clear and human readable overview of the business transactions of our company.
 Based on the previous example, where we joined the table \sqlil{customer} with the table \sqlil{demand}, we anticipate that we will need two \inQuotes{joins} now.
 We will need to combine the \sqlil{demand} table with the \sqlil{customer} table and with the \sqlil{product} table.
@@ -118,7 +118,7 @@ The query will therefore probably be more complicated.
 
 Let us construct the new query.
 We first define what we want in a way more close to \sql:
-\emph{\inQuotes{For each row in \sqlil{demand}, we need the corresponding row in \sqlil{customer} and the corresponding row in \sqlil{product}.}}
+\emph{\inQuotes{For each row in table~\sqlil{demand}, we need the corresponding row in table~\sqlil{customer} and the corresponding row in table~\sqlil{product}.}}
 We know that there always exists exactly one \sqlil{customer} row, because we defined the foreign key \sqlilIdx{REFERENCES} constraint that enforces this.
 We also know that there always exists exactly one \sqlil{product} row, because we defined the foreign key \sqlilIdx{REFERENCES} constraint that enforces this.
 So it cannot be that we have a row \sqlil{demand} but no corresponding row in \sqlil{customer} or \sqlil{product}.
@@ -148,7 +148,7 @@ Selecting the sales data by joining the three tables~\sqlil{demand}, \sqlil{cust
 Equipped with the understanding of this concept, we begin by doing basically the same thing as before:
 We \sqlil{SELECT <something> FROM demand} and then \sqlil{INNER JOIN customer ON (customer.id = demand.customer)}.
 For each row in \sqlil{demand}, this gives us the corresponding row in \sqlil{customer}.
-It also would drop each row in \sqlil{demand} for which no row in \sqlil{customer} exists from the output, but that cannot happen anyway.
+It also would drop each row in \sqlil{demand} for which no row in \sqlil{customer} exists from the output, but that cannot happen anyway.%
 \end{sloppypar}%
 %
 \begin{sloppypar}%
@@ -210,7 +210,7 @@ A view is basically a stored query that we can work with exactly as if it was a 
 We can apply other \sqlil{SELECT}\sqlIdx{SELECT{\idxdots}FROM} queries on top of it.
 Thus, all we have to do is to store this query as view so that we can re-use it whenever it pleases us.
 
-However, this time, suddenly a problem occurs to us:
+However, suddenly we realize that there is a potential problem with our query:
 As we discussed before, customer names are not necessarily \sqlilIdx{UNIQUE} in our \db\ design.
 Product names are \sqlil{UNIQUE}, but eventually, we may have two customers with the same name.
 This would be a flaw of this query, as it does not give us any means to distinguish two different customers with the same name.
@@ -290,7 +290,7 @@ The \sqlil{DESC} enforces sorting in descending order, i.e., larger values come 
 \end{sloppypar}%
 %
 We can do pretty much the same for products, in which case we would \sqlil{GROUP BY product_name}.
-We could compute \sqlil{SUM(amount * price) AS product_sale}\sqlIdx{SUM} and we would know for how much money each product sold.
+We could compute \sqlil{SUM(amount * price) AS product_sale}\sqlIdx{SUM} and we would know for how much money each product sold~\cite{PGDG:PD:AF}.
 On a per-product basis, it makes also sense to look at the total units sold, so we could additionally compute \sqlil{SUM(amount) AS total_amount}\sqlIdx{SUM}.
 Of course, we could sort the data by the product sale in descending order, i.e., write \sqlil{ORDER BY product_sale DESC}\sqlIdx{ORDER BY!DESC}.
 
@@ -309,9 +309,9 @@ No wonder that customers love it, as it offers 10g of product per~元~(see \cref
 It is interesting to briefly think about how the above works.
 On the top level, we have an \sql\ query that selects from data from the view \sqlil{sale}.
 Fine, you already have a feeling about how such queries work.
-But remember: \sqlil{sale} is \emph{not} a table.
+But remember:~\sqlil{sale} is \emph{not} a table.
 It itself is just a query!
-So what happens here is that the query stored as view \sqlil{sale} is executed.
+You can imagine that what happens here is that the query stored as view \sqlil{sale} is executed.
 Its results are taken and then on top of these results, the new query that sums up the customer purchases~(or the product purchases) is executed.
 The results of \sqlil{sale} are not stored.
 \sqlil{sale} is not a table.
