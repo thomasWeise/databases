@@ -46,6 +46,7 @@ The slides in German language can be found at <https://thomasweise.github.io/dat
 10. [Fabrik-Datenbank: Tabelle `customer`](https://thomasweise.github.io/databasesSlidesDE/10_fabrik_datenbank_tabelle_customer.pdf)
 11. [Fabrik-Datenbank: Tabelle `demand`](https://thomasweise.github.io/databasesSlidesDE/11_fabrik_datenbank_tabelle_demand.pdf)
 12. [Fabrik-Datenbank: Joins und Views](https://thomasweise.github.io/databasesSlidesDE/12_fabrik_datenbank_joins_und_views.pdf)
+13. [Fabrik-Datenbank: Daten ändern und löschen](https://thomasweise.github.io/databasesSlidesDE/13_fabrik_datenbank_daten_ändern_und_löschen)
 
 ### 2.3. The Examples
 This is a practice-oriented course on databases.

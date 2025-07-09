@@ -1,14 +1,13 @@
 %
 \hsection{Updating and Deleting Records}%
 %
-\hsection{Updating Records}%
-%
 We have seen how new data can be inserted into a \db\ row-by-row in \cref{sec:factoryCreatingTableAndInsertingData}.
 Often, we also want to modify or delete data.
 This can be done similarly easily.
-
+%
+\hsection{Updating Records}%
 Assume that our factory found another producer for shoe boxes.
-The new boxes are 5mm less higher and therefore cheaper.
+The new boxes are 5mm less high and therefore cheaper.
 In \cref{lst:factory:update_table_product} we want to change the package size for all products in shoe boxes accordingly.
 We do this with an \sqlil{UPDATE <table> SET <fields>}\sqlIdx{UPDATE{\idxdots}SET} statement~\cite{PGDG:PD:U}.%
 %
@@ -17,6 +16,12 @@ We do this with an \sqlil{UPDATE <table> SET <fields>}\sqlIdx{UPDATE{\idxdots}SE
 \gitLoadAndExecSQL{factory:update_table_product}{}{factory}{update_table_product.sql}{factory}{boss}{superboss123}%
 \listingSQLandOutput{factory:update_table_product}{%
 Modifying some records in the table \sqlil{product}.%
+}{}%
+%
+\gitLoadAndExecSQL{factory:update_table_product_error}{}{factory}{update_table_product_error.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{factory:update_table_product_error}{%
+The attempt to update the table~\sqlil{product} in a way that would violate the referential integrity:~%
+We cannot change the primary key \sqlil{id} value of a record that is referenced by a foreign key from table~\sqlil{demand}.%
 }{}%
 %
 The table is clearly \sqlil{product}.
@@ -37,6 +42,29 @@ We return all the data from the changed rows.
 
 As you can see \cref{exec:factory:update_table_product}, nine rows are affected.
 Their \sqlil{height} indeed changed to~\sqlil{245}.
+
+When we designed the table~\sqlil{demand}, we create two foreign key columns:
+\sqlil{customer} and \sqlil{product}.
+The latter one references the rows in table~\sqlil{product} by their corresponding~\sqlil{id} values.
+We did learn that it is impossible to insert a row into the table~\sqlil{demand} whose value in column~\sqlil{product} does not occur somewhere in column~\sqlil{id} of table~\sqlil{product}.
+In other words, we cannot have a \sqlil{demand}~record that stored the sale of a product that does not exist.
+If we create a \sqlil{demand}~record, then there must be corresponding and existing row in~\sqlil{product} associated with it.
+Otherwise, the record creation failes, as we demonstrated in \cref{exec:factory:insert_into_table_demand_error_1}.
+
+What, however, happens if we change the value of the \sqlil{id} of an existing product?
+In the very first row in table~\sqlil{demand}, customer Bibbo orders 12 units of product~\inQuotes{Shoe, Size 42}.
+\inQuotes{Shoe, Size 42} has \sqlil{id = 7}.
+Therefore, that \sqlil{demand} record stores value~\sqlil{7} in its \sqlil{product}~attribute.
+
+What will happen if we change the value of~\sqlil{id} of the record with~\sqlil{id = 7} in table~\sqlil{product} to, say,~\sqlil{id = 20}?
+If we do this, then all records in the table~\sqlil{demand} which hold \sqlil{product = 7} would become invalid.
+Because there no longer would be any row in table~\sqlil{product} with~\sqlil{id = 7}.
+But this is another table, right?
+If we change table~\sqlil{product}, will this be affected by the constraints that we defined upon \emph{a completely different} table~(namely table~\sqlil{demand})?
+In \cref{lst:factory:update_table_product_error} we try to do exactly that.
+And we cannot!
+\Cref{exec:factory:update_table_product_error} clearly shows that, no, we cannot violate the referential integrity that way.
+We cannot change the \sqlil{id} value of a record in table~\sqlil{product} \emph{if} that record is referenced elsewhere via a foreign key~(\sqlilIdx{REFERENCES}) constraint.%
 \endhsection%
 %
 \hsection{Deleting Records}%
@@ -48,7 +76,7 @@ Brokenheartedly, we decide to discontinue this product.
 This means that we somehow need to remove it from the table \sqlil{product}, as it will no longer be sold.
 
 In \cref{lst:factory:delete_from_table_product}, we do this with the command \sqlil{DELETE FROM product WHERE id = 1;}\sqlIdx{DELETE FROM}\sqlIdx{WHERE}~\cite{PGDG:PD:D}.
-This command is pretty self-explanatory.%
+This command is pretty self-explanatory:%
 %
 \sqlSyntax{syntax/delete.sql}%
 %
@@ -57,14 +85,44 @@ This command is pretty self-explanatory.%
 Deleting a row from the table \sqlil{product}.%
 }{}%
 %
+\gitLoadAndExecSQL{factory:delete_from_table_customer_error}{}{factory}{delete_from_table_customer_error.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{factory:delete_from_table_customer_error}{%
+We try to delete a record in table~\sqlil{customer} that is used in records in table~\sqlil{demand}. %
+This fails, because otherwise, the referential integrity of our data would be violated.%
+}{}%
+%
 In \cref{lst:factory:delete_from_table_product}, we use it to delete all the rows from table \sqlil{product} where the field~\sqlil{id} has value~\sqlil{1}.
 Only one such row exists, namely the one with \inQuotes{Shoe, Size 36}.
 It is deleted.
 Under \postgresql, we can directly access the deleted rows via the \sqlilIdx{RETURNING} statement\footnote{This is a \postgresql\ addition to~\sql~\cite{SE:DA:2020WDSSOAOTNPSDIOR} and does not seem to be part of the \sql\ standard, but it is also supported by \mariadb~\cite{M:MSD:D} and \sqlite~\cite{HWACIS:R}.}.
 To see whether this really worked, we print \sqlil{SELECT COUNT(*) as number_of_products from product;} before and after the \sqlilIdx{DELETE FROM} query.
 Indeed, \cref{exec:factory:delete_from_table_product} shows that we originally had 11~products in our palette.
-After deleting the smallest-sized shoes, only ten products are left.%
+After deleting the smallest-sized shoes, only ten products are left.
+
+We know that changing records via \sqlil{UPDATE} is not permitted if it would lead to a violation of referential integrity.
+How about deletion of records?
+Let's say we want to delete the record of customer Bebbo, which has \sqlil{id = 2}.
+This customer issued several orders in our system, so there are several rows in table~\sqlil{demand} that reference this record via their foreign key~\sqlil{customer}.
+In \cref{lst:factory:delete_from_table_customer_error}, we attempt to delete Mr.~Bebbo from our \db.
+And it fails, as it should, because then we would have orphaned records in our table~\sqlil{demand}.
+We could, however, first delete all of these records from table~\sqlil{demand}~(while leaving unrelated records intact, of course).
+Then we could delete Mr.~Bebbo's \sqlil{customer} record afterwards.%
 %
+\endhsection%
+%
+\hsection{A Note on Compatibility}%
+In this section, we learned a lot of useful things.
+We learned how we can update and delete data from tables.
+This basically completes our understanding of the most important operations in \sql.
+
+However, we also touched another important subject:
+While most \pglspl{rdb} support the \sql\ language, many of them still differ in the features that they implement and may even add own statements and extensions.
+\postgresql, for example, provides the \sqlilIdx{RETURNING} clause in its \sqlilIdx{INSERT}, \sqlilIdx{UPDATE}, and \sqlilIdx{DELETE} statements~\cite{SE:DA:2020WDSSOAOTNPSDIOR}.
+This is a very very useful clause, because we often want to know, e.g., which data has been changed, or which automatically generated~\sqlil{id}\nobreakdashes-value has been assigned to a row upon insertion.
+This clause is only supported by some other \pglspl{dbms} and even then maybe only partially~\cite{HWACIS:R,M:MSD:D,M:MSD:IR}.
+Many \pglspl{dbms} offer the same basic functionality, but may differ in features and command syntax.
+So even if \sql-based \pglspl{rdb} seem to be compatible at first glance, most often they are not.
+Choosing a \pgls{dbms} for a project therefore is often a decision that cannot easily be changed later and, thus, has to be deliberated carefully.%
 \endhsection%
 \FloatBarrier%
 \endhsection%
