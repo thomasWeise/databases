@@ -12,7 +12,19 @@ Both approaches to install packages have been covered in~\cite{programmingWithPy
 
 Nevertheless, since they are integral to the contents of this course, we will also discuss them here.
 It would best, however, if you would read~\cite{programmingWithPython} to a point where you know what \pip\ is and what \pglspl{virtualEnvironment} are.
-We also cover the installation only under \ubuntu\ \linux, as the installation steps under \microsoftWindows\ will be analogous~(see again~\cite{programmingWithPython}).%
+We also cover the installation only under \ubuntu\ \linux, as the installation steps under \microsoftWindows\ will be analogous~(see again~\cite{programmingWithPython}).
+
+The most common way to use external packages in \python\ is to install them into \pglspl{virtualEnvironment}.
+A \pgls{virtualEnvironment} is essentially something like a directory hosting a stand-alone \python\ installation separate from the \python\ setup of the computer.
+This allows you to have different versions of different libraries installed~(in different \pglspl{virtualEnvironment}).
+
+Imagine that you have one program that requires the \python\ package \numpy\ in version~2.0 or above to run.
+You also need to use another application, which can only run with \numpy\ \emph{below} version~2.0.
+This is a very common scenario.
+It would be impossible to realize, because you can only have one version of \numpy\ installed in your system.
+However, you can use both applications if each is installed into its own \pgls{virtualEnvironment}.
+Because each \pgls{virtualEnvironment} can have its own version of \numpy.
+Therefore, regardless whether we want to install \psycopg\ for productive use via the \pgls{terminal} or whether we instead want to use it within \pycharm\ to develop software, we will use \pglspl{virtualEnvironment}.%
 %
 \hsection{Installing Psycopg via the Terminal}%
 %
@@ -67,19 +79,19 @@ The prompt changes back to normal.%
 \label{fig:installPsycopgLinux}%
 %
 \end{figure}%
-
-The most common way to use external packages in \python\ is to install them into \pglspl{virtualEnvironment}.
-A \pgls{virtualEnvironment} is essentially something like a directory hosting a stand-alone \python\ installation separate from the \python\ setup of the computer.
-This allows you to have different versions of different libraries installed~(in different \pglspl{virtualEnvironment}).
-
-Imagine that you have one program that requires the \python\ package \numpy\ in version~2.0 or above to run.
-You also need to use another application, which can only run with \numpy\ \emph{below} version~2.0.
-This is a very common scenario.
-It would be impossible to realize, because you can only have one version of \numpy\ installed in your system.
-However, you can use both applications if each is installed into its own \pgls{virtualEnvironment}.
-Because each \pgls{virtualEnvironment} can have its own version of \numpy.
-
-Therefore, we will first explore this route of installing packages, and we will do so under \ubuntu\ \linux\ in the \bash\ \pgls{terminal} in \cref{fig:installPsycopgLinux}.
+%
+\Pglspl{db} are storages for large amounts of structured data.
+They form the very backends of modern applications.
+They contain the data that drive business as well as the contents of huge websites.
+We can connect to \pglspl{db} via applications and programs in order to work with the data.
+Often, there are middlewares like web services or application \pglspl{server} that implement business logic and ensure that data is manipulated or evaluated in a correct way.
+Such applications and programs, if developed with \python, often run in \pglspl{terminal}.
+You would \emph{never} execute them within a \pgls{ide} like \pycharm.%
+%
+\cquotation{programmingWithPython}{The only proper way to run a \python\ application in a productive scenario is in the terminal.}%
+%
+Therefore, we will first explore how to install packages for this use case.
+We will do so under \ubuntu\ \linux\ in the \bash\ \pgls{terminal} in \cref{fig:installPsycopgLinux}.
 For \microsoftWindows, you can find a similar procedure discussed in~\cite{programmingWithPython}.
 The commands there are almost the same.
 
@@ -100,7 +112,9 @@ And our \pgls{virtualEnvironment} \textil{.venv} is now active, which we can see
 Notice that the environment is only active in the current \pgls{terminal}.
 If you open another \pgls{terminal} using \ubuntuTerminal, our \pgls{virtualEnvironment} is not active in it~(but we can activate it exactly as shown in \cref{fig:pipInstallPyscopgVenv3activate}).
 
-We install \psycopg\ into this environment by writing \bashil{pip install psycopg} and hitting~\keys{\enter}.
+In \python, we normally install packages by using the program~\pip.
+\pip~automatically uses the current \pgls{virtualEnvironment}, if one is active.
+We install \psycopg\ into our new environment by writing \bashil{pip install psycopg} and hitting~\keys{\enter}.
 This invokes the \pip\ installer, which looks the package up in \pypi\ and downloads it.
 In \cref{fig:pipInstallPyscopgVenv5pip}, you see that it downloads \psycopg\ in version~\textil{3.2.4}.
 When you do the same thing, you will probably get a newer version installed.
@@ -286,6 +300,8 @@ Indeed, we can now even find it in the \textil{.venv} folder.%%
 \label{fig:cloneAndSetupPsycopgD}%
 \end{figure}%
 %
+The \pycharm\ \pgls{ide} allows us to download all the example codes of this course and to install the \python\ packages they depend on in one step from \github.
+In this process, we encounter two concepts: \git\ and the aforementioned \pglspl{virtualEnvironment}.
 \git\ is a distributed \pgls{VCS}, meaning that it allows us to create so-called repositories, which basically are directories, whose change history is preserved and that can be collaboratively edited by teams.
 Every team member has a local copy of the code and can commit their local changes to the central repository as well as download the changes comitted by others.
 \github\ is one provider that offers us to host \git\ repositories online.

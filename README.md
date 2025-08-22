@@ -48,6 +48,7 @@ The slides in German language can be found at <https://thomasweise.github.io/dat
 12. [Fabrik-Datenbank: Joins und Views](https://thomasweise.github.io/databasesSlidesDE/12_fabrik_datenbank_joins_und_views.pdf)
 13. [Fabrik-Datenbank: Daten ändern und löschen](https://thomasweise.github.io/databasesSlidesDE/13_fabrik_datenbank_daten_ändern_und_löschen)
 14. [Python Installieren](https://thomasweise.github.io/programmingWithPythonSlidesDE/03_python_installieren.pdf) &mdash; Slide-Set&nbsp;03 der Schwestervorlesung "[Programming with Python](https://thomasweise.github.io/programmingWithPython)"
+15. [Psycopg Installieren](https://thomasweise.github.io/databasesSlidesDE/15_psycopg_installieren)
 
 ### 2.3. The Examples
 This is a practice-oriented course on databases.
