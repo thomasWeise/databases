@@ -50,65 +50,121 @@ It would probably also be useful to have the \pycharm\ \pgls{ide} ready.
 How these pieces of software can be obtained is discussed in \cref{sec:pythonEtAl} and in~\cite{programmingWithPython}.
 
 \python\ is a programming language.
-It allows us to write almost arbitrary programs using datatypes such as \pythonilIdx{int}, \pythonilIdx{float}, \pythonilIdx{str}.
+It allows us to write arbitrary programs using datatypes such as \pythonilIdx{int}, \pythonilIdx{float}, and~\pythonilIdx{str}.
 We can use control flow statements like~\pythonil{if...then...else}\pythonIdx{if}\pythonIdx{then}\pythonIdx{else}, \pythonilIdx{for}~loops, and \pythonilIdx{while}~loops.
 We can define functions using~\pythonilIdx{def}.
 It supports \pgls{OOP} and we can create classes using the \pythonilIdx{class}~keyword.
 The language does not have any built-in connection with \postgresql.
 
 However, \python\ can use packages, which are libraries that offer additional functionality.
-Some Well-known packages are \numpy~\cite{HMvdWGVCWTBSKPHvKBHFdRWPGMSRWAGO2020APWN,N2025N,DBvR2024ITN,J2018NPSCADSAWNSAM}, \pandas~\cite{PD2025P,B2012DPWP,L2024PW}, \scikitlearn~\cite{PVGMTGBPWDVPCBPD2011SMLIP,RLM2022MLWPAS}, \scipy~\cite{VGOHRCBPWBvdWBWMMNJKLCPFMVLPCHQHARPvMS2020SFAFSCIP,J2018NPSCADSAWNSAM}, \tensorflow~\cite{ABCCDDDGIIKLMMMSTVWWYZ2016TASFLSML,L2023TDDBTADMLMWT}, or \pytorch~\cite{PGMLBCKLGADKYDRTCSFBC2019PAISHPDLL,RLM2022MLWPAS}.
+Some well-known packages are \numpy~\cite{HMvdWGVCWTBSKPHvKBHFdRWPGMSRWAGO2020APWN,N2025N,DBvR2024ITN,J2018NPSCADSAWNSAM}, \pandas~\cite{PD2025P,B2012DPWP,L2024PW}, \scikitlearn~\cite{PVGMTGBPWDVPCBPD2011SMLIP,RLM2022MLWPAS}, \scipy~\cite{VGOHRCBPWBvdWBWMMNJKLCPFMVLPCHQHARPvMS2020SFAFSCIP,J2018NPSCADSAWNSAM}, \tensorflow~\cite{ABCCDDDGIIKLMMMSTVWWYZ2016TASFLSML,L2023TDDBTADMLMWT}, or \pytorch~\cite{PGMLBCKLGADKYDRTCSFBC2019PAISHPDLL,RLM2022MLWPAS}.
 Such packages are offered in the central \pypi\ repository and can be installed using \pip.
 Usually, we will install them into a \pgls{virtualEnvironment} and then use them with our application.
 More on this can, again, be found in~\cite{programmingWithPython}.
 
 The important thing is that there is also a \python\ package for connecting with the \postgresql\ \dbms.
-This package is called \psycopg~\cite{VDGE2010P}.
-We briefly outline how to install and use this package in~\cref{sec:installPsycopg}.
-
-\gitLoadAndExecPython{factory:connect_insert_and_select}{\databasesCodeRepo}{factory}{connect_insert_and_select.py}{}%
-\listingPythonAndOutput{factory:connect_insert_and_select}{A \python\ program connecting to our factory \pgls{db}, using \sqlilIdx{INSERT INTO} to add some records, and executing a \sqlIdx{SELECT{\idxdots}FROM}\sqlil{SELECT} statement.}{}%
-
-From here on, let us assume that \psycopg\ is installed and you have opened \cref{lst:factory:connect_insert_and_select} in the \pycharm\ \pgls{ide}.
-When you read this listing, you notice a lot of interesting or strange things.
-It begins by importing the type \pythonilIdx{LiteralString} from the standard \pythonilIdx{typing} package.
-This type is provided by \python\ for security reasons~\cite{PEP675}:
-It helps preventing \pglspl{SQLi}, especially if used together with static type checking tools.
-We will not discuss this here any further, but you should really read~\cite{PEP675,VDGE2022PPDAFP:ST} to learn more about this issue.
-Moving on, you see that we import two functions from the package \psycopg, which we will use later on, namely \pythonil{connect} and \pythonil{dict_row}.
+This package is called \psycopg~\cite{VDGE2010P} and it implements the standardized \citetitle{PEP249}~\cite{PEP249}.
+We briefly outline how to install this package in~\cref{sec:installPsycopg}.
+\psycopg\ allows us to construct \sql\ queries inside our \python\ programs, transmit them to the \postgresql\ \server, and to receive the results back in the \python\ program.
+This kind of low-level access is perfect for us, since we already learned some basic \sql\ queries.
+Thus, the only new thing we need to understand is how to use \psycopg\ to send them to the \dbms\ and how to process the results.
+Then, we can use \python\ to interact with our \pglspl{db}.
+This gives us the full power of the programming language to process data, which is of course far beyond the capabilities of \sql.%
+%
+\hsection{Reading Data from the Database}%
+%
+\gitLoadAndExecPython{factory:connect_and_select}{\databasesCodeRepo}{factory}{connect_and_select.py}{}%
+\listingPythonAndOutput{factory:connect_and_select}{A \python\ program connecting to our factory \pgls{db} and executing a \sqlIdx{SELECT{\idxdots}FROM}\sqlil{SELECT} statement.}{}%
+%
+From here on, let us assume that \psycopg\ is installed and you have opened \cref{lst:factory:connect_and_select} in the \pycharm\ \pgls{ide}.
+At its begin, this \python\ program imports two functions from the package \psycopg, which we will use later on, namely \pythonil{connect} and \pythonil{dict_row}.
+We will need them to connect to \postgresql\ and to define how we want to receive the results from \sqlil{SELECT}\sqlIdx{SELECT{\idxdots}FROM} statements, respectively.
 
 We now get to the meat of the example.
-One thing that we want to do with this program is to insert some new demand records into our \db.
-Therefore, we will use the \sqlilIdx{INSERT INTO} statement.
-However, we will not start the \psql\ \client\ and type the commands in.
-Instead, we will send them from our \python\ program via \psycopg.
+The first and simplest thing that we can do from \python\ is to read some data from our \db.
+For this, we would send a \sqlil{SELECT}\sqlIdx{SELECT{\idxdots}FROM} request to \postgresql.
+However, we will not start the \psql\ \client\ and type the command in.
+Instead, we will send it from our \python\ program via \psycopg.
 
-Now the full \sqlilIdx{INSERT INTO} statement is rather long and does not fit on a single line in \cref{lst:factory:connect_insert_and_select}.
-To make using it twice~(as we will) a bit less cumbersome, we store it in a variable \pythonil{statement}.
-This variable is annotated with \pgls{typeHint} \pythonilIdx{LiteralString} that we mentioned before, because it represents a string that was typed in as-is, that is not the result of \pgls{strinterpolation}, concatenation, or any other operation.
-Either way, we store our statement in this variable.
-A bit later we will discuss the meaning and structure of this statement.
-For now, just accept it as is.
-
-We now enter a \pythonilIdx{with} statement, which you also find discussed in~\cite{programmingWithPython}.
+To do this, we first need to establish a connection to the \db.
+We therefore enter a \pythonilIdx{with} statement, which you also find discussed in our sister course \citetitle{programmingWithPython}~\cite{programmingWithPython}.
 The sessions and cursors to the \db\ are implemented as context managers~\cite{PSF:P3D:TPLR:WSCM}, which means that they will automatically be closed at the end of the \pythonilIdx{with} block.
 At the beginning of the block, a connection \pythonil{conn} is opened to the \postgresql\ \dbms~\cite{VDGE2022PPDAFP:CC1} by using the \pythonilIdx{connect}~function.
 For this purpose, the same connection \pgls{URI} that we already used with \psql\ needs to be specified.
 It defines the where the \postgresql\ \server\ can be found, which user and password to use for logging in, and which \db\ we want to work on.
-Once the connection is open, the second line in the \pythonilIdx{with} block header opens a cursor~\cite{VDGE2022PPDAFP:CC2} in the connection.
+Once the connection is open, the second line in the \pythonilIdx{with} block header opens a cursor~\cite{PEP249,VDGE2022PPDAFP:CC2} in the connection.
 
-Cursors are the objects for sending commands to the \postgresql\ \server\ via a connection.
+Cursors are the objects for sending commands to the \postgresql\ \server\ via a connection and to receive the \server's responses.
 They are created with the \pythonilIdx{cursor} method of the connection object.
 If a curser is used return results from queries, one may optionally specify a \pythonil{row_factory} parameter.
-We here pass in the \pythonilIdx{dict_row} function, which returns each row resulting from a query as a \pythonilIdx{dict}.
+We here pass in the \pythonilIdx{dict_row} function, which returns each record~(row) resulting from a query as a dictionary of key-value pairs, i.e., a~\pythonilIdx{dict}.
 The cursor is stored in a variable named~\pythonil{cur}.
-Like the connection object, it will be closed at the end of the \pythonilIdx{with} block.%
+Like the connection object, it will be closed at the end of the \pythonilIdx{with} block.
+
+The cursor object~\pythonil{cur} has a method~\pythonilIdx{execute} which we can use to, well, execute an \sql\ command~\cite{PEP249}.
+The first parameter of the function is the \sql\ statement that should be executed.
+The second parameter can be a sequence of query parameters, but for this first example, we do not need it.
+All we want to do is to read all the orders issued by customer Bebbo, i.e., by the customer with ID~2.
+We thus use the cursor \pythonil{cur} to issue the command \pythonil{"SELECT * FROM demand WHERE customer=2"}\sqlIdx{SELECT{\idxdots}FROM}\sqlIdx{WHERE} via the \pythonilIdx{execute} method.
+
+We remember that Mr.~Bebbo has four orders in his name and we would expect these four orders to be returned.
+Once the query is issued, the cursor can be used as \pythonilIdx{Iterator}~\cite{PEP234} in a \pythonilIdx{for}~loop.
+We can write \pythonil{for record in cur:}\pythonIdx{in} and this will return the query result row by row.
+And since we specified \pythonilIdx{dict_row} as \pythonil{row_factory} when creating the cursor, each row will be a \pythonilIdx{dict}.
+This \pythonilIdx{dict} will have the column names keys and the values as, well, values.
+
+Once all these \pythonilsIdx{dict} are printed to the \pgls{stdout}, the \pythonil{for}~loop terminates.
+Then, the \pythonilIdx{with} block is over, too, which means that first the cursor is closed and then the connection to the \db.
+You can find the output of our program in \cref{exec:factory:connect_and_select}.
+As you can see, we have a convenient way to extract data from our \db\ and to use this data in \python.
+
+You can also see that the data has appropriate types:
+Data which is integer by nature, such as IDs, is printed as integer numbers.
+Date or time data is returned as instances of \pythonilIdx{datetime.date}, i.e., the \python\ datatype to handle such data.%
+\FloatBarrier%
+\endhsection%
+%
+\hsection{Inserting Data into the Database}%
+%
+\gitLoadAndExecPython{factory:connect_and_insert}{\databasesCodeRepo}{factory}{connect_and_insert.py}{}%
+\listingPythonAndOutput{factory:connect_and_insert}{A \python\ program connecting to our factory \pgls{db} and then using \sqlilIdx{INSERT INTO} to add some records.}{}%
+%
+\gitLoadAndExecPython{factory:connect_and_select2}{\databasesCodeRepo}{factory}{connect_and_select.py}{}%
+\listingBox{exec:factory:connect_and_select2}{%
+The output produced by \cref{lst:factory:connect_and_select} if we execute it a second time after running \cref{lst:factory:connect_and_insert}.%
+}{,style=text_style}%
+%
+We can do more.
+Let us now insert some data into the \db\ with program \cref{lst:factory:connect_and_insert}.
+When you read this listing, you notice that it begins by importing the type \pythonilIdx{LiteralString} from the standard \pythonilIdx{typing} package.
+This type is provided by \python\ for security reasons~\cite{PEP675}:
+It helps preventing \pglspl{SQLi}, especially if used together with static type checking tools.
+We will not discuss this here any further, but you could read~\cite{PEP675,VDGE2022PPDAFP:ST} to learn more about this issue.
+The idea is that several potential attacks on an \sql\ \pgls{server} are made possible if the \sql\ queries are constructed via string concatenation.
+A \pythonilIdx{LiteralString} is a string constant written as text in \python.
+It is explicitly not the result of any string operation.
+Therefore, attacks using string operations as vector are prevented.
+
+Anyway, what we want to do is to insert some new demand records into our \db.
+Therefore, we will use the \sqlilIdx{INSERT INTO} statement.
+Now the full \sqlilIdx{INSERT INTO} statement is rather long and does not fit on a single line in \cref{lst:factory:connect_and_insert}.
+To make using it twice~(as we will) a bit less cumbersome, we store it in a variable \pythonil{statement}.
+This variable is annotated with \pgls{typeHint} \pythonilIdx{LiteralString} that we mentioned before.
+It represents a string that was typed in as-is, that is not the result of \pgls{strinterpolation}, concatenation, or any other operation.
+Either way, we store our statement in this variable.
+A bit later we will discuss the meaning and structure of this statement.
+For now, just accept it as is.
+
+We now again enter basically he same \pythonilIdx{with} statement as in the previous example.
+At the beginning of the block, again a connection~\pythonil{conn} is opened to the \postgresql\ \dbms~\cite{VDGE2022PPDAFP:CC1}.
+Then again a cursor~\pythonil{cur}~\cite{VDGE2022PPDAFP:CC2} in the connection is created.
 %
 \begin{sloppypar}%
-The cursor object~\pythonil{cur} has a method~\pythonilIdx{execute} which we can use to, well, execute an \sql\ command.
-The first parameter of the function is the \sql\ statement that should be executed.
+We now use again the method~\pythonilIdx{execute} of the cursor.
+The first parameter is, as said, the \sql\ statement that should be executed.
 The second parameter is a sequence or mapping with parameters of the statement.
-Now let us circle back to our statement string constant.
+This time we need it:
+Let us circle back to our statement string constant.
 We wrote \pythonil{"INSERT INTO demand (customer, product, amount, ordered) VALUES (\%s,\%s,\%s,\%s)"}.
 The first part of this statement is pretty clear:
 We will insert a new row into the table~\sqlil{demand} by using the \sqlilIdx{INSERT INTO} command.
@@ -125,41 +181,33 @@ These parameter values are supplied as the aforementioned second parameter of th
 They will be substituted into the query string in a safe fashion that prevents \pglspl{SQLi}.
 
 This means that \pythonil{cur.execute(statement, (3, 4, 5, "2025-03-05" ))} inserts one new row into our table~\sqlil{demand}.
-The customer~id for this row is~3, the product~id is~4, the product amount is~5, and the ordered date is March~5th, 2025.
+The customer~ID for this row is~3, the product~ID is~4, the product amount is~5, and the ordered date is March~5th, 2025.
 
 After inserting this one row, we use the \pythonilIdx{executemany} method in exactly the same way.
 The difference is that this method lets the cursor perform several invocations of a \sql\ command.
-The second parameter is a sequence \emph{of} parameter sequences or mappings.
+The second parameter is a \emph{sequence of} parameter sequences or mappings.
 We use this command to insert three rows into the \sqlil{demand} table.
-If you read the code in \cref{lst:factory:connect_insert_and_select}, you find that it is very self-explanatory.
+If you read the code in \cref{lst:factory:connect_and_insert}, you find that it is very self-explanatory.
 The command looks pretty similar to our normal \sql\ commands, except that we issue it from \python\ code instead of the \psql\ client.
 
-Finally, we also want to query some data from the \db.
-We use the cursor \pythonil{cur} to issue the command \pythonil{"SELECT * FROM demand WHERE customer=\%s"}\sqlIdx{SELECT{\idxdots}FROM}\sqlIdx{WHERE} via the \pythonilIdx{execute} method.
-As parameter to the query we provide a tuple with the single value~2.
-This means that the~2 will replace the \textil{\%s} in the constructed query.
-This, in turn, means that we will list all the orders issued by the customer with the id~2.
-
-This customer is Mr.~Bebbo.
-Compared to \cref{exec:factory:insert_into_table_demand,exec:factory:select_customer_demand}, where Mr.~Bebbo had four orders in his name, we can now expect five orders, since we just added one using the \pythonilIdx{executemany} method.
-Once the query is issued, the cursor can be used as \pythonilIdx{Iterator}~\cite{PEP234} in a \pythonilIdx{for}~loop.
-We can write \pythonil{for record in cur:}\pythonIdx{in} and this will return the query result row by row.
-And since we specified \pythonilIdx{dict_row} as \pythonil{row_factory} when creating the cursor, each row will be a \pythonilIdx{dict}.
-This \pythonilIdx{dict} will have the column names keys and the values as, well, values.
-
-Once all these \pythonilsIdx{dict} are printed to the \pgls{stdout}, the \pythonil{for}~loop terminates.
-Then, the \pythonilIdx{with} block is over, too, which means that first the cursor is closed and then the connection to the \db.
-You can find the output of our program in \cref{exec:factory:connect_insert_and_select}.
+After the command is executed, the cursor and the connection to the \db\ are closed.
+The output of the program in \cref{exec:factory:connect_and_insert} looks successful.
+We want to check if it really worked by executing \cref{lst:factory:connect_and_select} for a second time.
+\Cref{exec:factory:connect_and_select} now lists five orders under customer Bebbo's~ID.
+Indeed, we just inserted a new order and it correctly appears.
 
 \gitLoadAndExecSQL{factory:select_from_view_sale_3}{}{factory}{select_from_view_sale_1.sql}{factory}{boss}{superboss123}%
 \listingSQLandOutput{factory:select_from_view_sale_3}{%
-Repeating the query from \cref{lst:factory:select_from_view_sale_1} after inserting the records using our \python\ program from \cref{lst:factory:connect_insert_and_select}.%
+Repeating the query from \cref{lst:factory:select_from_view_sale_1} after inserting the records using our \python\ program from \cref{lst:factory:connect_and_insert}.%
 }{}%
 %
 Let us now verify that the changes really reached and a are stored in the \db.
 For this purpose, we fire up \psql\ and repeat the query from \cref{lst:factory:select_from_view_sale_1}.
-The result in \cref{exec:factory:select_from_view_sale_3} the expected increase in sales for customers and products.
-
+The result in \cref{exec:factory:select_from_view_sale_3} the expected increase in sales for customers and products.%
+%
+\endhsection%
+%
+\hsection{Summary}%
 At first glance, what we did here is not very spectacular.
 We have basically written \sql\ commands, like before.
 The difference is that we issued them from \python\ instead of the \psql\ \client\ shipping with \postgresql.
@@ -183,5 +231,6 @@ This way, we can design complex applications in \python\ that interact with a \p
 }%
 %
 \FloatBarrier%
+\endhsection%
 \endhsection%
 %
