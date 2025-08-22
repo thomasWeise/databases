@@ -103,19 +103,20 @@ Like the connection object, it will be closed at the end of the \pythonilIdx{wit
 
 The cursor object~\pythonil{cur} has a method~\pythonilIdx{execute} which we can use to, well, execute an \sql\ command~\cite{PEP249}.
 The first parameter of the function is the \sql\ statement that should be executed.
-The second parameter can be a sequence of query parameters, but for this first example, we do not need it.
-All we want to do is to read all the orders issued by customer Bebbo, i.e., by the customer with ID~2.
+The optional second parameter can be a sequence of query parameters, but for this first example, we do not need it.
+All we want to do is to read all the orders issued by customer Mr.~Bebbo, i.e., by the customer with ID~2.
 We thus use the cursor \pythonil{cur} to issue the command \pythonil{"SELECT * FROM demand WHERE customer=2"}\sqlIdx{SELECT{\idxdots}FROM}\sqlIdx{WHERE} via the \pythonilIdx{execute} method.
 
-We remember that Mr.~Bebbo has four orders in his name and we would expect these four orders to be returned.
 Once the query is issued, the cursor can be used as \pythonilIdx{Iterator}~\cite{PEP234} in a \pythonilIdx{for}~loop.
 We can write \pythonil{for record in cur:}\pythonIdx{in} and this will return the query result row by row.
 And since we specified \pythonilIdx{dict_row} as \pythonil{row_factory} when creating the cursor, each row will be a \pythonilIdx{dict}.
 This \pythonilIdx{dict} will have the column names keys and the values as, well, values.
 
-Once all these \pythonilsIdx{dict} are printed to the \pgls{stdout}, the \pythonil{for}~loop terminates.
+After all these \pythonilsIdx{dict} are printed to the \pgls{stdout}, the \pythonil{for}~loop terminates.
 Then, the \pythonilIdx{with} block is over, too, which means that first the cursor is closed and then the connection to the \db.
 You can find the output of our program in \cref{exec:factory:connect_and_select}.
+We remember that Mr.~Bebbo has four orders in his name and we would expect these four orders to be returned.
+And they are returned.
 As you can see, we have a convenient way to extract data from our \db\ and to use this data in \python.
 
 You can also see that the data has appropriate types:
