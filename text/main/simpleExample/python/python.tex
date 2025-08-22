@@ -137,62 +137,99 @@ The output produced by \cref{lst:factory:connect_and_select} if we execute it a 
 %
 We can do more.
 Let us now insert some data into the \db\ with program \cref{lst:factory:connect_and_insert}.
-When you read this listing, you notice that it begins by importing the type \pythonilIdx{LiteralString} from the standard \pythonilIdx{typing} package.
-This type is provided by \python\ for security reasons~\cite{PEP675}:
-It helps preventing \pglspl{SQLi}, especially if used together with static type checking tools.
-We will not discuss this here any further, but you could read~\cite{PEP675,VDGE2022PPDAFP:ST} to learn more about this issue.
-The idea is that several potential attacks on an \sql\ \pgls{server} are made possible if the \sql\ queries are constructed via string concatenation.
-A \pythonilIdx{LiteralString} is a string constant written as text in \python.
-It is explicitly not the result of any string operation.
-Therefore, attacks using string operations as vector are prevented.
+At the top of the listing, we import the type \pythonilIdx{LiteralString} from the standard \pythonilIdx{typing} package~\cite{PEP675}.
+\pythonilIdx{LiteralString} is a type annotation for string \emph{constants}.
 
-Anyway, what we want to do is to insert some new demand records into our \db.
+What we want to do is to insert some new demand records into our \db.
 Therefore, we will use the \sqlilIdx{INSERT INTO} statement.
 Now the full \sqlilIdx{INSERT INTO} statement is rather long and does not fit on a single line in \cref{lst:factory:connect_and_insert}.
 To make using it twice~(as we will) a bit less cumbersome, we store it in a variable \pythonil{statement}.
-This variable is annotated with \pgls{typeHint} \pythonilIdx{LiteralString} that we mentioned before.
-It represents a string that was typed in as-is, that is not the result of \pgls{strinterpolation}, concatenation, or any other operation.
+This variable is annotated with the \pgls{typeHint} \pythonilIdx{LiteralString}, denoting it as a string that was typed in as-is, that is not the result of \pgls{strinterpolation}, concatenation, or any other operation.
 Either way, we store our statement in this variable.
 A bit later we will discuss the meaning and structure of this statement.
 For now, just accept it as is.
 
-We now again enter basically he same \pythonilIdx{with} statement as in the previous example.
+We then again enter basically the same \pythonilIdx{with} statement as in the previous example.
 At the beginning of the block, again a connection~\pythonil{conn} is opened to the \postgresql\ \dbms~\cite{VDGE2022PPDAFP:CC1}.
 Then again a cursor~\pythonil{cur}~\cite{VDGE2022PPDAFP:CC2} in the connection is created.
 %
+\hsection{Inserting One Row}%
 \begin{sloppypar}%
-We now use again the method~\pythonilIdx{execute} of the cursor.
+We now use the method~\pythonilIdx{execute} of the cursor.
 The first parameter is, as said, the \sql\ statement that should be executed.
 The second parameter is a sequence or mapping with parameters of the statement.
 This time we need it:
 Let us circle back to our statement string constant.
 We wrote \pythonil{"INSERT INTO demand (customer, product, amount, ordered) VALUES (\%s,\%s,\%s,\%s)"}.
+\end{sloppypar}%
+%
 The first part of this statement is pretty clear:
 We will insert a new row into the table~\sqlil{demand} by using the \sqlilIdx{INSERT INTO} command.
 We specify the name of the table~(\sqlil{demand}) and the names of the columns that we will set, i.e., \sqlil{customer}, \sqlil{product}, \sqlil{demand}, and sqlil{ordered}.
 So far, the command is the same as used in \cref{lst:factory:insert_into_table_demand}.
+
 The difference is in the second part.
-After specifying the fields to be set, the original \sql\ command in \cref{lst:factory:insert_into_table_demand} gave the rows to be stored in parentheses with field values separated by commas after the \sqlilIdx{VALUES} keyword.
-Here, we instead write \pythonil{"VALUES (\%s,\%s,\%s,\%s)"}.%
+After specifying the fields to be set, the original \sql\ command in \cref{lst:factory:insert_into_table_demand} gave the record to be stored in parentheses with field values separated by commas after the \sqlilIdx{VALUES} keyword.
+Here, we instead write \pythonil{"VALUES (\%s,\%s,\%s,\%s)"}.
+These \textil{\%s} are replaced, one by one, by the parameter values supplied in the second argument.
+These values are safely converted to the proper \sql\ representation from which ever datatype we use.%
+%
+\begin{sloppypar}%
+This means that \pythonil{cur.execute(statement, (3, 4, 5, "2025-03-05"))} inserts one new row into our table~\sqlil{demand}, where \pythonil{3} is used as value for \sqlil{customer}, \pythonil{4} as value for \sqlil{product}, \pythonil{5} is used as \sqlil{amount}, and \pythonil{"2025-03-05"} is used as value for the attribute \sqlil{ordered}.
+Hence, the customer~ID for this record is~3, the product~ID is~4, the product amount is~5, and the ordered date is March~5th, 2025.%
+\end{sloppypar}%
+\endhsection%
+%
+\hsection{Brief Excursion: Security Concerns}%
+At first glance, this process of parameter substitution looks a bit odd.
+In \python\ we have \pglspl{fstring}, which are the go-to solution for constructing strings containing parameter values.
+Why would we construct a query in this odd fashion instead of using a perfectly suitable tool offered by the language?
+Also, before, we used this strange type \pythonilIdx{LiteralString}, but did not really explain why.
+
+\pythonilIdx{LiteralString} is basically a special string type, a subclass of \pythonil{str}, for strings constants, i.e., strings that were written as text in \python.
+If a value or variable is of type \pythonilIdx{LiteralString}, then it is a string, but this string is explicitly not the result of any string operation, not the result of concatenation, no \pgls{fstring}.
+So we do not just not use \pglspl{fstring}, we even explicitly state that we do not use them intentionally.
+Why would we do that?%
+%
+\begin{sloppypar}%
+\pythonilIdx{LiteralString} is provided by \python\ for security reasons~\cite{PEP675}:
+It helps preventing \pglspl{SQLi}, especially if used together with static type checking tools~\cite{PEP675,VDGE2022PPDAFP:ST}.
+You see, several potential attacks on an \sql\ \pgls{server} are made possible if the \sql\ queries are constructed via string concatenation or \pgls{strinterpolation}.
+For example, if we would do \pythonil{"INSERT INTO customer (name, phone, address) VALUES (" + s + ")"}, then someone could do set the string~\pythonil{s} to \pythonil{s = "1, 2, 3); DROP TABLE customer;"}\sqlIdx{DROP!TABLE}.
+The \textil{);} would terminate the insertiong query and then a new query, \sqlil{DROP TABLE...} would begin, which would delete the table.
+Hence, an attacker could do all kinds of evil things to our \db\ if we would not guard against this kind of behavior.
 \end{sloppypar}%
 %
-This is because of the aforementioned security concerns.
-The \pythonil{"\%s"} are placeholders for parameter values of the query.
-These parameter values are supplied as the aforementioned second parameter of the \pythonilIdx{execute} function.
-They will be substituted into the query string in a safe fashion that prevents \pglspl{SQLi}.
+So it is forbidden to use any form of string construction during the assembly of an \sql\ command in \psycopg\ by enforcing that each command be a string constant.
+Therefore, attacks using string operations as vector are prevented.
 
-This means that \pythonil{cur.execute(statement, (3, 4, 5, "2025-03-05" ))} inserts one new row into our table~\sqlil{demand}.
-The customer~ID for this row is~3, the product~ID is~4, the product amount is~5, and the ordered date is March~5th, 2025.
-
+But then the question arises:
+How do we get parameter values into the queries?
+For this the \pythonil{"\%s"} exist as placeholders for query parameter.
+The idea is that the system can apply proper escaping, meaning that all characters that could lead to problems are replaced with \pglspl{escapeSequence}.
+Therefore, regardless of what parameter value is supplied, no malicious can be constructed.
+The parameter values will be substituted into the query string in a safe fashion that prevents \pglspl{SQLi}.%
+%
+\bestPractice{sqlCommandAssembly}{%
+Regardless which programming language or tool you use to access a \db, you must \emph{\textbf{never}} construct \sql\ commands using string operations such as concatenation or \pgls{strinterpolation}. %
+Otherwise, you open the door to \pglspl{SQLi} attacks. %
+Always use the proper tools, such as query parameters, for dynamic queries.%
+}%
+\endhsection
+%
+\hsection{Inserting Multiple Rows}%
 After inserting this one row, we use the \pythonilIdx{executemany} method in exactly the same way.
 The difference is that this method lets the cursor perform several invocations of a \sql\ command.
 The second parameter is a \emph{sequence of} parameter sequences or mappings.
 We use this command to insert three rows into the \sqlil{demand} table.
 If you read the code in \cref{lst:factory:connect_and_insert}, you find that it is very self-explanatory.
-The command looks pretty similar to our normal \sql\ commands, except that we issue it from \python\ code instead of the \psql\ client.
-
+The command looks pretty similar to our normal \sql\ commands, except that we issue it from \python\ code instead of the \psql\ client.%
+%
 After the command is executed, the cursor and the connection to the \db\ are closed.
 The output of the program in \cref{exec:factory:connect_and_insert} looks successful.
+\endhsection%
+%
+\hsection{Checking the Result}%
 We want to check if it really worked by executing \cref{lst:factory:connect_and_select} for a second time.
 \Cref{exec:factory:connect_and_select} now lists five orders under customer Bebbo's~ID.
 Indeed, we just inserted a new order and it correctly appears.
@@ -206,6 +243,7 @@ Let us now verify that the changes really reached and a are stored in the \db.
 For this purpose, we fire up \psql\ and repeat the query from \cref{lst:factory:select_from_view_sale_1}.
 The result in \cref{exec:factory:select_from_view_sale_3} the expected increase in sales for customers and products.%
 %
+\endhsection%
 \endhsection%
 %
 \hsection{Summary}%
