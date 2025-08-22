@@ -1,11 +1,12 @@
 %
 \hsection{Downloading the Example Codes}%
+\label{sec:downloadingExamples}%
 %
 \begin{figure}%
 \centering%
 %
 \subfloat[][%
-We use a webbrowser to visit the website~\expandafter\url{\databasesCodeRepo}. %
+We use a web browser to visit the website~\expandafter\url{\databasesCodeRepo}. %
 On the website, we click on the green \menu{Code} menu.%
 \label{fig:examplesBrowser1website}%
 ]{\parbox[t]{0.9999\linewidth}{\centering\tightbox{%
@@ -45,21 +46,26 @@ In folder \textil{factory}, we find the simple factory example.
 \caption{Downloading the examples from this book.~(Continued)}%
 \end{figure}%
 %
-In the previous two sections, we discussed how a new \db\ user and how a new \db\ can be created, using \sql\ on the \postgresql\ \dbms\ \pgls{server} via the \psql~\pgls{client}.
-There, we mentioned that there are two ways to do that with \psql:
-We can either type in the commands manually in an interactive session.
-Or we can tell \psql\ to execute an \sql~script on the \pgls{server}.
-
-The latter way is maybe more convenient.
-For all the examples that follow in this book, we provide such scripts.
+In this book, we provide a lot of examples.
+Some of them are \sql\ scripts that can be sent to the \postgresql\ \dbms\ \pgls{server} via the \psql~\pgls{client}.
+Others are \pglspl{ERD} drawn with \yEd.
+Yet others are domain-specific \db\ models developed with \pgmodeler.
+For all examples, we always provide the source files.
 So you do not need to type in the examples from the book.
+You can download them!
 
 All these examples are provided in the repository~\texttt{\databasesCodeRepoName} on \github.
-You can either clone this repository using~\git, which is explained in our book \citetitle{programmingWithPython}~\cite{programmingWithPython}.
-Our you can just visit this repository at \expandafter\url{\databasesCodeRepo} with your webbrowser and download the files.
-This is illustrated in \cref{fig:examplesBrowser:A}.
+There are two basic ways to obtain all of these examples:
+First, you can download them using your web browser.
+This basically requires no prerequisites except a web browser, which is usually part of any \pgls{OS}.
+Second, you can use \pycharm\ \pgls{ide} to clone the \git\ repository and setting up \python\ dependencies in one swoop.
+We discuss this option in \cref{sec:cloningExamplesRepoAndInstallingPsycopgUnderPyCharm}.
+This, however, requires you to also first instally \python\ and \pycharm, which is discussed in our freely available sister course \citetitle{programmingWithPython}~\cite{programmingWithPython}.
+If you have these tools available, then that might be the even more convenient choice.
 
-As shown in \cref{fig:examplesBrowser1website}, you would use your  webbrowser to visit the website~\expandafter\url{\databasesCodeRepo}.
+For downloading the examples directly, you would visit this repository at \expandafter\url{\databasesCodeRepo}.
+This is illustrated in \cref{fig:examplesBrowser:A}.
+As shown in \cref{fig:examplesBrowser1website}, you would use your web browser to visit the website~\expandafter\url{\databasesCodeRepo}.
 Once the website has loaded, you click on the green \menu{Code} menu.
 Then, in \cref{fig:examplesBrowser2beginDownload}, a small popup-menu appears, where you click on~\menu{Download ZIP}.
 This will download a so-called ZIP-archive, i.e., a file that contains a compressed folder structure with all files in our examples repository.
