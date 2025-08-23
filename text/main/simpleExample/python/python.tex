@@ -127,22 +127,17 @@ Date or time data is returned as instances of \pythonilIdx{datetime.date}, i.e.,
 %
 \hsection{Inserting Data into the Database}%
 %
-\gitLoadAndExecPython{factory:connect_and_insert}{\databasesCodeRepo}{factory}{connect_and_insert.py}{}%
-\listingPythonAndOutput{factory:connect_and_insert}{A \python\ program connecting to our factory \pgls{db} and then using \sqlilIdx{INSERT INTO} to add some records.}{}%
-%
-\gitLoadAndExecPython{factory:connect_and_select2}{\databasesCodeRepo}{factory}{connect_and_select.py}{}%
-\listingBox{exec:factory:connect_and_select2}{%
-The output produced by \cref{lst:factory:connect_and_select} if we execute it a second time after running \cref{lst:factory:connect_and_insert}.%
-}{,style=text_style}%
+\gitLoadAndExecPython{factory:connect_and_insert_1}{\databasesCodeRepo}{factory}{connect_and_insert_1.py}{}%
+\listingPythonAndOutput{factory:connect_and_insert_1}{A \python\ program connecting to our factory \pgls{db} and then using \sqlilIdx{INSERT INTO} to insert one record.}{}%
 %
 We can do more.
-Let us now insert some data into the \db\ with program \cref{lst:factory:connect_and_insert}.
+Let us now insert some data into the \db\ with program \cref{lst:factory:connect_and_insert_1}.
 At the top of the listing, we import the type \pythonilIdx{LiteralString} from the standard \pythonilIdx{typing} package~\cite{PEP675}.
-\pythonilIdx{LiteralString} is a type annotation for string \emph{constants}.
+\pythonilIdx{LiteralString} is a type annotation for string \emph{literals}.
 
 What we want to do is to insert some new demand records into our \db.
 Therefore, we will use the \sqlilIdx{INSERT INTO} statement.
-Now the full \sqlilIdx{INSERT INTO} statement is rather long and does not fit on a single line in \cref{lst:factory:connect_and_insert}.
+Now the full \sqlilIdx{INSERT INTO} statement is rather long and does not fit on a single line in \cref{lst:factory:connect_and_insert_1}.
 To make using it twice~(as we will) a bit less cumbersome, we store it in a variable \pythonil{statement}.
 This variable is annotated with the \pgls{typeHint} \pythonilIdx{LiteralString}, denoting it as a string that was typed in as-is, that is not the result of \pgls{strinterpolation}, concatenation, or any other operation.
 Either way, we store our statement in this variable.
@@ -178,68 +173,103 @@ These values are safely converted to the proper \sql\ representation from which 
 This means that \pythonil{cur.execute(statement, (3, 4, 5, "2025-03-05"))} inserts one new row into our table~\sqlil{demand}, where \pythonil{3} is used as value for \sqlil{customer}, \pythonil{4} as value for \sqlil{product}, \pythonil{5} is used as \sqlil{amount}, and \pythonil{"2025-03-05"} is used as value for the attribute \sqlil{ordered}.
 Hence, the customer~ID for this record is~3, the product~ID is~4, the product amount is~5, and the ordered date is March~5th, 2025.%
 \end{sloppypar}%
+\FloatBarrier%
 \endhsection%
 %
 \hsection{Brief Excursion: Security Concerns}%
-At first glance, this process of parameter substitution looks a bit odd.
-In \python\ we have \pglspl{fstring}, which are the go-to solution for constructing strings containing parameter values.
-Why would we construct a query in this odd fashion instead of using a perfectly suitable tool offered by the language?
-Also, before, we used this strange type \pythonilIdx{LiteralString}, but did not really explain why.
+Databases are amongst the most valueable assets of the IT ecosystem in an organization.
+We need to protect them from both outside and inside attackers.
+It is important to always focus on their security.
+Special care must be taken to prevent the theft, manipulation, or destruction of data.
+When programs access our \pglspl{db}, then we need to make sure that these programs cannot be used to attack our system.
 
-\pythonilIdx{LiteralString} is basically a special string type, a subclass of \pythonil{str}, for strings constants, i.e., strings that were written as text in \python.
-If a value or variable is of type \pythonilIdx{LiteralString}, then it is a string, but this string is explicitly not the result of any string operation, not the result of concatenation, no \pgls{fstring}.
+Programs often receive their input data either from user input, from files, via the internet, or from other programs.
+If this input is directly channeled to a \db\ without taking precautions, the result can be mayham.
+Trying to manipulate the input data of programs that access \pglspl{db} is a very old and yet very common attack vector~\cite{S2008SI}.
+
+And this is why the process of parameter substitution that we had to go through when inserting data into our \db\ looks a bit odd:
+In \python\ we have \pglspl{fstring}, which are the go-to solution for constructing strings containing parameter values.
+One may ask:~Why would we construct a query in this odd fashion instead of using a perfectly suitable tool offered by the language?
+Also, before, we used this strange type \pythonilIdx{LiteralString}.
+What do we need that for?
+We did not give a reasonable explanation.
+The explanation is:~systems security.
+
+\pythonilIdx{LiteralString} is basically a special string type, a subclass of \pythonil{str}, for strings literals, i.e., strings that were written as text in \python.
+If a value or variable is of type \pythonilIdx{LiteralString}, then it is still a string.
+However, this string is explicitly declared to not be the result of any string operation, not be the result of concatenation, and no \pgls{fstring} either.
 So we do not just not use \pglspl{fstring}, we even explicitly state that we do not use them intentionally.
 Why would we do that?%
 %
 \begin{sloppypar}%
-\pythonilIdx{LiteralString} is provided by \python\ for security reasons~\cite{PEP675}:
-It helps preventing \pglspl{SQLi}, especially if used together with static type checking tools~\cite{PEP675,VDGE2022PPDAFP:ST}.
-You see, several potential attacks on an \sql\ \pgls{server} are made possible if the \sql\ queries are constructed via string concatenation or \pgls{strinterpolation}.
-For example, if we would do \pythonil{"INSERT INTO customer (name, phone, address) VALUES (" + s + ")"}, then someone could do set the string~\pythonil{s} to \pythonil{s = "1, 2, 3); DROP TABLE customer;"}\sqlIdx{DROP!TABLE}.
-The \textil{);} would terminate the insertiong query and then a new query, \sqlil{DROP TABLE...} would begin, which would delete the table.
-Hence, an attacker could do all kinds of evil things to our \db\ if we would not guard against this kind of behavior.
+\Pglspl{SQLi}~\cite{ASO2024SIADPP,KDP2024AOSIAITCAIWA,CMCVGHRDCAAFL2023SIADINFD,S2008SI,databases} are attacks on \sql\ \pglspl{server} that are made possible if the \sql\ queries are constructed via string concatenation~(\pythonil{+}) or \pgls{strinterpolation}.
+For example, assume that we would construct our query like this:~\pythonil{"INSERT INTO demand (customer, product, amount, ordered) VALUES (" + s + ")"}.
+Then someone could set the string~\pythonil{s} to \pythonil{s = "1, 2, 3, '2023-02-02'); DROP TABLE demand;"}\sqlIdx{DROP!TABLE}.
+The \textil{);} in \pythonil{s} would terminate the insertiong query.
+The rest of the string would then be a new query: \sqlil{DROP TABLE...} would delete the entire table~\sqlil{demand}\footnote{We will learn that later, in \cref{sec:simpleExampleCleanup}.}.
+And this is just one example.
+Other typical examples are bypassing user authentication to obtain access to sensitive data.
+An attacker could do all kinds of evil things to our \db\ if we would not guard against this kind of behavior.
 \end{sloppypar}%
 %
-So it is forbidden to use any form of string construction during the assembly of an \sql\ command in \psycopg\ by enforcing that each command be a string constant.
-Therefore, attacks using string operations as vector are prevented.
+\pythonilIdx{LiteralString} is provided by \python\ for security reasons~\cite{PEP675}, with the goal to prevent such \pglspl{SQLi}.
+The idea is that, in the future, static type checking tools could check whether a string is constructed or a literal and raises errors in security critical situations~\cite{PEP675,VDGE2022PPDAFP:ST}.
+It is forbidden to use any form of string construction during the assembly of an \sql\ command in \psycopg.
+It is enforced that each command be a string literal, i.e., of type~\pythonilIdx{LiteralString}.
+Therefore, attacks exploiting string operations as vector are prevented~(as long as we follow these rules).
 
 But then the question arises:
-How do we get parameter values into the queries?
+OK, no \pglspl{fstring} {\dots} then how do we get parameter values into the queries?
+If all queries would need to be static, fixed, hard-coded string literals, then we couldn't do many useful things, could we?
 For this the \pythonil{"\%s"} exist as placeholders for query parameter.
-The idea is that the system can apply proper escaping, meaning that all characters that could lead to problems are replaced with \pglspl{escapeSequence}.
-Therefore, regardless of what parameter value is supplied, no malicious can be constructed.
+The idea is that the system can apply proper escaping, meaning that all characters that could lead to problems are replaced with proper \pglspl{escapeSequence} and hence turned into harmless text.
+Therefore, regardless of what parameter value is supplied, no malicious string for an attack can be constructed.
 The parameter values will be substituted into the query string in a safe fashion that prevents \pglspl{SQLi}.%
 %
 \bestPractice{sqlCommandAssembly}{%
 Regardless which programming language or tool you use to access a \db, you must \emph{\textbf{never}} construct \sql\ commands using string operations such as concatenation or \pgls{strinterpolation}. %
-Otherwise, you open the door to \pglspl{SQLi} attacks. %
+Otherwise, you open the door to \pglspl{SQLi}. %
 Always use the proper tools, such as query parameters, for dynamic queries.%
 }%
+%
+Also:~We should never hard-code usernames and passwords in our programs.
+We did this here anyway {\dots} to keep the examples simple.
+But seriously:~Don't do that.%
 \endhsection
 %
 \hsection{Inserting Multiple Rows}%
-After inserting this one row, we use the \pythonilIdx{executemany} method in exactly the same way.
+%
+\gitLoadAndExecPython{factory:connect_and_insert_2}{\databasesCodeRepo}{factory}{connect_and_insert_2.py}{}%
+\listingPythonAndOutput{factory:connect_and_insert_2}{A \python\ program connecting to our factory \pgls{db} and then using \sqlilIdx{INSERT INTO} to insert multiple records.}{}%
+After inserting one record via the method~\pythonilIdx{execute}, we now use the \pythonilIdx{executemany} method to insert multiple records in \cref{lst:factory:connect_and_insert_2}.
 The difference is that this method lets the cursor perform several invocations of a \sql\ command.
 The second parameter is a \emph{sequence of} parameter sequences or mappings.
 We use this command to insert three rows into the \sqlil{demand} table.
-If you read the code in \cref{lst:factory:connect_and_insert}, you find that it is very self-explanatory.
+If you read the code in \cref{lst:factory:connect_and_insert_2}, you find that it is very self-explanatory.
 The command looks pretty similar to our normal \sql\ commands, except that we issue it from \python\ code instead of the \psql\ client.%
 %
 After the command is executed, the cursor and the connection to the \db\ are closed.
-The output of the program in \cref{exec:factory:connect_and_insert} looks successful.
+The output of the program in \cref{exec:factory:connect_and_insert_2} looks successful.%
+\FloatBarrier%
 \endhsection%
 %
 \hsection{Checking the Result}%
+%
+\gitLoadAndExecPython{factory:connect_and_select2}{\databasesCodeRepo}{factory}{connect_and_select.py}{}%
+\listingBox{exec:factory:connect_and_select2}{%
+The output produced by \cref{lst:factory:connect_and_select} if we execute it a second time after running \cref{lst:factory:connect_and_insert_2}.%
+}{,style=text_style}%
+%
+\gitLoadAndExecSQL{factory:select_from_view_sale_3}{}{factory}{select_from_view_sale_1.sql}{factory}{boss}{superboss123}%
+\listingSQLandOutput{factory:select_from_view_sale_3}{%
+Repeating the query from \cref{lst:factory:select_from_view_sale_1} after inserting the records using our \python\ program from \cref{lst:factory:connect_and_insert_2}.%
+}{}%
+%
 We want to check if it really worked by executing \cref{lst:factory:connect_and_select} for a second time.
 \Cref{exec:factory:connect_and_select} now lists five orders under customer Bebbo's~ID.
 Indeed, we just inserted a new order and it correctly appears.
 
-\gitLoadAndExecSQL{factory:select_from_view_sale_3}{}{factory}{select_from_view_sale_1.sql}{factory}{boss}{superboss123}%
-\listingSQLandOutput{factory:select_from_view_sale_3}{%
-Repeating the query from \cref{lst:factory:select_from_view_sale_1} after inserting the records using our \python\ program from \cref{lst:factory:connect_and_insert}.%
-}{}%
-%
-Let us now verify that the changes really reached and a are stored in the \db.
+Let us now verify manually that the changes really reached and a are stored in the \db.
 For this purpose, we fire up \psql\ and repeat the query from \cref{lst:factory:select_from_view_sale_1}.
 The result in \cref{exec:factory:select_from_view_sale_3} the expected increase in sales for customers and products.%
 %
