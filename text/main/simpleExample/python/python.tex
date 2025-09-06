@@ -133,7 +133,7 @@ Date or time data is returned as instances of \pythonilIdx{datetime.date}, i.e.,
 We can do more.
 Let us now insert some data into the \db\ with program \cref{lst:factory:connect_and_insert_1}.
 At the top of the listing, we import the type \pythonilIdx{LiteralString} from the standard \pythonilIdx{typing} package~\cite{PEP675}.
-\pythonilIdx{LiteralString} is a type annotation for string \emph{literals}.
+\pythonilIdx{LiteralString} is a type annotation for string~\emph{\pglspl{literal}}.
 
 What we want to do is to insert some new demand records into our \db.
 Therefore, we will use the \sqlilIdx{INSERT INTO} statement.
@@ -195,7 +195,7 @@ What do we need that for?
 We did not give a reasonable explanation.
 The explanation is:~systems security.
 
-\pythonilIdx{LiteralString} is basically a special string type, a subclass of \pythonil{str}, for strings literals, i.e., strings that were written as text in \python.
+\pythonilIdx{LiteralString} is basically a special string type, a subclass of \pythonil{str}, for strings \pglspl{literal}, i.e., strings that were written as text in \python.
 If a value or variable is of type \pythonilIdx{LiteralString}, then it is still a string.
 However, this string is explicitly declared to not be the result of any string operation, not be the result of concatenation, and no \pgls{fstring} either.
 So we do not just not use \pglspl{fstring}, we even explicitly state that we do not use them intentionally.
@@ -213,14 +213,14 @@ An attacker could do all kinds of evil things to our \db\ if we would not guard 
 \end{sloppypar}%
 %
 \pythonilIdx{LiteralString} is provided by \python\ for security reasons~\cite{PEP675}, with the goal to prevent such \pglspl{SQLi}.
-The idea is that, in the future, static type checking tools could check whether a string is constructed or a literal and raises errors in security critical situations~\cite{PEP675,VDGE2022PPDAFP:ST}.
+The idea is that, in the future, static type checking tools could check whether a string is constructed or a \pgls{literal} and raises errors in security critical situations~\cite{PEP675,VDGE2022PPDAFP:ST}.
 It is forbidden to use any form of string construction during the assembly of an \sql\ command in \psycopg.
-It is enforced that each command be a string literal, i.e., of type~\pythonilIdx{LiteralString}.
+It is enforced that each command be a string \pgls{literal}, i.e., of type~\pythonilIdx{LiteralString}.
 Therefore, attacks exploiting string operations as vector are prevented~(as long as we follow these rules).
 
 But then the question arises:
 OK, no \pglspl{fstring} {\dots} then how do we get parameter values into the queries?
-If all queries would need to be static, fixed, hard-coded string literals, then we couldn't do many useful things, could we?
+If all queries would need to be static, fixed, hard-coded string \pglspl{literal}, then we couldn't do many useful things, could we?
 For this the \pythonil{"\%s"} exist as placeholders for query parameter.
 The idea is that the system can apply proper escaping, meaning that all characters that could lead to problems are replaced with proper \pglspl{escapeSequence} and hence turned into harmless text.
 Therefore, regardless of what parameter value is supplied, no malicious string for an attack can be constructed.
