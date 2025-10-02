@@ -6,7 +6,7 @@
 %
 \subfloat[][%
 We open a console via \ubuntuTerminal\ under \ubuntu\ \linux\ or by \windowsTerminal\ under \microsoftWindows. %
-We type in the command to connect the \psql\ \pgls{client} to the \postgresql\ \pgls{server} listening at the default port on our current computer~(\localhost) and tell it to log in as user \textil{postgresql} with the password~\textil{XXX}~(which you need to replace with whatever password you are using) and hit~\keys{\enter}.%
+We type in the command to connect the \psql\ \pgls{client} to the \postgresql\ \pgls{server} listening at the default port on our current computer~(\localhost) and tell it to log in as user \textil{postgresql} with the password~\textil{XXX}~(which you need to replace with whatever password you are using) and hit~\keys{\return}.%
 \label{fig:psqlNewUser1starting}%
 ]{\parbox[t]{0.99\linewidth}{\centering\includegraphics[width=0.67\linewidth]{\currentDir/psqlNewUser1starting}}}%
 %
@@ -21,7 +21,7 @@ We type in the command to connect the \psql\ \pgls{client} to the \postgresql\ \
 %
 \subfloat[][%
 We type in the command \sqlilIdx{CREATE USER} to create the new user \textil{boss} with the password \textil{superboss123}. %
-We hit~\keys{\enter}.%
+We hit~\keys{\return}.%
 \label{fig:psqlNewUser3command}%
 ]{\parbox[t]{0.99\linewidth}{\centering\includegraphics[width=0.67\linewidth]{\currentDir/psqlNewUser3command}}}%
 %
@@ -55,7 +55,7 @@ Besides the DBMS administrator user \sqlil{postgresql}, there now also exists a 
 \floatRowSep%
 %
 \subfloat[][%
-We quit this session by typing in the commant~\textil{\\q} and hit~\keys{\enter}.%
+We quit this session by typing in the commant~\textil{\\q} and hit~\keys{\return}.%
 \label{fig:psqlNewUser7typeQuit}%
 ]{\parbox[t]{0.99\linewidth}{\centering\includegraphics[width=0.67\linewidth]{\currentDir/psqlNewUser7typeQuit}}}%
 %
@@ -171,7 +171,7 @@ It is most important to be consistent in your casing, regardless whether you pre
 Nevertheless, I prefer uppercase and the \postgresql\ documentation does so too~\cite{PGDG:PD}.
 So we will use uppercase throughout this book and I consider this a best practice.
 
-Anyway, we type in the command and hit~\keys{\enter}.
+Anyway, we type in the command and hit~\keys{\return}.
 The command is executed successfully.
 The system signals this to us with the output \sqlilIdx{CREATE ROLE}\sqlIdx{CREATE!ROLE} in \cref{fig:psqlNewUser4executed}.
 \psql\ always signals success by typing the command back to us, and under \postgresql, \sqlilIdx{CREATE ROLE} and \sqlilIdx{CREATE USER} are (almost) the same.
@@ -187,7 +187,7 @@ In \postgresql, all users are stored in the table named~\sqlilIdx{pg\_catalog.pg
 On other \pglspl{dbms}, the users may be stored differently.}
 So we can just query this table.
 The \sql\sqlIdx{SELECT{\idxdots}FROM} command \sqlil{SELECT usename FROM pg_catalog.pg_user;} will list the value of the column \sqlilIdx{usename} for all rows in the table \sqlilIdx{pg\_catalog.pg\_user}.
-We type it in \cref{fig:psqlNewUser5getUsers} and hit~\keys{\enter}.
+We type it in \cref{fig:psqlNewUser5getUsers} and hit~\keys{\return}.
 If we had run this command \emph{before} creating the user, on a fresh \postgresql\ installation, it would only list the single user \textil{postgres}, i.e., the administrator of the whole \dbms.
 But if we run it again now, \emph{after} creating the new user, it will also list~\textil{boss}.
 You can see this in \cref{fig:psqlNewUser6gotUsers}.
@@ -199,12 +199,12 @@ This type of query is structured as follows:%
 %
 \sqlSyntax{syntax/select_from.sql}%
 %
-We can now close this \psql\ session by typing~\sqlil{\\q}\sqlIdx{{\textbackslash}q} and hitting~\keys{\enter}.
+We can now close this \psql\ session by typing~\sqlil{\\q}\sqlIdx{{\textbackslash}q} and hitting~\keys{\return}.
 As shown in \cref{fig:psqlNewUser7typeQuit}, this takes us back to our normal \pgls{OS} \pgls{terminal} shown in~\cref{fig:psqlNewUser8quit}.
 
 Actually, there are two ways to use \psql:
 We can either open an interactive session.
-In such a session, we type in the \sql\ commands, execute them by pressing~\keys{\enter}, and then read their output.
+In such a session, we type in the \sql\ commands, execute them by pressing~\keys{\return}, and then read their output.
 After that, we can type in the next command, execute it, read its output, and so on.
 Eventually, we quit by executing~\sqlil{\\q}\sqlIdx{{\textbackslash}q}.
 
