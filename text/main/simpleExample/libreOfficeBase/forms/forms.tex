@@ -22,7 +22,7 @@ The corresponding option is most likely hidden behind double-angle button~\libre
 \floatRowSep%
 %
 \subfloat[][%
-Click on the \menu{Table Control} control~\libreOfficeBaseTable.%
+Click on the \menu{Table Control} button~\libreOfficeBaseTable.%
 \label{fig:factoryLibreOfficeBaseForms03insertTable}%
 ]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms03insertTable}}}%
 %
@@ -89,7 +89,7 @@ We right-click on it.%
 \floatSep%
 %
 \subfloat[][%
-In the menu that opens, click \menu{Column...}.%
+In the menu that opens, click \menu{Column\dots}.%
 \label{fig:factoryLibreOfficeBaseForms10editListColumn}%
 ]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms10editListColumn}}}%
 %
@@ -120,7 +120,7 @@ Then we click on the \menu{Data} pane.%
 \centering%
 %
 \subfloat[][%
-We first need to choose the data field of our \sqlil{demand} table that should be set via this form field. %
+We first need to choose the column of our \sqlil{demand} table that should be set via this form field. %
 We type in \sqlil{customer}.%
 \label{fig:factoryLibreOfficeBaseForms13dataOld}%
 ]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms13dataOld}}}%
@@ -444,7 +444,7 @@ We of course click on \menu{Save}.%
 \floatSep%
 %
 \subfloat[][%
-We choose the name \sqlil{demand} for our form and type into into the \emph{File name:}~box. %
+We choose the name \sqlil{demand} for our form and type this into the \emph{File name:}~box. %
 We click \menu{Save}.%
 \label{fig:factoryLibreOfficeBaseForms48saveAsDemand}%
 ]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseForms48saveAsDemand}}}%
@@ -484,10 +484,15 @@ In \cref{sec:factory:tableAndView}, we found that we can also enter data into ta
 This is a big step forward, because it does not require any understanding of \sql.
 We, as the \pglspl{dba}, can create and manage a \db\ using \sql.
 Then we can connect a frontend like \libreofficeBase\ to it and give this as \client\ to a secretary.
-They can then enter the data in a form that is more natural to them, while our \db\ will stay consistent and the data integrity is preserved by its constraints.
-This is much better than an \microsoftExcel\ sheet or that alike, because multiple people can work with \db\ concurrently using the \pglspl{client} on multiple computers \emph{and} it is impossible to create invalid data.
+They can then enter the data in a way that is more natural to them.
+Our \db\ will stay consistent and the data integrity is preserved by its constraints.
+This is much better than an \microsoftExcel\ sheet or that alike.
+Multiple people can work with \db\ concurrently using the \pglspl{client} on multiple computers.
+Different types of related data can be entered simulataneously.
+Also, it is much harder to create invalid data.
 
-However, entering demand records into the \sqlil{demand} table this way is still a total buzzkill.
+However, entering records with foreign keys is still a total buzzkill.
+This comes to light when dealing with table \sqlil{demand}.
 The user needs to keep the tables \sqlil{product} and \sqlil{customer} open, too.
 They need to look up customer~ids and product~ids and use them manually.
 And there is no protection against entering the id of the wrong customer or product.
@@ -495,14 +500,17 @@ While we can pull the data together nicely in the view \sqlil{sale} once it is e
 {\dots}we do not have a way to enter it comfortably.
 Not yet.
 
-Because now we learn an easy way to do so.
-Via \emph{forms}.
+Because now we learn an easy way to build an input method for datasets with foreign keys.
+This method is called \emph{forms}.
 Both \microsoftAccess\ and \libreofficeBase\ allow us to develop so-called forms.
 Forms are entry masks that can be designed in different ways.
-We can place different controls onto forms, and the controls may take their data from different tables in the \db.
+We can place different controls onto forms.
+The controls may take their data from different tables in the \db.
 This is what we are after.
 So we will now design a form for entering customer demands into our \db\ from \libreofficeBase.
 
+We therefore first open our dokument \textil{factory.odb} using \libreofficeBase.
+To connect with the \db, we will have to enter the password \textil{superboss123}.
 In the \menu{Database} pane on the right-hand side of the \libreofficeBase\ window, we select \menu{For\underline{m}s}.
 Then, under \menu{Tasks}, we  click on \inQuotes{Create Form in Design View\dots} in \cref{fig:factoryLibreOfficeBaseForms01createInDesignView}.
 Then, in \cref{fig:factoryLibreOfficeBaseForms02designView}, a new and empty form opens in the design view.
@@ -682,7 +690,33 @@ We are taken back to the main window of \libreofficeBase.
 To see whether our new \sqlil{demand} form was properly saved and still works, we double-click on it in \cref{fig:factoryLibreOfficeBaseForms49forms}.
 The form opens in all of its beauty in \cref{fig:factoryLibreOfficeBaseForms50reopened}.
 We close it again.
-We are done for now.%
+We are done for now.
+
+What we achieved here is something quite nice.
+The strength of \pglspl{rdb} is that we can create multiple tables of interrelated data.
+One table can reference existing records in other tables via foreign keys.
+The \dbms\ ensures that the referential integrity is always maintained.
+However, inserting records into such tables was cumbersome.
+Even after we transitioned from \sql\ to the simple table-based views in tools like \microsoftAccess\ and \libreofficeBase, we would still need to know the IDs of customers and products to correctly enter records into the table \sqlil{demand}.
+This is not just complicated, but also very error-prone.
+
+Now we can design structured forms for entering data.
+We only scratched the surface of this topic.
+We only designed one form that looked like a table.
+With this form, we were able to link data together much similar to our view \sqlil{sale}.
+It became unnecessary to know customer and product IDs.
+Instead, we could directly work with customer and product names.
+We can now enter data from tables that are interlinked in a complex way very conveniently.
+The \inQuotes{We} here includes also people who do not really understand what \pglspl{rdb} are.
+With such a form, a normal person can already work.
+
+There are many more ways to design forms.
+They do not have to look like tables.
+They may have much cooler controls, drop-down boxes, radio buttons, check boxes, etc.
+There are many more cool things to learn.
+However, the important point is this:
+We know that forms exist and what we can use them for.
+And with this, we can depart and move on to the next topic.%
 %
 \FloatBarrier%
 \endhsection%

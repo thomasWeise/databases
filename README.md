@@ -51,6 +51,10 @@ The slides in German language can be found at <https://thomasweise.github.io/dat
 15. [Psycopg Installieren](https://thomasweise.github.io/databasesSlidesDE/15_psycopg_installieren.pdf)
 16. [Fabrik-Datenbank: von Python auf PostgreSQL zugreifen](https://thomasweise.github.io/databasesSlidesDE/16_fabrik_datenbank_von_python_auf_postgresql_zugreifen.pdf)
 17. [LibreOffice Installieren](https://thomasweise.github.io/databasesSlidesDE/17_libreoffice_installieren.pdf)
+18. [Fabrik-Datenbank: LibreOffice Base mit PostgreSQL verbinden](https://thomasweise.github.io/databasesSlidesDE/18_fabrik_datenbank_libreoffice_base_verbinden.pdf)
+19. [Fabrik-Datenbank: Tabellen und Sichten in LibreOffice Base](https://thomasweise.github.io/databasesSlidesDE/19_fabrik_datenbank_libreoffice_base_tabellen_und_sichten.pdf)
+20. [Fabrik-Datenbank: ERDs in LibreOffice Base](https://thomasweise.github.io/databasesSlidesDE/20_fabrik_datenbank_libreoffice_base_erd.pdf)
+21. [Fabrik-Datenbank: Formulare in LibreOffice Base](https://thomasweise.github.io/databasesSlidesDE/21_fabrik_datenbank_libreoffice_base_formulare.pdf)
 
 
 ### 2.3. The Examples

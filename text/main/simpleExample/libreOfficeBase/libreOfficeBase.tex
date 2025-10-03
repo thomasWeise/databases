@@ -4,8 +4,8 @@
 %
 In the previous example, we have discussed how we can connect with \python\ to our \dbms.
 In \python, we can develop an application with a nice user interface.
-Our \python\ program could draw data from different sources, like web sites, web services, other \pglspl{db}, sensors in production machines, etc., and insert the data into our \db.
-Or maybe it analyzes the data from or \db\ using \pgls{AI} and \pgls{ML} to predict future sales.
+Or we could make a \python\ program that draws data from different sources, like web sites, web services, other \pglspl{db}, sensors in production machines, etc., and insert the data into our \db.
+Or maybe we write a \python\ program that analyzes the data from or \db\ using \pgls{AI} and \pgls{ML} to predict future sales.
 Or maybe our \python\ code runs inside a web \pgls{server} and offers us a web form to enter data manually.
 All of these are rather \inQuotes{big} applications.
 They are designed for special purposes by software engineers, implemented and maintained by programmers, and thus cost serious money.
@@ -17,13 +17,14 @@ In such cases, they may look for a commercial solution but such solution may not
 Or maybe we are at an early stage of rolling out a \db\ in a bigger organization.
 We may plan big investments in the future.
 But we first need to convince the organization that there is merit in our project.
-We want to have quick and very cheap prototype that allows us to enter and access data in our \db.
+We want to have quick and very cheap prototype that allows us to at least enter and access data in our \db.
 
 We already learned how to access \pglspl{db} via \sql\ and how to access them from a programming language.
 A third and completely different way to work with \pglspl{db} on a professional \dbms\ is to connect to them from \pglspl{GUI}.
-Typical examples for such a \pgls{GUI} are the commercial \microsoftAccess\ and the free and open source \libreofficeBase.
-Both allow you to create \db\ tables in single files and work on them on your local computer, as they treat \pglspl{db} as local files for the current user to work on.
-As you can infer from the things we have already seen and done, a \inQuotes{real \dbms} offers us the ability to store the \db\ on one compute and to connect to this computer from other computers using multiple \pglspl{client} to work on the centrally managed data.
+Typical examples for such a \pgls{GUI} are the commercial \microsoftAccess\cite{SSI2023MA2BTA,B2020HOMA2,UC2021AFD} and the free and open source \libreofficeBase\cite{FNFHWSKLSSGLFRSRPLJG2022BG7R1BOL7C,S2022L7PFEUU}.
+Both allow you to create \db\ tables in single files and work on them on your local computer.
+They realize such \pglspl{db} as local files for the current user to work on.
+As you can infer from the things we have already seen and done, a \inQuotes{real \dbms} offers us the ability to store the \db\ on one computer and to connect to this computer from other computers using multiple \pglspl{client} to work on the centrally managed data.
 So neither \microsoftAccess\ nor \libreofficeBase\ can be recommended as \dbms\ for a complex application going beyond simple hobbiest tasks or small-office scenarios.
 
 However, they both offer some pretty cool tools, such as reports and forms.
