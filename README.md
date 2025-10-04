@@ -55,6 +55,8 @@ The slides in German language can be found at <https://thomasweise.github.io/dat
 19. [Fabrik-Datenbank: Tabellen und Sichten in LibreOffice Base](https://thomasweise.github.io/databasesSlidesDE/19_fabrik_datenbank_libreoffice_base_tabellen_und_sichten.pdf)
 20. [Fabrik-Datenbank: ERDs in LibreOffice Base](https://thomasweise.github.io/databasesSlidesDE/20_fabrik_datenbank_libreoffice_base_erd.pdf)
 21. [Fabrik-Datenbank: Formulare in LibreOffice Base](https://thomasweise.github.io/databasesSlidesDE/21_fabrik_datenbank_libreoffice_base_formulare.pdf)
+22. [Fabrik-Datenbank: Berichte in LibreOffice Base](https://thomasweise.github.io/databasesSlidesDE/22_fabrik_datenbank_libreoffice_base_berichte.pdf)
+23. [Fabrik-Datenbank: Aufräumen](https://thomasweise.github.io/databasesSlidesDE/23_fabrik_datenbank_aufräumen.pdf)
 
 
 ### 2.3. The Examples

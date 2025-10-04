@@ -83,8 +83,9 @@ We click \menu{Next}.%
 \floatSep%
 %
 \subfloat[][%
-Now we can sort the data. %
-It will be sorted by customer, but inside the customer sections, we want to order the sales demands by date, product~(in case of tied dates), and amount.%
+Now we can sort the data records. %
+They will already be sorted and grouped by customer. %
+However, but inside the customer sections, we want to order the sales demands by date, product~(in case of tied dates), and amount.%
 \label{fig:factoryLibreOfficeBaseReport10wizardSorting}%
 ]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseReport10wizardSorting}}}%
 %
@@ -92,7 +93,8 @@ It will be sorted by customer, but inside the customer sections, we want to orde
 %
 \subfloat[][%
 We have added the fields. %
-(Ordering in descending fashion means bigger values first, ordering in ascending fashion means smaller values first.) %
+Ordering in descending fashion means bigger values first. %
+Ordering in ascending fashion means smaller values first. %
 We click \menu{Next}.%
 \label{fig:factoryLibreOfficeBaseReport11wizardSortingFields}%
 ]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseReport11wizardSortingFields}}}%
@@ -143,7 +145,7 @@ We can now click \menu{Next}.%
 \floatRowSep%
 %
 \subfloat[][%
-The report is create in design view. %
+The report is created and opened in design view. %
 It looks a bit clunky. %
 For example, the customer field takes way too much space. %
 And it does not need a label. %
@@ -193,7 +195,8 @@ The header is now moved up.%
 \floatSep%
 %
 \subfloat[][%
-We now want to make the group header field of the report a bit smaller, so we click on the \inQuotes{customer\_name Header} pane and then into the \menu{Height} property.%
+We now want to make the group header field of the report a bit smaller. %
+We click on the \inQuotes{customer\_name Header} pane and then into the \menu{Height} property.%
 \label{fig:factoryLibreOfficeBaseReport22headerDeselected}%
 ]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseReport22headerDeselected}}}%
 %
@@ -248,16 +251,16 @@ We double-click on it. %
 \floatSep%
 %
 \subfloat[][%
-A new document opens in \libreoffice\ \softwareStyle{Write}. %
+A new document opens in \libreofficeWriter. %
 It contains all the data in a very nicely formatted fashion. %
-We can even export it to PDF by clicking the PDF symbol~\libreOfficePdf.%
+We can even export it to \pgls{formatPDF} by clicking the PDF symbol~\libreOfficePdf.%
 \label{fig:factoryLibreOfficeBaseReport28executed}%
 ]{\tightbox{\includegraphics[width=0.49\linewidth]{\currentDir/factoryLibreOfficeBaseReport28executed}}}%
 %
 \floatRowSep%
 %
 \subfloat[][%
-The exported PDF document.%
+The exported \pgls{formatPDF} document.%
 \label{fig:factoryLibreOfficeBaseReport29report}%
 ]{\tightbox{\includegraphics[width=0.62\linewidth]{\currentDir/factoryLibreOfficeBaseReport29report}}}%
 %
@@ -268,14 +271,19 @@ The exported PDF document.%
 %
 The last common facette in small-scale \db\ applications that we will consider are \emph{reports}.
 A report is basically a nicely-styled document created from the data in a \db.
-While forms are a convenient way to enter data, reports are a convenient way to display it.
+Forms are a convenient way to enter data into a \db.
+Reports are a convenient way to display data from a \db.
 If the secretary managing the customer orders wants to compose a overview on the business transactions, then they could look at the output of our view~\sqlil{sale}.
-While its output is indeed nicely readable, it is not exactly something that we would print and put on the table of manager.
-Now they could copy the data into a document and then print it, but this would mean that, everytime such overview is needed, the same copy-paste-format-print workflow needs to be applied.
-Reports offer pre-formatted automated workflows for presenting data from a \db.
+While its output is indeed nicely readable, it is not exactly something that we would print on paper and put on the table of manager.
+Now they could copy the data into a \microsoftWord\ document and then print it.
+However, this would mean that, everytime such overview is needed, the same copy-paste-format-print workflow needs to be applied.
+At the bottom line, reports automate this process.
+They offer automated workflows for pre-formatted documents presenting data from a \db.
 
 \libreofficeBase\ also offers the functionality to construct some basic reports.
-To explore feature this at least a little bit, we select \menu{Reports} in the \menu{Database} pane and click on \inQuotes{Use Wizard to Create Report\dots} in the \libreofficeBase main window as shown in \cref{fig:factoryLibreOfficeBaseReport01main}.
+To explore feature this at least a little bit, first open our dokument \textil{factory.odb} using \libreofficeBase.
+To connect with the \db, we will have to enter the password \textil{superboss123}.
+Then we select \menu{Reports} in the \menu{Database} pane and click on \inQuotes{Use Wizard to Create Report\dots} in the \libreofficeBase main window as shown in \cref{fig:factoryLibreOfficeBaseReport01main}.
 
 In the dialog that opens up, we need to choose the data source for the new report.
 We click on \inQuotes{Tables \underline{o}r queries} in \cref{fig:factoryLibreOfficeBaseReport02wizardDataSource}.
@@ -361,25 +369,30 @@ We click on \menu{save} in \cref{fig:factoryLibreOfficeBaseReport26save}.
 The report now appears under this name in the \menu{Reports} pane.
 We double-click on it in \cref{fig:factoryLibreOfficeBaseReport27saved} to finally see how it looks like in action.
 
-A new document opens in \libreoffice\ \softwareStyle{Write}.
+A new document opens in \libreofficeWriter.
 It contains all the data in a very nicely formatted fashion.
-We can even export it to PDF by clicking the PDF symbol~\libreOfficePdf\ in \cref{fig:factoryLibreOfficeBaseReport28executed}.
-The exported PDF document is shown in \cref{fig:factoryLibreOfficeBaseReport29report}.
+We can even export it to \pgls{formatPDF} by clicking the PDF symbol~\libreOfficePdf\ in \cref{fig:factoryLibreOfficeBaseReport28executed}.
+The exported \pgls{formatPDF} document is shown in \cref{fig:factoryLibreOfficeBaseReport29report}.
 
 This looks quite nice.
 Of course, we just quickly clicked this report together.
 There is much much more that can be done.
-For example, reports often support the ability to compute and present statistics.
+
+Reports often support the ability to compute and present statistics.
 We could present the total sales income per customer, for example.
 We could just as well as the display overall total income of our company in the report.
+It is also often possible to define filters for the data.
+We could probably have limited that data to with a start date and end data that the user should enter.
 
 Reports often also allow us to include diagrams.
 It is totally possible to include a chart per customer showing when they made purchases and for how much money.
-\libreofficeBase\ has this functionality {\dots} but on my computer it crashes the program.
+\libreofficeBase\ has this functionality {\dots} but my version of \libreofficeBase\ on computer crashes when I try to use it{\dots}
 Well, you can play around a bit and see if you get it to work on your machine.
 
 Either way, the important point is that you now also got to take a glimpse on what reports are in the field of \pglspl{db}.
-They are a very common tool in many small and mid-scale applications.
+Reports provide us the ability to automatically generate nicely formatted and pritable views on the data in our \db.
+Their output can be understood by people who do not even know what a \db\ is.
+Therefore, they are a very common tool in many small and mid-scale applications.
 They are supported by tools such as \libreofficeBase\ or \microsoftAccess.
 There exist whole software libraries that can generate reports.
 For example, there probably are \python\ libraries that can produce beautiful reports, maybe in conjunction with \matplotlib\ and all the other functionality that the \python\ ecosystem can offer us.

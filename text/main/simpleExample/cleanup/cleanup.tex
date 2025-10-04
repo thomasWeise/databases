@@ -2,6 +2,14 @@
 \hsection{Cleanup After the Example}%
 \label{sec:simpleExampleCleanup}%
 %
+We are now approaching the end of this brief journey crisscrossing the domain of \pglspl{rdb}.
+We obtained a rough impression of what they are and how they can be used.
+To finish it, i.e., to conclude our factory example, let us delete all the things we created.
+Of course, we have to do that in the opposite order in which we created them.
+
+\sqlSyntax{syntax/drop.sql}%
+\FloatBarrier%
+%
 \gitLoadAndExecSQL{factory:cleanup_inside_database}{}{factory}{cleanup_inside_database.sql}{factory}{boss}{superboss123}%
 \listingSQLandOutput{factory:cleanup_inside_database}{%
 User \textil{boss} deletes all tables and views inside the database, in the inverse order of their creation.%
@@ -13,46 +21,69 @@ Delete the database \textil{factory} and the user \textil{boss}. %
 This must be executed by the administrator account \textil{postgres}.%
 }{}%
 %
-We are now approaching the end of this brief journey crisscrossing the domain of \pglspl{rdb} to get a rough impression what they are.
-To finish it, let us delete all the things we created.
-Of course, we have to do that in the opposite order in which we created them.
+The \sql\ syntax for deleting various \db\ objects is rather easy~\cite{PGDG:PD:DU,PGDG:PD:DD,PGDG:PD:DT,PGDG:PD:DV}.
+You write \sqlilIdx{DROP} followed by the object type followed by the object name.
+The object type could, e.g., be \sqlil{TABLE}\sqlIdx{DROP!TABLE}, \sqlil{VIEW}\sqlIdx{DROP!VIEW}, \sqlil{USER}\sqlIdx{DROP!USER}, or \sqlil{DATABASE}\sqlIdx{DROP!DATABASE}.
+These commands will always fail if the object is still in use, i.e., if it is referenced by any other object.
+You cannot delete a table that is part of a foreign key constraint, for instance.
+The command will also fail if the object does not exist.
+This can be circumvented by inserting \sqlilIdx{IF EXISTS}\sqlIdx{DROP!IF EXISTS} between the object type and the object name.
 
+In our case, we do know that the elements that we want to delete do actually exist.
+So why would we explicitly mention this \sqlilIdx{IF EXISTS}\sqlIdx{DROP!IF EXISTS} option?
+Because it has some interesting use cases.
+If we wanted to create a backup copy of our entire \db, then one thing we could do is to export the whole \db\ as a single large \sql~script~\cite{PGDG:PD:SD}.
+This script could, basically, be the concatenation of all of our listings, with the \sqlil{CREATE ...} and \sqlil{INSERT INTO...} commands and all.
+Running this script would re-create the \db\ in exactly its present state.
+
+Except that sometimes, it won't.
+If the \db\ already exists, it will fail.
+Because we cannot create an object that already exists.
+Or maybe if we had a crash or a user issued some faulty \sql\ commands that wreaked havoc.
+Then the \db\ maybe now exists only partially.
+Maybe some tables or views have disappeared, maybe some rows in some tables are missing.
+One method to make the \inQuotes{backup \sql~script} robust to deal with such issues is to add \sqlil{DROP ... IF EXISTS}\sqlIdx{DROP!IF EXISTS} clauses \emph{before} the commands for re-creating each table or view.
+Then we can restore the \db\ or parts of the \db\ even if the \db\ still exists or partially exists.
+
+Anyway, let us now use these commands to clean up the \dbms\ at the end of our example.
+We want to remove all the objects that we have created.
 In \cref{lst:factory:cleanup_database_and_user}, we first delete the view~\sqlil{sale}.
 We can do this by the command \sqlil{DROP VIEW sale;}\sqlIdx{DROP!VIEW}~\cite{PGDG:PD:DV}.
 The \sqlil{DROP} is the \sql\ command for deleting things.
-The \sqlil{VIEW} is specified to make clear what type of object we want to delete, to prevent us from accidentally deleting something else.
+The \sqlil{VIEW} is specified to make clear what type of object we want to delete.
+This prevents us from accidentally deleting something else.
 Then we give the name of the view to delete, in our case, that is \sqlil{sale}.
-However, we make this command a bit more handy:
-We insert an \sqlilIdx{IF EXISTS} inbetween the object type and the view's name.
+
+We make this command a bit more handy:
+We insert an \sqlilIdx{IF EXISTS}\sqlIdx{DROP!IF EXISTS} inbetween the object type and the view's name.
 This condition is self-explanatory:
 If a view of the provided name exists, then it is deleted.
 If not, then nothing happens.
-Without the \sqlilIdx{IF EXISTS}, this would cause an error.
-
-Well, we do know that the view exists, so why are we mentioning this condition here?
-Because it has some interesting use cases.
-If we wanted to create a backup copy of our entire \db, then one thing we could do is to export the whole \db\ as a single large \sql~script~\cite{PGDG:PD:SD}.
-This script could, basically, be the concatenation of all of our listings.
-Running this script would re-create the \db\ in exactly its present state.
-
-Except that it won't.
-If the \db\ already exists, it will fail.
-Or maybe if we had a crash or a user issued some faulty \sql\ commands wreaking havoc, then the \db\ maybe now exists only partially.
-Maybe some tables or views have disappeared, maybe some rows in some tables are missing.
-One method to make the \inQuotes{backup \sql~script} robust to deal with such issues is to add \sqlil{DROP ... IF EXISTS} clauses \emph{before} the commands for re-creating each table or view.
-Then we can even restore the \db\ while the \db\ still exists.%
+Without the \sqlilIdx{IF EXISTS}\sqlIdx{DROP!IF EXISTS}, this case would cause an error.
+With it, we simply don't need to care.
+We can issue the command twice and it will be OK.%
 %
 \begin{sloppypar}%
 Anyway, we use the same method to delete the three tables.
 We issue the commands \sqlil{DROP TABLE IF EXISTS demand;}\sqlIdx{DROP!TABLE}\sqlIdx{IF EXISTS}, \sqlil{DROP TABLE IF EXISTS product;}, and \sqlil{DROP TABLE IF EXISTS customer;}\sqlIdx{DROP!TABLE}\sqlIdx{IF EXISTS}~\cite{PGDG:PD:DT}.
-Notice that we delete \sqlil{demand} before we delete \sqlil{customer} and \sqlil{product} because of the \sqlilIdx{REFERENCES} constraints.%
+Notice that we delete table \sqlil{demand} before we delete the tables \sqlil{customer} and \sqlil{product}.
+This is because of the \sqlilIdx{REFERENCES} constraints.
+We cannot delete an object that is still referenced.
+As long as these constraints exist, tables \sqlil{customer} and \sqlil{product} are in use and cannot be deleted.
+By deleting table \sqlil{demand} first, the constraints also disappear.
+Tables \sqlil{customer} and \sqlil{product} are no longer referenced by other objects and can be disposed of.%
 \end{sloppypar}%
 %
 All of these deletion steps are done by using the user \textil{boss} and their password \textil{superboss123}.
 Let us finally also get rid of the entire \db\ and of that user as well in \cref{lst:factory:cleanup_database_and_user}.
 First, we delete the \db\ by executing \sqlil{DROP DATABASE IF EXISTS factory;}\sqlIdx{DROP!DATABASE}\sqlIdx{IF EXISTS}~\cite{PGDG:PD:DD}.
 Then we remove the user via \sqlil{DROP USER IF EXISTS boss;}\sqlIdx{DROP!USER}\sqlIdx{IF EXISTS}~\cite{PGDG:PD:DU}.
-Notice that we log in as the \pgls{dba} user \textil{postgres} to do that.%
+Notice that we log in as the \pgls{dba} user \textil{postgres} to do that.
+With this, all remains of our example are gone from the \dbms\ \pgls{server}.
+
+All the objects that we can create in a \dbms\ can be deleted as well.
+Deleting \db\ objects is something that we do not do very often.
+But in several situations, like the restoration of data via backup scripts, it comes in handy.%
 %
 \FloatBarrier%
 \endhsection%

@@ -4,27 +4,33 @@
 With this, we have reached the end of our simple introductory example.
 
 What did we learn?
-First of all, we got some hands-on experience using one of the world's leading \dbms, \postgresql.
+First of all, we got some hands-on experience using one of the world's leading \pglspl{dbms}, \postgresql.
 We connected to the \postgresql\ \server\ using the \psql\ \client\ software.
 We issued commands in the \sql\ language to the \dbms.
 
 What kind of commands did we issue?
-Well, we created a new user~(or role), we created a \db, we created tables inside the \db, we issued queries to read data back from tables, we used queries to join data from different tables, we created a view and we built queries on top of that view, and we learned how to modify the data in tables.
+Well, we created a new user~(or role) and a \db.
+We created tables inside the \db.
+We issued queries to insert data into a table and to read data back from a table.
+We used queries to join data from different tables.
+We created a view and we built queries on top of that view.
+We learned how to modify the data in tables.
 Finally, we deleted everything again.
-This means that we have seen several of the most important \sql\ commands that exist.
+This means that we have seen several of the most important \sql\ commands.
 Surely, we only have played with them.
 We are not even close to really understand their full behavior, special cases, performance issues, nor do we have a clear picture of what happens behind the scenes.
 
 But one thing is clear:
 If somebody would come and ask us to create a \db\ for some certain application, we could probably do it.
 We could stitch together something that does the trick.
-Would it be an efficient \db?
+Would it be an efficient or elegent \db?
 Definitely not.
 We did not yet learn anything about how to design nice \pglspl{db}.
-We have no experience whatsoever.
+But we now already have a bit of experience.
+We do have some raw and unrefined knowledge and ability in this field.
 
 Even more so, we also understand how to access a \db\ from outside, from a programming language like \python.
-Based on what we learned, we have a rough feeling of what a \dbms\ can and probably cannot do.
+Based on what we learned, we have a rough feeling of what a \dbms\ can and probably cannot do with \sql.
 This allows us to, in principle, develop ideas for even more complex applications.
 The things that the \dbms\ can do should go into the \db.
 The things that it cannot, like displaying forms, processing data from some source like sensors or files, or training \pgls{ML} models on the data would go into the \python\ program code.
