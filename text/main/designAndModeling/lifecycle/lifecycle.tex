@@ -2,15 +2,18 @@
 \label{sec:dbLifecycle}%
 The design of \pglspl{db} is not a straightforward process of \inQuotes{idea $\rightarrow$ design $\rightarrow$ finished.}
 Instead, designing good \pglspl{db} involves several steps.
+These steps are follow a \db\ lifecycle.
+
 We need to clearly understand the requirements for the \db.
 We should create a rough sketch of what things will be included.
 We need to decide what tables and relations should exist.
-This conceptual model~(information about the types of data and their relationships) must then be mapped to a physical model~(concrete implementation instructions for a selected~\dbms).
+This conceptual model~(information about the types of data and their relationships) must ultimately be mapped to a physical model~(concrete implementation instructions for a selected~\dbms).
 There should be some sort of prototype, where we and the users can enter a subset of the data to test whether everything works as predicted.
 At this stage, we may uncover some problems and may need to improve our design.
 The actual application must then be tested.
 Then, once we are happy with everything, the application and \db\ enter the productive environment.
-They need to be maintained and backed up regularly.
+Then the \db\ needs to be maintained and backed up regularly.
+
 Due to the longevity of \pglspl{db}, eventually, new features and changes may become necessary, at which point we may need to revise our design.
 Interestingly, differently from normal software projects, \db~applications do not seem to grow in complexity during their evolution~\cite{SVZ2014OSD}, but they do indeed evolve over time after their initial development.
 There exist several general approaches on how to manage or conduct the \db\ design process, how to bring this process into some structure~\cite{GMTM2011DDLC}.
@@ -20,36 +23,39 @@ Yet, \pglspl{db} are also special.
 They are objects with a comparatively long lifetime~\cite{SS2005EIDDDFDB:I}.
 The hardware in your computer stays the same maybe for three to five years.
 Software programs often change every five to ten years.
-Every two years, a new long term support~(LTS) version of the \ubuntu\ operating system comes out~\cite{C2024TULARC}.
+Every two years, a new \pgls{LTS} version of the \ubuntu\ \glslink{OS}{operating system} comes out~\cite{C2024TULARC}.
 \libreoffice\ releases every six months~\cite{DF2024TDFWR}.
 Major versions of \microsoftWindows\ come out every two to six years~\cite{EOEBEB:LOWV}.
 Once new major versions of such important software appear, the old versions usually fade out of support within five years and need to be replaced.
 
 \Pglspl{db}, however, may stay in use for several decades.
 Indeed, a long time ago, I designed a \db\ that was used by a branch office of a midsized company for well over a decade.
-Therefore, \pglspl{db} and the applications built on top of them are important assets of en organization.
+\Pglspl{db} and the applications built on top of them are important assets of an organization.
 They contain valuable information, both historical data as well as the data required by the current operation.
 
-\Pglspl{db} are not just used to store data, the data they store mirrors real-world entities and processes.
+\Pglspl{db} are not just used to store data, the data they mirror real-world entities and processes.
 In our small factory example, the data mirrors the products, the customers, and the interactions of the customers with the factory.
 Any of them may well change over time.
 For example, maybe the company eventually changes from selling products with a fixed name and configuration to configurable products.
 Maybe one day a customer can decide the color and size of the shoes they want to order together with the cloth to be used as well as the material of the sole.
 This could yield so many possible combinations that the current way to store products is no longer feasible.
 Maybe the scope of the \db\ is eventually expanded to also keep track of the product stock in the warehouse.
+\Pglspl{db} may exist over many years and may evolve during their lifetime.
 
 All of the above together lead to several demands on the \db\ development lifecycle.
-This lifecycle is very similar to the software development lifecycle.
+This lifecycle is very similar to the \pgls{SDLC}.
 It often even is either the backend or the foundation of software development.
 However, there are two aspects that make the \db\ development special:
 First, the longevity of \pglspl{db}.
 Second, there is the \inQuotes{low-levelness} of \pglspl{db}.
-Since the \db\ is the very foundation upon which other applications like reports, forms, and websites are developed, they are the first point of contact between project stakeholders and developers.
+The \db\ is the very foundation upon which other applications like reports, forms, and websites are developed.
+Therefore, they are the first point of contact between project stakeholders and developers.
 The \db\ development process is where the basic understanding of the data and processes in an organization is built.
 This is where the situation is most uncertain, where most of the misunderstandings will happen.
 
 The foremost and obvious requirement to the \db\ design process is that it guides us to translate the information from the stakeholders to a fully functional and running \db\ application.
 It should allow us to plan how to do the project, i.e., to create a timeline defining when we will reach which milestone, how many work hours may be needed, and how much things are going to cost.
+But these things are all affected by uncertainty.
 
 More often than not, the stakeholders are initially not entirely clear about their processes and data.
 During the first few discussions about what the \db\ should store and do, several important details may be missed.
@@ -62,7 +68,7 @@ When we offer them our \inQuotes{Screw~3B} we call it \inQuotes{double-inch scre
 Obviously, such a situation could not be captured with a single table per product anymore.
 
 Also, many real-world processes are not entirely formally specified.
-Processes that modify the ata may have a very clear core, e.g., \inQuotes{We send the product to the customer's address once they paid.}
+Processes that modify the data may have a very clear core, e.g., \inQuotes{We send the product to the customer's address once they paid.}
 But there might be fuzzy edges, like \inQuotes{Very few of our customers have been with us for many years or buy lots of products, they can pay after receiving the product.}
 If we design a \db\ for managing students, it may be that the school says:
 \inQuotes{A student can repeat an exam at most twice after failing it.}
@@ -85,58 +91,68 @@ At the same time, it should avoid scope creep, i.e., a situation where progressi
 \begin{figure}%
 \centering%
 \includegraphics[width=0.8\linewidth]{\currentDir/waterfall}%
-\caption{The waterfall model~\cite{PM2020SEAPA,GMTM2011DDLC,I2018SAH,N2024SEFDS}.}%
+\caption{The waterfall model~\cite{R1970MTDOLSS,PM2020SEAPA,GMTM2011DDLC,I2018SAH,N2024SEFDS}.}%
 \label{fig:model:waterfall}%
 \end{figure}%
 %
 Several different design methods, i.e., \pglspl{SDLC}, have been proposed in the field of software engineering.
-The simplest is the waterfall model~\cite{PM2020SEAPA,GMTM2011DDLC} illustrated in \cref{fig:model:waterfall}.
+The simplest one is probably the waterfall model~\cite{R1970MTDOLSS,PM2020SEAPA,GMTM2011DDLC,I2018SAH,N2024SEFDS} published in \citeyear{R1970MTDOLSS} by \citeauthor{R1970MTDOLSS}.
+An adoption of this model to \db\ development could look like \cref{fig:model:waterfall}.
 The waterfall model is a sequential process of project planning, requirements definition, design, development, testing, and installation and project acceptance.
 Each step produces deliverables as output which become the input for the next phase.
-During the requirements definition phase, the project scope is restricted based on the discussions with the stakeholders.
 The waterfall model specifies which activities should be carried out in each phase as well as the deliverables that should be produces.
+During the requirements definition phase, for example, the project scope is restricted based on the discussions with the stakeholders.
 The waterfall model is simple and easy to implement.
 It allows the developers to work their way along a well-known structure.
 At each phase of the project, we know where we are standing and there thus will be few misunderstandings.
 
-However, the model is strictly sequential.
-It does not anticipate that there can still be misunderstandings and that we may still discover unexpected issues.
-There is no feedback and return to previous phases built-in.
-The requirements are specified early in the process and there is no predefined mechanism to introduce changes later in the project.
+This model may sometimes be misunderstood as being strictly sequential.
+If we indeed were to follow the steps sequentially, then we would fail to anticipate that we may make errors in each phase, that there can still be misunderstandings, and that we may still discover unexpected issues.
+However, \citeauthor{R1970MTDOLSS} explicitly acknowledges that feedback between succeeding and preceeding phases takes place.
+Sometimes even larger changes are necessary, e.g., when the testing phase does not yield the anticipated success.
+One idea already proposed in~\cite{R1970MTDOLSS} is to do the whole design and development process twice for entirely new applications.
+The first time would be a brief simulation phase, maybe with a fourth of the scheduled project time.
+Its purpose would be to gather the experience that will then lead the second iteration of the process to success.
+I personally am a fan of this.
+
+Either way, a weakness of the model may be that the requirements are specified early in the process and there is no predefined mechanism to introduce changes later in the project.
 
 \begin{figure}%
 \centering%
 \includegraphics[width=0.8\linewidth]{\currentDir/prototype}%
-\caption{The prototyping model~\cite{PA2009SETAP,GMTM2011DDLC}.}%
+\caption{The prototyping model~\cite{PA2009SETAP,GMTM2011DDLC,L1989SETRP}.}%
 \label{fig:model:prototype}%
 \end{figure}%
 %
-Another idea is to embrace that both the stakeholders and the developers do not clearly know what the final product should look like and to put a cycle of prototypes and discussions into the center of the development process.
-This prototyping process is illustrated in \cref{fig:model:prototype}~\cite{PA2009SETAP,GMTM2011DDLC}.
+Another idea or maybe a formalization and extension of the \inQuotes{do it twice} concept is (rapid)~prototyping~\cite{L1989SETRP}.
+Here we embrace that both the stakeholders and the developers do not clearly know what the final product should look like.
+We put a cycle of prototypes and discussions into the center of the development process~\cite{BLM2023AEBMOSPAMSAAMCS,L1989SETRP}.
+This prototyping process is illustrated in \cref{fig:model:prototype}.
 First, a limited version of the requirements are collected and a prototype of the \db\ and software is designed right away.
-The prototype may even be a mockup which only shows the basic functionality of the project and does not interact with other tools.
-It serves as basis for discussions and may need to be redesigned.
-The final product may look different from the prototype, which creates some uncertainty.
-The prototyping model provides the ability of iterative enhancement of the project specification, but sacrifices some clarity of process sequence.
-In the prototyping model, the requirements are still finalized early on.
-The iterative part is focused on the design, prototyping, evaluation by the stakeholders, and reviews.
+The prototype may even be a mockup which only shows the basic functionality of the project and does not interact with other tools~\cite{BLM2023AEBMOSPAMSAAMCS}.
+It serves as basis for discussions and we may need to redesign it a few times.
+In some variants of this approach, the requirements may be finalized early on~\cite{PA2009SETAP,GMTM2011DDLC} and in others they can be updated later on~\cite{L1989SETRP}.
+The prototyping model provides the ability of iterative enhancement of the project specification.
+In turn, it sacrifices some clarity of process sequence.
 
 \begin{figure}%
 \centering%
 \includegraphics[width=0.8\linewidth]{\currentDir/spiral}%
-\caption{The spiral model~\cite{S2007OOSE,GMTM2011DDLC}.}%
+\caption{The spiral model~\cite{B1985ASMOSDAE,B1988ASMOSDAE,S2007OOSE,GMTM2011DDLC}.}%
 \label{fig:model:spiral}%
 \end{figure}%
 
-This spiral model illustrated in \cref{fig:model:spiral} is a combination of the prototyping and waterfall model~\cite{PA2009SETAP,GMTM2011DDLC}.
+The spiral model~\cite{B1985ASMOSDAE,B1988ASMOSDAE,PA2009SETAP,GMTM2011DDLC} illustrated in \cref{fig:model:spiral} could be considered as another take on the multi-pass waterfall model.
 Here, the development process begins with the requirements analysis and a development plan.
 An initial pass through a standard waterfall lifecycle based on a subset of the requirements is performed to develop a first prototype.
 The prototype is evaluated and then the cycle begins again in order to add new functionality and to create the next prototype.
 In each iteration, a risk analysis is performed before the prototype is developed.
 Each new prototype thus helps to reduce the risks.
+
 One idea of the spiral model is that requirements are of hierarchical nature.
 In each iteration, additional requirements are built on top of the first set of requirements implemented.
-This is not very suitable when we design a \db, where different functions can be more or less independent from each other while using the same data~(e.g., keeping track of stock in a warehouse and booking customer orders).
+This may not be very suitable when we design a \db, where different functions can be more or less independent from each other while using the same data~(e.g., keeping track of stock in a warehouse and booking customer orders).
+
 The problem to be solved is defined at the project start and therefore the project scope is limited.
 However, since the requirements are finalized early, the model does not encourage progressive enhancement of the design.
 Also, the risk analysis steps can be quite complex and so is the overall structure of the spiral model, which are downsides of the method~\cite{S2007OOSE,GMTM2011DDLC}.
@@ -144,14 +160,19 @@ Also, the risk analysis steps can be quite complex and so is the overall structu
 \begin{figure}%
 \centering%
 \includegraphics[width=0.8\linewidth]{\currentDir/rapid}%
-\caption{The \pgls{RAD} model~\cite{S2007OOSE,GMTM2011DDLC,I2018SAH,N2024SEFDS}.}%
+\caption{The \pgls{RAD} model~\cite{M1991RAD,S2007OOSE,GMTM2011DDLC,I2018SAH,N2024SEFDS}.}%
 \label{fig:model:rad}%
 \end{figure}%
 %
-\glsreset{RAD}\Pgls{RAD}, as illustrated in \cref{fig:model:rad}, lets the user try the application before it is delivered~\cite{S2007OOSE,GMTM2011DDLC,M1996RTWSS}.
+\glsreset{RAD}\Pgls{RAD}~\cite{BDCMT1999RADRAER,M1991RAD}, as illustrated in \cref{fig:model:rad}, is similar to prototyping.
+The user gets to try the (prototypic) application \emph{before} it is delivered~\cite{S2007OOSE,GMTM2011DDLC,M1996RTWSS}.
 If stakeholders can play around with a live system, then they can probably give much better feedback compared to a situation where they only work with specification documents.
 Thus, a prototype is created and installed as soon as possible and made available to the user.
-RAD-based projects tend to have a lower level of rejection when the application is placed into production.
+\Pgls{RAD}-projects are often implemented by small, highly-collaborative teams and within a short time frame.
+The projects are very interactive and often of comparatively low complexity.
+\Pgls{RAD} therefore also introduces a social component and team building into software development~\cite{BDCMT1999RADRAER}.
+
+\Pgls{RAD}-based projects tend to have a lower level of rejection when the application is placed into production.
 The downside is that they are also likely to exhibit scope creep:
 The stakeholders perceive modifying the application as easy and therefore are more likely to ask for more features.
 The final goal of having a fully operational product may drift out of focus and the projects may overdraw budget and schedule.%
@@ -162,14 +183,21 @@ The final goal of having a fully operational product may drift out of focus and 
 \FloatBarrier%
 %
 \Pgls{db} systems differ from normal software applications.
-On one hand, they usually are the foundation for \emph{several} software projects.
+First, they usually are the foundation for \emph{several} software projects.
 A student management \db\ for a university, for example, may offer the students to log in and join modules or view their grades.
 It may also allow the administrative staff to create new modules and even manage the module structure of curricula.
 It may furthermore handle the room planning for classes.
 And it may even help to manage the important dates in the semester, such as times for exams, the schedule for students.
 These things may be handled by different applications with different user interfaces.
 But all of these applications would access the same \db\ backend.
-Additionally, \pglspl{db} are long-living artifacts, which must be managed, maintained, and improved over many years.
+
+Second, we normally want to incorporate the development succession over the three schemas:
+We will at some point develop the conceptual schema modelling the real-world entitites and processes.
+Then we derive a logical schema by mapping the conceptual schema to a concrete technology.
+Finally we may introduce a physical schema with specific performance-improving configurations.
+
+Thirs, we must keep on our radar that \pglspl{db} are long-living artifacts.
+They must be managed, maintained, and improved over many years.
 
 As a result, a wide variety of design processes and life cycle management structures for \pglspl{db} have been developed.
 They often are adaptations of different \pgls{SDLC} models and can offer different levels of detail to the project managers.
@@ -182,14 +210,14 @@ They often are adaptations of different \pgls{SDLC} models and can offer differe
 \end{figure}%
 %
 Personally, I like the comprehensive approach proposed by \citeauthor{GMTM2011DDLC}~\cite{GMTM2011DDLC} and illustrated in \cref{fig:model:gupta}.
-It shows us all of the activities that a good \db~architect needs to consider.
+In it, we find many activities that a good \db~architect needs to consider.
 In this model, the lifecycle begins with a planning stage.
 Initially, there often are too many uncertainties to lay out a realistic timeline for the project.
 Therefore, the goal of this first phase is to plan two activities:
 (1)~the collection of the necessary information about the organizational processes that should be mirrored by the \db\ application and (2)~the requirements analysis.
 The result of this phase is a plan document.
 
-In the next stage, we collect all the data and information about the organization.
+In the next stage, we collect all the necessary data and information about the organization.
 The developers and designers interact with all stakeholders in the project at all levels, from the intended users of the \db\ applications up to the management of the organization.
 The documents and processes in the organization are explored, as well as the flow of data through the organization.
 We check which systems and frameworks already exist, what input they require, what output the produce, who uses them and how and why.
@@ -200,7 +228,7 @@ A software requirement specification is produced.
 
 In the requirements analysis, we can now analyze the collected data to find out whether the project is feasible and to approximate the costs.
 The goals of the project and the objectives of all proposed systems are specified.
-The scope and boundaries~(budget, equipment, available software) of the project are defined, as well as requirements regarding performance, security, portability, and maintenance.
+The scope and boundaries~(budget, equipment, available software, \dots) of the project are defined, as well as requirements regarding performance, security, portability, and maintenance.
 All of these issues are very important for both the short term and long term success of the project.
 
 As the result, potential problems and constraints that could arise later will be identified.
@@ -217,7 +245,7 @@ This design can be visualized using \pglspl{ERD}~\cite{WF1995DHQDM,B1990CMERMO}.
 It is common to \emph{not} just draw one single huge \pgls{ERD}, which would be overwhelming and hard to understand.
 Instead, often, several smaller and easily readable \pglspl{ERD} are drawn with no more than ten or so entity types~\cite{WF1995DHQDM}.
 
-Then, the \db\ model is chosen.
+Then, the data model is chosen.
 In the context of this book, our focus is on \pglspl{rdb}, where data is store in tables that can reference each other.
 This may not always be the right choice.
 For example, maybe we have to deal with images or video data, maybe we have to deal with results of simulations or computational experiments.
@@ -227,20 +255,21 @@ At this stage, we may also decide which \dbms\ to use.
 This decision may be based on aspects such as costs, maintenance aspects, licenses, and available training.
 In our book, we chose \postgresql, simply because it is a free~(open source) and very mature \sql\ \dbms.
 
-In the next step, the conceptual design is converted into a logical design.
+In the next step, the conceptual schema is converted into a logical schema.
 This can mean to map the entity types from the \pglspl{ERD} in the conceptual models to tables and the relationships between them~\cite{SS2005EIDDDFDB:I,SS2005EIDDDFDB:CDDRAAML}.
-Here, we may sometimes split one entity type from the \pglspl{ERD} into multiple tables or use different primary keys~(e.g., sequential integers instead of a multi-part key constructed of strings\dots).
+During this step, we may perform adaptations to improve the practicality and efficiency.
+We may, for example, sometimes split one entity type from the \pglspl{ERD} into multiple tables, join multiple entity types into a single table, or use different primary keys~(e.g., sequential integers instead of a multi-part key constructed of strings\dots).
 In other words, we map the conceptual model to the internal structures provided by the \dbms.
 At this stage, we basically have an unoptimized design of the \db.
 
-The logical design is then translated to a physical design.
-This stage emphasizes the internal aspects of the database, e.g., the creation of access paths, indexes, the creation of partitions, and the implementation of business rules.
-At this stage, we have a complete \db\ design, optimized for the planned operations.
+The logical schema is then translated to a physical schema.
+This stage emphasizes the internal aspects of the \db, e.g., the creation of access paths, indexes, the creation of partitions, and the implementation of business rules.
+After this, we have a complete \db\ design, optimized for the planned operations.
 
-The division in conceptual, logical, and physical design is not always defined like this.
+\emph{Side note:}~The division in conceptual, logical, and physical design is not always defined like this.
 Some approaches only distinguish the conceptual and the physical model~\cite{G2011EW2ITDS:ITRD,V1999C5DMS:CI}.
 In this case, the conceptual model is also called logical model and focuses on the specifications of the entity types and relations of the data.
-The physical model then comprises the two aspects that called physical and logical design above, i.e., the definition of tables, relations, and access paths.
+The physical model then comprises the two aspects that we called physical and logical design above, i.e., the definition of tables, relations, and access paths.
 From my perspective, which of the two approaches are chosen does not really matter.
 Whether we have three-step or a two-step design method -- the important point is that we first model the data in an technological-independent and abstract way and later map this abstract model to a concrete design.
 
@@ -249,7 +278,7 @@ At this stage, the requirements may change again, which must be properly documen
 While the \db\ is being designed, the user-facing applications are design in parallel.
 Here, too, changes may be found necessary during discussions with the future users.
 
-After the design phase, the database is implemented based on the physical design documents developed earlier.
+After the design phase, the \db\ is implemented based on the physical design documents developed earlier.
 The \db\ tables are created, populated with data, and constraints and queries are implemented.
 
 Now that the \db\ exists, the application(s) can be implemented as well.
@@ -263,9 +292,9 @@ After the system has been accepted and enters the productive stage, the maintena
 The system is continuous upgraded, improved, and extended until it eventually reaches its end of life.
 
 The method by \citeauthor{GMTM2011DDLC}~\cite{GMTM2011DDLC} sketched in \cref{fig:model:gupta} is a comprehensive approach for \db\ and software co-design in a large-scale project.
-The main goal is to make \db\ projects more projectable.
-
-Most lectures on \pglspl{db} focus more on the core of the development process, labeled \emph{Database Design} in \cref{fig:model:gupta} and often combine several of the framework activities such as installation and maintenance into one activity.
+The main goal is to make \db\ projects more predictable.
+Most discussions on \pglspl{db}-design focus more on the core of the development process, labeled \emph{Database Design} in \cref{fig:model:gupta}.
+They also often combine several of the framework activities such as installation and maintenance into one activity.
 
 \begin{figure}%
 \centering%
@@ -274,8 +303,8 @@ Most lectures on \pglspl{db} focus more on the core of the development process, 
 \label{fig:model:ddlc}%
 \end{figure}%
 
-In the context of this book, we, too, use a model with fewer steps.
-It is illustrated in \cref{fig:model:ddlc} and combines ideas from several sources~\cite{SS2005EIDDDFDB:I,SS2005EIDDDFDB:CDDRAAML,D2022DN:DRA}.
+When we explore the design phases of \pglspl{db}, we, too, will use a model with fewer steps.
+\Cref{fig:model:ddlc} illustrates such a simplified lifecycle model that combines ideas from several sources~\cite{SS2005EIDDDFDB:I,SS2005EIDDDFDB:CDDRAAML,D2022DN:DRA}.
 Indeed, we will hinge the more comprehensive \db\ design example project discussed in this part of our book on this process.
 
 This approach to the \db\ development life cycle begins with a phase of requirements gathering and analysis.
@@ -283,12 +312,14 @@ Then, the three models~(conceptual, logical, and physical) are designed one afte
 We start with the conceptual model:
 The entities and their relationships are sketched with \pglspl{ERD}.
 It makes sense to discuss this model with the stakeholders and, if any inconsistencies are discovered, to adapt the requirements specification.
+
 In this step, we also choose the proper data model.
 
 The entities in the conceptual model are then translated to fit to the data model in the logical model design process.
 In case of a relational data model~(as used here), this means to create tables, define keys, attributes, and relations, and to normalize the data.
 This model can be defined either in \sql\ or using any other suitable formal mechanism.
 It could be bound to a specific \dbms\ or to a group of similar \pglspl{dbms}.
+
 Finally, the logical model, i.e., the perspective of the users on the data, is mapped to a physical model.
 The physical model is the internal representation of the data as provided by the \dbms.
 The logical model defines \emph{how} the data is accessed.
@@ -298,12 +329,37 @@ Now a prototype can be developed and verified with the stakeholders.
 Finally, the \db\ enters the production stage.
 From here on, the focus is on maintenance, regular backups, fine-tuning, and the addition of features and adaptations to changed situations.
 The last two stages can create feedback to the earlier stages, i.e., lead to changes in the physical or logical models as well as the requirements.
-
-In the following, we will work our way step-by-step through this lifecycle.
-By doing so, we will not just explore the different steps in more detail, but also discuss several important topics, such as \pglspl{ERD}, normalization, and $\sigma$\nobreakdashes-algebra based on a~(more or less) realistic scenario.%
 %
 \FloatBarrier%
 \endhsection%
 %
+\hsection{Summary}%
+Databases are long-lived and important assets of an organization.
+They are somewhere in the gray area between documents and software.
+They are the foundation for many of most important applications in an organization.
+Their design and performance therefore impact many of the most important processes of organizations.
+And they do so over a very long time.
+
+If we design a \db, then we cannot just begin doing so aimlessly or without a clear plan.
+Instead, it makes sense to follow one of the well-known design processes.
+Which one is probably not very important.
+The important point is that all of them help us to bring structure into our work.
+They provide us guidance.
+They make projects plannable.
+And maybe most importantly, they reduce risks.
+There are plenty of risks, ranging from running out of budget or running out of time to not meeting the user requirements.
+To mitigate such risks, we follow established engineering approaches.
+
+Most \db\ design processes boil down to interatively working our way from a conceptual over a logical to a physical schema.
+They usually preface this process with requirements gathering and analysis.
+During the actual design, close contact with stakeholders is often emphasized.
+Here, prototypes come in handy and allow us to collect feedback and to discover misunderstandings.
+With this we can then update design documents and schemas if need be.
+As epilogue after the \db\ enters the productive stage, periodic activities like maintainance, update, and backup are usually prescribed.
+
+In the following, we will work our way step-by-step through a \db\ development lifecycle.
+By doing so, we will not just explore the different steps in more detail, but also discuss several important topics, such as \pglspl{ERD}, and normalization, based on a more or less realistic scenario.%
+%
+\endhsection%
 \endhsection%
 %
