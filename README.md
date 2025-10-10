@@ -57,6 +57,8 @@ The slides in German language can be found at <https://thomasweise.github.io/dat
 21. [Fabrik-Datenbank: Formulare in LibreOffice Base](https://thomasweise.github.io/databasesSlidesDE/21_fabrik_datenbank_libreoffice_base_formulare.pdf)
 22. [Fabrik-Datenbank: Berichte in LibreOffice Base](https://thomasweise.github.io/databasesSlidesDE/22_fabrik_datenbank_libreoffice_base_berichte.pdf)
 23. [Fabrik-Datenbank: Aufräumen](https://thomasweise.github.io/databasesSlidesDE/23_fabrik_datenbank_aufräumen.pdf)
+24. [Entwicklung](https://thomasweise.github.io/databasesSlidesDE/24_entwicklung.pdf)
+25. [Anforderungen](https://thomasweise.github.io/databasesSlidesDE/25_anforderungen.pdf)
 
 
 ### 2.3. The Examples
