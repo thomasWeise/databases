@@ -12,7 +12,7 @@ An \emph{entity} is an object or thing with an independent existence in the worl
 It can be distinguished from all other objects.%
 \end{definition}%
 %
-Examples of entities are maybe the student Mr.~Bibbo, the module~\citetitle{programmingWithPython}~\cite{programmingWithPython}, the professor Mrs.~Bebba~教授, room~\#36~305, or the curriculum \emph{Computer Science and Technology}.
+Examples of entities are maybe the student Mr.~Bibbo, the module~\citetitle{programmingWithPython}~\cite{programmingWithPython}, the professor Mrs.~Bebba~教授, room~\#36~202, or the curriculum \emph{Computer Science and Technology}.
 Entities can be spotted easily in the requirement specification or when viewing the meeting or interview notes:
 They correspond to \emph{proper nouns}~\cite{C1997ECAED}, i.e., nouns that actually name one specific thing and that are usually capitalized~\cite{EOWM2025MWAMTD:CAPNWTDLWOGC}.%
 %
@@ -23,7 +23,7 @@ An \emph{attribute}~$a$ is characterized by a name and a domain~\attrDomainb{a} 
 %
 Attributes are features or characteristics of an entity.
 Entities in our model are represented by the values of their attributes.
-A student could be defined by their name, ID, student~ID, mobile phone number, home address, date of birth, etc.
+A student could be defined by their name, ID, student~ID, mobile phone number, home address, \pgls{dateOfBirth}, etc.
 A module could be described by its title, syllabus, and abstract.
 Additionally to such features, \emph{adjectives} in the requirements text often can be interpreted as attribute values~\cite{C1997ECAED}, e.g., red, young, successful, heavy, fast.%
 %
@@ -32,13 +32,13 @@ Additionally to such features, \emph{adjectives} in the requirements text often 
 The \emph{domain}~\attrDomainb{a} of an attribute~$a$ is the set of possible values that it can take on.%
 \end{definition}%
 %
-It is important to distinguish the concepts of domain and datatype in the context of conceptual models~\cite{S2024D:LDMRMRA}.
+We can distinguish the concepts of domain and datatype in the context of conceptual models~\cite{S2024D:LDMRMRA}.
 A datatype is a mathematical concept whereas a domain is a logical concept.
 For example, \sqlil{VARCHAR(100)}, \sqlilIdx{SMALLINT}, and \sqlilIdx{REAL} are datatypes.
 The name of a student, while being represented as a text string, is a logical concept.
-The mobile phone numbers and IDs are maybe also represented as text strings, but probably are of a fixed length and limited to certain character ranges at certain positions.
-The \pgls{dateOfBirth}, on the other hand, is a date.
-The score in an exam may be an integer number between~0 and~100.
+Mobile phone numbers and IDs are maybe also represented as text strings, but probably are of a fixed length and limited to certain character ranges at certain positions.
+A \pgls{dateOfBirth}, on the other hand, is a special date whose year is from a certain range of reasonable years.
+A score in an exam may be an integer number between~0 and~100.
 The attribute domain therefore can be considered as the combination of a datatype with semantics limiting its valid range.%
 %
 \begin{definition}[Entity Type]%
@@ -48,7 +48,7 @@ The set of all entities that have the same attributes is called an \emph{entity 
 %
 So while the entity Mr.~Bebbo is a single student, the set of all possible students would form an entity type.
 While the module~\citetitle{programmingWithPython}~\cite{programmingWithPython} is a single entity, the set of all possible modules would form an entity type.
-Mrs.~Bebba~教授 is a single entity, but the set of all possible professors represents an entity type.
+The professor Mrs.~Bebba~教授 is a single entity, but the set of all possible professors represents an entity type.
 Entity types are \emph{common nouns} that stand for groups or types of things~\cite{C1997ECAED} and that are usually written with lowercase letters~\cite{EOWM2025MWAMTD:CAPNWTDLWOGC}.
 
 Also notice the plural \emph{attributes} in \cref{def:entityType}:%
@@ -59,10 +59,10 @@ Only things with multiple attributes should become entity types.%
 Indeed, it makes little sense, for example, to consider \emph{year} as an entity type, because it does not have multiple attributes.%
 %
 \bestPractice{entityTypeSingleObject}{%
-Each entity (type) should model one (type of) object from reality (and not more than one)~\cite{SS2005EIDDDFDB:NQORD}.%
+Each entity (type) should model exactly one (type of) object from reality (and not more than one)~\cite{SS2005EIDDDFDB:NQORD}.%
 }%
 %
-If we model the setup of, let's say, a car race, then drivers and cars should be separate entity types.
+If we model the setup of, let's say, a car race, then drivers and cars should be separate entity types, although each driver is assigned to one car.
 If instead we would include the name of the driver and the type and features of a car into a single entity type, then we would likely encounter redundancy:
 If multiple cars of the same type participate in the race, we would store information about them several times~(each time together with other driver data).%
 %
@@ -72,7 +72,8 @@ It is a set of some entities of a type that exist at one point in time.%
 \end{definition}%
 %
 For example, Mr.~Bebbo is a single student entity, the set of all possible student entities forms an entity type, but the students Mr.~Bebbo, Mr.~Bibbo, and Mr.~Bobbo together form an entity set.
-The modules~\citetitle{programmingWithPython}~\cite{programmingWithPython} and \citetitle{databases}~\cite{databases} form an entity set, because they are a subset of an entity type for modules.
+The modules~\citetitle{programmingWithPython}~\cite{programmingWithPython} and \citetitle{databases}~\cite{databases} form an entity set.
+This entity set is a subset of an entity type for modules.
 Notice that the mathematical notion of \emph{set} is indeed correct here:
 All entities have a unique identity and, hence, can be differentiated from all possible other objects.
 There are no two identical Mr.~Bibbos.
@@ -82,27 +83,34 @@ Viewing the conceptual design of \pglspl{db} through this lense, we notice a few
 First, we always model only a tiny window to the real world.
 When we talk about students, modules, and curricula as entity types, this only concerns our particular application.
 Of course, in our real big wide world, students exist in other universities and in other countries.
-These students may have completely different attributes from ours.
+These students may have different attributes from ours.
+They probably do not have an Chinese~ID~(中华人民共和国居民身份证), for example.
 They do not matter in the model of our small part of the world.
+Also, we only model that aspects of the students that are relevant to our application.
+We do not model, for example, their hobbies, favorite songs, shoe size, favorite food, hair color, etc.
+These do not matter in our window to the world either.
+Therefore, the entity type \emph{student} does not reflect the full real-world concept of a student.
+It is a simplified projection of this concept into our application.
 
-Second, if you attended or do attend a course on programming, then you will feel that this way of modeling things is a bit related to \pgls{OOP}.
-Entity types could be thought of as \pythoniles{class}, entities could be their instances and attributes could be their, well, attributes.
+Second, if you attended or do attend a course on programming~(such as~\cite{programmingWithPython}), then you will feel that this way of modeling things is a bit related to \glsreset{OOP}\pgls{OOP}.
+Entity types could be thought of as \pythoniles{class} and entities could be their instances.
+Attributes could be their, well, attributes.
 While \db\ theorists may dislike this way of thinking, I believe that it is not wrong.
 It is a viable analogy.
 However, later, when we model the relationships between entities, it may no longer be helpful.
 
 We now know that entity types with their attributes basically correspond to datastructures in programming.
-They form one element of the conceptual model.
+They form one of the important components of the conceptual model.
 But how do we actually write them down?
 How do we specify them?
 
-For this, a graphical notation has been introduced:
+For this, a graphical method has been introduced:
 \glsreset{ERD}\Pglspl{ERD} are the most commonly used tool to model the entity types and their relationships in a \db~\cite{C2002ERMHEFTALL,C1975TRMTAUVOD,C1976TERMTAUVOD,KW2012ASHOTEDAIM,WF1995DHQDM,B1990CMERMO}.
 There exists a wide variety of graphical notations that can be used for \pglspl{ERD}.
 The original notations by \citeauthor{B1969DSD}~\cite{B1969DSD} and \citeauthor{C1975TRMTAUVOD}~\cite{C1975TRMTAUVOD,C1976TERMTAUVOD} are still in use, the Crow's Foot notation~\cite{E1976BDSMEWACE,CM2000MDMAUDA} is very common, the more comprehensive and standardized \pgls{IDEF1X} syntax~\cite{FIPSPUB184,ISOIECIEEE2012ITMLP2SASFII}, and the \glsreset{UML}\pgls{UML}~\cite{OMG2017OUMLOU,RMHOSMUUIIIIOPPTRS1997UNG,BRJ1999TUMLRM}.
 Indeed, there are many different flavors of diagrams that can serve as \pglspl{ERD}.
 \Citeauthor{S2024D:CDMERDE}~\cite{S2024D:CDMERDE}, for example, presents nine slightly different variations.
-\Citeauthor{SS2005EIDDDFDB:CDDRAAML}~\cite{SS2005EIDDDFDB:CDDRAAML} has two baseline variants, including several slight variations of a \pgls{UML}-based approach~(which is not listed in~\cite{S2024D:CDMERDE}).
+\Citeauthor{SS2005EIDDDFDB:CDDRAAML}~\cite{SS2005EIDDDFDB:CDDRAAML} has two baseline variants and includes several slight variations of a \pgls{UML}-based approach~(which is not listed in~\cite{S2024D:CDMERDE}).
 The notation used by \citeauthor{V1999C5DMS:CDUTERM}~\cite{V1999C5DMS:CDUTERM} is yet again slightly different.
 Therefore, \pglspl{ERD} may look slightly different depending on who drew them and which tools they used.
 However, understanding them is not really hard, so these differences are not that important.
@@ -132,25 +140,25 @@ We dragged the entity symbol into the diagram document.%
 \floatSep
 %
 \subfloat[][%
-We double-click into the new entity symbol in order to edit its name.%
+We double-click into the new entity symbol in the document in order to edit its name.%
 \label{fig:yedErdEntitiesA04doubleClickName}%
 ]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/yedErdEntitiesA04doubleClickName}}}%
 %
 \floatRowSep
 %
 \subfloat[][%
-We change the entity name to \inQuotes{Student} and press \keys{\return}.%
+We change the entity type name to \inQuotes{Student} and press \keys{\return}.%
 \label{fig:yedErdEntitiesA05changeNameToStudent}%
 ]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/yedErdEntitiesA05changeNameToStudent}}}%
 %
 \floatSep
 %
 \subfloat[][%
-The name has changed. We now click on the \menu{Attribute} symbol in the element palette.%
+The name has changed. We now click on the \menu{Attribute} symbol in the palette.%
 \label{fig:yedErdEntitiesA06nameIsStudentSelectAttribute}%
 ]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/yedErdEntitiesA06nameIsStudentSelectAttribute}}}%
 %
-\caption{Drawing an \pgls{ERD} for the \emph{Student} entity using \yEd.}%
+\caption{Drawing an \pgls{ERD} for the \emph{Student} entity type using \yEd.}%
 \label{fig:yedErdEntitiesA:A}%
 \end{figure}%
 %
@@ -195,11 +203,11 @@ We drop the connection symbol onto the \emph{Name} attribute.%
 \floatSep
 %
 \subfloat[][%
-We then click into the entity to connect the attribute \emph{Name} to the \emph{Student} entity.%
+We then click into the entity type to connect the attribute \emph{Name} to the \emph{Student} entity type.%
 \label{fig:yedErdEntitiesA12connectToStudent}%
 ]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/yedErdEntitiesA12connectToStudent}}}%
 %
-\caption{Drawing an \pgls{ERD} for the \emph{Student} entity using \yEd~(Continued).}%
+\caption{Drawing an \pgls{ERD} for the \emph{Student} entity type using \yEd~(Continued).}%
 \label{fig:yedErdEntitiesA:B}%
 \end{figure}%
 %
@@ -208,7 +216,7 @@ We then click into the entity to connect the attribute \emph{Name} to the \emph{
 \centering%
 %
 \subfloat[][%
-The \emph{Name} attribute is now connected to the \emph{Student} entity.%
+The \emph{Name} attribute is now connected to the \emph{Student} entity type.%
 \label{fig:yedErdEntitiesA13connectedToStudent}%
 ]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/yedErdEntitiesA13connectedToStudent}}}%
 %
@@ -245,12 +253,12 @@ We save the diagram under the name \textil{erd_student_1} in the \textil{graphml
 \floatSep
 %
 \subfloat[][%
-We can also store the diagram in a format that we can use in other documents. %
+We can also export the diagram in a format that we can use in other documents. %
 For this, we click on \menu{\underline{E}xport} in the \menu{\underline{F}ile} menu.%
 \label{fig:yedErdEntitiesA18export}%
 ]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/yedErdEntitiesA18export}}}%
 %
-\caption{Drawing an \pgls{ERD} for the \emph{Student} entity using \yEd~(Continued).}%
+\caption{Drawing an \pgls{ERD} for the \emph{Student} entity type using \yEd~(Continued).}%
 \label{fig:yedErdEntitiesA:C}%
 \end{figure}%
 %
@@ -279,18 +287,20 @@ This produces this beautiful \pgls{ERD}.%
 ]{\includegraphics[scale=0.6]{\figYedErdEntitiesAXXIerd}}%
 %
 %
-\caption{Drawing an \pgls{ERD} for the \emph{Student} entity using \yEd~(Continued).}%
+\caption{Drawing an \pgls{ERD} for the \emph{Student} entity type using \yEd~(Continued).}%
 \label{fig:yedErdEntitiesA:D}%
 \end{figure}%
 
 In the following sections, we will look at several different \pglspl{ERD}.
 The goal of this course is to teach you \emph{actionable} knowledge.
-So, while we will look at \pglspl{ERD}, we will also \emph{draw} them.
+So, we will not just look at \pglspl{ERD}, we will also \emph{draw} them.
+
 That is fairly easy:
 Once you understand the basic syntax, you can draw them with almost arbitrary drawing software.
 Then again, this can also become tedious.
 You could, for example, use the \softwareStyle{Draw} program which is part of \libreoffice, or a vector graphics program like \inkscape.
 This would mean that you have to draw all the shapes of the diagrams independently, which would yield inconsistent designs and be generally tedious.
+
 Then there are programs like \pgmodeler\ or \mysqlWorkbench\ which offer much better capabilities to draw \pglspl{ERD},
 These tools, however, are bound to certain technologies, such as \postgresql\ and \mysql, respectively.
 They would be useful for the development of logical models, but it feels awkward to apply them at a conceptual level, which should be technology agnostic.
@@ -300,18 +310,18 @@ There exists many possible tools that we could use.
 After searching for a while, I have settled for \yEd~\cite{SG2015MDAWY,Y2011YGEM}.
 \yEd\ is a free graph editor that offers a convenient ability to draw and layout \pglspl{ERD} while being entirely independent from any data model.
 In \cref{sec:installingYed}, we provide instructions on how to obtain and install this program.
-I will use it for all of the conceptual-level \pglspl{ERD} in the rest of the book.
-As an example on how to use \yEd, we will give some instructions on how to draw the most simplest \pgls{ERD} with only a single entity inside in \cref{fig:yedErdEntitiesA:A}.
+We will use it for all of the conceptual-level \pglspl{ERD} in the rest of the book.
+As an example on how to use \yEd, we will give some instructions on how to draw the most simplest \pgls{ERD} with only a single entity type inside in \cref{fig:yedErdEntitiesA:A}.
 This program is rather easy to use, so after that example, we will assume that you can figure out how to draw more advanced \pglspl{ERD} on your own\dots
-At least we do not just paint some \pglspl{ERD} and leave you entirely to your own devices when the time comes where you should draw some as well.
+At least we do not just paint some \pglspl{ERD} and leave you entirely to your own devices when the time comes where you should draw some as well{\dots}
 
 Before we really get into this, just a quick note:
-In the context of \pglspl{ERD}, an \emph{entity type} are often called a \emph{entity}.
+In the context of \pglspl{ERD}, an \emph{entity type} are sometimes called a \emph{entity}.
 In other words, the meaning of the term \emph{entity} is shifted.
 But let this not bother us too much.
 
 The very first thing that we want to model is the entity~(type) \emph{Student}.
-From our requirements analysis, we know that students have names, they have an ID~(issued by the government), they have a student ID (issued by our university), they have a mobile phone number, they have an address, and they have a \pgls{dateOfBirth}.
+From our requirements analysis, we know that students have names, they have an ID~(中国公民身份号码\cite{GB116431999CIN}, issued by the government), they have a student ID (issued by our university), they have a mobile phone number, they have an address, and they have a \pgls{dateOfBirth}.
 So let us model this.
 
 After installing \yEd\ as discussed in \cref{sec:installingYed}, we open it.
@@ -325,10 +335,10 @@ Inside the rectangle, the name of the entity~(type) is written.
 Let's change it to \inQuotes{Student}.
 We therefore double-click into the new entity symbol in order to edit its name in \cref{fig:yedErdEntitiesA04doubleClickName}.
 The text inside is marked.
-We change the entity name to \inQuotes{Student} and press \keys{\return} in \cref{fig:yedErdEntitiesA05changeNameToStudent}.
+We change the entity type name to \inQuotes{Student} and press \keys{\return} in \cref{fig:yedErdEntitiesA05changeNameToStudent}.
 The name has changed.
 
-Let us now add the attributes of the \emph{Student} entity step by step.
+Let us now add the attributes of the \emph{Student} entity type step by step.
 Attributes are represented as oval bubbles in \pglspl{ERD} that are connected to their owning entities by straight lines.
 We now click on the \menu{Attribute} symbol in the element palette in \cref{fig:yedErdEntitiesA06nameIsStudentSelectAttribute}.
 We drag the attribute symbol into our document in \cref{fig:yedErdEntitiesA07dragAttribute}.
@@ -338,13 +348,13 @@ So we double-click into it to change its name.
 We want its name to be, well, \inQuotes{Name,} i.e., we want to create an attribute that represents the name of the student in \cref{fig:yedErdEntitiesA09changeNameToName}.
 We successfully changed the attribute name in \cref{fig:yedErdEntitiesA10changeNameChangedToNameSelectConnection}.
 The attribute, however, is still floating in the diagram all by itself.
-Attributes belong to entities, so we need to attach it to the entity \emph{Student}.
+Attributes belong to entities, so we need to attach it to the entity type \emph{Student}.
 
 We thus now we click on the connection symbol in the palette and drag it right onto the attribute.
 We drop the connection symbol onto the \emph{Name} attribute in \cref{fig:yedErdEntitiesA11dragConnection}.
 Our mouse cursor now marks the end of a connecting line and we can drag the connection to whatever object we want to.
-We click into the entity rectangle to connect the attribute \emph{Name} to the \emph{Student} entity in \cref{fig:yedErdEntitiesA12connectToStudent}.
-The \emph{Name} attribute is now connected to the \emph{Student} entity in \cref{fig:yedErdEntitiesA13connectedToStudent}.
+We click into the entity rectangle to connect the attribute \emph{Name} to the \emph{Student} entity type in \cref{fig:yedErdEntitiesA12connectToStudent}.
+The \emph{Name} attribute is now connected to the \emph{Student} entity type in \cref{fig:yedErdEntitiesA13connectedToStudent}.
 
 We add an attribute \emph{ID} in exactly the same way in \cref{fig:yedErdEntitiesA14addedID}.
 We then go on and add several more attributes, \emph{Student-ID}, \emph{Address}, \emph{Mobile Phone}, \emph{\pgls{dateOfBirth}}, in \cref{fig:yedErdEntitiesA15addedAddrMobDoB}.
@@ -395,7 +405,7 @@ During our discussion with the administrators, a few issues come up.
 %
 First, \emph{Name}s are more complicated than we thought.
 Students have a given name, a family name, and a salutation.
-For example, the name of Mr.~Bebbo would actually be Mr.~Fred Bebbo, where \inQuotes{Bebbo} is the family name, \inQuotes{Fred} is the given name.
+For example, the name of \inQuotes{Mr.~Bebbo} would actually be \inQuotes{Mr.~Fred Bebbo}, where \inQuotes{Bebbo} is the family name, \inQuotes{Fred} is the given name.
 To accommodate this, \emph{Name} attribute should not be a single attribute.
 We could turn it into a \emph{composite attribute}, consisting of given name, family name, and a salutation.
 The system then could combine these components appropriately when addressing the student or when issuing documents.%
@@ -410,29 +420,26 @@ Simple attributes do not have any components.%
 %
 %
 When thinking about this, we encounter a problem:
-In Western culture, the full name is composed by first writing the given name and then the family name.
+In Western culture, the full name is usually composed by first writing the given name and then the family name.
 This is why the full name of Mr.~Bebbo is Fred Bebbo.
-In Eastern cultures, it is the other way around:
-The name of the famous Chinese mathematician 刘徽 is transcribed as LIU Hui in the Latin alphabet.
+In Eastern cultures, it is often the other way around:
+The name of the famous Chinese mathematician 刘徽 is transcribed as LIU Hui in the Latin alphabet~\cite{OR2003LH,S1998LHATFGAOCM,Y2024COACMMLHFHTIOMACE}.
 LIU~(刘) here is the family name and it comes first.
 Hui~(徽) is the given name and it comes second.
 Depending on the cultural background, the system would need to decide how to compose the name correctly.
 This sounds a like an awful problem that would probably become the source of many interesting errors or, at least, complaints.
 
 We decide to not compose the name of given name and family name.
-Instead, we provide two values as part of the \emph{Name} attribute:
+Instead, we provide two different components as part of the \emph{Name} attribute:
 The \emph{Full Name} will be the complete and official name, as written on the ID card.
 This would be something like 刘徽 for a Chinese person and Fred Bebbo for the Westerner Mr.~Bebbo.
-As second component, we store the \emph{Salutation}.
+As second component, we store the complete \emph{Salutation}.
 For 刘徽, this could be 刘教授 and for Fred Bebbo, it could be Mr.~Bebbo.
 Maybe we could later permit the students to change their salutation in the system to whatever they feel comfortable with.
 The full name, however, would be entered by an administrator exactly as it is spelled on the student's ID document.
 If our system would ever sent an automated message to Mr.~Bebbo, it will use the salutation.
 If we print the name on a certificate, we will use the full name.
-A composite attribute in the \pgls{ERD} is simply drawn with the components as attributes connected to the attribute.
-
-We also notice that a student may have multiple mobile phone numbers.
-Such multivalued attributes can be modeled by ellipses with small ellipses inside.%
+A composite attribute in the \pgls{ERD} is simply drawn with the components as attributes connected to the attribute.%
 %
 \begin{definition}[Multi-Valued Attribute]%
 An entity may have multiple values for a \emph{multivalued attribute}.%
@@ -450,16 +457,19 @@ A single-valued non-optional attribute has exactly one value.
 A multi-value optional value has either no value, one value, or multiple values.
 A multivalued non-optional attribute has one value or multiple values.
 
+A multivalued attribute can be modeled as an ellips with a smaller ellipse inside in an \pgls{ERD}.
+Optional attributes can be signified in the \pgls{ERD} by small empty bubbles at the end of the lines connecting them to the entity types.
+
+For example, we notice that a student may have multiple mobile phone numbers.
+This can be modeled with a multi-valued attribute.
 Upon closer inspection, we notice that the mobile phone number attribute should probably be modeled as optional multivalued attribute.
 While it seems very unlikely nowadays, there may be students who do not have a mobile phone number.
 Well, maybe a foreign exchange student, i.e., a 留学生, who enters China does not yet have a mobile phone number when enrolling into our university.
 So making this attribute optional is reasonable.
 
 While we are on the subject of foreign exchange students:
-They probably do not have a Chinese~ID.
+They probably do not have a Chinese~ID~(中国公民身份号码\cite{GB116431999CIN}).
 So we turn ID into an optional single-valued attribute.
-Optional attributes can be signified by small empty bubbles at the end of the lines connecting them to the entity types.
-
 We update our \pgls{ERD} in \cref{fig:erdStudent2}.
 The \pgls{dbs} could now decide whether to fully spell out the name, e.g., in graduation certificates, or whether to just print the salutation and family name, e.g., when sending messages addressed to the students.
 Now we also are able to represent that fact that a student can have no or multiple mobile phone numbers.
@@ -498,12 +508,13 @@ A typical example is the age of person.
 If we know the \pgls{dateOfBirth} and the current date, the age can directly be calculated.
 This can be done very quickly.
 There is no reason to store the age in the \db.
-Derived attributes are illustrated by ellipses with dashed lines around thei perimeter, as shown in \cref{fig:erdStudent4}.
+Derived attributes are illustrated in \pglspl{ERD} by ellipses with dashed lines around their perimeter, as shown in \cref{fig:erdStudent4}.
 
 At this stage, we have learned several things about entities and attributes.
-An entity models some real-world object, person, thing, location, event, or concept.
+An entity models one real-world object, such as one person, one thing, one location, one event, or one concept.
 An entity does not just exist.
-It is the merger of its attribute values.
+It is a tuple of its attribute values.
+While entities represent single objects, entity types represent classes of objects, such as people, addresses, a type of events, or a set of concepts.
 
 Attributes can have different properties as well~\cite{S2024D:CDMERDE}:
 Attributes can be \emph{simple}, which means that they have atomic values that cannot be subdivided any further, like phone numbers.
@@ -515,6 +526,7 @@ For example, our students have the attribute \glsreset{dateOfBirth}\emph{\pgls{d
 Technically, we have learned back in \dref{sec:factory:demand} that dates are atomic datatypes in \sql.
 So naturally, we would model the \pgls{dateOfBirth} as an atomic attribute.
 Of course, we could also model it as a composite attribute consisting of year, month, and day.
+No sane person would ever do that, though, because then you have to manually consider things like time zones and different calendars{\dots}
 Then again, an address could also be represented as a single string of text instead of using a composite attribute.
 
 The decision of how to model attributes probably depends on which data we need.
@@ -524,7 +536,12 @@ For an address, however, extracting the country from an address string could be 
 And we would probably need the country in almost any use case where an address is required.
 
 Anyway, besides being either simple or composite, attributes can also be single-valued or multi-values.
-Students can have multiple addresses, multiple phone numbers, but only a single \pgls{dateOfBirth}.%
+Students can have multiple addresses, multiple phone numbers, but only a single \pgls{dateOfBirth}.
+
+We are now able to model the different types of data that we want to store in our \db.
+However, a relational \db\ is not just \emph{data}.
+It also comprises constraints on the data as well as the relationship between them.
+And nxt we will explore one special constraint\dots%
 \FloatBarrier%
 \endhsection%
 %
