@@ -3,20 +3,22 @@
 %
 In \cref{def:entity}, we stated that an entity can be distinguished from all other entities in the world.
 This means that it must be unique.
+Entities are characterized entirely and only by their attributes.
+They do not have an property beyond their attribute values.
 The only way it can be unique is because of its attributes.
 
-These unique identifiers are called \emph{keys}~\cite{S2024D:CDMERDE}.%
+The attributes that can serve as unique identifiers are called \emph{keys}~\cite{S2024D:CDMERDE}.%
 %
 \begin{definition}[Super Key]%
 \label{def:superKey}%
-A \emph{super key} is an attribute or set of attributes of an entity type that unique identifies an entity in an entity set~\cite{S2024D:CDMERDE,G2011EW2ITDS:CMUTERM}.%
+A \emph{super key} is an attribute or set of attributes of an entity type that uniquely identifies an entity in an entity set~\cite{S2024D:CDMERDE,G2011EW2ITDS:CMUTERM}.%
 \end{definition}%
 %
 A student entity, for example, can uniquely be identified by the student~ID.
-It can also be uniquely identified by the combination of the address and mobile phone number.
-Or just by the mobile phone number.
-Or the email address.
-Or by the government-issued ID.
+It can also be uniquely identified by the combination of the address and mobile phone number(s).
+Or just by the mobile phone number {\dots} if these were not optional.
+Or maybe by an email address.
+Or by the government-issued ID {\dots} if these were not optional.
 Or we could try using the name, address, and \pgls{dateOfBirth}.%
 %
 \begin{definition}[(Candidate) Key]%
@@ -30,55 +32,89 @@ Another possible candidate key could be a combination of the name, place of birt
 Both would be minimal in the sense of the above definition.
 The government-issued ID, however, would consist of a single attribute whereas the other choice consists of three.
 The combination of all four attributes would be a super key, but not a candidate key.
+Another super key would be the combination of name, gender, place of birth, and \pgls{dateOfBirth}.
+It would not be a candidate key, because we could remove the attribute \inQuotes{gender} without impairing the uniqueness property.
 
-We have at least three different candidate keys for students:
+If we ignore the issue of some attributes being optional for now, then we have at least three different candidate keys for students:
 the student~ID, the government-issued ID, and the mobile phone number.%
 %
 \begin{definition}[Primary Key]%
 \label{def:primaryKey}%
-The \emph{primary key} of an entity type is a \emph{candidate key} that is used as the identifying attribute or group of attributes of an entity when modeling relationships between different entity types.%
+The \emph{primary key} of an entity type is a \emph{candidate key} that is used as \emph{the} identifying attribute or group of attributes of an entity when modeling relationships between different entity types.%
 \end{definition}%
 %
 \begin{definition}[Prime Attribute]%
 An attribute is referred to as \emph{prime} if it is part of the primary key.%
 \end{definition}%
 %
+An entity cannot be referenced in one place using some attributes and in another using other attributes.
+That would lead to all kinds of problems and inconsistencies.
+Thus, there can only be one such primary key for each entity type.
+
 Later in our \db\ design, we will also model how students enroll into modules.
-Then we will have another entity type for modules.
-It will be necessary to establish relationships between student and module entities.
+Thus, we then also will have another entity type for modules~(or module instantiations in specific semesters).
+It will be necessary to establish relationships between student and module-instance entities.
+We already did something like this back in our factory example.
+You do remember the \sqlil{PRIMARY KEY} and \sqlil{REFERENCES} keywords from back then.
+Of course, these are technology-specific things which we do not care about at the conceptual level.
+However, even at this level, we still must decide about which attributes we will \emph{actually} use to identify entities.
+
 We will need one primary key that is used to uniquely identify students.
 Which of the candidate keys makes the most sense?
 
+How about mobile phone numbers?
 Phone numbers may change.
-Primary keys should never change.
+Primary keys must never change.
 Also, a student may have multiple phone numbers.
 This would feel awkward to use a primary key.
 Actually, some students might not have a mobile phone number.
 This may be rare, but it could happen, as we already discussed before.
-Primary keys should never be \sqlilIdx{NULL}.
+Primary keys must never be \sqlilIdx{NULL}.
 So we rule out phone numbers as primary keys.
-This leaves us the government-issued ID and the student~ID that the university itself issues.
 
-We would naturally prefer the student~ID.
+This is a very similar reason to \emph{not} use the government-issued ID number~(中国公民身份号码\cite{GB116431999CIN}) candidate key as primary key:
+Foreign exchange students, so-called 留学生, do not have IDs issued by the Chinese government.
+As said, primary keys should never be \sqlilIdx{NULL}, so we rule out government-issued IDs as well.
+
+Another candidate key could be a combination of the name, place of birth, and \pgls{dateOfBirth}.
+Another criterion for primary keys is that they should be reasonably small.
+For example, composite attributes or attributes that consist of longer texts are not very suitable.
+If we store relationships between entities, then we do this by storing their primary keys.
+Recall, for example, our \sqlil{demand} table from back in \cref{sec:factory:demand}.
+This means that primary keys are not just stored as part of their original entities, but also as part of all of the relations they are involved in.
+While this is a technological aspect that does not really belong into the conceptual model design stage, it is something that we should keep in mind:
+Huge keys are bad.
+And the combination of name, place of birth, and \pgls{dateOfBirth} would be fairly impractical to store in multiple locations.
+So we rule it out, too.
+
+We would naturally prefer the student~ID that the university itself issues.
 The reason is as follows:
 A student joins a curriculum, maybe studies in the Bachelor Program \inQuotes{Computer Science and Technology} at our university.
 For this process, they receive a student~ID.
 This student~ID does not just represent them as a person, but it represents them \inQuotes{as a person in the function \inQuotes{BSc student of Computer Science and Technology.}}
 Later, after graduation, they may join a Master's program and get a new, different student~ID.
-This realization makes us feel a bit anxious about or concept of modeling students\dots
 
-But there is another compelling and potentially more alarming reason to \emph{not} use the ID number as primary key:
-Foreign exchange students, so-called 留学生, do not have IDs issued by the Chinese government.
-As said, primary keys should never be \sqlilIdx{NULL}, so we rule out government-issued IDs as well.
+This realization makes us feel a bit anxious about or concept of modeling students{\dots}
+We may have two student entities referring to the same person, but at different stages of their educational process.
+Maybe we should model students differently?
+We will see.
+For now, we accept this and use the student ID as primary key.
+From the available candidate keys, it is the best option.
 
-Another criterion for primary keys is that they should be reasonably small.
-For example, composite attributes or attributes that consist of longer texts are not very suitable.
-The reason is that much later, in our logical \db\ design step, we will often create tables to represent the relationships between entity types.
-Recall, for example, our \sqlil{demand} table from back in \cref{sec:factory:demand}.
-This means that primary keys are not just stored as part of their original entities, but also as part of all of the relations they are involved in.
-While this is a technological aspect that does not really belong into the conceptual model design stage, it is something that we should keep in mind:
-Huge keys are bad.
-In summary:%
+\begin{figure}%
+%
+\centering%
+\includegraphics[scale=0.6]{\currentDir/erdStudent5}%
+\caption{A new version of the \emph{Student} \pgls{ERD} from \cref{fig:erdStudent4}, this time with \emph{Student-ID} marked as primary key.}%
+\label{fig:erdStudent5}%
+\end{figure}%
+%
+We update our \pgls{ERD} from \cref{fig:erdStudent4}.
+In the new \cref{fig:erdStudent5}, the attribute \emph{Student-ID} is marked as primary key.
+This is done by underlining the attribute name~\cite{G2011EW2ITDS:CMUTERM}.
+
+We learned a few things about primary keys.
+Let's re-iterate them:%
 %
 \bestPractice{primaryKeys}{%
 Primary keys should:%
@@ -93,27 +129,24 @@ Primary keys should:%
 \item be small in terms of the expected required storage size~(see also \cref{bp:surrogatePrimaryKey}).%
 \end{enumerate}%
 }%
-%
+
 Sometimes, it can happen that we end up with entity types where \emph{no} suitable primary key exists.
 Maybe all the attributes that form candidate keys are just too long.
 In such a case, we can use a technique we already learned in back in \dref{sec:factory:table:product}:%
 %
 \begin{definition}[Surrogate Key]%
 \label{def:surrogateKey}%
-When no suitable candidate key for an entity exists, an artificial key, such as an auto-incremented integer value, can be used as \emph{surrogate key}.%
+When no suitable candidate key for an entity type exists, an artificial key, such as an auto-incremented integer value, can be used as \emph{surrogate key}.%
 \end{definition}%
-\begin{figure}%
 %
-\centering%
-\includegraphics[scale=0.6]{\currentDir/erdStudent5}%
-\caption{A new version of the \emph{Student} \pgls{ERD} from \cref{fig:erdStudent4}, this time with \emph{Student-ID} marked as primary key.}%
-\label{fig:erdStudent5}%
-\end{figure}%
-%
-While we feel very pessimistic about our idea about the concept of students, for now, we bravely march on and update our \pgls{ERD} from \cref{fig:erdStudent4}.
-In the new \cref{fig:erdStudent5}, the attribute \emph{Student-ID} is marked as primary key.
-This is done by underlining the attribute name~\cite{G2011EW2ITDS:CMUTERM}.%
-%
+Keys are a very important component when we model the real world.
+Each object in the real world must be unique in some aspect.
+Each object must be identifiable by some unique properties.
+The objects are represented as entities.
+Their properties are represented as attributes.
+Those attributes that we can use to identify them form the candidate keys.
+Those attributes that we \emph{actually} use to identify them form the primary key.
+Primary keys must be unique and small.%
 \FloatBarrier%
 \endhsection%
 %
