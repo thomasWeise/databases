@@ -5,8 +5,8 @@
 If we only had a single entity type in our \db, the using a \db\ makes no sense.
 In that case, we would be better of using simple documents, like \pgls{CSV} or \pgls{XML} files.
 However, clearly, in our teaching management platform application, we are going to have many different entity types.
-And again, if these entity types were unrelated, say \inQuotes{Student,} \inQuotes{Weather,} \inQuotes{Product,} then we were still better off storing them in a bunch of such files.
-But they are related.
+And again, if these entity types were unrelated, say \inQuotes{Student,} \inQuotes{Weather,} \inQuotes{Product,} then we were still better off storing them in a bunch of files.
+But our entity types are going to be \emph{very} related.
 So how do we model these relationships?
 Let us begin with some basic definitions~\cite{G2011EW2ITDS:CMUTERM}.%
 %
@@ -14,7 +14,7 @@ Let us begin with some basic definitions~\cite{G2011EW2ITDS:CMUTERM}.%
 A \emph{relationship}~(instance) is an association of two or more entities.%
 \end{definition}%
 %
-An example for a relationship would be \emph{Mr.~Bibbo enrolls into the module \citetitle{programmingWithPython}.}
+An example of a relationship would be \emph{Mr.~Bibbo enrolls into the module \citetitle{programmingWithPython}.}
 %
 \begin{definition}[Relationship Type]%
 A \emph{relationship type} is the set of all relationships possible between two or more sets of entities.%
@@ -31,21 +31,24 @@ The degree of a relationship~(instance or type) refers to the number of particip
 There can be binary relationships, i.e., relationships where two entities participate.
 For example, we could model the student-module relationship in a binary fashion: \emph{Student enrolls into Module.}
 We could just as well use a ternary relationship with three participating entities instead, e.g., \emph{Student enrolls into Module taught by Professor.}
+And so on.%
 %
 \begin{definition}[Roles in a Relationship]%
 Each entity participating in relationship may have a role, which defines the way in which the entity participates in the relationship.%
 \end{definition}%
 %
-If we imagine the ternary \emph{Student enrolls into Module taught by Professor} relationship, then the student could have the role \emph{enrolls} and the professor could have the role \emph{teaches}.%
+Again imagine the ternary \emph{Student enrolls into Module taught by Professor} relationship.
+Here, the student entity has the role \emph{enrolls}.
+The professor entity would  have the role \emph{teaches}.%
 %
 \begin{definition}[Relationship Attribute]%
 \label{def:relationshipAttribute}%
-A relationship type can have attributes describing properties of the relationship.%
+A relationship type can have attributes describing properties of the relationships it embodies.%
 \end{definition}%
 %
 For example, we could write something like \emph{Mr.~Bebbo enrolls into module \citetitle{databases} in summer semester 2025.}
 The attribute \emph{Semester} of this relation only makes sense in this context.
-It neither belongs to the student \emph{Mr.~Bebbo} nor does it belong to the module~\citetitle{databases}.
+It neither belongs to the student \emph{Mr.~Bebbo} nor does it belong to the module~\emph{\citetitle{databases}}.
 Different from entities, relationship types do not have key attributes.
 The single relationships are identified by the primary keys of the participating entities~\cite{G2011EW2ITDS:CMUTERM}.
 
@@ -90,8 +93,8 @@ The ternary relationship of students, modules, and professors with the relations
 %
 Let us start modelling relationships.
 We begin by representing the fact that a student can enroll into a module.
-Relationships in \pglspl{ERD} are drawn as diamonds that are connected to the involved entities.
-\Cref{fig:erdStudentModule1} shows an \pgls{ERD} where the student entity is linked to a module entity by the relationship \emph{enrolls into}.
+Relationships~(or better, relationship types) in \pglspl{ERD} are drawn as diamonds that are connected to the involved entities~(or better, entity types).
+\Cref{fig:erdStudentModule1} shows an \pgls{ERD} where the student entity type is linked to a module entity type by the relationship type \emph{enrolls into}.
 This is a binary relationship, because two entities take part in it.
 
 This diagram is interpreted as follows:
@@ -107,8 +110,11 @@ We try to fix this in \cref{fig:erdStudentModuleProf1} by adding a second binary
 Professor teaches module.
 Sadly, this does not solve the problem at all.
 We now can properly represent that a student can enroll into a certain module.
+Multiple students can enroll into one module.
 We can also represent that a professor teaches a module.
-But with this model, we cannot represent the information that a student joins a module taught be a specific professor.
+Maybe multiple professors can teach one Module.
+Maybe in this year, Professor \citeauthor{databases} teaches the module \citetitle{databases}, maybe next year Professor~李 teaches it.
+With this model, we cannot represent the information that a student joins a module taught be a specific professor.
 Because the two binary relationships we drew are independent from each other.
 
 This can be fixed by using a single ternary relationship in our model.
@@ -120,11 +126,8 @@ However, it is still a bit ambiguous.
 There is no real statement about when the module takes place.
 Also, we said before that a relationship is represented by the primary keys of all involved entities.
 What happens if a student takes part in a module but, sadly, fails the final exam or has to repeat the module for some other reason?
-Can they enroll twice?
-Well, if we use all the primary keys of all involved entities, i.e., one professor, one module, and potentially many students, that would probably be OK.
-Although it feels awkward.
-Also, what happens if the professor, for some reason, cannot complete the module and teaches it again next semester?
-Then all the students would enroll again, and then we would definitely have two relations where all keys are identical.
+What if the professor teaches it again?
+Then we have two relationships to the same entities with the same primary keys.
 To resolve these issues, we give our relationship the attribute \emph{in Semester} in \cref{fig:erdStudentModuleProf3}.
 
 This was rather easy.
@@ -136,19 +139,21 @@ First, there is the issue with names again.
 See, people may have \emph{multiple} names.
 Foreign exchange students, for example, may have their original name.
 However, they may \emph{also} have a Chinese name.
-A Ms.~Elizabeth Prudence McDouglas may thus also be known as 邓小花 in the university.
-Obviously, for official documents, only the original name of the person is to be used, while university-internal files or maybe seating cards in meetings might use the Chinesified name.
+A \emph{Ms.~Elizabeth Prudence McDouglas} may thus also be known as 邓小花女士 in the university.
+Obviously, for official documents, only the original name of the person is to be used.
+University-internal files or maybe seating cards in meetings might use the Chinesified name.
 So the original name may be the name-for-documents, while others are there to allow us to match different documents.
 
 \inQuotes{Original name,} we said, did we?
 Actually, in the West, it is not uncommon that people change their name when they marry.
-Let's say that Elizabeth marries Mr.~Heinrich Gieselher von G{\"o}rlitz-Zittau.
+Let's say that \emph{Elizabeth} marries \emph{Mr.~Heinrich Gieselher von G{\"o}rlitz-Zittau}.
 She may decide to keep her name unchanged.
-She may take on the family name of her husband and become Mrs.~Elizabeth Prudence von G{\"o}rlitz-Zittau.
+She may take on the family name of her husband and become \emph{Mrs.~Elizabeth Prudence von G{\"o}rlitz-Zittau}.
+Or her new husband could change his family name to hers.
 The couple may also choose for a composite family name.
 This may result in a person named Mrs.~Elizabeth Prudence von G{\"o}rlitz-Zittau-McDouglas or maybe Mrs.~Elizabeth Prudence McDouglas-von-G{\"o}rlitz-Zittau.
 (Notice that this would look interesting on Chinese official documents where the space for names is usually calculated to not exceed five characters\dots)
-Either way, there can be a variety of reasons why names change.
+Either way, there can be a variety of reasons why a person may have multiple names or why the name of a person changes.
 
 However, changing the names in the \db\ is not an option.
 Because this would mean that the old name \inQuotes{disappears}.
@@ -167,19 +172,25 @@ In the moment where wanted to begin modelling the names, we realize that this is
 The same issue will later reappear when we model the employees of our university.
 They, too, may have dodgy name issues.
 They also have mobile phones, IDs, and addresses.
-Now we do not want to model the same stuff twice, because that just makes the system more complicated and introduces the chance for inconsistencies.
-Thus, before moving on, we decide to make short work of this problem by introducing a new entity \emph{Person}.
+
+Now we do not want to model the same stuff twice.
+That just makes the system more complicated and introduces the chance for inconsistencies.
+Thus, before moving on, we decide to make short work of this problem by introducing the new entity type \emph{Person}.
 Students and employees are persons.
-We will put all the fancy attributes then into the person records.
-This also makes sense because, theoretically, a teacher might also enroll as a student.
+We will put all the common attributes of students and employees into the person records.
+
+This also makes sense because the same person could enroll in multiple curricula.
+A student could first do the BSc in computer science and later do an MSc.
+Theoretically, even a teacher might also enroll as a student.
 Maybe a chemistry lecturer wants to also do a MSc in computer science.
-Or a student first does the BSc in computer science and later the MSc.
-They would still be the same person and there is no reason to store all their data separately multiple times.%
+They would still be the same person and there is no reason to store all their data separately multiple times.
 
 We sort out all of these issues in \cref{fig:erdPersonStudentFaculty1} by introducing the new entity type \emph{Person}.
 Later, we will hang all the shared attributes on this entity type.
+For now, we do not worry about what primary key this entity type should get.
 The entity type \emph{Student} for now only needs the single primary key attribute \emph{Student ID}.
-A person can be a student and this relationship has a certain start and end date.
+A person can be a student, which we model with a relationship type.
+Such a relationship has a certain start and an optional end date.
 The end date can be \sqlilIdx{NULL} for all students that currently are enrolled and therefore is an optional attribute.
 
 For faculty members, the situation is quite similar.
@@ -194,13 +205,14 @@ This function, too, has a start date and an optional end date.
 \label{fig:erdPerson1}%
 \end{figure}%
 %
-In \cref{fig:erdPerson1}, we copy the attributes from the \emph{Student} entity type in \cref{fig:erdStudent5} to the new \emph{Person} entity type.
+In \cref{fig:erdPerson1}, we copy the attributes from the old \emph{Student} entity type in \cref{fig:erdStudent5} to the new \emph{Person} entity type.
 Of course, we now do no longer include the student ID.
 We also fix the \emph{Name} attribute.
 It is now a multivalued attribute.
-Each name now also has a start and (optional) end date associated with it.
+Each name now also has a start and an optional end date associated with it.
+A name can be \emph{official}~(True/False), which means that it is used for documents.
 This should help to sort out situations such as name changes nicely.
-We will also define the constraint that exactly one name of a person must be the \emph{offical} name and that this name must have a start date before the present date and no end date.
+We will also define the constraint that exactly one name of a person must be the \emph{offical} name and that this name must have a start date no later than the present date and no end date.
 
 We imagine that our system will not bother the data-entry person too much with these options.
 They can just enter one name.
@@ -216,7 +228,8 @@ We can no longer spot a reasonable candidate for primary key in our \emph{Person
 The government-issued \emph{ID} is optional.
 The \emph{Mobile Phone} number is both optional and multivalued.
 \emph{Date of Birth} is certainly not unique and \emph{Age} is additionally derived.
-None of them and neither combination is necessarily unique.
+None of them and neither combination is non-optional \emph{and} necessarily unique.
+
 Of course, later, we will add other ID values like passport numbers and email addresses.
 An application could enforce that each person has either a passport or a government-issued ID and that their numbers be unique.
 However, it would still feel awkward to somehow create a Frankensteinesque primary key out of this.
@@ -226,13 +239,13 @@ We will assume that whatever \dbms\ we will eventually use, it will be able to s
 Our \emph{Person} in \cref{fig:erdPerson1} now looks fairly reasonable.
 
 Having solved this problem, we now want to clean up the issue of IDs and ID documents.
-So far, we modeled the ID as the government-issued ID.
+So far, we modeled the ID as the government-issued ID~(中国公民身份号码~\cite{GB116431999CIN}).
 It is an optional attribute, because foreign exchange students as well as foreign employees do not have one.
 On one hand, even foreigners do have ID documents -- just not Chinese ones.
-These are, of course, useless in our context.
+These foreign documents are, of course, useless in our context.
 On the other hand, a foreigner entering China must have a passport~\cite{ICAO2021MRTDP3SCTAMEE}.
 A passport has a unique number {\dots} it is not a \emph{permanent} ID, though.
-While Chinese~ID numbers stay the same, the passport number is usually a number identifying the passport booklet~\cite{ICAO2004TAGOMRTDFMUOPINAPN}.
+While Chinese~ID numbers identify one person and stay the same, the passport number is usually a number identifying the passport booklet~\cite{ICAO2004TAGOMRTDFMUOPINAPN}.
 A passport booklet usually stays valid for ten years and then a new passport is issued to the person, usually having a new passport number.
 When a foreigner enters China, they need a visa, which, in turn, also has a unique identification number and a time window of duration~\cite{CMOFA2019ITCV}.
 There are many different types of visa that are for different activities, for example X1 and X2~visa are for studying and Z~visas are for working.
@@ -248,7 +261,6 @@ This allows for an arbitrarily complex and ugly model.
 \label{fig:erdPerson2}%
 \end{figure}%
 
-We decide to cut our losses.
 How about this:
 We create an entity type to represent \emph{ID Type}s.
 An entity of this type will store the name of the ID type, which is the primary key of this entity type.
@@ -264,19 +276,31 @@ We can also store multiple ID values and multiple phone numbers or email address
 Each ID value would be associated with an ID type.
 
 This, however, creates the problem how to validate ID values.
-After all, mobile phone numbers and passport numbers and ID numbers are very different.
-We can leave this, to some degree, to the application that we will build on top of our \db.
-We can still add some very basic method to check ID values.
+If a new ID-value is entered, there should be at least some basic sanity check.
+Mobile phone numbers and passport numbers and ID numbers are very different.
+Yet, we must be able to prevent, e.g., letters from occuring in a phone number.
+We could leave this, to some degree, to the application that we will build on top of our \db.
+
+But we can also add some very basic method to check ID values.
 Back in \dref{sec:factory:table:customer}, we learned about \pglspl{regex}, i.e., text strings that describe patterns can be matched against other strings.
 We will simply store one \pgls{regex} as \inQuotes{Validation RegEx} attribute for each ID type entity.
 When the administrator enters a new ID of a given type, this value will be matched against this the corresponding pattern.
 While we cannot emulate checksums or other advanced validation techniques, we can this way at least ensure the right amount of characters or numbers for the IDs.
 
 We can now introduce the new relationship type between the \emph{Person} and \emph{ID Type} entity types:
-A person has an ID.
+A person has IDs.
 Each ID has a \emph{Valid From} attribute and may have a \emph{Valid To} date.
-\Cref{fig:erdPerson2} provides an illustration of the new \emph{Person} entity.%
-%
+\Cref{fig:erdPerson2} provides an illustration of the new \emph{Person} entity.
+
+Now we can model relationships.
+Relationships connect two or more entities.
+With this, we can create models that actually require a \db.
+Without relationships, we could store our just as well data in groups of flat files.
+But as soon as different entities are in relationships, this changes.
+It cannot be allowed that one entity that is part of a relationship is deleted without first deleting the relationship.
+Relationships can only be created between existing entities.
+Therefore, our models now require that the technology with which they will eventually be implemented supports this.
+And \pglspl{rdb} do.%
 \FloatBarrier%
 \endhsection%
 %
