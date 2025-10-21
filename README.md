@@ -64,6 +64,7 @@ The slides in German language can be found at <https://thomasweise.github.io/dat
 28. [Konzeptuelles Schema: Schlüssel](https://thomasweise.github.io/databasesSlidesDE/28_konzeptuelles_schema_schlüssel.pdf)
 29. [Konzeptuelles Schema: Beziehungen](https://thomasweise.github.io/databasesSlidesDE/29_konzeptuelles_schema_beziehungen.pdf)
 30. [Konzeptuelles Schema: Schwache Entitäten](https://thomasweise.github.io/databasesSlidesDE/30_konzeptuelles_schema_schwache_entitäten.pdf)
+31. [Konzeptuelles Schema: Beziehungskardinalität](https://thomasweise.github.io/databasesSlidesDE/31_konzeptuelles_schema_beziehungskardinalität.pdf)
 
 
 ### 2.3. The Examples

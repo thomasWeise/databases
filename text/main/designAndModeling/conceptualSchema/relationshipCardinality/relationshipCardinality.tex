@@ -41,48 +41,55 @@ The entity to which the arrow points may occur N times, then one from which the 
 
 When creating an entity-relationship model, we often want a finer granularity.
 We want to express whether relationships are optional or mandatory~(required) on either end of the relationship.
-Therefore, usually, an end of relationships can be annotated with its modality~(is it optional or mandatory) and with its cardinality~(the number of participating entities)~\cite{R2024CDS:E}.
+Therefore, an end of relationships can be annotated with its modality~(is it optional or mandatory) and with its cardinality~(the number of participating entities)~\cite{R2024CDS:E}.
 %
 \begin{definition}[Relationship Modality]
 The \emph{modality} of a relationship end defines whether participation is optional or mandatory. %
 It can be viewed as the minimum number of participating entities.%
 \end{definition}%
 %
-From a practical point of view, only the minimum participation numbers of 0 and~1 are practically relevant.
-A modality of~0 means that relationship participation is optional.
+From a practical point of view, only the minimum participation numbers of 0 and~1 are really relevant.
+A modality of \inQuotes{optional participation} means that the minimum participation number is~0.
 In this case, one entity occurrence does not require a corresponding entity occurrence in a particular relationship.
-A modality of~1 means that relationship participation is mandatory.
+A modality of \inQuotes{mandatory participation} means that the minimum participation number is~1.
 In this case, one entity occurrence requires a corresponding entity occurrence in a particular relationship.
 This allows us to distinguish total and partial relationships~\cite{P2006CITRD:ERMI,V1999C5DMS:CDUTERM}.
-If all entities of an entity set \emph{must} participate in at least one relationship, then this relationship end \emph{total}.
+If all entities of an entity set \emph{must} participate in at least one relationship, then this relationship end is \emph{total}.
 If only some entities participate in a relationship, then this relationship end is \emph{partial}.
 %
 \begin{definition}[Relationship Cardinality]
 The maximum number of participating entities of a relationship end is called \emph{cardinality}.%
 \end{definition}%
 %
-Practically, we usually only distinguish the cardinalities \emph{one} and \emph{many}, i.e., unlimited.%
-In \pgls{UML}, cardinality is called multiplicity.
+Practically, we usually only distinguish the cardinalities \emph{one} and \emph{multiple}, i.e., unlimited.%
+In the similar modelling language \pgls{UML}, cardinality is called multiplicity.
 
 \begin{figure}%
 \centering%
 \includegraphics[scale=0.6]{\currentDir/erdCardinalities1}%
-\caption{Two different ways to express possible modalities and cardinalities of relationship ends in \pglspl{ERD}.}%
+\caption{Three different ways to express possible modalities and cardinalities of relationship ends in \pglspl{ERD}.}%
 \label{fig:erdCardinalities1}%
 \end{figure}%
 
 There are multiple conventions on how to express the relationship end modality and cardinality in an \pgls{ERD}.
-\Cref{fig:erdCardinalities1} presents these two methods.
+The top part of \cref{fig:erdCardinalities1} presents two of these methods.
 On one hand, there is the Crow's Foot notation~\cite{E1976BDSMEWACE,CM2000MDMAUDA,S2024D:CDMERDE}, where a graphical notation is used to expresses the cardinality and modality of a relationship end.
-On the other hand, we can also directly write the permitted number of participants as labels on the ends the relationships~\cite{P2006CITRD:ERMI}.
-Here, an integer range~\intRange{i}{j}, where $i$~is the minimum number of participating entities, $j$~is the maximum, and $*$~stands for unlimited, many, or~infinity.
+It uses the four symbols \crowsFootOptionalOne, \crowsFootOptionalMany, \crowsFootMandatoryOne, and \crowsFootMandatoryMany\ to define optional one and many as well as mandatory one and many participations, respectively.
+On the other hand, we can also directly write the minimal and maximal permitted number of participants as labels on the ends the relationships~\cite{P2006CITRD:ERMI}.
+Here, an integer range~\intRange{i}{j}, where $i$~is the minimum number of participating entities, $j$~is the maximum, and $j=*$~stands for unlimited, multiple, many, or~infinity.
 The second method has the advantage of permitting much more diverse ranges of cardinalities.
-The drawback is that it is slightly harder to draw, because we need to add labels to the relationship ends.
-In \libreofficeBase, \pglspl{ERD} can be drawn that are directly linked to the underlying \db\ in the 1:1/1:N notation, but lowercase~n represent \inQuotes{many}.
-\microsoftAccess\ offers a similar functionality, but the relationship ends are annotated with~1 or~$\infty$.
-For the remainder of this text, we will stick to the Crow's Foot Notation to signify the relationship modalities and cardinalities~(while keeping \citeauthor{C1976TERMTAUVOD}'s notation for the symbols), simply because we can paint this more easily with \yEd\ without needing to add labels to relationship ends.
+The drawback is that it is slightly harder to read when printed on paper or from afar.
+More importantly, it is harder to draw, because we need to manually add labels to the relationship ends.
+Also, as said, a finer granularity of cardinalities is often not needed.
+Cardinalities like \intRange{7}{11} could potentially be nightmarish to implement and enforce later on.
 
-Notice that original Crow's Foot method by \citeauthor{E1976BDSMEWACE}~\cite{E1976BDSMEWACE}, also sketched in \cref{fig:erdCardinalities1}, which did not yet have the mandatory/optional symbolism.
+In \libreofficeBase, \pglspl{ERD} can be drawn that are directly linked to the underlying \db.
+They are in the 1:1/1:n notation and the lowercase~n represents \inQuotes{multiple}.
+\microsoftAccess\ offers a similar functionality, but the relationship ends are annotated with~1 or~$\infty$.
+For the remainder of this text, we will stick to the Crow's Foot Notation to signify the relationship modalities and cardinalities, simply because we can paint this more easily with \yEd\ without needing to add labels to relationship ends.
+For now, we keep using \citeauthor{C1976TERMTAUVOD}'s notation for the symbols, though.
+
+Notice that the original Crow's Foot method by \citeauthor{E1976BDSMEWACE}~\cite{E1976BDSMEWACE}, also sketched in \cref{fig:erdCardinalities1}, which did not yet have the mandatory/optional symbolism.
 This method can be used when the modality is not important during modeling, or when we want to leave it open and settle it during a later discussion.
 
 Of course, there are many more possible notations to express the cardinality of relationships.
@@ -97,11 +104,11 @@ Which notation is used probably does not matter much, as long as all stakeholder
 \begin{figure}%
 \centering%
 \includegraphics[scale=0.6]{\currentDir/erdCardinalities2}%
-\caption{The ten possible combinations of cardinalities in Crow's Foot notation.}%
+\caption{The ten possible combinations of cardinalities in binary relationship types expressed with the Crow's Foot notation.}%
 \label{fig:erdCardinalities2}%
 \end{figure}%
 
-As said, we will stick with the Crow's Foot notation, mainly because it is easy to use in \yEd.
+As said, we will stick with the Crow's Foot notation.
 Let's write down all the possible combinations of \inQuotes{relationship ends} in \cref{fig:erdCardinalities2} for this notation.
 There are four possibilities to annotate the end of a relation:%
 \begin{itemize}%
@@ -111,17 +118,19 @@ There are four possibilities to annotate the end of a relation:%
 \item Mandatory~Many:~\crowsFootMandatoryMany, equivalent to~\intRange{1}{*}, \intRange{1}{\textnormal{N}}, and~\intRange{1}{\infty}.%
 \end{itemize}%
 %
-Since each relationship as two ends, this gives us $4+3+2+1=10=\frac{\factorial{(4+2-1)}}{\factorial{4-1}*\factorial{2}}$ different combinations.
+Since each relationship as two ends, this gives us $10=\frac{\factorial{(4+2-1)}}{\factorial{2}*\factorial{4-1}}$ different combinations for binary relationships.\footnote{%
+The number of multisets of size~$k$ with elements from a set of size~$n$ is $\frac{\factorial{(m+k-1)}}{\factorial{k}*\factorial{n-1}}$ and that's the number of combinations of~$k$ out of~$n$ with repetitions but without order.%
+} %
 It is important to understand how to interpret the cardinalities and modalities of the relationship ends, because this can easily be mistaken:
 The participation of an entity depends on the \emph{other} end.
 Let's take \crowsFoot{K}{M1}{L}{OM} as example.
 First, place your finger on the~K as say \inQuotes{Each~K has\dots}.
-Now move your finger towards the~L and read the relationship end there says:~\inQuotes{{\dots}zero, one, or many~L.}~\cite{SE:DA:2016HDIRENCFTCTNL}.
-Then place your finger on the~L an say \inQuotes{Each~L has\dots}.
+Now move your finger towards the~L and read the relationship end there, which says:~\inQuotes{{\dots}zero, one, or multiple~L.}~\cite{SE:DA:2016HDIRENCFTCTNL}.
+Then place your finger on the~L and say \inQuotes{Each~L has\dots}.
 Move the finger to the~K and read the relationship end touching the~K.
-This means that~\inQuotes{{\dots}exactly one~K.}
+The symbol there means that~\inQuotes{{\dots}exactly one~K.}
 Notice that the \crowsFootMandatoryOne\ touching~K does \emph{not} mean that \inQuotes{Every K must be related to some~L.}
-To be on the safe side, let's write down the meaning of each of them based on \cref{fig:erdCardinalities2}.%
+To be on the safe side, let's write down the meaning of each of the possible binary relationship types based on \cref{fig:erdCardinalities2}.%
 %
 \begin{itemize}%
 %
@@ -144,19 +153,19 @@ A school must have exactly one dean.~\cite{R2024CDS:E}\\%
 See later in \cref{sec:rm:cd}.%
 %
 \item \crowsFoot{E}{O1}{F:}{OM}
-Each entity of type~E may be linked to zero, one, or many entities of type~F.
+Each entity of type~E may be linked to zero, one, or multiple entities of type~F.
 Each entity of type~F may be linked to zero or one entity of type~E.~\cite{MA2006MAC:DMERDED}\\%
 \emph{Example:}~Assume that for bank accounts, two addresses may be associated:
-A home address is required~(not relevant for this example).
-Additionally, a bank account may be linked to zero or one postal address.
-Each address may be the postal address of zero, one, or many bank accounts.~\cite{MA2006MAC:DMERDED}\\%
+A home address is required, which is not relevant for this example.
+What is relevant is that additionally, a bank account may be linked to zero or one postal address.
+Each address may be the postal address of zero, one, or multiple bank accounts.~\cite{MA2006MAC:DMERDED}\\%
 See later in \cref{sec:rm:ef}.%
 %
 \item \crowsFoot{G}{O1}{H:}{MM}
-Each entity of type~G is related at least one, but maybe many entities of type~H.
+Each entity of type~G is related at least one, but maybe multiple entities of type~H.
 Each entity of type~H is linked to zero or one entity of type~G.\\%
-\emph{Example:}~The trainer of a football club coaches many club members.
-A club member can be coached by at most one trainer or not be coached at all, if they have other functions~\cite{SE:DA:2020UTFBRTCACFE}.\\%
+\emph{Example:}~The trainer of a football club coaches multiple club members~(but always at least one, otherwise they are not a trainer\dots).
+A club member can be coached by at most one trainer or not be coached at all, if they have other functions and do not play actively~\cite{SE:DA:2020UTFBRTCACFE}.\\%
 See later in \cref{sec:rm:gh}.%
 %
 \item \crowsFoot{I}{M1}{J:}{M1}
@@ -168,45 +177,45 @@ Each entity of type~J must be associated with exactly one entity of type~I.\\%
 See later in \cref{sec:rm:ij}.%
 %
 \item \crowsFoot{K}{M1}{L:}{OM}
-Each entity of type~K may be linked to zero, one, or many entities of type~L.
+Each entity of type~K may be linked to zero, one, or multiple entities of type~L.
 Each entity of type~L must be linked to exactly one entity of type~K.~\cite{MA2006MAC:DMERDED,BS2023G:CFNIERD}\\%
-\emph{Example:}~A customer may issue zero or arbitrarily many orders for products.
+\emph{Example:}~A customer may issue zero or arbitrarily multiple orders for products.
 However, each order must be linked to exactly one customer.~\cite{BS2023G:CFNIERD}\\%
-\emph{Example:}~A bank account may take part in zero, one, or many bank transfers as source account.
+\emph{Example:}~A bank account may take part in zero, one, or multiple bank transfers as source account.
 However, each bank transfer must have exactly one source bank account.~\cite{MA2006MAC:DMERDED}\\%
 \emph{Example:}~Each customer is handled by exactly one salesperson.
-A salesperson may not have any customers, one customer, or many customers.~\cite{T2025CDBMS:ERM}\\%
+A salesperson may not have any customers, one customer, or multiple customers.~\cite{T2025CDBMS:ERM}\\%
 See later in \cref{sec:rm:kl}.%
 %
 \item \crowsFoot{M}{M1}{N:}{MM}
 Each entity of type~M is related to at least one and possibly multiple entities of type~N.
 Each entity of type~N is related to exactly one entity of type~M.~\cite{BS2023G:EDFAHMSCFN}\\%
-\emph{Example:}~A patient can make several appointments~(to visit doctors).
+\emph{Example:}~A patient can make several appointments to visit doctors.
 Each appointment is linked to exactly one patient.~\cite{BS2023G:EDFAHMSCFN}\\%
-\emph{Example:}~A school of a university must consist of at least one, but possibly many departments.
+\emph{Example:}~A school of a university must consist of at least one, but possibly multiple departments.
 Each department must belong to exactly one school.~\cite{R2024CDS:E}\\%
 See later in \cref{sec:rm:mn}.%
 %
 \item \crowsFoot{O}{OM}{P:}{OM}
 Each entity of type~O may be related to zero, one, or multiple entities of type~P.
-Each entity of type~P may be related to zero, one, or multiple entities of type~Q.\\%
+Each entity of type~P may be related to zero, one, or multiple entities of type~O.\\%
 \emph{Example:}~A pizza shop sells pizza to customers.
-A pizza may be ordered by zero, one, or many customers.
+A pizza may be ordered by zero, one, or multiple customers.
 A customer may not order pizza~(maybe the want to eat something else), or order one pizza, or order multiple pizzas.~\cite{FCC2016D:CFNRSAHTRD}\\%
 See later in \cref{sec:rm:op}.%
 %
 \item \crowsFoot{Q}{OM}{R:}{MM}
-Each entity of type~Q must be linked to at least one entity of type~R, i.e, one or many entities of type~R.
-Each entity of type~R may be related to zero, one, or many entities of type~Q.~\cite{BS2023G:CFNIERD}\\%
+Each entity of type~Q is linked to at least one, but maybe multiple entities of type~R.
+Each entity of type~R may be related to zero, one, or multiple entities of type~Q.~\cite{BS2023G:CFNIERD}\\%
 \emph{Example:}~When placing an order for products online, the order must be for at least one product.
-Each product may be referenced by zero, one, or many orders.~\cite{BS2023G:CFNIERD}\\%
+Each product may be referenced by zero, one, or multiple orders.~\cite{BS2023G:CFNIERD}\\%
 See later in \cref{sec:rm:qr}.%
 %
 \item \crowsFoot{S}{MM}{T:}{MM}
-Each entity of type~S is linked to at least one, but maybe many entities of type~T.
-Each entity of type~T is linked to at least one, but maybe many entities of type~S.~\cite{T2025CDBMS:ERM}\\%
+Each entity of type~S is linked to at least one, but maybe multiple entities of type~T.
+Each entity of type~T is linked to at least one, but maybe multiple entities of type~S.~\cite{T2025CDBMS:ERM}\\%
 \emph{Example:}~Each salesperson sells at least one product but may also sell more than one product.
-Each product must be sold by at least one salesperson, but may also be sold by many salespeople.~\cite{T2025CDBMS:ERM}\\%
+Each product must be sold by at least one salesperson, but may also be sold by multiple salespeople.~\cite{T2025CDBMS:ERM}\\%
 See later in \cref{sec:rm:st}.%
 %
 \end{itemize}%
@@ -254,13 +263,13 @@ Every student must be enrolled in exactly one curriculum instance.
 There may be zero, one, or many students enrolled in a curriculum instance.
 What is a curriculum instance?
 Well, we said that a student is maybe enrolled in the Bachelor program for computer science.
-When they do so, they enroll in a particular semester of the program, say, the Bachelor program computer science starting in the Winter semester of~2024.
+When they do so, they enroll in a particular implementation of the program starting in a particular semester, say, the Bachelor program computer science starting in the Winter semester of~2024.
 From the perspective of entity relationship modeling, we could say:
 A curriculum may be executed by the university zero~(unlikely), one, or many times as curriculum instance.
 Each curriculum instance is associated with exactly one curriculum.
-Also, it is associated with exactly one semester.
+Also, it is associated with exactly one starting semester.
 Since curricula instances do not have any other identifying characteristics and cannot exist by themselves, they are weak entities.
-They only come to life through their relationship with the curriculum they belong to and the semester in which they are launched.
+They only come to life through their identifying relationships with the curriculum they belong to and the semester in which they are launched.
 
 We decided to model a semester as independent entity, because this allows us to tag attributes to it.
 For example, a semester can have a start date and end date, it may even have dates for the exam period.
@@ -291,20 +300,26 @@ A faculty member may be promoted or change their position, but the worker's~ID w
 There are different types of positions in a university.
 For example, lecturer, assistant professor, associate professor, full professor, and even different levels of full professorship.
 Each such position type has a unique name and determines which kind of things a faculty member can do.
-For example, there are different types of modules, such as undergraduate modules, graduate modules, professional base classes, professional special classes, etc.
-A person at a given position type may chair modules belonging to an arbitrary number of module types.
-Each module type may be chaired by faculty members belonging to an arbitrary number of position types.
+For example, there are different types of modules, such as %
+Subject Basic Courses~(学科基础课), %
+General Basic Courses~(公共基础课), %
+Professional Basic Courses~(专业基础课), %
+Professional Elective Courses~(专业选修课), or %
+General Elective Courses~(公共选修课).
+A position grants the persons in that position the permission to chair modules of certain~(an arbitrary number of)~module types.
+(Modules of)~each module type may be chaired by faculty members belonging to an arbitrary number of position types.
 
-Either way, we introduce the weak entity position that we use to link faculty members to position types.
-Every instance of this weak entity belongs to exactly one faculty member and to exactly one position type.
+We introduce the weak entity position that we use to link faculty members to position types.
+Every instance of this weak entity type belongs to exactly one faculty member and to exactly one position type.
 Each faculty member does have at least one position.
-Usually they have only one position at a time~(which is why each position has a starting date and an optional end date).
+Usually they have only one position at a time.
+This why each position has a starting date and an optional end date.
 Faculty members may have multiple different positions over time, for example, they may start as lecturer in 2022, then be promoted to associate professor in 2025.
 For each position type, there may be arbitrarily many corresponding position records.
 
 Interestingly, whether a faculty member can supervise certain types of students is not necessarily only determined by the position type.
 These abilities are instead attributes of the faculty member.
-They may require certain positions, such as full professor for graduate students.
+They may require certain positions, such as full professor for graduate student supervision.
 But there may also be other factors, such as recent publications, fulfillment of teaching duties, etc.
 
 Finally, we also model that each faculty member belongs to exactly one school.
@@ -313,7 +328,13 @@ An each school can have an arbitrary number of faculty members.
 When we look at the new \cref{fig:erdPersonStudentFaculty2}, we find that it is truly beautiful.
 We can also see that many things are still missing.
 For example, we did not yet model the relationship between students and classes, classes and modules, modules and curricula, classes and rooms, the list of available rooms and their features, exams, exam results, graduation requirements, and so on.
-Still, we have managed to drag a good piece of reality into our model.%
+Still, we have managed to drag a good piece of reality into our model.
+
+The ability to annotate relationship types with modalities and cardinalities is very important.
+It makes our models both clearer and more precise.
+Without it, we cannot express whether a person can study multiple curricula or not.
+Without it, we cannot express that a person can have multiple IDs of each ID~type but that each ID belongs to exactly one ID~type.
+We make big strides toward being able to model real-world scenarios.%
 %
 \FloatBarrier%
 \endhsection%
