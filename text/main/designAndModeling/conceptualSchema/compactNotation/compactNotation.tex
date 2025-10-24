@@ -8,7 +8,7 @@ Especially if we have many attributes, the ellipses get many and hard to read.
 The diamonds to expression relationships are also space consuming.
 
 There also is a more compact method to express~(almost) the same information:
-We can combine \pgls{UML} class diagrams with the Crow's Foot notation as well.
+We can combine \pgls{UML} class diagrams~\cite{OMG2017OUMLOU,RMHOSMUUIIIIOPPTRS1997UNG,BRJ1999TUMLRM,F2003UDABGTTSOML} with the Crow's Foot notation as well.
 This is a very commonly used method in several tools.
 Let us investigate it here and use it to further explore our example application, the teaching management platform.
 %
@@ -20,27 +20,34 @@ Let us investigate it here and use it to further explore our example application
 \end{figure}%
 %
 In \cref{fig:erdMessage1}, we sketch the messaging subsystem of our teaching management platform.
-In this notation, an entity type is still visualized a rectangle.
+The messaging system is a feature requested by students and teachers alike.
+The teachers want a way to provably and traceably inform students about requirements, tasks, problems, and reminders:~\emph{\inQuotes{You forgot your homework two times in a row. Do this again an I will have to deduce 10 points from your final score!}}
+Actually, the students want exactly the same thing, too -- to be provably able to inform the teachers of issues and problems:~\emph{\inQuotes{I want to do the homework, but the \glsShort{formatPDF} file you offer to download is damaged and cannot be displayed. Please re-upload it.}}
+It is better to have such messages in our system, where they can provably be traced.
+
+In the new compact notation, an entity type is still visualized a rectangle.
 In the top part of the rectangle, the entity type name is written.
 In the second part, we write the list of attributes.
 As you remember, \emph{Person} is a strong entity type in our model.
 The new entity type \emph{Message} is a strong entity type as well.
-It as three attributes, \emph{Subject}, i.e., the title of the message, and \emph{Body}, i.e., the message text, and \emph{When}, the date and time when the message was sent.
+It as three attributes, \emph{Subject}, i.e., the title of the message, \emph{Body}, i.e., the message text, and \emph{When}, the date and time when the message was sent.
 
-Relationships in this visualization approach are modeled just as lines connecting the entities.
+Relationships in this visualization approach are modeled just as lines directly connecting the entity types.
 No diamonds are used, but instead the relationship names are written as labels directly adjacent to the lines.
+Cardinalities and modalities are expressed using the Crow's Foot notation.
+
 Each message has exactly one person as sender.
 Each person can be the sender of arbitrarily many messages.
-Each message has at least one, but potentially many persons as receiver.
-Each person can receive zero or arbitrarily many messages.
-Additionally, a message can be the answer to no or exactly one~(previous) message.
+Each message has at least one, but potentially many persons as receiver(s).
+Each person can receive zero, one, or arbitrarily many messages.
+Additionally, a message can be the answer to no or exactly one previous message.
 There can be arbitrarily many answers to each message.
 
 Before, we signified strong and weak entities by using normal or double-lined rectangles.
-Now, instead, relationships can be weak or strong~\cite{P2024C6DS:EM}.%
+Now relationships can be weak or strong~\cite{P2024C6DS:EM}.%
 %
 \begin{definition}[Identifying Relationship]%
-A \emph{identifying}~(strong) relationship is connected to at least one weak entity and is required for identifying the weak entity. %
+An \emph{identifying}~(strong) relationship is connected to at least one weak entity and is required for identifying the weak entity~(see also \cref{def:identiRelation}). %
 \end{definition}%
 %
 Usually, a strong relationship connects a strong entity to a weak entity.
@@ -51,8 +58,8 @@ Strong relationships are signified by solid lines.%
 \begin{definition}[Non-Identifying Relationship]%
 A \emph{non-identifying}~(weak) relationship is not needed to identify an entity.%
 \end{definition}%
-Examples for this are, e.g., two connected strong entities.
-But also weak entities can be connected, as long as the connection is not required for identifying purposes.
+Examples for this are, e.g., relationships that connect two strong entities.
+But also weak entities can be connected by weak relationships, as long as the connections are not required for identifying purposes.
 
 \begin{figure}%
 \centering%
@@ -62,61 +69,22 @@ But also weak entities can be connected, as long as the connection is not requir
 \end{figure}%
 %
 We now develop the room management subsystem for our teaching management platform in \cref{fig:erdRoom1}.
+Courses take place in rooms at certain times, so we need to know which rooms exist and what features they have.
 In this model, buildings are strong entities.
 They may have a name, maybe something like 合肥大学综合实验楼, and a number, let's say~53.
 We also offer an address string.
-No real addresses as discussed before are needed, because we certainly do not need to model countries or provinces here.
+No real addresses like thiose discussed before are needed, because we certainly do not need to model countries or provinces here.
 We assume that all classes of a curriculum take place in the same country, province, and city.
 However, maybe the university has different campuses, like 南一区 and 南二区, which would be something useful to write there.
 
-Rooms exist within buildings, so they are weak entities.
+Rooms exist within buildings and never without a building, so they are weak entities.
 They have a number and maybe a name.
 Each room has a capacity limit for students.
-They are connected to the building entities via identifying relationships:
+Rooms are connected to the building entities via identifying relationships:
 A room must be in exactly one building, whereas a building should consist of one or many rooms~(otherwise, we do not need to store it in our \db).
 
-The last sentence is interesting, as it poses a somewhat philosophical problem.
-We said that \inQuotes{each room is inside one building and each building is composed of one or multiple rooms.}
-This is what we wrote in our \pgls{ERD} in \cref{fig:erdRoom1} and this is what makes sense.
-On a technical level, this causes me to scratch my head.
-What we have here is a \crowsFoot{Building}{M1}{Room}{MM}~pattern.
-
-Regardless of what data model I use, I will be forced to instantiate the data structure for \emph{Room} to, well, represent a room in my \db.
-Following the formal definition of the above rule, I would need to have an existing entity of type \emph{Building} at this point in time.
-Because I must link each room to one building.
-So I must first instantiate \emph{Building} and then I can instantiate \emph{Room}.
-However, if I interpret my \pgls{ERD} strictly, I face the problem that each building must also be connected to at least one room.
-So this means that I would first need an instance of \emph{Room} before I can instantiate the \emph{Building} entity type.
-
-This philosophical dilemma, resulting from nitpicking, can be solved in three ways:
-First, we could say:
-\emph{\inQuotes{Well, the conceptual model represents the real world. %
-In the real world, each room is inside a building and a building has at least one room. %
-That is true and that is what we model here.
-Whether or not this can be realized technically is not relevant at this stage of development.}}
-
-Second, we could say, maybe even as a corollary of the above, that:
-\emph{\inQuotes{On a technical level, we simply do not enforce that buildings must contain rooms. %
-We know that the user will add rooms to buildings eventually. %
-We just accept that there may be a temporary state of the \db\ where one of the mutual dependency constraints is violated. %
-Just for a short time, between the moment when the user has created a building and right before she adds a room. %
-It doesn't matter.}}
-
-The third solution is that we, well, actually implement it as specified.
-Most \pglspl{dbms} support \emph{transactions}, i.e., groups of instructions to the \db\ that are executed as one atomic unit and either fail together or succeed together.
-There is no intermediate state, as transactions are indivisible, atomically executed units.
-Thus, we could require that every time a new building is added to the \db, the first room is specified as well.
-The creation of the building and room record could be executed together as atomic transaction.
-If we do this, the conceptual constraints would perfectly map to technical constraints, at the expense of more complex update operations~(because we now need to use transactions).
-\postgresql\ permits us to defer the constraints checking to the end of a transaction~\cite{PGDG:PD:SC:SC,N2016SSFA:DC}.
-Later, in \cref{sec:rm:mn}, we will learn that using \postgresql-specific extensions to \sql, we can group the necessary instructions together such that they form an implicit transaction.
-
-Anyway, the point is that conceptual relationships that seem hard to realize in software may exist.
-We will see that all relationship models that can be represented with crow's notation can be implemented in a relational \dbms.
-Whether it makes sense to do it -- it can become a bit complicated -- or not, this should not bother us during the conceptual modelling phase.
-
 Rooms are also connected with non-identifying relationships to schools:
-One school may be permitted to use zero or more rooms for teaching.
+One school may be permitted to use zero, one, or more rooms for teaching.
 Each room must be usable by at least one school~(because otherwise, we simply don't need to store it in the \db).
 
 We can easily expect that different teaching modules may have different requirements regarding the rooms.
@@ -124,12 +92,61 @@ For normal teaching, it may be sufficient that an overhead projector is present.
 We could assume that this is always the case.
 However, for practical computer science lab classes, we may need one computer per desk.
 For chemistry experiment classes, we may need a smoke outlet and something for chemical waste disposal.
-To model this, we create the strong entity \emph{Room Feature}, which just needs a descriptive name.
+
+To model such things, we create the strong entity \emph{Room Feature}, which just needs a descriptive name.
 Rooms are linked via non-identifying connections to such features:
 Each room may have zero or one or many such features.
 Each room feature may be provided by zero, one, or many rooms.
 At the same time, a teaching module may require any number of room features.
 A room feature may be required by any number of teaching modules.
+
+Wait.
+Suddenly we realize something interesting.
+We said~\emph{\inQuotes{A room must be in exactly one building, whereas a building should consist of one or many rooms.}}
+This is what we wrote in our \pgls{ERD} in \cref{fig:erdRoom1} and this is what makes sense.
+However, that sentence is interesting, as it poses a somewhat philosophical problem.
+If we look at it from a technical perspective -- which is not really relevant yet at this stage -- it causes us to scratch our heads.
+What we have here is a \crowsFoot{Building}{M1}{Room}{MM}~pattern.
+Actually, we have discussed several such relationship patterns before.
+
+We are not yet at the stage to choose a data model and \dbms.
+Yet, regardless of what data model we use, we will be forced to instantiate the data structure for \emph{Room} to, well, represent a room in our \db.
+Following the formal definition of the above rule, we would need to have an existing entity of type \emph{Building} at this point in time.
+Because we must link each room to one building.
+So we must first instantiate \emph{Building} and then we can instantiate \emph{Room}.
+Except that we can't.
+If we interpret my \pgls{ERD} strictly, we face the problem that each building must also be connected to at least one room.
+So this means that we would first need an instance of \emph{Room} before we can instantiate the \emph{Building} entity type.
+
+This philosophical dilemma can be solved in three ways:
+First, we could say:
+\emph{\inQuotes{Well, the conceptual model represents the real world. %
+In the real world, each room is inside a building and a building has at least one room. %
+That is true and that is what we model here.
+Whether or not this can be realized technically is not relevant at this stage of development.}}
+And this is true.
+Conceptual modelling should be technology-agnostic.
+
+Second, we could say, maybe even as a corollary of the above, that:
+\emph{\inQuotes{If not otherwise possible, on a technical level, we may choose to not enforce that buildings must contain rooms. %
+We know that the user will add room records related to building records eventually. %
+We just accept that there may be a temporary state of the \db\ where one of the mutual dependency constraints is violated. %
+Just for a short time, between the moment when the user has created a building record and right before she adds a room record. %
+It doesn't matter.}}
+
+The third solution is that we, well, actually implement it as specified.
+Most \pglspl{dbms} support \emph{transactions}, i.e., groups of instructions to the \dbms\ that are executed as one atomic unit and either fail together or succeed together.
+There is no intermediate state, as transactions are indivisible, atomically executed units.
+Thus, we could require that every time a new building is added to the \db, the first room is specified as well.
+The creation of the building and room record could be executed together as atomic transaction.
+If we do this, the conceptual constraints would perfectly map to logical~/~technical constraints.
+We would pay for this with more complex operations, because we now need to use transactions explicitly.
+\postgresql, for example, permits us to defer the constraints checking to the end of a transaction~\cite{PGDG:PD:SC:SC,N2016SSFA:DC}.
+Later, in \cref{sec:rm:mn}, we will learn that using \postgresql-specific extensions to \sql, we can group the necessary instructions together such that they form an implicit transaction.
+
+Anyway, the point is that conceptual relationships that seem hard to realize in software may exist.
+We will see that all (binary) relationship models that can be represented with crow's foot notation can be implemented in a relational \dbms.
+Whether it makes sense to do it -- it can become a bit complicated -- or not, this should not bother us during the conceptual modelling phase.
 
 \begin{figure}%
 \centering%
@@ -138,14 +155,18 @@ A room feature may be required by any number of teaching modules.
 \label{fig:erdModules1}%
 \end{figure}%
 %
-Let us now re-design the interactions of students, curricula, faculty, and modules.
-Wen we initially discussed our plans for designing these systems, we discussed with our stakeholders in the university.
+Let us re-design the interactions of students, curricula, faculty, and modules.
+Before making our initial designing of these systems, we discussed with our stakeholders in the university.
 We learned that, for example, some abilities of teachers are bound to their position, e.g., which kind of modules they can chair.
 Other abilities should be bound to their person, e.g., whether they can be Master's supervisor.
 We did model this back in \cref{fig:erdPersonStudentFaculty2}.
 There also are two different ways teachers and students can interact:
 Students can enroll in classes of professors and/or a professor can be their BSc or MSc supervisor.
 Basically, we would have two sets of interactions governed by two different forms credentials on the teacher's side.
+Such situations are always bad.
+They make our models bigger.
+They have a smell of redundancy.
+They almost beg us to simplify them.
 
 We have the idea to unify them both in \cref{fig:erdModules1}.
 It is clear that not all teachers can chair all types of modules.
@@ -157,16 +178,17 @@ The same holds for \inQuotes{Master's Supervisor}.
 
 Well, not necessarily:
 How about we permit that a person can hold multiple positions at a time.
-Besides the traditional positions, we could add things like \inQuotes{Chemistry Safety Certified,} \inQuotes{Master's Supervisor,} an whatever else we need.
+We already modelled the traditional carrer-based positions.
+Additionally, we could include things like \inQuotes{Chemistry Safety Certified,} \inQuotes{Master's Supervisor,} and whatever else we need as position types.
 That positions are limited by starting and ending dates is also not a problem.
 This is exactly a feature that we would like to have.
 Interestingly, with our \emph{Position} and \emph{Position Type} entity types used like this, we could easily represent even more complex functions, such as Dean, Vice-Dean for Teaching, Department Head, Team Head, and so on.
 These functions could then be tied to what kind of changes the person can make to the data.
 
 But back to the relationship between teaching and position.
-Each \emph{Module Type} entity can now be linked to one or multiple \emph{Position Type}s that a teacher must hold to be permitted to chair them.
+Each \emph{Module Type} entity can now be linked to one or multiple \emph{Position Type} entities that a teacher must hold to be permitted to chair them.
 Each position type, of course, can be the credential for chairing modules of multiple different module types.
-This approach works because we realize that Master's and Bachelor's projects are, basically, just special module types.
+This approach works because we realize that Master's and Bachelor's projects are nothing but modules belonging special module types.
 They would automatically be covered by this permission system.
 
 A school in our university may offer different curricula, e.g., a Master of Computer Science or a Bachelor of Engineering in Computer Science.
@@ -177,14 +199,14 @@ Second, for a curriculum, there may be different specialization directions.
 A Master in Computer Science could offer the specializations \pgls{AI}, \pglspl{dbms}, and Computer Security, for example.
 Each such specialization may~(recursively) come with different compulsive and elective modules.
 
-We will try to model this by introducing the \emph{Component} entity.
+We will try to model this by introducing the \emph{Component} entity type.
 A curriculum consists of at least one component and each component belongs to exactly on curriculum.
 A component can also be a sub-component of at most one other component.
 A component may also contain an arbitrary number of sub-components.
-Each component has a name, a set of semester indices in which it is offered~(such as \inQuotes{7th and 8th semester}).
+Each component has a name and a set of semester indices in which it is offered~(such as \inQuotes{7th and 8th semester}).
 A module can now be offered in one or multiple such components.
 Each component may offer zero or multiple modules.
-A component can also contain a number defining how many of the offered modules must be taken.
+A component can also contain a number defining how many of the offered modules a student \emph{must} complete.
 With this, we could now state that:
 
 \emph{\inQuotes{Among the many components of the Master of Computer Science curriculum, there is the \inQuotes{Specialization} component. %
@@ -239,9 +261,10 @@ Based on the classes offered and the curriculum structure, it can also offer the
 %
 Another part for our platform will focus on deliverables in \cref{fig:erdDeliverables1}.
 There are different types of deliverables, e.g., written exams, oral exams, midterm exams, homework, internship reports, or theses.
-Each module type may require any number of deliverables of different types.
-Each module type may also permit any number of deliverables.
+Each module type may \emph{require} any number of different deliverables types.
+Each module type may also \emph{permit} any number of different deliverables types.~%
 (We modeled these two relationships as one to save space.)
+
 We already have established that classes belong to modules belong to module types.
 So from the relationship between module types and deliverable types, we can infer what deliverable types are permitted and/or required for every class.
 For a Master's Project, a Master's Thesis may be a required deliverable.
@@ -249,7 +272,8 @@ For a course \inQuotes{Databases}, a written final exam may be required and a mi
 The teacher then will create a (weak) \emph{Deliverable} entity, which has a Name and a Description.
 Each students will make corresponding submission for the deliverable.
 These submissions will not go to our platform.
-Instead they are sent to the teacher.
+
+Instead they are sent by the student to the teacher.
 The teacher evaluates them and creates the corresponding (weak) \emph{Submission} entities -- one per student -- in the system.
 This weak entity holds the result of the student and maybe a comment by the teacher.
 This way, the teacher can upload exam results, mid-term exam results, and so on.
@@ -274,7 +298,7 @@ We did not explicitly state this before, our model for the teaching platform par
 In many application scenarios where historical information needs to be preserved, data in a \db\ should never be changed or deleted. %
 Changes in the real world should instead be reflected by adding data to the \db.}%
 %
-In other words, viewing this from the \sql\ perspective, \sqlil{UPDATE} and \sqlil{DELETE} operations should not be used if we need to remember the past state of data.
+Viewing this from the \sql\ perspective means that in this scenario, the operations \sqlil{UPDATE} and \sqlil{DELETE} should not be used.
 Instead, only new records should be added via \sqlil{INSERT INTO}.
 And in our situation, we do want to preserve the history of the data.
 
@@ -286,28 +310,29 @@ It would have a big drawback, though:
 It would be impossible to tell which teacher taught a module in the past.
 
 Therefore, we chose a different path:
-Each instantiation of a module is a class and each class is assigned to a teacher.
-This assignment never changes.
+Instead of assigning modules directly to teachers, we create instantiations of them~(the class entities), which bound to semesters and teachers.
+This assignments never changes.
 Each semester, new class records are added.
 We always know who taught which course in which semester.
 Our \db\ will grow incrementally an changes are reflected by new records and not the modification of existing records.
 If a module is taken over by another professor, then this will yield a new class instance.
 We can see who taught which class~(module) in which semester.
 
-For this reason, we also added the \emph{Valid From} and \emph{Valid To} attributes to the \emph{Address} entity type.
-If the address of a student or faculty member changes, we create a new address record and mark it as valid starting today, while leaving the \emph{Valid To} attribute at \sqlil{NULL}.
+For this reason, the \emph{Address} entity type has the \emph{Valid From} and \emph{Valid To} attributes.
+If the address of a student or faculty member changes, we create a new address record, set \emph{Valid From} to today, while leaving the \emph{Valid To} attribute at \sqlil{NULL}.
 We then enter yesterday as \emph{Valid To} value of the old address as no longer in use.
 The same also holds for our \emph{Personal ID} and \emph{Person Name} entity types.
 The administrators can therefore immediately see which address, ID, or name a person had in use when some action was taken in the past.
 
-Our system also has some shortcomings.
-For example, there may be some more levels of structural indirection in a university.
-A school may be subdivided into different departments.
+The conceptual model of our system also has some shortcomings.
+For example, there may be some more organisatorial levels in a university than just schools.
+A school may be subdivided into different departments and departments into teams.
 
-Furthermore, we should be able to add timestamps and notes to most of the data items -- a technique called \pgls{timestamping} -- which we did not really model here.
+Furthermore, we should be able to add timestamps and notes to most of the data items to be able to track when they have been created.
+Such a technique called \pgls{timestamping} -- which we did not really model here.
 Also, we did not model rights management.
-We would probably need a table assigning which person is permitted to enroll students into a class or curriculum, which person in a school can create new modules, classes, curricula, and so on.
-Or we could also handle this via the position submodule that we already designed.
+We would probably need a table defining which person is permitted to enroll students into a class or curriculum, which person in a school can create new modules, classes, curricula, and so on.
+Or we could also handle this via the position entities that we already designed.
 This would probably a good idea.
 
 Additionally, we may want to create a table creating an audit trail~\cite{K2010ATTDCID}.
@@ -318,8 +343,14 @@ We could probably have another entity type to represent countries and country su
 Each address could be linked to at least one such entity via a relationship.
 
 For now, we omit all of this.
-Such features could probably be added later.
-The system looks more or less reasonable, so our goal is to move on to create a logical model and then a prototype.%
+This is just a book, not a real system design.
+We have to draw the line somewhere to make this chapter not overly long.
+The system looks more or less reasonable, so our goal is to move on to create a logical model and then a prototype.
+
+The important point is that we now can really design almost arbitriraly complex systems on the conceptual level.
+We know how to model entity type, relationship types, cardinalities, modalities, etc.
+We can do this in a compact notation such that we can easily fit ten entity types into one \pgls{ERD} while not sacrificing readability.
+In terms of conceptual modelling, we are good.%
 %
 \FloatBarrier%
 \endhsection%

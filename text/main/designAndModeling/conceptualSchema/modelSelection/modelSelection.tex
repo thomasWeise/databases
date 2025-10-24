@@ -1,18 +1,20 @@
-\hsection{Database Model Selection}%
+\hsection{Data Model Selection}%
 \label{sec:dbModelSelection}%
 %
 Between the design of the conceptual schema and the design of the logical schema, we have to choose a \emph{data model} for our \db~\cite{SS2005EIDDDFDB:I}.%
 %
 \begin{definition}[Data Model]%
-The \emph{data model} specifies the notation and language for defining types and for accessing and updating the \db.%
+The \emph{data model} specifies the notation and language for defining datatypes and for accessing and updating the \db.%
 \end{definition}%
 %
 There are several important data models.
 
-We could treat our data as single or weakly-interrelated tables, which can be stored in formats such as \pgls{CSV}, \pgls{microsoftExcel}, or \pgls{libreofficeCalc}.
+We could treat our data as single or weakly-interrelated tables.
+These could be stored in formats such as \pgls{CSV} or in the file formats offered by \pgls{microsoftExcel} or \pgls{libreofficeCalc}.
 Such formats can deal with thousands of similarly-structured records and perform efficient calculations on them.
-They are not suitable for data where records of different types are related and constraints are placed upon such relationships.
+They are not suitable for data where records of different types are related and constraints are placed upon the relationships or the data.
 They are also not suitable for scenarios where multiple users concurrently work on the same documents.
+For our teaching management system, they are unsuitable.
 
 Another choice would be hierarchically structured single documents, in formats such as \pgls{XML}, \pgls{JSON}, and \pgls{YAML}.
 These formats are able to deal with thousands of records that are structured similarly or differently.
@@ -29,15 +31,20 @@ Still, some open source hierarchical \pglspl{dbms} still exist, including MUMPS~
 The hierarchical key-value store YottaDB is also an implementation of MUMPS~\cite{B2018THALOMMATFOY}.
 
 Another legacy approach is the network data model, which emerged from IDS~\cite{B2009TOOTIDSITFDAD,B1965SFRAP,H2016HCBITDAFOODW} and CODASYL~\cite{TF1976CDBMS}.
-There still exist CODASYL and COBOL-based \pglspl{dbms} today~\cite{O2022OCDDARM}.
-However, as is the case for hierarchical \pglspl{db}, it may generally be better to implement a \db\ in the relation model.
-On one hand, this model fits well to many application domains.
-If you can express your data in an hierarchical or network model, you probably can do this with a relational model, too.
-On the other hand, there just exists infinitely more and well-maintained open source and commercial relational \pglspl{dbms}.
+There still exist CODASYL-\ and COBOL-based \pglspl{dbms} today~\cite{O2022OCDDARM}.
+They have the reputation of not being easy to use.
+However, as is the case for hierarchical \pglspl{db}, these systems can be considered as in decline.
+I would avoid them.
 
-Another data model are key-value stores, which are basically schema-less and appropriate if your data has a key-value structure.
+Another data model are key-value stores.
+They are basically schema-less and appropriate if your data has a key-value structure.
+For our teaching management platform, they do not appear suitable.
 
 The main focus of this book, however, is on the relational data model invented by \citeauthor{C1970ARMODFLSDB}~\cite{C1970ARMODFLSDB} and the \sql\ language.
+This model fits well to many application domains.
+If you can express your data in one of the previous models, you probably can do this with a relational model, too.
+Compared to the other data models, there just exist infinitely more and well-maintained open source and commercial relational \pglspl{dbms}.
+
 Here, entity sets are represented as relation and stored in a table inside the \db.
 As we already practically explored, the tables can also be related and constraints can ensure that the relationships between them remain in a consistent state.
 We find that most of our entity types will probably nicely map two-dimensional tabular structure.

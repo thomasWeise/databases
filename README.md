@@ -31,7 +31,15 @@ The website with up-to-date information about the course is <https://thomasweise
 The book itself can be downloaded as pdf at <https://thomasweise.github.io/databases/databases.pdf>.
 
 
-### 2.2. Die Slides in Deutsch  &mdash; The Slides in German Language
+### 2.2. Questions and Exercises / Fragen und Übungen
+At <https://thomasweise.github.io/databasesQuestions/databasesQuestions.pdf>, we provide a list of questions and exercises that you can use to test your knowledge on databases.
+The questions are both in English and German language.
+
+Bei <https://thomasweise.github.io/databasesQuestions/databasesQuestions.pdf> stellen wir eine Liste von Fragen und Übungen zur Verfügung, die Sie verwenden können, um Ihre Datenbanken-Fähigkeiten zu testen.
+Die Fragen sind sowohl in Englisch als auch in Deutsch geschrieben.
+
+
+### 2.3. Die Slides in Deutsch  &mdash; The Slides in German Language
 The slides in German language can be found at <https://thomasweise.github.io/databasesSlidesDE> and are listed here:
 
 1. [Organisation](https://thomasweise.github.io/databasesSlidesDE/01_organisation.pdf)
@@ -65,16 +73,18 @@ The slides in German language can be found at <https://thomasweise.github.io/dat
 29. [Konzeptuelles Schema: Beziehungen](https://thomasweise.github.io/databasesSlidesDE/29_konzeptuelles_schema_beziehungen.pdf)
 30. [Konzeptuelles Schema: Schwache Entitäten](https://thomasweise.github.io/databasesSlidesDE/30_konzeptuelles_schema_schwache_entitäten.pdf)
 31. [Konzeptuelles Schema: Beziehungskardinalität](https://thomasweise.github.io/databasesSlidesDE/31_konzeptuelles_schema_beziehungskardinalität.pdf)
+32. [Konzeptuelles Schema: Kompakte Notation](https://thomasweise.github.io/databasesSlidesDE/32_konzeptuelles_schema_kompakte_notation.pdf)
+33. [Auswahl des Datemodells](https://thomasweise.github.io/databasesSlidesDE/33_datenmodell_auswahl.pdf)
 
 
-### 2.3. The Examples
+### 2.4. The Examples
 This is a practice-oriented course on databases.
 Therefore, we also provide a set of examples.
 The examples that we provide are all "real" in the sense that they can actually be executed and their results are actually presented in the book.
 All of them are available in the online repository <https://github.com/thomasweise/databasesCode>.
 
 
-### 2.4. LaTeX Sources, Graphics, Bibliography, etc.
+### 2.5. LaTeX Sources, Graphics, Bibliography, etc.
 The book is written in LaTeX.
 You can find its sources in <https://github.com/thomasWeise/databases>.
 You may use these files under the licensing terms provided below.
