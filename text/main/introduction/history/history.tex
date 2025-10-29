@@ -153,32 +153,32 @@ The need for systems that supported modern \db\ features became aparent.
 At the same time, it was not really clear how that could be done.
 Different groups began developing concepts, ideas, and prototypes.
 
-The first version of the Integrated Data Store~(IDS) was developed by \citeauthor{B2009TOOTIDSITFDAD} in 1961/62 at General Electric~\cite{B2009TOOTIDSITFDAD,B1965SFRAP}.
-IDS offered the first direct access \pgls{db}, holding data in virtual memory.
+The first version of the \pgls{softIDS} was developed by \citeauthor{B2009TOOTIDSITFDAD} in 1961/62 at General Electric~\cite{B2009TOOTIDSITFDAD,B1965SFRAP}.
+\Pgls{softIDS} offered the first direct access \pgls{db}, holding data in virtual memory.
 It may have been the first real \pgls{dbms} and \citeauthor{B2009TOOTIDSITFDAD} won the 1973~A.M.~Turing Award for this work~\cite{H2016HCBITDAFOODW}.
-IDS was based on a network model, further advancing data management by structuring complex relationships in data.
+\Pgls{softIDS} was based on a network model, further advancing data management by structuring complex relationships in data.
 The programmer acted as navigator through the data.
 The idea to step-by-step navigate through data, updating it if needed, is more complicated and slower compared to the relational approach of today's \pglspl{db}.
-IDS and similar systems encode elements of the views of the data as part of the \pgls{db} structure, which make IDS less flexible.
-The Database Task Group of the Conference on Data Systems Languages~(CODASYL)~\cite{TF1976CDBMS}, a standardization body for the data processing industry, took over many of \citeauthor{B2009TOOTIDSITFDAD}'s ideas for IDS in the late 1960s.
+\Pgls{softIDS} and similar systems encode elements of the views of the data as part of the \pgls{db} structure, which make \pgls{softIDS} less flexible.
+The Database Task Group of the Conference on Data Systems Languages~(CODASYL)~\cite{TF1976CDBMS}, a standardization body for the data processing industry, took over many of \citeauthor{B2009TOOTIDSITFDAD}'s ideas for \pgls{softIDS} in the late 1960s.
 CODASYL is best known for its creation of the COBOL programming language~\cite{H2016HCBITDAFOODW}.
 
-Only slightly later than IDS, another \pglspl{dbms} that could handle the structured storage of records obeying datatype constraints appeared.
-IBM developed the Information Management System~(IMS) for the Apollo space program~\cite{KLBGNLWBS2012ITIYCGTIIMS}.
+Only slightly after \pgls{softIDS}, another \pgls{dbms} that could handle the structured storage of records obeying datatype constraints appeared.
+IBM developed the \pgls{softIMS} for the Apollo space program~\cite{KLBGNLWBS2012ITIYCGTIIMS}.
 The system was launched 1965/1967~\cite{BBP2007TBOI}.
-IMS is still sold as a product and still exists today.
-Like IDS, it was not a \pgls{dbms} for \emph{\pglspl{rdb}}.
+\Pgls{softIMS} is still sold as a product and still exists today.
+Like \pgls{softIDS}, it was not a \pgls{dbms} for \emph{\pglspl{rdb}}.
 Instead, it offered hierarchically structured records.
 This system, too, had a set of disadvantages~\cite{KC2024DS:ITD}:
 If your data is not structured hierarchically, some records may need to be duplicated.
 For example, if we have a \db\ that assigns students to courses, then a student would appear in each of the records of the courses that she attends.
-The programming language offered by the IMS for the data access is also relatively low-level and, for example, the search strategy has to be implemented.
+The programming language offered by the \pgls{softIMS} for the data access is also relatively low-level and, for example, the search strategy has to be implemented.
 Finally, changes to the logical schema will require us to perform cascading changes in the code accessing them.
 
-Both IDS and IMS offered a strikingly new concept:
+Both \pgls{softIDS} and \pgls{softIMS} offered a strikingly new concept:
 The application code and the code for physical data storage and retrieval were separated.
-Between them, the Data Language One~(DL/I) was located as interface in IMS.
-IDS offered the Data Description Language~(DDL) to define types of logical records and the Data Manipulation Language~(DML) to manipulate and navigate the data.
+Between them, the Data Language One~(DL/I) was located as interface in \pgls{softIMS}.
+\Pgls{softIDS} offered the Data Description Language~(DDL) to define types of logical records and the Data Manipulation Language~(DML) to manipulate and navigate the data.
 The \pgls{dbms} controls how the data is stored and loaded.
 Application programs can navigate through the data using the much simpler interface languages.
 As we briefly mentioned before: \pglspl{dbms} can become arbitrarily complicated pieces of software, and one major part of this is the code to efficiently store and retrieve data.
@@ -188,15 +188,15 @@ All data is eventually mapped/stored to sequential files on a hard disk or other
 You must be able to add new records and delete old records.
 You must also be able to find them.
 This alone is not easy to implement, but all of that has to be efficient, so (today) one would probably like to use datastructures like hashes, tress, and sorted lists {\dots} all of which are actually located in sequential files.
-Before IDS and IMS, this had to be part of your application's code.
+Before \pgls{softIDS} and \pgls{softIMS}, this had to be part of your application's code.
 Actually, it had to be part of the code of \emph{all} applications that accessed the data, if multiple such applications exist~\cite{BBP2007TBOI}.
-Now this is part of IDS and IMS, and the user can ignore this complexity and just use a simple programming language where she can define which record to load, change, delete, or add.%
+Now this is part of \pgls{softIDS} and \pgls{softIMS}, and the user can ignore this complexity and just use a simple programming language where she can define which record to load, change, delete, or add.%
 %
 \cquotation{C1970ARMODFLSDB}{Future users of large data banks must be protected from having to know how the data is organized in the machine~(the internal representation).}%
 %
 In \citeyear{C1970ARMODFLSDB}, the seminal paper \emph{\citetitle{C1970ARMODFLSDB}} by \citeauthor{C1970ARMODFLSDB} appeared, starting with the above quote.
-He noticed the shortcomings of the IDS network model, namely that the programmers accessing the data still need a lot of information about how the data is actually represented and organized internally.
-Even \citeauthor{B2009TOOTIDSITFDAD} himself mentioned that issues with IDS arose when users did not consider how data is internally sorted~\cite{B2009TOOTIDSITFDAD}.
+He noticed the shortcomings of the \pgls{softIDS} network model, namely that the programmers accessing the data still need a lot of information about how the data is actually represented and organized internally.
+Even \citeauthor{B2009TOOTIDSITFDAD} himself mentioned that issues with \pgls{softIDS} arose when users did not consider how data is internally sorted~\cite{B2009TOOTIDSITFDAD}.
 
 \Citeauthor{C1970ARMODFLSDB} wanted to protect programmers against such errors.
 He models data as a relational view by using tables, that he calls \emph{relations}.
