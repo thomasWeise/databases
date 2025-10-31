@@ -25,7 +25,7 @@ These belong to the system catalog.%
 %
 \item Guaranteed Access Rule:~Each and every datum~(atomic value) in a relational \db\ is guaranteed to be accessible via a combination of table name, primary key value, and column name.%
 %
-\item Systematic Treatment of Missing Values Rule:~\sqlilIdx{NULL} values~(distinct from the empty character string or a string of blank characters, and distinct from zero or any other number) are supported in fully relational \pgls{dbms} for representing missing information and inapplicable information in a systematic way (independent of data type).
+\item Systematic Treatment of Missing Values Rule:~\sqlilIdx{NULL} values~(distinct from the empty character string or a string of blank characters, and distinct from zero or any other number) are supported in fully relational \pgls{dbms} for representing missing information and inapplicable information in a systematic way~(independent of data type).
 
 This rule has been a point of arguments over meany years~\cite{C20245YOQ}:
 Real data does include unspecified elements.
@@ -53,8 +53,7 @@ Of course, one could conceive and support also other languages.%
 \item Insert, Update, and Delete Rule:~The capability of handling a base relation or a derived relation as a single operand applies not only to the retrieval of data but also to the insertion, update, and deletion of data.
 In other words, the operations do not just apply to single records~(rows) but can concern multiple rows at once, because their inputs can be relations~(whole tables, results of \sqlil{SELECT}, \dots).%
 %
-\item Physical Data Independence Rule:~Application programs and terminal activities remain logically unimpaired whenever any
-changes are made in either storage representations or access methods.
+\item Physical Data Independence Rule:~Application programs and terminal activities remain logically unimpaired whenever any changes are made in either storage representations or access methods.
 In other words, the way the \pgls{dbms} actually stores the data has no impact on how an application accesses data via the text-based language.%
 %
 \item Logical Data Independence Rule:~Application programs and terminal activities remain logically unimpaired when information-preserving changes of any kind that theoretically permit unimpairment are made to the base tables.
@@ -67,12 +66,12 @@ We did this several times, for example with the \sqlilIdx{PRIMARY KEY} constrain
 All of them were defined in \sql.
 %
 \item Distribution Independence Rule:~A relational \pgls{dbms} has distribution independence.
-This means that a \pgls{dbms} \emph{may} store data distributed over several different computers~(nodes) or a cluster.
+This means that a \pgls{dbms} \emph{may support} storing data distributed over several different computers~(nodes) or a cluster.
 \emph{If} the \pgls{dbms} supports such distribution, then this should not affect the \sql\ programs sent to it.
 In this case, the \pgls{dbms} must take care of dividing the queries to the corresponding nodes and re-assemble the results.
 If a \pgls{dbms} does not support distribution of data over a network, then it automatically fulfills this rule.%
 %
-\item Non-Subversion Rule:~If a relational system has a low level~(single-record-at-a-time) language, that low level cannot be used to subvert or bypass the integrity rules and constraints expressed in the higher level relational language~(multiple-records-at-a-time).
+\item Non-Subversion Rule:~If a relational system has an additional low level~(single-record-at-a-time) language, that low level cannot be used to subvert or bypass the integrity rules and constraints expressed in the higher level relational language~(multiple-records-at-a-time).
 In other words, a \pgls{dbms} must support at least one relational language~(Rule~5), but it may support any other access languages or programming interfaces as well, some of which may work on single records, some may not be relational and so on.
 However, none of these access methods must be allowed to violate the integrity of the relational data.%
 %

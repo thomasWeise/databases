@@ -5,18 +5,18 @@ The following additional definitions are commonly considered~\cite{C1970ARMODFLS
 \begin{definition}[Relation Schema]%
 \sloppy%
 \label{def:relationSchema}%
-A \emph{relation schema}~\pgls{relSchema} is the ordered sequences of $n$~attributes~$(a_1, a_2, \dots, a_n)$, i.e., is a sequence of attribute names and domains. %
+A \emph{relation schema}~\pgls{relSchema} is the ordered sequences of $n$~attributes~$(a_1, a_2, \dots, a_n)$, i.e., is a sequence of attribute names and domains.%
 \end{definition}%
 \fussy%
 %
 \begin{definition}[Relation]%
 \label{def:rdb:relation}%
-A \emph{relation}~$R$ is a set of $n$\nobreakdashes-tuples $R\subseteq\attrDomainb{a_1}\times\attrDomainb{a_2}\times\dots\times\attrDomainb{a_n}$ to which a relation schema~\relSchemab{R}~\cite{SS2005EIDDDFDB:SDWSD2} that specifies the attributes~$(a_1, a_2, \dots, a_n)$ is associated.%
+A \emph{relation}~$R$ is a set of $n$\nobreakdashes-tuples $R\subseteq\attrDomainb{a_1}\times\attrDomainb{a_2}\times\dots\times\attrDomainb{a_n}$ to which a relation schema~\relSchemab{R} that specifies the attributes~$(a_1, a_2, \dots, a_n)$ is associated~\cite{SS2005EIDDDFDB:SDWSD2}.%
 \end{definition}%
 %
 The definition of relation schemas in the relational model is therefore somewhat equivalent to the definition of entity types in the entity model~(see \cref{def:entityType}).
 When translating our conceptual model to a logical relational model, an entity type will become a relation schema.
-The difference between conceptual and logical model is that we will use relations to implement both entities and relationships.
+The difference to the conceptual is that, in the logical schema, we will use relations to implement both entities and relationships.
 
 Also, at first glance, one may think that \inQuotes{Relations = Tables} in a \db.
 In other words, one may think that relations are implemented as tables.

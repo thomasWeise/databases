@@ -9,11 +9,19 @@ This has two reasons:
 First, the relationship diamonds waste space.
 Second, in the relational data model, relationships do not exist as independent objects.
 In this model, we only have entity types~(embodied by tables) and attributes~(the columns of the tables).
-Relationships are realized as foreign keys, i.e., as special attributes.%
+Relationships are realized as foreign keys, i.e., as special attributes, and as constraints.%
 %
 \hinput{definitions}{definitions.tex}%
 \hinput{keys}{keys.tex}%
 \hinput{rdbms}{rdbms.tex}%
-%
+
+We now have a basic understanding about how the relational data model works.
+We know the basic definitions.
+Even better, we can tie the definitions that we learned for conceptual modelling into the definitions for the relational model.
+We find that they are quite similar.
+We also learned the basic requirements for a relational \dbms.
+Combining these information with what we already learned in the initial example of this book, we have a pretty clear understanding of what relational \pglspl{dbms} like \postgresql\ offer to us.
+And we may have some good ideas about how we can transform our conceptual models to relational ones tied to an \sql\ \db.
+Which, coincidentally, is what we will do next.%
 \endhsection%
 %
