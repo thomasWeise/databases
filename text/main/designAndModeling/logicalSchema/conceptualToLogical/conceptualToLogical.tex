@@ -1,23 +1,28 @@
 \hsection{Mapping Conceptual Models to Logical Models}%
 %
-It is now our task to implement the conceptual model of our teaching management platform on top of a relational \pgls{dbms}, which is governed by these rules.
-This requires us to map entities and relationships to tables and constraints.
+We now want to implement the conceptual model of our teaching management platform on a relational \pgls{dbms}.
+This requires us to map entities and relationships to tables and constraints to objects in the relational realm.
 We further will need to design views, queries, as well as insertion rules for our data.
 Naturally, we choose \postgresql\ as the \pgls{dbms}.
 \postgresql\ supports \sql, so most of the functionality we will use can be provided 1:1 by other systems, such as \mysql, \mariadb, or \sqlite.
 
 The question of how to translate the conceptual model to a logical model is interesting.
 There are several sources that say that entity relationship models can easily be converted to logical schemas based on the relational data model and that there are tools available that can automate this~\cite{SS2005EIDDDFDB:SDLDUTRDM}.
-This, I believe, depends on how abstract your entity relationship models.
-As said, there are different tools that we could use to create our \pglspl{ERD}.
+This, I believe, depends on how abstract your entity relationship models are.
+And it depends on how exact the translation should be.
+
+There are different tools that we could use to create our \pglspl{ERD}.
 We used \yEd, which is total independent from any underlying \db\ technology.
 It does not even have anything to do with the relational data model.
-Translating such models to logical model does require thinking, although it is quite easy.
+Translating such models to logical model does require thinking, although often it is not that hard.
 
 We could have used \pgmodeler\ to draw our \pglspl{ERD} as well.
 The \pgmodeler\ can output \sql\ or even directly connect to the \postgresql\ \dbms.
 Then, however, we would not have created an abstract conceptual model.
-We would have directly started with something that is more or less already a logical model.%
+We would have directly started with something that is more or less already a logical model.
+
+But we do have an abstract conceptual model.
+And now we will learn how to translate such models to logical models.%
 %
 \hinput{entityToTable}{entityToTable.tex}%
 \hinput{relationships}{relationships.tex}%

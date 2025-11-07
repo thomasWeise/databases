@@ -5,25 +5,31 @@ Translating entity types from the conceptual model to the logical model is fairl
 Each entity type in the conceptual model becomes one table in the logical model.
 The entity type \emph{Student} becomes the table~\sqlil{student}.
 Each simple single-valued attribute becomes one column of that table.
-The attribute~\emph{Name} becomes the column~\sqlil{name} with a specific \sql~datatype for text and maybe an added sanity constraint, e.g., names should begin and end with printable (non-whitespace) characters.
+The attribute~\emph{Name} becomes the column~\sqlil{name} with a specific \sql~datatype for text and maybe an added sanity constraint, e.g., names should begin and end with printable~(non-whitespace) characters.
 
 Each component of a composite attribute becomes one column of that table.
-If \emph{Name} is not a simple attribute but a composite attribute consisting of the two components \emph{Full Name} and \emph{Salutation}, then we will have two columns, one called~\sqlil{full_name} and one called~\sqlil{saluation}.
-Both have reasonable datatypes and attached sanity constraints.
-In this case, the composite attribute~\emph{Name} in the conceptual model does not have a column in the table for the entity type of the logical model, but instead its components have columns.
-Of course, if the components themselves are composite attributes, the process is repeated recursively, i.e., the components are broken down until we arrive at simple attribes, for which we then have columns.
+Assume that \emph{Name} is not a simple attribute but a composite attribute.
+Let's say that it consists of the two components \emph{Full Name} and \emph{Salutation}.
+Then we will have two columns, one called~\sqlil{full_name} and one called~\sqlil{saluation}.
+Both would have reasonable datatypes and attached sanity constraints.
+In this case, the composite attribute~\emph{Name} in the conceptual model does not itself have a column in the table.
+Instead, its components have columns.
+Of course, if the components themselves are composite attributes, the process is repeated recursively.
+Then, the components are broken down until we arrive at simple attributes, for which we then have columns.
 
-Multivalued attributes come separate tables, where each row references the primary key of entity's table as foreign key.
+Multivalued attributes become separate tables.
+Each of their rows references the one row of the table of the entity type~(by storing its primary key via a foreign key).
 For example, if the \emph{Student} entity type in the conceptual model has the multivalued attribute \emph{Mobile Phone}, this would mean that each entity of type \emph{Student} can have multiple values of \emph{Mobile Phone} associated with it.
-The relational model, all datatypes are atomic, i.e., we cannot have a column that is of type \inQuotes{list of something}.
+In the relational data model, all datatypes are atomic, i.e., we cannot have a column that is of type \inQuotes{list of something}.
 Each attribute can only have a single value in each record.
 Thus, multivalued attributes need to become tables by themselves.
 So we would need to create a table~\sqlil{mobile} just for mobile phone numbers.
 This table would, at least, need a column for the actual phone number and a column that references the corresponding \emph{Student} record via a foreign key.
 It may also need to have a surrogate key, but this we discuss later on.
-Derived attributes are not included in the table.
 
-OK, so our goal here would be to either transform the conceptual model of a \db\ to a logical model~(or to directly design the logical model).
+Derived attributes normally are not included in the table.
+
+OK, so our goal here would be to either transform the conceptual model of a \db\ to a logical mode \emph{or}, in smaller-scale projects, to directly design the logical model.
 But lets first circle back to what a logical model is.
 In \cref{def:logicalModel}, we basically stated that the logical model is the collective view that users and applications have on the \db.
 In the relational model, this means that it defines all the tables, their attributes and constraints, as well as the queries.
@@ -49,7 +55,7 @@ Instead, there are also tools that are tied closely to \sql\ or even to specific
 \mysqlWorkbench~\cite{M2013MWDM}, for example, can connect to the \mysql\ \dbms\ and allows us to craft tables using an \pgls{ERD}\nobreakdashes-like syntax.
 \pgmodeler~\cite{AES2006PPDM} allows us to do the same for the \postgresql\ \dbms.
 The idea here is that we can use a much clearer and more restricted syntax to draw a visual representation of our \db.
-This syntax can then be translated to \sql, which we can send to the \postgresql\ \pgls{server}, e.g., via the \psql\ client.
+This syntax can then be translated to \sql, which we can send to the \postgresql\ \pgls{server}, e.g., via the \psql\ \pgls{client}.
 Using such a \pgls{GUI} has two main advantages:
 First, diagrams are intuitive and faster to understand than \sql\ scripts.
 Second, the different forms and dialogs that we use to create the \pglspl{ERD} help guiding us to create syntactially correct \sql.
@@ -509,7 +515,7 @@ We open the \menu{Export} dialog again. %
 This time, we want to export our model to~\sql. %
 We click on~\menu{SQL file}. %
 \textcolor{red}{Important:~Mark the output as \emph{Split}.} %
-Then on the file bar.%
+Then click on the file bar.%
 \label{fig:makeStudentTable46exportToSql}%
 ]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/makeStudentTable46exportToSql}}}%
 %
@@ -718,8 +724,6 @@ The next eight digits are the \pgls{dateOfBirth} in format YYYYMMDD, followed by
 The last character is a single checksum digit~(which can be~X).
 We could check this in a super fancy fashion.
 We could get our hands on a list of the actual valid values for the first digits, assuming that not all possible 1\decSep000\decSep000~possible administrative division codes are actually valid.
-We could compare the next six digits to the \pgls{dateOfBirth} that we store as well\footnote{%
-On second thought, if we require ID numbers to be present, we would not need to store the \pgls{dateOfBirth} anymore {\dots} but well, now we did it and will stick to it.}.
 We could even try to compute the checksum digit and check whether it matches.%
 %
 \begin{sloppypar}%
@@ -728,11 +732,15 @@ Instead, we will resort to a \glsreset{regex}\pgls{regex} to check the field lik
 We write \expandafter\sqlil{national_id ~ '^\\d\{6\}((19)|(20))\\d\{9\}[0-9X]\$'}.
 The \sqlil{national_id ~ xxx} means that the value of \sqlil{national_id} must match to some \pgls{regex}~\textil{xxx}.
 In the \pgls{regex}, \textil{^}~indicates the start of the text.
-\textil{\\d\{6\}}~means that six digits must immediately follow~\textil{^}, i.e., be right at the start of the string.
+\textil{^\\d\{6\}}~means that six digits must immediately follow~\textil{^}, i.e., be right at the start of the string.
 Then comes \textil{((19)|(20))}, which means that the next two characters must be either \inQuotes{19} or \inQuotes{20}.
-This is because we do not permit \pglspl{dateOfBirth} before the year 19\textcolor{gray}{00} or after 20\textcolor{gray}{99}.
+These two characters are the first two digits of the year of birth.
+We do not permit \pglspl{dateOfBirth} before the year 19\textcolor{gray}{00} or after 20\textcolor{gray}{99}.
 After that, we require nine digits to follow via~\textil{\\d\{9\}}.
-This means we now have $6+2+9=17$~digits, leaving the final checksum character, which can be any digit from 0~to~9 or~X.
+We could do this a bit better to enforce that next two digits would be valid months~\intRange{\textil{01}}{\textil{12}} and that the two digits following that be valid days-of-month, i.e., \intRange{\textil{01}}{\textil{31}}.
+In a \emph{real} application, we would totally do that {\dots} but here I leave this as exercise to the interested reader.
+Anyway, this means we now have $6+2+9=17$~digits.
+This leaves only the final checksum character, which can be any digit from 0~to~9 or~X.
 This is expressed by the~\textil{[0-9X]}.
 The~textil{\$} that follows marks the end of the string, which, hence, must come directly after the checksum digit.%
 \end{sloppypar}%
@@ -776,10 +784,20 @@ We click on~\menu{Apply}.
 
 The new constraint appears and we click on~\menu{Add Item}~\pgmodelerAddItem\ again in \cref{fig:makeStudentTable29mobileAddedNewConstraint}.
 We want to specify the \sqlilIdx{CHECK}\sqlIdx{CONSTRAINT!CHECK} constraint for the \pgls{dateOfBirth} and call it~\sqlil{student_date_of_birth_check}.
-We combine the condition \sqlil{date_of_birth > '1900-01-01'}~(demanding that students may not be born before the year~1900) and \sqlil{date_of_birth < '2100-01-01'}~(which prevents students born in the 22nd century) with~\sqlilIdx{AND}.
+One condition is that \sqlil{date_of_birth > '1900-01-01'}, i.e., we demand that students may not be born before the year~1900.
+Another condition is that \sqlil{date_of_birth < '2100-01-01'}, which prevents students born in the 22nd century.
+We combine both conditions with~\sqlilIdx{AND}.
 We click~\menu{Apply} in \cref{fig:makeStudentTable30dateOfBirthCheck}.
-
 In \cref{fig:makeStudentTable31dateOfBirthAddedNewConstraint}, the new constraint appears and we click on~\menu{Add Item}~\pgmodelerAddItem.
+
+It may be a cool idea to define a \sqlil{CHECK} constraint that validates whether the \pgls{dateOfBirth} given as \sqlil{date_of_birth} fits to the value provided in \sqlil{national_id}.
+After all, the \pgls{dateOfBirth} is directly present in the national Chinese~ID number, too.
+\sqlil{SUBSTR(national_id, 7, 8)}\sqlilIdx{SUBSTR} should give us the eight digits of the birth date from the national~ID~\cite{PGDG:PD:SFAO}.
+\sqlil{TO_CHAR(date_of_bith, \'YYYYMMDD\')}\sqlIdx{TO\_CHAR} would probably give us the \pgls{dateOfBirth} in the same format~\cite{PGDG:PD:DTFF}.
+Hence, we could add a \sqlil{CHECK}-constraint comparing the two and failing if they are different.
+This would be a pretty strong guard against typos.
+We leave this to the interested reader.
+
 As final constraint, we want to set some restriction on valid names.
 We create a \sqlilIdx{CHECK}\sqlIdx{CONSTRAINT!CHECK}~constraint for the column~\sqlil{name} and call it~\sqlil{student_name_check}.
 We specify the expression~\expandafter\sqlil{name ~ '^\\S+.*\\S+\$'}.
@@ -935,7 +953,7 @@ We double-click on the table~\sqlil{student} to edit it.%
 \floatRowSep%
 %
 \subfloat[][%
-We want tp add the columns~\sqlil{full_name} and~\sqlil{saltulation} to represent the flattened composite attribute~\sqlil{name}.%
+We want to add the columns~\sqlil{full_name} and~\sqlil{saltulation} to represent the flattened composite attribute~\sqlil{name}.%
 \label{fig:newStudentDb02addColumns}%
 ]{\tightbox{\includegraphics[width=0.48\linewidth]{\currentDir/newStudentDb02addColumns}}}%
 %
@@ -1182,7 +1200,7 @@ The model has the \sqlil{student} table.
 We will first add the two new name-related columns.
 Therefore, we double-click on the table~\sqlil{student} to edit it.
 
-We want tp add the columns~\sqlil{full_name} and~\sqlil{saltulation} to represent the flattened composite attribute~\sqlil{name} in \cref{fig:newStudentDb02addColumns}.
+We want to add the columns~\sqlil{full_name} and~\sqlil{saltulation} to represent the flattened composite attribute~\sqlil{name} in \cref{fig:newStudentDb02addColumns}.
 First, we add a column~\sqlil{full_name}, which is a variable-length string with maximum length~255 that must be~\sqlil{NOT NULL}.
 We insist that full names must always be provided for students.
 Then, we add the column~\sqlil{saltulation}, which is a variable-length string with maximum length~255.
@@ -1308,6 +1326,28 @@ With this, we are able to translate single entity types to the relational data m
 We are then also able to create the corresponding logical model in a comfortable editor~(\pgmodeler), that offers us an \pgls{ERD}-like visual syntax.
 We can export these models to~\sql.
 And we can then push these \sql~scripts to the \postgresql\ server.
+
+Wow, that was a lot.
+We learned how we can translate an entity type from the conceptual model to a logical schema based on the relational data model.
+Each entity type becomes one relation, i.e., one table.
+Its attributes become the columns of the relation.
+This, however, only holds for simple, single-valued attributes.
+If the attribute is composite, we break it down to its atomic components and these become columns.
+Multi-values attributes need to be separated from the entity type.
+In relational \pglspl{db}, all datatypes are single-valued.
+So multi-valued attributes become their own tables.
+They are then linked over foreign key constraints back to the main table of the entity type.
+Multiple rows in such a table can relate to one row of the main table, thus realizing the multi-valued-ness.
+
+Luckily, we learned the new tool \pgmodeler.
+This tool allows us to draw logical models for the \postgresql\ \dbms\ in a way quite similar to what we are used with \yEd.
+The models we generated by \yEd\ were technology-independent conceptual models.
+The logical models created with \pgmodeler\ are bound to \sql\ and the \postgresql\ \dbms.
+We can export them as \pgls{SVG} graphics, exactly as we did with models we created in \yEd.
+However, we can also export them to \sql\ directly.
+This is actually pretty awesome.
+We can now use a comfortable \pgls{GUI} to help us to build the \db\ schema.
+And then we can directly feed it into \postgresql.%
 \FloatBarrier%
 \endhsection%
 %

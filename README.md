@@ -77,6 +77,7 @@ The slides in German language can be found at <https://thomasweise.github.io/dat
 33. [Auswahl des Datemodells](https://thomasweise.github.io/databasesSlidesDE/33_datenmodell_auswahl.pdf)
 34. [Logisches Schema: Relationales Datenmodell](https://thomasweise.github.io/databasesSlidesDE/34_logisches_schema_relationales_datenmodell.pdf)
 35. [PgModeler Installieren](https://thomasweise.github.io/databasesSlidesDE/35_pgmodeler_installieren.pdf)
+36. [Logisches Schema: Entitäten zu Tabellen](https://thomasweise.github.io/databasesSlidesDE/36_logisches_schema_entitäten_zu_tabellen.pdf)
 
 
 ### 2.4. The Examples
