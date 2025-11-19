@@ -96,7 +96,7 @@ These are clearly numbers, too.
 
 This fairly straightforward structure is illustrated in \cref{fig:dbStructureProduct}.
 All we need to do now is to translate this design to \sql\ commands, which includes choosing names and \sql-datatypes for the columns.
-Fittingly, the command for creating tables is called \sqlil{CREATE TABLE}\sqlIdx{CREATE!TABLE}\sqlIdx{TABLE}.
+Fittingly, the command for creating tables is called \sqlil{CREATE TABLE}\sqlIdx{CREATE!TABLE}\sqlIdx{TABLE!CREATE}.
 As illustrated below, the command is followed by the table name and then, in parentheses, the list of attributes, i.e., columns, which are separated by commas.
 Each collumn has a datatype and may be annotated with some validity constraints~\cite{PGDG:PD:CT2}.
 The structure of the command looks like this:%
@@ -276,7 +276,7 @@ The name of the user owning each table is stored in column \sqlilIdx{tableowner}
 %
 \begin{sloppypar}%
 This results in the query \sqlil{SELECT tablename FROM pg_catalog.pg_tables}\sqlIdx{SELECT{\idxdots}FROM} with the clause \sqlil{WHERE tableowner = 'boss';}\sqlIdx{WHERE}~\cite{PGDG:PD:SC:S}.
-As you can see, before executing the \sqlil{CREATE TABLE}\sqlIdx{CREATE!TABLE}\sqlIdx{TABLE} command, this query returns nothing.
+As you can see, before executing the \sqlil{CREATE TABLE}\sqlIdx{CREATE!TABLE}\sqlIdx{TABLE!CREATE} command, this query returns nothing.
 Afterwards, one new table exists, namely~\sqlil{product}.
 This output is also illustrated in \cref{fig:createTable5select,fig:createTable6selected}.%
 \end{sloppypar}%

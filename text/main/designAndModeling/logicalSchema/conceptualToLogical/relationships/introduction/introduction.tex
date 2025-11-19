@@ -11,7 +11,7 @@ Vice versa, the \crowsFoot{C}{O1}{D}{M1} pattern also permits an entity of type~
 A \db\ where the relationship constraints between entities are correctly maintained has the property of \emph{referential integrity}.%
 \end{definition}%
 %
-In other words, if we map a conceptual models, say given as \pgls{ERD}, to a relational data model, we must also map the relationship patterns.
+If we map a conceptual models, say given as \pgls{ERD}, to the relational data model, we must also map the relationship patterns.
 This means essential to translate crow's foot notation to \sql.
 \sql\ offers us four major tools to implement relationship constraints:%
 %
@@ -27,7 +27,13 @@ This means essential to translate crow's foot notation to \sql.
 %
 \end{itemize}%
 %
-We will now set out to find how each of the ten binary conceptual relationship types that we discussed can be implemented in \sql.
+In most courses that I have on \pgls{db}, the relationship types are discussed in the conceptual levels.
+Then, there is only a very approximate and incomplete explanation on how these can actually be realized.
+Maybe something along the lines of~\inQuotes{For this type, you use two tables\dots}.
+It is usually discussed how the multiplicity and modality can be actually enforced, especially for more complex constellations like~\crowsFoot{S}{MM}{T}{MM}.
+
+Well, you are lucky.
+We will now set out to find how \emph{each} of the ten binary conceptual relationship types that we discussed can be implemented in \sql.
 We will do this in plain \sql\ and not in the \pgmodeler, because we start from the visual representation of the relationships and want to transform them to \sql.
 Using \pgmodeler, we would practically do the same, just in a convenient \pgls{GUI}.
 \pgmodeler\ is also more suitable for managing larger models, whereas we will slash and hammer our way through several small models with two entity types each.
@@ -35,7 +41,7 @@ Using \pgmodeler, we would practically do the same, just in a convenient \pgls{G
 Please also consider this as an exercise in \sql.
 This is not so much about whether all of these relationship types do occur in practice.
 It is also not about memorizing the different approaches how they can be implemented.
-It is mainly about getting some feeling and understanding how the utilities that \sql\ offers us, mainly \sqlil{NOT NULL}, \sqlil{REFERENCES}, \sqlil{UNIQUE}, and \sqlil{PRIMARY KEY}~constraints~\cite{PGDG:PD:C} together with \sqlil{INNER JOIN} queries~\cite{PGDG:PD:JT} can be used to enforce referential integrity between tables.
+It is mainly about getting some feeling and understanding how the utilities that \sql\ offers us, mainly \sqlil{NOT NULL}, \sqlil{REFERENCES}, \sqlil{UNIQUE}, and \sqlil{PRIMARY KEY}~constraints~\cite{PGDG:PD:C} together with \sqlil{INNER JOIN} queries~\cite{PGDG:PD:JT}, can be used to enforce referential integrity between tables.
 And also, for some relationship types {\dots} it is even fun to figure out how they can be implemented.%
 %
 \noviceHint{%

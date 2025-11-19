@@ -23,7 +23,7 @@ This must be executed by the administrator account \textil{postgres}.%
 %
 The \sql\ syntax for deleting various \db\ objects is rather easy~\cite{PGDG:PD:DU,PGDG:PD:DD,PGDG:PD:DT,PGDG:PD:DV}.
 You write \sqlilIdx{DROP} followed by the object type followed by the object name.
-The object type could, e.g., be \sqlil{TABLE}\sqlIdx{DROP!TABLE}, \sqlil{VIEW}\sqlIdx{DROP!VIEW}, \sqlil{USER}\sqlIdx{DROP!USER}, or \sqlil{DATABASE}\sqlIdx{DROP!DATABASE}.
+The object type could, e.g., be \sqlil{TABLE}\sqlIdx{DROP!TABLE}\sqlIdx{TABLE!DROP}, \sqlil{VIEW}\sqlIdx{DROP!VIEW}\sqlIdx{VIEW!DROP}, \sqlil{USER}\sqlIdx{DROP!USER}\sqlIdx{USER!DROP}, or \sqlil{DATABASE}\sqlIdx{DROP!DATABASE}\sqlIdx{DATABASE!DROP}.
 These commands will always fail if the object is still in use, i.e., if it is referenced by any other object.
 You cannot delete a table that is part of a foreign key constraint, for instance.
 The command will also fail if the object does not exist.

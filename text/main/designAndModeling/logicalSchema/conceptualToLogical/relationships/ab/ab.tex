@@ -114,10 +114,13 @@ Assume that there also is an attribute~\sqlil{y}, which is a string of two chara
 (In all the remaining examples in this section, we will use similar table patterns).
 
 We start with the three-table approach in~\cref{lst:AB_1_tables}, as suggested in, e.g.,~\cite{S2024D:MEDTRDM}.
-There, we have a third table~\sqlil{relate_a_and_b} relating the entities of type~A to those of type~B.
+There, we have a third table, \sqlil{relate_a_and_b}, relating the entities of type~A to those of type~B.
 This table has two columns, the first one, \sqlil{fkaid}, holding the primary key of the A~entities as foreign key and the second one, \sqlil{fkbid}, holding the primary key of the B~entities as foreign key.
 Since we only store the pairs that exist, both columns have the~\sqlil{NOT NULL} constraint.
 Both also have~\sqlil{REFERENCES} constraints to their respective foreign keys.
+Since every entity of type~A can only be linked to at most one entity of type~B, each value of the primary key of table~\sqlil{a} must only appear in column~\sqlil{fkaid} of table \sqlil{relate_a_and_b} \emph{at most once}.
+The same holds for the entities of type~B vice versa, which also means that each value~(of \sqlil{bid}) can occur at most once in column~\sqlil{fkbid} \emph{at most once}.
+In other words:
 Since on both relationship ends there can only be one entity, both columns also have \sqlil{UNIQUE}~constraints.
 Either of them may be used as~\sqlil{PRIMARY KEY}.
 
@@ -134,14 +137,14 @@ We can then establish relationships between the rows of tables~\sqlil{a} and~\sq
 \sqlil{INSERT INTO relate_a_and_b (fkaid, fkbid) VALUES (2, 3);}, for example, would relate the row in table~\sqlil{a} with~\sqlil{aid = 2} to the row in table~\sqlil{b} with~\sqlil{bid = 3}.
 The contents of the tables after executing \cref{lst:AB_1_insert_and_select} is illustrated in \cref{fig:rm:ab:1:tables}.
 
-Now we want to query some information about~A, using~\sqlil{SELECT}, but also need information about the potentially related~B.
+Now we want to query some information about an entity~A, using~\sqlil{SELECT}, but also need information about the potentially related B~entity.
 We use an~\sqlil{INNER JOIN} coming from table~\sqlil{a} on the third table~\sqlil{relate_a_and_b} based on the primary key~\sqlil{aid} of table~\sqlil{a}.
 We then need another~\sqlil{INNER JOIN} with the table for~B on its primary key~\sqlil{bid}, as shown in \cref{lst:AB_1_insert_and_select}.
 This way, we can reconstruct the related data in two steps.
 
 Notice that it is impossible to have any row of table~\sqlil{a} that is related to more than one row in table~\sqlil{b}, as demonstrated in \cref{lst:AB_1_insert_error_1}.
-The \sqlil{UNIQUE} constraint on the column~\sqlil{a} of~\sqlil{relate_a_and_b} prevents this.
-Vice versa, the \sqlil{UNIQUE} constraint on column~\sqlil{b} in~\sqlil{relate_a_and_b} prevents that any row in table~\sqlil{b} is related to more than one row in table~\sqlil{a}.
+The \sqlil{UNIQUE} constraint on the column~\sqlil{fkaid} of~\sqlil{relate_a_and_b} prevents this.
+Vice versa, the \sqlil{UNIQUE} constraint on column~\sqlil{fkbid} in~\sqlil{relate_a_and_b} prevents that any row in table~\sqlil{b} is related to more than one row in table~\sqlil{a}.
 This is demonstrated in \cref{lst:AB_1_insert_error_2}.
 
 However, there are two problems with this three-table-method:
@@ -154,13 +157,14 @@ Also, if all entities of type~A were related to an entity of type~B, then we cou
 Actually, in that case, using the third table would just be a waste of space and query time.
 
 Thus, if many or most A~entities are related to B~entities, then instead of using a third table, we could alternatively add a column~\sqlil{fkbid} to the table for~A and store the primary keys of the related B~entities in that column.
-We delete the tables we just created in \cref{lst:AB_cleanup} to explore the two-table solution in \cref{lst:AB_1_tables}.
-The new column~\sqlil{fkbid} added to the table~\sqlil{a} can be allowed to be~\sqlil{NULL}, because not all entities of type~A need to be related to an entity of type~B.
+We delete the tables we just created in \cref{lst:AB_cleanup} to explore the two-table solution in \cref{lst:AB_2_tables}.
+The new column~\sqlil{fkbid} added to the table~\sqlil{a}.
+It can be allowed to be~\sqlil{NULL}, because not all entities of type~A need to be related to an entity of type~B.
 It must be marked as \sqlilIdx{UNIQUE}, though, because no entity of type~B can be related to more than one entity of type~A.
-This constraint only applies to values that are \emph{not}~\sqlil{NULL}.
+This constraint only applies to \sqlil{fkbid}~values that are \emph{not}~\sqlil{NULL}.
 
 It also needs a \sqlil{REFERENCES} constraint.
-In \cref{lst:AB_2_tables}, we add this constraint later via \sqlil{ALTER TABLE}\sqlIdx{ALTER!TABLE}\sqlIdx{TABLE}, very much like \pgmodeler\ does it~(see back in \cref{lst:logical:teachingManagment:student_database_2:05_public_mobile_mobile_student_id_fk_constraint_5087}).
+In \cref{lst:AB_2_tables}, we add this constraint later via \sqlil{ALTER TABLE}\sqlIdx{ALTER!TABLE}\sqlIdx{TABLE!ALTER}, very much like \pgmodeler\ does it~(see back in \cref{lst:logical:teachingManagment:student_database_2:05_public_mobile_mobile_student_id_fk_constraint_5087}).
 Otherwise, we would need to create table~\sqlil{b} before table~\sqlil{a}.
 That is totally OK, but if we had many tables, the required order of table creation could make our \sql\ code harder to read.
 Also, the probability of making errors that are hard to figure out would be higher.

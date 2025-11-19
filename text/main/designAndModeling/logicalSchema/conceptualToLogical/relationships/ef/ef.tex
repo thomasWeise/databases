@@ -74,18 +74,20 @@ There may be zero, one, or many replies to any existing message.
 This situation is sketched in \cref{fig:rm:ef}.
 
 We need a table~\sqlil{e} for the entities of type~E and a table~\sqlil{f} for the entities of type~F.
-Both have their respective surrogate primary keys~\sqlil{eid} and~\sqlil{fid} and we also add the example attributes~\sqlil{x} and~\sqlil{y} to them, respectively.
+Both have their respective surrogate primary keys~\sqlil{eid} and~\sqlil{fid}.
+We also add the example attributes~\sqlil{x} and~\sqlil{y} to them, respectively.
 Apart from that, there can again be two solutions to implementing this relationship:
 We can use three tables or two, again, depending on how many entities of types~E and~F are actually related.
 
-We may use a third table~\sqlil{relate_e_and_f} relating the entities of type~E to those of type~F.
+We can use a third table~\sqlil{relate_e_and_f} relating the entities of type~E to those of type~F.
 This approach is illustrated in \cref{lst:EF_1_tables}.
 There will be two columns in that table.
 The first one, \sqlil{fkeid}, holds the reference to the primary key~\sqlil{eid} of the E~entities.
 The second one, \sqlil{fkfid}, holds the reference to the primary key~\sqlil{fid} of the F~entities.
 Since we only store the pairs that exist, both columns are~\sqlil{NOT NULL} and have~\sqlil{REFERENCES} constraints to their respective foreign keys.
 
-Since each entity of type~F can only be connected to at most one entity of type~E, there will be a~\sqlil{UNIQUE} constraint on the column~\sqlil{fkfid} and it would be the primary key of table~\sqlil{relate_e_and_f}.
+Since each entity of type~F can only be connected to at most one entity of type~E, there will be a~\sqlil{UNIQUE} constraint on the column~\sqlil{fkfid}.
+We also make it would be the primary key of table~\sqlil{relate_e_and_f}.
 It needs to be the primary key because the values in column~\sqlil{fkeid} do not need to be unique -- one entity of type~E can be related to many entities of type~F.
 
 In \cref{lst:EF_1_insert_and_select}, we insert some data into the tables.
@@ -101,18 +103,22 @@ Instead of simply storing the keys of the related E~entities in the table~\sqlil
 Also, we would again need two \sqlil{INNER JOIN} statements instead of one when we merge the data, as shown in \cref{lst:EF_1_insert_and_select}.%
 \end{sloppypar}%
 %
+We thus first delete the tables again in \cref{lst:EF_cleanup}.
 The two-table solution is illustrated in \cref{lst:EF_2_tables}.
 Here, we need to add a foreign key column~\sqlil{fkeid} to the table~\sqlil{f}.
 This column has a \sqlil{REFERENCES} constraint pointing to column~\sqlil{eid} of table~\sqlil{e}.
-The value of this column can be \sqlil{NULL}, because not all rows in~\sqlil{f} need to be related to rows in~\sqlil{e}.
-Different from the \crowsFoot{A}{O1}{B}{O1} situation in~\cref{lst:AB_2_tables}, there also \emph{should not} be a \sqlil{UNIQUE} constraint here, because each row of~\sqlil{E} can be related to multiple rows in~\sqlil{f}.
+A value in this column can be \sqlil{NULL}, because not all rows in table~\sqlil{f} need to be related to rows in table~\sqlil{e}.
+Different from the \crowsFoot{A}{O1}{B}{O1} situation in~\cref{lst:AB_2_tables}, there \emph{must not} be a \sqlil{UNIQUE} constraint here:
+Each row of table~\sqlil{e} can be related to multiple rows in table~\sqlil{f}.
+This means that the primary key values from table~\sqlil{e} are allowed to occur multiple times as foreign key values in column~\sqlil{fkeid} in table~\sqlil{f}.
 
-We store some data into the three tables in \cref{lst:EF_2_insert_and_select}.
+We store some data into the two tables in \cref{lst:EF_2_insert_and_select}.
 We can do this by first inserting rows into table~\sqlil{e}.
 Then we add rows to table~\sqlil{f}.
 For each such row, we can provide a valid foreign key~\sqlil{fkeid} to a row in table~\sqlil{e} identified by primary key~\sqlil{eid}.
-This means that the new row in table~\sqlil{f} will be related to the existing row in table~\sqlil{e}.
-We can also store~\sqlil{NULL} as \sqlil{fkeid}, in which case the row in table~\sqlil{f} is not related to any row in table~\sqlil{e}.
+If we do this, then the new row in table~\sqlil{f} will be related to the existing row in table~\sqlil{e}.
+We can also store~\sqlil{NULL} as \sqlil{fkeid}.
+In this case the row in table~\sqlil{f} is not related to any row in table~\sqlil{e}.
 The contents of the two tables after executing \cref{lst:EF_2_insert_and_select} are given in \cref{fig:rm:ef:2:tables}.
 We also only need a single \sqlil{INNER JOIN} to merge the data, as illustrated in \cref{lst:EF_2_insert_and_select}.
 

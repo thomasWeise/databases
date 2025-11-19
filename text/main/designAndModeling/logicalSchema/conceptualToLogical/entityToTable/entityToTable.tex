@@ -893,9 +893,13 @@ The third file is named something like \textil{03_public_student_table_...sql}.
 This file contains the commands for creating the table \sqlil{student}.
 Its contents are shown in \cref{lst:logical:teachingManagment:student_database_1:03_public_student_table_5071}.
 There is not really anything there that goes beyond what we discussed in our initial example back in \dref{sec:factoryCreatingTableAndInsertingData}.
-We see the \sqlil{CREATE TABLE}\sqlIdx{CREATE!TABLE}\sqlIdx{TABLE} command together with statements for creating the constraints\sqlIdx{CONSTRAINT}.%
+We see the \sqlil{CREATE TABLE}\sqlIdx{CREATE!TABLE}\sqlIdx{TABLE!CREATE} command together with statements for creating the constraints\sqlIdx{CONSTRAINT}. %
 \end{sloppypar}%
 %
+The only peculiarity is the \sqlil{ALTER TABLE}\sqlIdx{ALTER!TABLE}\sqlIdx{TABLE!ALTER}, which can change a table after its creation~\cite{PGDG:PD:AT}.
+Here, it assigns the owner of the table.
+We can ignore this for now.
+
 When we pass the contents of this file to \psql, we must make sure to send them to the \db\ \sqlil{student_database}.
 We do so in \cref{exec:logical:teachingManagment:student_database_1:03_public_student_table_5071} and the execution completes successful.
 
@@ -1302,7 +1306,7 @@ Both types are synonymous.
 
 The foreign key constraint is not included in \cref{lst:logical:teachingManagment:student_database_2:04_public_mobile_table_5081}.
 Instead, it went into its own script, here reproduced as \cref{lst:logical:teachingManagment:student_database_2:05_public_mobile_mobile_student_id_fk_constraint_5087}.
-Instead of directly including it when the table is created, the table is later changed~(\sqlil{ALTER TABLE}\sqlIdx{ALTER!TABLE}\sqlIdx{TABLE}).
+Instead of directly including it when the table is created, the table is later changed~(\sqlil{ALTER TABLE}\sqlIdx{ALTER!TABLE}\sqlIdx{TABLE!ALTER}).
 The constraint is added via \sqlilIdx{ADD CONSTRAINT}.
 Apart from this and some additional behavior specifications that we will ignore here, it looks not much different from the \sqlilIdx{REFERENCES} statement we used when creating our factory's \sqlil{demand} table back in \cref{lst:factory:create_table_demand}.
 Well, it looks different, because now it is explicitly defined as constraint instead of being declared inline.
