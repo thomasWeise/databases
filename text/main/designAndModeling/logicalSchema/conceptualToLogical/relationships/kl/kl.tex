@@ -18,7 +18,7 @@ The realization of a \crowsFoot{K}{M1}{L}{OM} conceptual relationship.%
 Inserting into and selecting data from the realization of an \crowsFoot{K}{M1}{L}{OM} conceptual relationship given in \cref{lst:KL_tables}.%
 }{}%
 %
-\gitExec{cdtrmTableL}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships k kid;x}{cdtrmTableK}%
+\gitExec{cdtrmTableK}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships k kid;x}{cdtrmTableK}%
 \gitExec{cdtrmTableL}{\databasesCodeRepo}{conceptualToRelational}{../_scripts_/db_table_to_latex_table.sh relationships l lid;fkkid;y}%
 %
 \begin{figure}%
@@ -38,7 +38,7 @@ Each entity of type~L is connected to exactly one entity of type~K.
 
 We already encountered this relationship pattern in back in \cref{fig:erdPerson4}, when we modeled the relationship between the entity types~\emph{Personal~ID} and~\emph{ID~Type}.
 We found that there can be many different types of IDs, including the Chinese~IDs~(中国公民身份号码), passports, visas, or even mobile phone numbers.
-For each such type, we may have zero, one, or many personal~ID records stored in our \db.
+For each such ID-type, we may have zero, one, or many personal~ID records stored in our \db.
 Each personal~ID, however, must always belong to exactly one ID~type.
 This is illustrated in \cref{fig:rm:kl}.
 
@@ -47,11 +47,11 @@ We call the primary key for table~\sqlil{k} \sqlil{kid} and also add the example
 The primary key for table~\sqlil{l} be~\sqlil{lid} and we again provide the example attribute~\sqlil{y}.
 Every row of table~\sqlil{l} must be related to exactly one row of table~\sqlil{k}.
 The three table solution from the \crowsFoot{E}{O1}{F}{OM} scenario therefore makes no sense:
-The third table could never have few rows, it would always have exactly as many rows as~\sqlil{l}.
+The third table could never have just a few rows, it would always have exactly as many rows as Table~\sqlil{l}.
 
 The sensible solution is to add a foreign key column to table~\sqlil{l} that references the primary key of table~\sqlil{k}, as shown in \cref{lst:KL_tables}.
 Since the relationship is mandatory, the column must be~\sqlil{NOT NULL}.
-It does not need to be unique, because each row in table~\sqlil{k} can be related to arbitrarily many rows in~\sqlil{l}.
+It does not need to be unique, because each row in table~\sqlil{k} can be related to arbitrarily many rows in table~\sqlil{l}.
 
 We insert some data into this structure in \cref{lst:KL_insert_and_select}.
 We can first create the rows for table~\sqlil{k}, because their relationship to rows in table~\sqlil{l} is optional.
@@ -62,9 +62,9 @@ The reason is that each row in table~\sqlil{l} must be related to exactly one ro
 Thus, providing~\sqlil{NULL} as~\sqlil{fkkid} is not possible.
 The contents of the tables~\sqlil{k} and~\sqlil{l} after inserting the data are shown in \cref{fig:rm:kl:tables}.
 
-It is impossible to add a row to table~\sqlil{l} without providing an existing value of the primary key attribute~\sqlil{id} of table~\sqlil{k} for the foreign key column~\sqlil{k}.
+It is impossible to add a row to table~\sqlil{l} without providing an existing value of the primary key attribute~\sqlil{kid} of table~\sqlil{k} for the foreign key column~\sqlil{fkkid}.
 In other words, because of the \sqlil{REFERENCES} and the \sqlil{NOT NULL} constraint, each row in table~\sqlil{l} must reference exactly one row in table~\sqlil{k}.
-It cannot reference more than one row, because the atttribute~\sqlil{k} can only take on a single value.
+It cannot reference more than one row, because the atttribute~\sqlil{fkkid} can only take on a single value.
 In turn, the rows in table~\sqlil{k} can be referenced by arbitrarily many rows in table~\sqlil{l}:
 maybe by no row at all, maybe by one, maybe be hundreds.
 This is exactly the meaning of the \inQuotes{optionally-many} relationship end pointing towards entity type~L.
