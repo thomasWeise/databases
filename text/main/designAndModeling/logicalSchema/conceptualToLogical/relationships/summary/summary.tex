@@ -10,8 +10,8 @@ This was quite a journey.
 We have worked our way through every single binary conceptual relationship type that can be expressed with crow's foot notation.
 We listed all of these relationship types back in \dref{sec:conceptual:relationshipCardinalities}.
 
-We found that each of these types can be enforced in a relational \dbms.
-With \emph{enforced}, we refer to the cardinality and modality of the relationship ends.
+We found that each of these types can be implemented in a relational \dbms.
+With \emph{implemented}, we refer to the cardinality and modality of the relationship ends.
 If we want to implement, for example, a relationship following the pattern \crowsFoot{K}{M1}{L}{OM} in a \dbms, then we can do that.
 We can create a table~\sqlil{k} for the entities of type~K and a table~\sqlil{l} for the entities of type~L.
 Then we can use constraints that enforce that each row in table~\sqlil{l} must be related to exactly one row in table~\sqlil{k}.
@@ -30,6 +30,7 @@ Another one were sequences and the \sqlil{NEXTVAL} function~\cite{PGDG:PD:CS,PGD
 
 Due to the complexity, we may sometimes choose to change the relationship types when moving from the conceptual model to the logical model.
 We only considered binary relationship between two entity types, and doing something like \crowsFoot{M}{M1}{N}{MM} while also having \crowsFoot{N}{MM}{X}{MM} might prove too annoying to actually implement.
+One may also use more complex tools for that, like Stored Procedures and Transactions, which we do not discuss at this stage.
 
 Creating examples for every single possible relationship type for two tables was fun, though.
 As final step, we can now get rid of our example \db\ in~\cref{lst:conceptualToRelational:cleanup}.%
