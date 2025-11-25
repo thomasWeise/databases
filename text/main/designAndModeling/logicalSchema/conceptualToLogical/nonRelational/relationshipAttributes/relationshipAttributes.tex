@@ -6,13 +6,13 @@
 %
 \subfloat[][%
 A reproduction of \cref{fig:erdPerson2} from back in \dref{sec:conceptual:relationships}, which was created using \yEd.%
-\label{fig:erdPerson1B}%
+\label{fig:erdPerson2B}%
 ]{\includegraphics[width=0.9\linewidth]{\figErdPersonII}}%
 %
 \floatRowSep%
 %
 \subfloat[][%
-A transformation of \cref{fig:erdPerson1B} to a logical model using \pgmodeler.%
+A transformation of \cref{fig:erdPerson2B} to a logical model using \pgmodeler.%
 \label{fig:logicalPerson2}%
 ]{\includegraphics[width=0.97\linewidth]{\currentDir/logicalPerson2}}%
 %
@@ -27,12 +27,13 @@ Since only relations exist in the relational model and such relations become tab
 It will depend on the relationship pattern where we put them.
 To try this concept out, let us go back to an even earlier example of the \emph{Person} entity:
 to \cref{fig:erdPerson2} from back in \dref{sec:conceptual:relationships}.
-We created this figure using \yEd\ and reprint it in \cref{fig:erdPerson1B}.
+We created this figure using \yEd\ and reprint it in \cref{fig:erdPerson2B}.
 As you can see, in this figure, there is a relationship \emph{has~ID} that connects the \emph{Person} entities with the entity type~\emph{ID~Type}.
 
 In the model, we did not annotate the relationships with cardinalities, because that was before we got to that topic.
 However, it is rather clear that this would either be a \crowsFoot{\emph{Person}}{OM}{\emph{ID Type}}{OM} or a \crowsFoot{\emph{Person}}{MM}{\emph{ID Type}}{OM} relationship.
-We can store arbitrarily many forms of ID for each person and each form of ID may be used by arbitrarily many people.
+We can store arbitrarily many forms of ID for each person.
+Each form of ID may be used by arbitrarily many people.
 Since we went the hard way in the last section and modeled a relationship with the \emph{mandatory many} pattern, we this time go easy and choose \crowsFoot{\emph{Person}}{OM}{\emph{ID Type}}{OM}.
 In other words, we follow the pattern \crowsFoot{O}{OM}{P}{OM} discussed in \dref{sec:rm:op}.
 
@@ -52,8 +53,9 @@ Each row in table~\sqlil{relate_o_and_p} must be related to one row in table~\sq
 Each row in table~\sqlil{o} can be related to arbitrarily many rows in table~\sqlil{relate_o_and_p}.
 Each row in table~\sqlil{p} can be related to arbitrarily many rows in table~\sqlil{relate_o_and_p}.
 Indeed, that forms a \crowsFoot{O}{OM}{P}{OM} relationship.
+And the diagram for the logical model here reflects that.
 
-Also, when implementing the full conceptual model given in \cref{fig:erdPerson1B}, we again encounter multivalued attributes:~\emph{Name} and \emph{Address}.
+Also, when implementing the full conceptual model given in \cref{fig:erdPerson2B}, we again encounter multivalued attributes:~\emph{Name} and \emph{Address}.
 As we already learned before, these go into additional tables, which we call \sqlil{name} and \sqlil{address}, respectively.
 For these, we again use the proper foreign key \sqlilIdx{REFERENCES} constraints.
 
@@ -97,10 +99,11 @@ Selecting data from the tables in the \sqlil{person_database}.}{}%
 
 We can export the logical model created with \pgmodeler\ and we get \cref{lst:person_2:01_person_database_database_2001,lst:person_2:03_public_person_table_5071,lst:person_2:04_public_name_table_5075,lst:person_2:05_public_address_table_5084,lst:person_2:06_public_id_type_table_5094,lst:person_2:07_public_has_id_table_5100,lst:person_2:08_public_name_name_person_fk_constraint_5108,lst:person_2:09_public_address_address_person_fk_constraint_5109,lst:person_2:10_public_has_id_has_id_id_type_fk_constraint_5110,lst:person_2:11_public_has_id_has_id_person_fk_constraint_5111}.
 \Cref{lst:person_2:01_person_database_database_2001} creates the \db\ \sqlil{person_database}.
-The table \sqlil{person} is created in \cref{lst:person_2:03_public_person_table_5071}, with a surrogate primary key and a field \sqlil{date_of_birth} for the \pgls{dateOfBirth}.
+The table \sqlil{person} is created in \cref{lst:person_2:03_public_person_table_5071}, with a surrogate primary key and an attribute \sqlil{date_of_birth} for the \pgls{dateOfBirth}.
 
 In \cref{lst:person_2:04_public_name_table_5075}, the table \sqlil{name} is created for the multivalued composite attribute \emph{Name}.
-Each row in table~\sqlil{name} will store a foreign key~\sqlil{person} that is linked to a row in table~\sqlil{person} using a \sqlilIdx{REFERENCES} constraint, which is added later in \cref{lst:person_2:08_public_name_name_person_fk_constraint_5108}.
+Each row in table~\sqlil{name} will store a foreign key~\sqlil{person} that is linked to a row in table~\sqlil{person} using a \sqlilIdx{REFERENCES} constraint.
+This is added later in \cref{lst:person_2:08_public_name_name_person_fk_constraint_5108} using \sqlil{ALTER TABLE}\sqlIdx{ALTER!TABLE}\sqlIdx{TABLE!ALTER}.
 Apart from that, we added a small gimmick for your enjoyment:
 The column \sqlil{start_date} is created \sqlil{NOT NULL DEFAULT CURRENT_DATE}.
 This means that, for each row in table~\sqlil{name}, we must \emph{store} a proper start date as per the~\sqlilIdx{NOT NULL}.
@@ -110,16 +113,58 @@ Similar functions are \sqlil{CURRENT_TIME}\sqlIdx{CURRENT\_TIME} and, most impor
 
 But back to the topic at hand.
 \Cref{lst:person_2:05_public_address_table_5084} creates the table~\sqlil{address}.
-There is nothing special about this table.
-Its foreign key~\sqlil{person} is related to the table~\sqlil{person} using the \sqlilIdx{REFERENCES} constraint given in \cref{lst:person_2:09_public_address_address_person_fk_constraint_5109}.
+There is nothing too special about this table.
+One interesting thing is maybe that we provide \sqlilIdx{DEAULT} values also for \sqlil{country} and \sqlil{province}.
+This means that, if we do not provide these when we enter data, they are set to~\sqlil{\'CN\'} and~\sqlil{\'AH\'}, respectively.
+The foreign key~\sqlil{person} is related to the table~\sqlil{person} using the \sqlilIdx{REFERENCES} constraint given in \cref{lst:person_2:09_public_address_address_person_fk_constraint_5109}.
+
 \Cref{lst:person_2:06_public_id_type_table_5094} creates the table~\sqlil{id_type} in pretty much the same shape and form already used in the previous section in \cref{lst:person_1:04_public_id_type_table_5072}.
 The table~\sqlil{has_id} is created in \cref{lst:person_2:07_public_has_id_table_5100}.
 It follows the same design as table~\sqlil{personal_id} from the previous section, which was given in \cref{lst:person_1:05_public_personal_id_table_5078}.
-The corresponding foreign key constraints linking its rows to tables~\sqlil{id_type} and~\sqlil{person} are created using \cref{lst:person_2:11_public_has_id_has_id_person_fk_constraint_5111,lst:person_2:10_public_has_id_has_id_id_type_fk_constraint_5110}, respectively.
+It hosts the relationship attributes that we designed in our conceptual model.
+The foreign key constraints linking its rows to tables~\sqlil{id_type} and~\sqlil{person} are created using \cref{lst:person_2:11_public_has_id_has_id_person_fk_constraint_5111,lst:person_2:10_public_has_id_has_id_id_type_fk_constraint_5110}, respectively.
 With this, we have constructed the \sqlil{person_database}.
 
 We fill the \db\ with data in \cref{lst:person_database_2:insert}.
-In \cref{lst:person_database_2:select}, we use a query that combines data from several tables using \sqlilIdx{INNER JOIN} statements and then concatenates the data to single text strings per result row.%
+We begin by creating three records for table~\sqlil{person}, for which only we need to specify the \pglspl{dateOfBirth}.
+We then insert the names of the three people in table~\sqlil{name}.
+Curiously, we have four name records.
+The reason is that, on February 2nd, 1989, a 26~year old \emph{Ms.~Bibbi} married and decided to take on the name of her husband.
+Her name thus changed to~\emph{Mrs.~Bebba}.
+This is reflected in the last two rows we add to the table~\sqlil{name}.
+
+The same two ID~types as in the previous example -- Chinese ID and mobile phone number -- are created and stored in table~\sqlil{id_type}.
+For each ID~type and person, we then store one value in the table~\sqlil{has_id}.
+We make use of the relationship attributes stored in there.
+Finally, we provide one \sqlil{address} record for each row in~\sqlil{person}.
+The data entry is completed.
+
+In \cref{lst:person_database_2:select}, we use a query that combines data from several tables using \sqlilIdx{INNER JOIN} statements and then concatenates the data to single text strings per result row.
+This is maybe the biggest \slqilIdx{INNER JOIN} we did to date.
+We want to combine the names of the people with their addresses and mobile phone numbers.
+This can be done using the string concatenation operator~\sqlil{||}\sqlIdx{\textbar\textbar}.
+
+To get the necessary data, we go through the table \sqlil{name} row-by-row.
+Later, in a \sqlilIdx{WHERE}~clause, we make sure to only use the currently valid names via \sqlil{name.is_official = TRUE}.
+For each such row in table \sqlil{name}, we pick the corresponding \sqlil{person} record via the foreign key.
+Using the primary key of that record's primary key, we can find the corresponding rows in tables \sqlil{address} and \sqlil{has_id}.
+We keep only the IDs with ID-type~\sqlil{2} via \sqlil{has_id.id_type = 2} in the \sqlilIdx{WHERE}~clause, i.e., the mobile phone numbers.
+
+If a person would not have a mobile phone number or address, they would not appear in this list.
+What would happen if a person had multiple mobile phone numbers and/or addresses?
+Feel encouraged to try it out!
+
+Anyway, we sort the resulting rows by the \pgls{dateOfBirth} of the persons, meaning that the oldest person will come first.
+The result is as expected.
+
+
+So what did we learn this time?
+Relationships on the conceptual level can have attributes.
+Relationships do not exist as objects in logical schemas based on the relational data model.
+Here, we only have tables.
+So these relationship attributes from the conceptual schema become table columns in the logical schema.
+And they are located in the tables that represent the relationships.
+That was easy.%
 %
 \FloatBarrier%
 \endhsection%
