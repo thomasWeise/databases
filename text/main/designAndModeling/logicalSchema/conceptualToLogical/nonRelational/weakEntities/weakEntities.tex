@@ -19,7 +19,7 @@ A transformation of \cref{fig:erdPerson4} to a logical model using \pgmodeler.%
 \label{fig:logicalErdPerson4X}%
 \end{figure}%
 %
-As introduced in \cref{sec:weakEntities}, weak entity types always appear in at least one identifying relationship with a strong entity type~\cite{S2024D:MEDTRDM}.
+As introduced in \cref{sec:weakEntities}, weak entity types always appear in at least one identifying relationship with a strong entity type~\cite{S2024D:MEDTRDM}~(or with another weak entity type that can be identified.)
 In \cref{fig:erdPerson4} back in \dref{sec:conceptual:relationshipCardinalities}, which is here reprinted as \cref{fig:erdPerson4B}, we modeled IDs that belong to a person as such a week entity type.
 Each \emph{Personal~ID} is in an identifying relationship with an entity of type~\emph{Person} and also in an identifying relationship with an entity of type~\emph{ID~Type}.
 
@@ -42,7 +42,7 @@ Back in \cref{sec:rm:mn}, we needed \emph{two} foreign key \sqlil{REFERENCES} co
 On the one hand, we referenced table~\sqlil{M} from table~\sqlil{N} with a single foreign key that was~\sqlil{NOT NULL}.
 This enforced that there was at least one row in table~\sqlil{M} for each row in table~\sqlil{N}.
 On the other hand, we referenced table~\sqlil{N} from table~\sqlil{M} with a compound foreign key.
-This enforced that each one row in table~\sqlil{M} was connected to one row in table~\sqlil{N}, while not preventing that more rows in table~\sqlil{N} may exist that are related to it.%
+This enforced that each row in table~\sqlil{M} was connected to one row in table~\sqlil{N}, while not preventing that more rows in table~\sqlil{N} may exist that are related to it.%
 \end{sloppypar}%
 %
 If we enter the same constraints into \pgmodeler, it will display them separately.
@@ -63,7 +63,7 @@ It is imposed on table~\sqlil{personal_id}.%
 \centering%
 %
 \subfloat[][%
-In the \pgmodeler\ design view, right-click and select \menu{New > Schema Object > Sequence}.%
+In the \pgmodeler\ design view, right-click into the workspace and select \menu{New > Schema Object > Sequence}.%
 \label{fig:pgmodelerSequence1new}%
 ]{\tightbox{\includegraphics[width=0.47\linewidth]{\currentDir/pgmodelerSequence1new}}}%
 %
@@ -87,7 +87,7 @@ We select \emph{Sequence} as \menu{Default Value} and then click into the text b
 \floatSep%
 %
 \subfloat[][%
-Another dialog opens up where we click through the tree of objects, find our new \sqlil{Sequence}, and then click the check mark button at the bottom.%
+Another dialog opens up where we click through the tree of objects, find our new \sqlilIdx{SEQUENCE}, and then click the check mark button at the bottom.%
 \label{fig:pgmodelerSequence4selectSequence}%
 ]{\tightbox{\includegraphics[width=0.47\linewidth]{\currentDir/pgmodelerSequence4selectSequence}}}%
 \floatRowSep%
@@ -131,7 +131,7 @@ The generated script to create the \sqlil{person_database}~\db.}%
 \listingSQL{person_1:05_public_personal_id_table_5078}{The generated script to create the \sqlil{personal_id} table.}%
 %
 \gitLoadAndExecSQL{person_1:06_public_person_table_5087}{}{teachingManagement/logical/person_database_1/generated_sql}{06_public_person_table_5087.sql}{person_database}{}{}%
-\listingSQL{person_1:06_public_person_table_5087}{The generated script to create the \sqlil{personal_id} table.}%
+\listingSQL{person_1:06_public_person_table_5087}{The generated script to create the \sqlil{person} table.}%
 %
 \gitLoadAndExecSQL{person_1:07_public_personal_id_personal_id_id_type_fk_constraint_5093}{}{teachingManagement/logical/person_database_1/generated_sql}{07_public_personal_id_personal_id_id_type_fk_constraint_5093.sql}{person_database}{}{}%
 \listingSQL{person_1:07_public_personal_id_personal_id_id_type_fk_constraint_5093}{The generated script to create the constraint managing the relationship between the rows in table~\sqlil{personal_id} and those in table~\sqlil{id_type}.}%
@@ -162,7 +162,7 @@ In other words, unless the \pgls{dba} provides a better \pgls{regex}, applicatio
 \Cref{lst:person_1:05_public_personal_id_table_5078} creates that table in which we will store the \emph{Personal ID} entities.
 Like all of our tables, it has a surrogate primary key~\sqlil{id}.
 The \emph{Personal~ID} entities are weak entities.
-They cannot exist without a defining relationship to one \emph{Person} entity and one \emph{ID~Type} entity.
+They cannot exist without a identifying relationship to one \emph{Person} entity and one \emph{ID~Type} entity.
 Therefore, this table stores two foreign keys:
 \sqlil{id_type} and \sqlil{person}.
 The corresponding constraints are added later in \cref{lst:person_1:07_public_personal_id_personal_id_id_type_fk_constraint_5093,lst:person_1:08_public_personal_id_personal_id_person_fk_constraint_5094}, respectively.
@@ -186,7 +186,8 @@ So there is no application that actually uses these \pglspl{regex}.
 But at least in our imagination, we would have provided the means for checking ID values.
 
 Then we use basically the same code as in \cref{lst:MN_insert_and_select} from back in \dref{sec:rm:mn} to fill the tables~\sqlil{person} and \sqlil{personal_id}.
-First we create a \sqlil{person} record with an associated Chinese national~ID, then we add a mobile phone number to that record.
+First we create a \sqlil{person} record with an associated Chinese national~ID.
+Then we add a mobile phone number to that record.
 Then we create a second record, again with national~ID.
 At the end, we combine the information back together using an~\sqlilIdx{INNER JOIN}.
 
@@ -204,8 +205,17 @@ But we would get much simpler code, which is easier to check and easier to maint
 Also, if an application would later enter data, maybe via a library like \psycopg, the complexity of the required access pattern would also be reduced.
 What to do here is a an interesting philosophical question, with no clear right or wrong choice.
 
-In this book, we choose the harder method {\dots} just to see whether we can get it to work.
+In this book, we choose the harder method for two reasons.
+First, we want to see whether we can get it to work~(we can).
+Also, we can learn more {\dots} the hard way requires a deeper understanding of \sql.
 Anyway, after running this example we delete the \sqlil{person_database} with a \sqlilIdx{DROP DATABASE} command.
+
+So.
+What did we learn?
+We basically learned that weak entities can be implemented very much like the strong entities we use before.
+The main difference is that the identifying relationships must be mandatory.
+Which they should be in the conceptual model as well.
+So actually, we learned that we can more or less ignore whether an entity is weak or strong.%
 %
 \FloatBarrier%
 \endhsection%

@@ -79,6 +79,7 @@ The slides in German language can be found at <https://thomasweise.github.io/dat
 35. [PgModeler Installieren](https://thomasweise.github.io/databasesSlidesDE/35_pgmodeler_installieren.pdf)
 36. [Logisches Schema: Entitäten zu Tabellen](https://thomasweise.github.io/databasesSlidesDE/36_logisches_schema_entitäten_zu_tabellen.pdf)
 37. [Logisches Schema: Beziehungen](https://thomasweise.github.io/databasesSlidesDE/37_logisches_schema_beziehungen.pdf)
+38. [Logisches Schema: Schwache Entitäten](https://thomasweise.github.io/databasesSlidesDE/38_logisches_schwache_entitäten.pdf)
 
 
 ### 2.4. The Examples
