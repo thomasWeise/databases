@@ -81,6 +81,7 @@ The slides in German language can be found at <https://thomasweise.github.io/dat
 37. [Logisches Schema: Beziehungen](https://thomasweise.github.io/databasesSlidesDE/37_logisches_schema_beziehungen.pdf)
 38. [Logisches Schema: Schwache Entitäten](https://thomasweise.github.io/databasesSlidesDE/38_logisches_schema_schwache_entitäten.pdf)
 39. [Logisches Schema: Beziehungsattribute](https://thomasweise.github.io/databasesSlidesDE/39_logisches_schema_beziehungsattribute.pdf)
+40. [Logisches Schema: Beziehungen höheren Grades](https://thomasweise.github.io/databasesSlidesDE/40_logisches_schema_beziehungen_höheren_grades.pdf)
 
 
 ### 2.4. The Examples
