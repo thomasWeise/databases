@@ -189,6 +189,80 @@ We could now change the theme to light, as done in \cref{fig:installingPgmodeler
 \label{fig:installingPgModeler:G}%
 \end{figure}%
 %
+\begin{figure}%
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+We open the \pgls{MSYS2} \pgls{terminal}.%
+\label{fig:installingPgModelerWindows24msys2terminal}%
+]{\tightbox{\includegraphics[width=0.45\linewidth]{\currentDir/installingPgModelerWindows24msys2terminal}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+We type in \bashil{nano ~/.bashrc} and hit \keys{\return}.%
+\label{fig:installingPgModelerWindows25nanoBashRc}%
+]{\tightbox{\includegraphics[width=0.45\linewidth]{\currentDir/installingPgModelerWindows25nanoBashRc}}}%
+%
+\floatRowSep%
+%
+\subfloat[][%
+The minimalistic \bashil{nano} text editor opens. %
+We press \keys{\ctrl+End}.%
+\label{fig:installingPgModelerWindows26nanoBashRcOpen}%
+]{\tightbox{\includegraphics[width=0.45\linewidth]{\currentDir/installingPgModelerWindows26nanoBashRcOpen}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+The \bashil{nano} text editor scrolls to the end of the file.%
+\label{fig:installingPgModelerWindows27nanoCtrlEnd}%
+]{\tightbox{\includegraphics[width=0.45\linewidth]{\currentDir/installingPgModelerWindows27nanoCtrlEnd}}}%
+%
+%
+\floatRowSep%
+%
+\subfloat[][%
+We type in \textil{export PATH=\$PATH:/mingw64/bin}.%
+\label{fig:installingPgModelerWindows28nanoExportPath}%
+]{\tightbox{\includegraphics[width=0.45\linewidth]{\currentDir/installingPgModelerWindows28nanoExportPath}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+We press \keys{\ctrl+O}. %
+Then we press \keys{\enter} when asked whether to store the text in the (original) file.%
+\label{fig:installingPgModelerWindows29nanoCtrlO}%
+]{\tightbox{\includegraphics[width=0.45\linewidth]{\currentDir/installingPgModelerWindows29nanoCtrlO}}}%
+%
+\caption{Installing \pgmodeler\ under \microsoftWindows\ using the \pgls{MSYS2} environment~(continued).}%
+\label{fig:installingPgModeler:H}%
+\end{figure}%
+%
+\begin{figure}%
+\ContinuedFloat%
+\centering%
+%
+\subfloat[][%
+After pressing \keys{\enter}, the text is written to the file. %
+We now press \keys{\ctrl+X} to quit the editor.%
+\label{fig:installingPgModelerWindows30enter}%
+]{\tightbox{\includegraphics[width=0.45\linewidth]{\currentDir/installingPgModelerWindows30enter}}}%
+%
+\floatSep%
+%
+\subfloat[][%
+We are now back in the \pgls{terminal}, which we close. %
+The next time we open it, the \bashil{pgmodeler} command should work.
+\label{fig:installingPgModelerWindows31CtrlX}%
+]{\tightbox{\includegraphics[width=0.45\linewidth]{\currentDir/installingPgModelerWindows31CtrlX}}}%
+%
+%
+\caption{Installing \pgmodeler\ under \microsoftWindows\ using the \pgls{MSYS2} environment~(continued).}%
+\label{fig:installingPgModeler:I}%
+\end{figure}%
+%
 \pgmodeler\ is a software leaning heavily to the \linux\ side.
 Installing it under \microsoftWindows\ as-is is not possible~(at least not for free).
 The \pgmodeler\ website recommends to first install the \glsreset{MSYS2}\gls{MSYS2}.
@@ -260,6 +334,22 @@ It is now important to \textbf{close and re-open} the \pgls{MSYS2} \pgls{termina
 After the \pgls{terminal} is opened again, we can type \bashil{pgmodeler} and hit~\keys{\return}.
 The \pgmodeler\ is starting up in \cref{fig:installingPgModelerWindows22pgmodelerLogo}.
 
+If it does not, then some simple additional steps are required.
+We therefore re-open the \pgls{MSYS2} \pgls{terminal}, as shown in \cref{fig:installingPgModelerWindows24msys2terminal}.
+Then we type in \bashil{nano ~/.bashrc} and hit \keys{\return}~(\cref{fig:installingPgModelerWindows25nanoBashRc}).
+The minimalistic \bashil{nano} text editor opens in \cref{fig:installingPgModelerWindows26nanoBashRcOpen}.
+We press \keys{\ctrl+End} to scroll to the end of the file and arrive there in \cref{fig:installingPgModelerWindows27nanoCtrlEnd}.
+
+Now we type in \textil{export PATH=\$PATH:/mingw64/bin}, as shown in \cref{fig:installingPgModelerWindows28nanoExportPath}.
+We press \keys{\ctrl+O}, which causes the changed file to be saved.
+Then we press \keys{\enter} when asked whether to store the text in the (original) file~(\cref{fig:installingPgModelerWindows29nanoCtrlO}).
+After pressing \keys{\enter}, the text is written to the file.
+We now press \keys{\ctrl+X} to quit the editor in \cref{fig:installingPgModelerWindows30enter}.
+
+We are now back in the \pgls{MSYS2} \pgls{terminal}, which we close in \cref{fig:installingPgModelerWindows31CtrlX}.
+The next time we open it, the \bashil{pgmodeler} command should work.
+
+We thus enter \bashil{pgmodeler} command in a newly opened \pgls{MSYS2} \pgls{terminal}.
 The \pgmodeler\ main window has opened in \cref{fig:installingPgModelerWindows23pgmodelerMain}.
 If you want, you can change its color theme to light, as done in \cref{fig:installingPgmodelerUbuntu09openSettings,fig:installingPgmodelerUbuntu10themeLight,fig:installingPgmodelerUbuntu11themeLightSet}.
 At this stage, the program is running and usable.%

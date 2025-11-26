@@ -21,24 +21,29 @@ One possible transformation of \cref{fig:erdStudentModuleProf3} to a logical mod
 \end{figure}%
 %
 In \cref{fig:erdStudentModuleProf3B}, we reproduce a figure from \dref{sec:conceptual:relationships} where a ternary relationship is illustrated.
-The entities \emph{Professor}, \emph{Student}, and \emph{Module} are related with each other and this relationship even has a relationship attribute.
+The entity types \emph{Professor}, \emph{Student}, and \emph{Module} are related with each other and this relationship even has a relationship attribute.
 The professor teaches a module in a certain semester.
 The student enrolls in that taught module in that semester.
 
-In \cref{fig:logicalStudentModuleProf}, we create a logical model that fits to this scenario.
-First, the entities become tables with surrogate primary keys.
+We now want to create a logical model that fits to this scenario.
+First we sort out the easy things.
+The entity types become tables with surrogate primary keys.
 We thus get the tables \sqlil{module}, \sqlil{professor}, and \sqlil{student}.
-In order to add a bit more sense to this example, we add the attribute \sqlil{name} to the tables \sqlil{student} and \sqlil{professor} as well as \sqlil{title} to \sqlil{module}.
+In order to add a bit more sense to this example, we include the attribute \sqlil{name} in the tables \sqlil{student} and \sqlil{professor} as well as \sqlil{title} in \sqlil{module}.
 
 We then construct the ternary relationship.
 We basically have two choices to do this:%
 %
 \begin{enumerate}%
 %
-\item We can create one single table \sqlil{takes_place} which has three foreign keys to the tables \sqlil{professor}, \sqlil{student}, and \sqlil{module}, as well as a column~\sqlil{semester}.%
+\item We can create one single table \sqlil{takes_place}.
+It will have three foreign keys to the tables \sqlil{professor}, \sqlil{student}, and \sqlil{module}, as well as a column~\sqlil{semester}. %
+It will store all the data and participants of the ternary relationship.%
 %
-\item We can create one table~\sqlil{course} with a surrogate key for the \inQuotes{module-instantiation}, which has foreign keys to the tables \sqlil{professor} and \sqlil{module} as well as the column~\sqlil{semester}. %
-We create a second table~\sqlil{enrolls} that has two foreign keys, one for the table~\sqlil{student} and one for the table~\sqlil{course}.%
+\item We can create one table~\sqlil{course} with a surrogate key and use it to store the \inQuotes{module-instantiation}. %
+It will have foreign keys to the tables \sqlil{professor} and \sqlil{module} as well as the column~\sqlil{semester}. %
+We then create a second table~\sqlil{enrolls} that has two foreign keys, one for the table~\sqlil{student} and one for the table~\sqlil{course}. %
+It stores the \inQuotes{enrolls} relationship of students towards module-instatiations.%
 %
 \end{enumerate}%
 %
@@ -46,7 +51,19 @@ Both choices would be feasible, but we go with the second one.
 The idea is that we can also consider the realization of a module by a certain professor in a semester as an entity in its own right.
 This entity would have the attribute \sqlil{semester}, but could also have arbitrary other attributes that we may want to add later.
 Relating the students to that \sqlil{course} table by using a separate table then makes sense.
-So we modeled this using \pgmodeler\ and get the logical schema illustrated in \cref{fig:logicalStudentModuleProf}.
+
+This approach has two striking benefits.
+First, it avoids avoids redundancy.
+The first idea, namely storing the student, module, and professor keys in a single table, would mean that we store the fact that \inQuotes{Prof.~Mrs.~Bibba} teaches~\inQuotes{Mathematics~101} again and again.
+By using two tables, one for module instances and one for module enrollment, we only store it once.
+
+Second, this second method can properly represent a situation in which a professor teaches the same module twice in one semester.
+Due to limited room capacity or scheduling conflicts of student time tables, it might indeed possible that \inQuotes{Prof.~Mrs.~Bibba} teaches~\inQuotes{Mathematics~101} on Mondays for one group of students and on Tuesdays for a second group.
+In the first solution, there is no way to express this fact.
+In the second one, which we chose, we can simply instantiate the module twice.
+
+Anyway, once we made up our mind, we can create the model.
+We do this using, of course, \pgmodeler\ and get the logical schema illustrated in \cref{fig:logicalStudentModuleProf}.
 
 \gitLoadAndExecSQL{teaching_1:01_teaching_database_database_2001}{}{teachingManagement/logical/teaching_database_1/generated_sql}{01_teaching_database_database_2001.sql}{}{}{}%
 \listingSQL{teaching_1:01_teaching_database_database_2001}{The generated script to create the \sqlil{teaching_database}~\db.}%
