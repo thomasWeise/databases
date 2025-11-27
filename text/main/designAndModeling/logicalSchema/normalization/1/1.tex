@@ -1,7 +1,7 @@
 \hsection{First Normal Form}%
 \label{sec:normalForm:1}%
 %
-The \glsreset{1NF}\pgls{1NF} dates back to \citeauthor{C1970ARMODFLSDB}'s seminal paper~\cite{C1970ARMODFLSDB} where he presented the relational data model back in~\citeyear{C1970ARMODFLSDB}.
+The \glsFull{1NF} dates back to \citeauthor{C1970ARMODFLSDB}'s seminal paper~\cite{C1970ARMODFLSDB} where he presented the relational data model back in~\citeyear{C1970ARMODFLSDB}.
 In its essence, it prescribes that the design of tables must follow the relational data model.%
 %
 \begin{definition}[\glsreset{1NF}\Pgls{1NF}]%
@@ -10,9 +10,12 @@ Under the \pgls{1NF}, all rows in a table must have the same number of fields an
 %
 This excludes multivalued attributes as well as composite attributes.
 As we already discussed before, the relational data model does not support such attributes anyway.
+So why does this normal form even exist?
+If all tables would fulfill it by default, then there would be no need to even discuss it.
 
 In \cref{sec:mappingEntitiesToTables}, we discussed how entity types in the conceptual schema are translate to tables in the logical schema based on the requirements of the relational data model.
-We stated that multivalued attributes become separate tables and that composite attributes need to be recursively broken down into their atomic components, which then become separate columns.
+We stated that multivalued attributes become separate tables.
+Composite attributes need to be recursively broken down into their atomic components, which then become separate columns.
 If we use the relational data model, then we would naturally produce logical models in \pgls{1NF}.
 
 However, this is only true if we \emph{recognize} multivalued attributes and composite attributes as such.

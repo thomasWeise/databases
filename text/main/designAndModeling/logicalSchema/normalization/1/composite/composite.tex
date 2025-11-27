@@ -30,29 +30,45 @@ Trying to find all the students with an address in China, which is hard, because
 \gitExecSQLraw{}{}{normalization/1nf/anomaly_composite}{cleanup.sql}{}{}{}%
 %
 In \cref{fig:anomalyComposite}, we illustrate a part of a logical model that relates student records to address records.
-In this relationship, each student has exactly one address.
-In \cref{lst:1nf:anomaly_composite:03_public_address_table_5071,lst:1nf:anomaly_composite:04_public_student_table_5075}, we create the two tables, while leaving the \db\ and constraint creation to your imagination.
+In this model, each student has exactly one address and a name.
+Addresses are text stored in a separate table.
+
+The auto-generated script \cref{lst:1nf:anomaly_composite:03_public_address_table_5071} creates the table~\sqlil{address}.
+It has two columns, namely the surrogate primary key~\sqlil{id} and the column~\sqlil{full_address}, which is a variable-length string of up to 255~characters.
+As the name suggests, we will store the addresses of the students in this table.
+
+The script \cref{lst:1nf:anomaly_composite:04_public_student_table_5075} then creates the table~\sqlil{student}.
+This table, too, has a surrogate primary key~\sqlil{id}.
+It also sports the column~\sqlil{name} storing the name of the students.
+Column~\sqlil{address} is a foreign key reference to the \sqlil{id}~column of table~\sqlil{address}.
+This is secured by a \sqlil{REFERENCES} constraint that we create with another script.
+We do not print that one here and neither do we print the script for generating the \db, as they do not contribute much to the understanding of the scnario.
+
 We then insert some data into them \db\ \cref{lst:1nf:anomaly_composite:insert}.
+We first create four address records, one for our Hefei University~(合肥大学) located in the beautiful city of Hefei~(合肥市) in China, one address in my hometown Chemnitz, Germany, one address located in the Chinatown of New York, USA, and, finally, one address in Quanzhou city~(泉州市), China.
+We then create four \sqlil{student} records for Mr.~Bibbo, Mr.~Bebbo, Mrs.~Bibbi, and Mr.~Bebbo.
+Via their foriegn key, these are linked to the above addresses in that order.
 At first glance, all looks well.
 
-And all could be well, if we would treat the address of a student always as a single text string.
+And all could be well, if we would treat the address of a student always as a single unstructured text string.
 However, this is not necessarily true, especially not true in our teaching management platform example.
 In our example, Mr.~Bibbo lives directly in our Hefei University whereas Mr.~Babbo comes from Quanzhou~(泉州市) in the Fujian province~(福建省).
-Mr.~Bebbo and Ms.~Bibbi, however, are foreign exchange students~(留学生) from Germany and the USA, respectively.
+Mr.~Bebbo and Mrs.~Bibbi, however, are foreign exchange students~(留学生) from Germany and the USA, respectively.
 Assume that this table would be much larger.
 What would happen if we wanted to know who of our students have a valid address in China?
 How would we do that?%
 %
 \begin{sloppypar}%
 Matter of fact, we encountered this very same situation back in \cref{sec:factory:table:customer:insert}.
-Back then, we used the \sqlilIdx{ILIKE} expression and we do so again here:
+Back then, we used the \sqlilIdx{ILIKE} expression~\cite{PGDG:PD:PM} and we do so again here:
 In \cref{lst:1nf:anomaly_composite:select}, we combine the tables~\sqlil{student} and \sqlil{address} by using an \sqlilIdx{INNER JOIN} statement.
-We then only keep the rows \sqlil{WHERE full_address ILIKE '\%china\%'}, in other words, where the word \inQuotes{china} occurs anywhere in the \sqlil{full_address} columns, regardless of its casing.
+We then only keep the rows \sqlil{WHERE full_address ILIKE '\%china\%'}.
+In other words, we retain only the rows where the word \inQuotes{china} occurs anywhere in the \sqlil{full_address} columns, regardless of its case.
 \inQuotes{China,} \inQuotes{china,} \inQuotes{CHINA,} \inQuotes{cHina} -- all are OK.
-Doing this will yield the two students Mr.~Bibbo and Ms.~Bibbi.
+Doing this will yield the two students Mr.~Bibbo and Mrs.~Bibbi.
 Ms.~Bibbi, however, is a foreign exchange student.
 She lives in \emph{China}town, New York.
-Also, Mr.~Babbo was not listed, as he declared his address to be in the PRC, i.e., the People's Republic of China.%
+Also, Mr.~Babbo was not listed, as he declared his address to be in the PRC, i.e., the People's Republic of China~(中华人民共和国).%
 \end{sloppypar}%
 %
 We are faced with two problems:
@@ -63,6 +79,8 @@ The first problem is caused directly by our violation of the \pgls{1NF}.
 Here, we did not model the attribute for the address as a composite attribute.
 We modelled it as an atomic attribute, which turned out to be wrong, because now we want to access its components.
 An atomic attribute does not have components.
+So the error did occur in the conceptual modeling phase.
+It became apparent only after we finished implementing the logical model.
 
 Now our \db\ can still \inQuotes{work}.
 We can construct the second query in \cref{lst:1nf:anomaly_composite:select}, which deals with both of the special cases mentioned above.
@@ -105,13 +123,17 @@ Let us now fix this problem.
 A proper solution can only be to model the address as a composite attribute.
 At least the country needs to be split off.
 Maybe also the province, because that could come in handy, too.
-We probably also want a postal code.
+Adn while we are at it, we probably also want to know the city and postal code.
+The components of this composite attribute then will become separate columns in a table.
 We apply these ideas to create the improved logical model in \cref{fig:fixedComposite}.
 
 The attribute~\sqlil{full_address} now now longer exists when we create the table \sqlil{address} in \cref{lst:1nf:fixed_composite:03_public_address_table_5071}.
-Instead, we have the columns~\sqlil{country}, \sqlil{province}, \sqlil{city}, \sqlil{postal_code}, and~\sqlil{street_address}, all of which are of type \sqlilIdx{VARCHAR} of appropriate lengths.
-We permit \sqlil{province} to be \sqlilIdx{NULL}, because some countries maybe do not have provinces, whereas all other fields must be~\sqlilIdx{NOT NULL}.
+Instead, we have the columns~\sqlil{country}, \sqlil{province}, \sqlil{city}, \sqlil{postal_code}, and~\sqlil{street_address}.
+All of them are of type \sqlilIdx{VARCHAR} of appropriate lengths.
+We permit \sqlil{province} to be \sqlilIdx{NULL}, because some countries maybe do not have provinces.
+All other fields must be~\sqlilIdx{NOT NULL}.
 Nothing else changes, the table~\sqlil{student} can stay as it is.
+We thus do not reproduce its creation here as a listing.
 
 When we insert the data into our \db\ \cref{lst:1nf:fixed_composite:insert}, we of course also need to split the addresses properly over the columns.
 This also shows us a slight drawback that is inherent to all normal forms:
@@ -119,8 +141,14 @@ They break compound data into independent pieces.
 If we later need the complete data again, we need to reassemble the pieces.
 Thus, if we need the full address string, we first must reassemble it, probably using the string concatenation operator~\sqlil{||}\sqlIdx{\textbar\textbar}~\cite{PGDG:PD:SFAO}.
 
+Anyway.
+This time, we create five student records, adding Ms.~Bebbe to the mix.
+The addresses of the other students stay basically the same, but are broken down into their components.
+Ms.~Bebbe lives in somewhere Beijing~(北京), China.
+
 As you can see in \cref{exec:1nf:fixed_composite:select}, we now can indeed obtain the list of all students with addresses in China much more easily.
-It is a given that we still have to deal with the fact that different people may use different names for the country, but at least we cannot accidentally classify someone from Chinatown in San Francisco as a PRC resident.
+It is a given that we still have to deal with the fact that different people may use different names for the country.
+But at least we cannot accidentally classify someone from Chinatown in San Francisco as a PRC resident.
 
 While we are here, let's do a small excursion that just fits nicely in this topic but is otherwise unrelated to the \pgls{1NF}.
 If you read \cref{lst:1nf:fixed_composite:select}, you notice that reassembling the full address was a bit complicated and went beyond simply using~\sqlil{||}\sqlIdx{\textbar\textbar}.
@@ -140,7 +168,7 @@ This function takes arbitrarily many arguments and returns the first argument th
 When reading the query, you will also find one additional change when checking the country:
 We could have used the logical \sqlilIdx{OR} to combine the three conditions \sqlil{country ILIKE '\%china\%'}, \sqlil{country ILIKE '\%PRC\%'}, and \sqlil{country ILIKE '\%P.R.C.\%'}\sqlIdx{ILIKE}.
 Instead, we wrote \sqlil{country ILIKE ANY(ARRAY['\%china\%', '\%PRC\%', '\%P.R.C.\%'])}\sqlIdx{ANY}\sqlIdx{ARRAY}, which is equivalent to that~\cite{PGDG:PD:RAAC,PGDG:PD:A}:
-We can declare an array of the values \sqlil{a}, \sqlil{b}, \sqlil{c}, and~\sqlil{d} as \sqlil{ARRAY[a, b, c, d]}\sqlIdx{ARRAY}.
+We can declare an array of the values \sqlil{a}, \sqlil{b}, \sqlil{c}, and~\sqlil{d} via \sqlil{ARRAY[a, b, c, d]}\sqlIdx{ARRAY}.
 The expression \sqlil{XXX operator ANY(ARRAY[...])}\sqlIdx{ANY} becomes \sqlil{TRUE} if \sqlil{XXX operator YYY} is \sqlil{TRUE} for any, i.e., at least one, \sqlil{YYY} in the array~\cite{PGDG:PD:RAAC}.
 In our case, \sqlil{XXX} is \sqlil{country} and \sqlil{operator} is \sqlilIdx{ILIKE}.
 (Similarly, the expression \sqlil{XXX operator ALL(ARRAY[...])}\sqlIdx{ALL} becomes \sqlil{TRUE} if \sqlil{XXX operator YYY} is \sqlil{TRUE} for every single, i.e., all, \sqlil{YYY} in the array~\cite{PGDG:PD:RAAC}.)

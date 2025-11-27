@@ -3,14 +3,16 @@
 %
 Designing the logical schema for a \pgls{rdb} is not just a transformation of a conceptual schema to \sql.
 While we now are able to translate all the elements of an \pgls{ERD} illustrating a conceptual model to to a logical model, this does not necessarily mean that the resulting model will be efficient and well-designed.
-In order to achieve this, several guidelines can be followed and some of the most important once concern \emph{normalization}~\cite{D2003AITDS,EN2015FODS}.
+In order to achieve this, several guidelines and best practices can be followed.
+Some of the most important of these concern \emph{normalization}~\cite{D2003AITDS,EN2015FODS}.
 
 Normalization is a process that aims at minimizing redundancy and avoiding inconsistencies and anomalies~\cite{S2024D:N,S2024D:RNDAFDNF}.
-It does so at the trade-off of data retrieval speed:
+It does so usually at the trade-off of data retrieval speed:
 Data which, in unnormalized form, could be stored in a single table needs to be reassembled using \sqlilIdx{INNER JOIN} and similar constructs combining multiple tables in normalized form~\cite{K1983ASGTFNFIRDT}.
 Therefore, whether to normalize data and to which degree is a question always to be answered with performance in mind~\cite{K1983ASGTFNFIRDT}.
 
-There exist several \glsreset{NF}\pglspl{NF}, such as the \glsreset{1NF}\pgls{1NF}, the \glsreset{2NF}\pgls{2NF}, the \glsreset{3NF}\pgls{3NF}, and so on.
+There exist several \glsFull{NF}.
+Out of these, we shall here consider the \glsFull{1NF}, the \glsFull{2NF}, and the \glsFull{3NF}.
 Higher normal forms are more restrictive.
 Therefore, if a part of a logical model is in a higher normal form, then it is also in all of the lower normal forms.
 %

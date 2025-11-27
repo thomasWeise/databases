@@ -11,19 +11,21 @@ The basic steps that you will have to take are as follows:%
 \item Go to \url{https://www.macports.org} and then to the register \emph{\inQuotes{Installing \pgls{macPorts}}} -- or directly visit
 \url{https://www.macports.org/install.php}.%
 %
-\item Download the \pgls{macPorts} suitable for your version of \pgls{macOS}. %
+\item Download the \pgls{macPorts} version suitable for your version of \pgls{macOS}. %
 For example, if you have \inQuotes{\pgls{macOS} Ventura}, then you would download the installer for \inQuotes{\pgls{macOS} Ventura}%
 %
 \item Install the downloaded version of \pgls{macPorts}.%
+%
+\item Update the package list of the \pgls{macPorts} system.%
 \begin{enumerate}%
 %
 \item Open a \emph{new} \pgls{terminal} window.%
 %
-\item Execute the command \bashil{sudo port -v selfupdate}. %
-It will ask you for your password, i.e., the (administrator) password for your computer. %
+\item Write \bashil{sudo port -v selfupdate} and press~\keys{\enter}. %
+It will ask you for your (\pgls{sudo}) password, i.e., the (administrator) password for your computer. %
 Enter it an hit~\keys{\return}.%
 %
-\item After the installation completes, close the \pgls{terminal}.%
+\item After the command completes, close the \pgls{terminal}.%
 \end{enumerate}%
 %
 \item We also need \pgls{xcode} as a dependency. %
@@ -31,7 +33,7 @@ So if you do not yet have it installed\dots%
 \begin{enumerate}%
 \item Open a \emph{new} \pgls{terminal} window.%
 %
-\item Type in \bashil{xcode-select --install}. %
+\item Type in \bashil{xcode-select --install} and press~\keys{\enter}. %
 If you need to provide your password again, do so.%
 %
 \item After the installation completes, close the \pgls{terminal}.%
@@ -41,8 +43,8 @@ If you need to provide your password again, do so.%
 \begin{enumerate}%
 \item Open a \emph{new} \pgls{terminal} window.%
 %
-\item Enter \bashil{sudo port install pgmodeler}. %
-It will ask you for your password, i.e., the (administrator) password for your computer. %
+\item Enter \bashil{sudo port install pgmodeler} and press~\keys{\enter}. %
+It will ask you for your (\pgls{sudo}) password, i.e., the (administrator) password for your computer. %
 Enter it an hit~\keys{\return}.%
 %
 \item After the installation completes, close the \pgls{terminal}.%
@@ -50,13 +52,13 @@ Enter it an hit~\keys{\return}.%
 %
 \item Open a \emph{new} \pgls{terminal} window.%
 %
-\item You should now be able to execute \pgmodeler\ using the command \bashil{pgmodeler}.%
+\item You should now be able to execute \pgmodeler\ using the command \bashil{pgmodeler} + \keys{\enter}.%
 %
 \end{enumerate}%
 %
 The above follows a similar pattern compared as in the \microsoftWindows\ situation.
 We first need some abstraction layer that makes \linux\ software available on this \pgls{OS}.
-What \pgls{MSYS2} offers for \microsoftWindows, \pgls{macPorts} offers for \pgls{macOS}.
+What \pgls{MSYS2} offers for \microsoftWindows, \pgls{macPorts} offers for \pgls{macOS}~\cite{RRJ2008MFUG}.
 This time, we also need an additional dependency, namely \pgls{xcode}.
 If it is not yet installed, we install it.
 After that, \pgmodeler\ can be installed.
