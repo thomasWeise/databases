@@ -1,10 +1,13 @@
 \hsection{Second Normal Form}%
 \label{sec:normalForm:2}%
 %
+We already learned about the \pgls{1NF}.
+It will not suprise you that this is not the only normal form.
+
 The \glsFull{2NF} deals with the relationship between key attributes and non-key attributes~\cite{C1971FNOTDBRM,C1971NDBSABT,K1983ASGTFNFIRDT,D2003AITDS,EN2015FODS}.
 It applies to composite keys only, i.e., keys that consist of multiple columns of a table.
 Back in \cref{def:key,def:key2}, we learned that a key can be used to uniquely identify entities.
-If a key~$X$ uniquely identifies an object, then this means that all the other attributes of an entity provide information about that object and, hence, that key.
+If a key~$X$ uniquely identifies an entity, then this means that all the other attributes of the entity basically provide additional information about that key.
 In a table in the relational model, a key is a unique identifier for each row.
 In other words, there can be at most one row for each value of~$X$.
 All the other columns provide additional information about the real-world object represented by that key.
@@ -21,12 +24,12 @@ A \glsreset{funcDep}\emph{\pgls{funcDep}} is a relationship between two groups o
 This can be written as~$\funcDepb{X}{Y}$.%
 \end{definition}%
 %
-In other words, if $\funcDepb{X}{Y}$ and $X$~is a key, then it is invalid to have two records with the same value of~$X$ but different values of~$Y$~\cite{K1983ASGTFNFIRDT}.
-A given value of the key~$X$ must always occur with the same value of~$Y$.
+In other words, if $\funcDepb{X}{Y}$, then there are no two records with the same value of~$X$ but different values of~$Y$~\cite{K1983ASGTFNFIRDT}.
+A given value of the key~$X$ must always occur with the same associated value of~$Y$.
 Also, if $X$ is a key, then all other columns are by definition dependent on~$X$, simply because there cannot be two rows in a table with the same value of~$X$.
 
 The relational schema of relation~$R$ be~\relSchemab{R} and a key be~$X\subseteq\relSchemab{R}$.
-Of course, all attributes~$a$ in\relSchemab{R} depend on the key attributes~$X$, i.e., it always holds that~$\funcDepb{X}{a}$.
+Of course, all attributes~$a$ in~\relSchemab{R} depend on the key attributes~$X$, i.e., it always holds that~$\funcDepb{X}{a}$.
 Let us approach a definition of the \pgls{2NF} using \pglspl{funcDep}.
 If the \pgls{2NF} is observed, then for all attributes~$a\in\relSchemab{R}$ that are not part of the key~$X$~(meaning $a \not\in X$), there does \emph{not} exist a proper subset~$X'\subset X$ such that~$a$ functionally depends on~$X'$, i.e.~$\funcDepb{X'}{a}$.
 (\emph{Proper} means that $X'\neq X$.)
@@ -34,14 +37,19 @@ In the \pgls{2NF}, all attributes depend on the \emph{complete} key~$X$.
 
 However, this definition is not fully correct.
 As we discussed before and will discuss again later, there can be multiple keys, i.e., multiple sets of attributes, that uniquely identify rows in~$R$.
+Yes, we do choose one as primary key, but there may be more keys.
+This is especially true if we choose a surrogate primary key because the other candidate keys are too large.
 The non-key attributes must depend on all of these keys in their entirety.
-It is not permitted that they depend any subset of any key.
+Under the \pgls{2NF}, it is not permitted that they depend any subset of any key.
 The correct definition for the \pgls{2NF} there is given as follows~\cite{SS2005EIDDDFDB:SDWSD2}:%
 %
 \begin{definition}[\glsreset{2NF}\Pgls{2NF}]%
 \label{def:2nf}%
 A relation~$R$ with the primary key~$P\subseteq\relSchema{R}$ is in the \glsreset{2NF}\pgls{2NF} if and only if it is in the \pgls{1NF} and for all sets of attributes~$X\subseteq\relSchemab{R}$ and all attributes~$a\in\relSchemab{R}$ with~$a\not\in X$, $a\not\in P$ and~$\funcDepb{X}{a}$, it holds that $X$ is either a key or a super key, but not a proper subset of any key of~$R$.%
 \end{definition}%
+%
+This definition may not be entirely clear at first glance.
+Let us do an example to understand it better.%
 %
 \hinput{rooms}{rooms.tex}%
 \hinput{summary}{summary.tex}%

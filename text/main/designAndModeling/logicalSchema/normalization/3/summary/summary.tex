@@ -1,0 +1,18 @@
+\hsection{Summary}%
+The \pgls{3NF} is again a rule that reduces the redundancy.
+This time it deals with the redundancy that emerges if some columns of our table depend on other columns which are not keys.
+Normally, all the information in the row of a table should be information about the key columns~$K$.
+
+Let's say that there exists a functional dependency of some columns~$A$ on some columns~$B$ and that it is transitive to the key~$K$, i.e., if we have \funcDepb{$K$}{\funcDepb{$B$}{$A$}}.
+Then, for any row that has a value~$\beta$ of~$B$, the same value~$\alpha$ of~$A$ is stored.
+The value of~$B$ determines the value of~$A$.
+If the same value of~$B$ occurs in multiple rows, which it well may, then we will \emph{also} store the same value of~$A$ multiple times.
+Which we would actually not need to do, because if we know the value of~$B$, we also know the value of~$A$.
+
+So, in order to restore the \pgls{3NF}, we may separate the table into two.
+We could use~$B$ as primary key in a new table and store the corresponding values of~$A$ therein.
+Then the old $B$~column in the original table becomes a foreign key.
+This way, we have reduced the redundancy and improved the clarity and cleanliness of our data.
+It of course also comes with the drawback that we need to re-assemble the data with \sqlil{INNER JOIN} if we want to know the value of~$A$ for a given value of~$K$.
+Still, this often is a good idea.%
+\endhsection%

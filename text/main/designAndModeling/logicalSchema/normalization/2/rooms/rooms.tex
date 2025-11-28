@@ -2,6 +2,7 @@
 %
 If a table is normalized to the \pgls{2NF}, then all attributes depend on the entire primary key.
 This only matters if the primary key is composite, i.e., if it consists of multiple columns.
+Let's assume that the primary key is the only key.
 If a table violates the \pgls{2NF}, then this means that some columns are functionally dependent only on a part of but not the whole primary key.
 
 Let us explore why this can be a bad thing.

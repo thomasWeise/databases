@@ -2,10 +2,10 @@
 The \pgls{2NF} is a rule that helps us to avoid redundancy.
 It prescribes that there should not be a functional dependency from non-key attributes on a part of any composite key.
 As the result, it reduces the chance of errors during data entry, because the volume of data entered becomes smaller.
-We do not need to enter the same information several times if it only concerns a part of a key.
+
 The \pgls{2NF} also mitigates problems that can be caused by deletion and update anomalies.
 It comes at the cost of slightly more complicated queries:
-If the \pgls{2NF} is violated, information is stored in a single table that needs to be divided into multiple tables if the \pgls{2NF} is observed.
+To implement the \pgls{2NF} often means to divide the data into more tables.
 Hence, when we need all of the information together, we need to merge it from these separate tables again using, e.g., \sqlilIdx{INNER JOIN} queries.
 
 At the beginning of this section,  we were talking about \emph{keys}, but not just \emph{primary keys}.

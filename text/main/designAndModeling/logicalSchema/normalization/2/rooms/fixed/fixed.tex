@@ -36,58 +36,82 @@ This no longer causes a deletion anomaly, as the data of Building~53 is not dele
 So when we select the list of all buildings again, it is still there. %
 This is different from the situation in \cref{exec:2nf:rooms:violation:delete}, where it disappeared.}{}%
 %
-\gitLoadAndExecSQL{2nf:rooms:fixed:update}{}{normalization/2nf/rooms/fixed}{update.sql}{fixed}{}{}%
-\listingSQLandOutput{2nf:rooms:fixed:update}{%
+\gitLoadAndExecSQL{2nf:rooms:fixed:update_a}{}{normalization/2nf/rooms/fixed}{update_a.sql}{fixed}{}{}%
+\listingSQLandOutput{2nf:rooms:fixed:update_a}{%
 We want to see all rooms in South Campus~2. %
-Compared to \cref{lst:2nf:rooms:violation:update}, the query is more complex as we now need an \sqlilIdx{INNER JOIN}. %
+Compared to \cref{lst:2nf:rooms:violation:update_a}, the query is more complex as we now need an \sqlilIdx{INNER JOIN}. %
 Due to the inconsistent spelling~(South Campus~II vs.\ South Campus~2), the first query finds nothing. %
 We then run a modified query, which gives us all the rooms. %
 We can also fix the table~\sqlil{building} by updating the corresponding rows, after which the first query also works correctly. %
 Notice that here, only one row is updated. %
-In \cref{exec:2nf:rooms:violation:update}, two rows were affected.%
+In \cref{exec:2nf:rooms:violation:update_a}, two rows were affected.%
 }{}%
 %
-\gitLoadAndExecSQL{2nf:rooms:fixed:update2}{}{normalization/2nf/rooms/fixed}{update2.sql}{fixed}{}{}%
-\listingSQLandOutput{2nf:rooms:fixed:update2}{%
+\gitLoadAndExecSQL{2nf:rooms:fixed:update_b}{}{normalization/2nf/rooms/fixed}{update_b.sql}{fixed}{}{}%
+\listingSQLandOutput{2nf:rooms:fixed:update_b}{%
 We want to change the name of Building~36 to \inQuotes{Computer Science Building.} %
-Different from the situation in \cref{exec:2nf:rooms:violation:update2}, only a single row needs to be changed.%
+Different from the situation in \cref{exec:2nf:rooms:violation:update_b}, only a single row needs to be changed.%
 }{}%
 %
 \gitExecSQLraw{}{}{normalization/2nf/rooms/fixed}{cleanup.sql}{}{}{}%
 %
+The violation of the \pgls{2NF} can -- either directly or indirectly -- cause several problems or anomalies.
 So let us normalize the \db\ from the previous section into the \pgls{2NF}.
-Back then, we had composite primary key consisting of the \sqlil{building_number} and \sqlil{room_number} in our table~\sqlil{building_room}.
+
+In our original design, we had a single table \sqlil{building_room}.
+This table had a composite primary key consisting of the columns \sqlil{building_number} and \sqlil{room_number}.
 However, the columns \sqlil{building_name} and \sqlil{address} only depend on \sqlil{building_number}.
-This has led to several anomalies.
+This led to several anomalies, to redundancy, and increased the probability to make errors.
+
 To achieve normalization into the \pgls{2NF}, we have to separate the columns \sqlil{building_name} and \sqlil{address} into an own table.
 We will call this table~\sqlil{building}.
 Of course, it also needs a primary key, which will be~\sqlil{building_number}.
+We can use \sqlil{building_number}, because, in our university, the rule is that there can never be two buildings with the same number.
 
 We rename the rest of the table~\sqlil{building_room} to \sqlil{room}.
 Each row now, indeed, just represents a single room in a building.
-This table still has the composite primary key~\sqlil{building_number} and~\sqlil{room_number}, as well as the fields~\sqlil{room_name} and~\sqlil{capacity}.
+This table still has the composite primary key consisting of the columns~\sqlil{building_number} and~\sqlil{room_number}
+There is no reason to change this.
+Matter of fact, keeping this composite key instead of using a surrogate key directly enforces that rooms can only be stored \emph{after} the corresponding building record has been created.
+
+There also still are the two fields~\sqlil{room_name} and~\sqlil{capacity} in this table.
 Clearly, both non-key fields are functionally dependent on the primary key.
-As a bonus additionally to satisfying the \pgls{2NF}, this design, illustrated in~\cref{fig:roomsFixed2nf}, represents our original conceptual model given in \cref{fig:roomsErdRoom2} much better.
+They depend on the \emph{complete} primary key, to be exact.
+As a bonus additionally to satisfying the \pgls{2NF}, this logical design, illustrated in~\cref{fig:roomsFixed2nf}, represents our original conceptual model given in \cref{fig:roomsErdRoom2} much better.
 
 We now implement this design using \sql.
-\Cref{lst:2nf:rooms:fixed:04_public_building_table_5080,lst:2nf:rooms:fixed:03_public_room_table_5071,lst:2nf:rooms:fixed:05_public_room_building_fk_constraint_5099} create the tables~\sqlil{building} and~\sqlil{room} and establish the foreign key constraint linking each row of table~\sqlil{room} to one row of table~\sqlil{building}.
+\Cref{lst:2nf:rooms:fixed:04_public_building_table_5080} creates the table \sqlil{building}.
+It has the columns \sqlil{building_number}, \sqlil{building_name}, and \sqlil{address}.
+\sqlil{building_number} is the primary key.
+We could have added a \sqlil{UNIQUE} constraint for \sqlil{building_name}, thus enforcing that no two buildings can have the same name {\dots} but we leave this as an exercise for the interesting reader.
+
+\Cref{lst:2nf:rooms:fixed:03_public_room_table_5071} creates the table~\sqlil{room}.
+Its first two columns, \sqlil{building_number} and \sqlil{room_number}, form the composite primary key.
+The other two columns~(\sqlil{room_name} and \sqlil{capacity}) functionally depend on this key in its entirety.
+\Cref{lst:2nf:rooms:fixed:05_public_room_building_fk_constraint_5099} establishes the foreign key constraint linking each row of table~\sqlil{room} to one row of table~\sqlil{building}.
+This constraint turns \sqlil{building_number} into a foreign key.
 
 We can now insert the exactly as same data as in the last section into this \db.
-\Cref{lst:2nf:rooms:fixed:insert} therefore needs two~\sqlilIdx{INSERT INTO} statements.
+\Cref{lst:2nf:rooms:fixed:insert} therefore now needs two~\sqlilIdx{INSERT INTO} statements.
 First we store all the building data into the table~\sqlil{building}.
 Then we store the information about the rooms into table~\sqlil{room}.
 We immediately notice that now, there is much less redundancy.
-The data about each building is stored exactly once, whereas before, we needed to store it for each room.
+The data about each building is stored exactly once.
+Before, we needed to store it for each room.
 Since we need to write data much less often, it becomes much less likely to make errors.
 And if we make errors, they are easier to spot, since there are fewer records that we would need to check.
 
 In \cref{lst:2nf:rooms:fixed:delete}, we now reproduce the example from \cref{lst:2nf:rooms:violation:delete}.
-We first want to get a list of all buildings.
+Back then, we first got a list of all buildings and found that there were four of them.
+We then deleted the two rooms 904a and~904b.
+This led to Building~53 to disappear as well, as its existence only emerged from the two room records.
+
+So we again start by geting a list of all buildings.
 This can be done using the query \sqlil{SELECT building_number, building_name FROM building;}.
 Notice that, compared to \cref{lst:2nf:rooms:violation:delete}, we do no longer need to write the \sqlilIdx{DISTINCT} keyword.
-In the table~\sqlil{building_room}, each building number and name could appear several times, as they were stored for each room.
+Back then, in the table~\sqlil{building_room}, each building number and name could appear several times, as they were stored for each room.
 However, in our new table~\sqlil{building}, they can only appear once.
-Hence, the deletion of duplicate rows, performed by \sqlilIdx{DISTINCT}, is now no longer necessary.
+Hence, the omission of duplicate rows, performed by \sqlilIdx{DISTINCT}, is now no longer necessary.
 Anyway, our query gives us a list of four buildings.
 
 We then again delete the two offices~904a and~904b of Building~53 using a \sqlilIdx{DELETE} query.
@@ -99,13 +123,14 @@ However, as you can see in \cref{exec:2nf:rooms:fixed:delete}, this does not hap
 The building records are independently stored in table~\sqlil{building} and not affected by the deletion of rows in table~\sqlil{room}.
 All four building records remain.
 
-In \cref{lst:2nf:rooms:fixed:update}, we reproduce the example from \cref{lst:2nf:rooms:violation:update}:
+In \cref{lst:2nf:rooms:fixed:update_a}, we reproduce the example from \cref{lst:2nf:rooms:violation:update_a}:
 We want to get a list of all rooms available in South Campus~2.
 When comparing the queries necessary to achieve this between the two listings, we notice the \emph{drawback} of the~\pgls{2NF}.
 We now have a more complex query.
+
 Before, the building address was stored together with the room number in a single row.
 This is no longer the case.
-The room information is now stored in table~\sqlil{room}.
+The room information is stored in table~\sqlil{room}.
 However, the building address is stored in table~\sqlil{building}.
 If we want to find out whether a room is in South Campus~2, we must combine the data from these two tables.
 An \sqlilIdx{INNER JOIN} does the trick.
@@ -123,7 +148,7 @@ But there still should be Building~36 with its three rooms.
 Upon closer inspection of the data we inserted in \cref{lst:2nf:rooms:fixed:insert}, we realize that we made the mistake to write the address of Building~36 as~\emph{South Campus~II} instead of~\emph{South Campus~2}.
 Since we only store the building record once, this affected all rooms belonging to it.
 
-This problem can be fixed exactly in the same ways as back in \cref{lst:2nf:rooms:violation:update}.
+This problem can be fixed exactly in the same ways as back in \cref{lst:2nf:rooms:violation:update_a}.
 We can either just expand our selection condition to also include South Campus~II.
 This works, but it also is a bit unsatisfying.
 Should we really leave inconsistent data in our \db?
@@ -131,16 +156,21 @@ Should we really leave inconsistent data in our \db?
 No.
 Of course not.
 We decide to fix this by applying \sqlil{SET address = 'South Campus 2'}\sqlIdx{UPDATE} to all rows of table~\sqlil{building} where \sqlil{address = 'South Campus II'}.
-We also return the number of the building that is affected by this update.
+We also return the building number of the buildings that are affected by this update.
 As the result, we see that a single row in the table~\sqlil{building} is changed.
-Back in \cref{lst:2nf:rooms:violation:update}, two rows needed to be changed.
+Back in \cref{lst:2nf:rooms:violation:update_a}, two rows needed to be changed.
 That was an example of the update anomaly.
+And that anomaly is gone now.
 After the update, the first query works as expected.
 
-A clearer example of the update anomaly that occurs when the \pgls{2NF} is violated was given in \cref{lst:2nf:rooms:violation:update2}.
+As a side note:
+The fact that this problem still persists hints that we should probably have a table \sqlil{building_address} where we put the building addresses.
+This would avoid this issue.
+
+An even clearer example of the update anomaly that occurs when the \pgls{2NF} is violated was given in \cref{lst:2nf:rooms:violation:update_b}.
 When we wanted to change the name of Building~36 from \emph{CS Teaching Building} to \emph{Computer Science Building}, we needed to update three rows.
 We wanted to change one piece of information, but three changes were actually required.
-Now that we observe the \pgls{2NF}, doing the same thing in \cref{lst:2nf:rooms:fixed:update2} only affects a single row in table~\sqlil{building}.
+Now that we observe the \pgls{2NF}, doing the same thing in \cref{lst:2nf:rooms:fixed:update_b} only affects a single row in table~\sqlil{building}.
 The anomaly has disappeared.%
 %
 \FloatBarrier%

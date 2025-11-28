@@ -83,6 +83,8 @@ The slides in German language can be found at <https://thomasweise.github.io/dat
 39. [Logisches Schema: Beziehungsattribute](https://thomasweise.github.io/databasesSlidesDE/39_logisches_schema_beziehungsattribute.pdf)
 40. [Logisches Schema: Beziehungen höheren Grades](https://thomasweise.github.io/databasesSlidesDE/40_logisches_schema_beziehungen_höheren_grades.pdf)
 41. [Logisches Schema: 1.&nbsp;Normalform](https://thomasweise.github.io/databasesSlidesDE/41_logisches_schema_1nf.pdf)
+42. [Logisches Schema: 2.&nbsp;Normalform](https://thomasweise.github.io/databasesSlidesDE/42_logisches_schema_2nf.pdf)
+43. [Logisches Schema: 3.&nbsp;Normalform](https://thomasweise.github.io/databasesSlidesDE/43_logisches_schema_3nf.pdf)
 
 
 ### 2.4. The Examples

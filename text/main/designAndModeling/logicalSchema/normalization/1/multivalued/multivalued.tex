@@ -237,18 +237,7 @@ We paid for this ease when we want to reassemble the address string, because now
 This time, it is the other way around.
 If we had implemented all constraints of the original model, then our \sqlilIdx{INSERT} statements would have become more complicated.
 The queries later become much easier.
-Either way, our data is certainly \inQuotes{cleaner} and easier to handle in the \pgls{1NF}.
-
-Normalizing data to obey the \pgls{1NF} means to implement the relational data model consistently at the logical level.
-Most often, we will naturally produce data that conforms with the \pgls{1NF} when we translate a conceptual model to a logical model.
-After all, we did learn exactly how to do that the right way.
-However, if our conceptual model does not fit to \pgls{1NF}, we may end up with convoluted structures of repeating groups or attriutes glued together into one that should actual be separate.
-This can indeed happen.
-We said so very often that the conceptual schema should be technology-agnostic.
-So we can hardly complain if such a model schema emerges that does not fit to our relational likings.
-Therefore, care must be taken during the logical model design.
-If we really need to create a logical model that deviates from the conceptual one to achieve proper normalization, we may wish to go back and also modify the conceptual model accordingly.
-Because we do not want to end up with design documents that contradict each other.%
+Either way, our data is certainly \inQuotes{cleaner} and easier to handle in the \pgls{1NF}.%
 \FloatBarrier%
 \endhsection%
 \endhsection%
