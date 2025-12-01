@@ -93,6 +93,7 @@ It needs to be the primary key because the values in column~\sqlil{fkeid} do not
 In \cref{lst:EF_1_insert_and_select}, we insert some data into the tables.
 Since both relationship ends are optional, we can first populate tables~\sqlil{e} and~\sqlil{f}.
 Then we can establish the relationships by adding rows to table~\sqlil{relate_e_and_f}.
+We can re-assemble the data using two \sqlil{INNER JOIN}s.
 The contents of the three tables after executing \cref{lst:EF_1_insert_and_select} are given in \cref{fig:rm:ef:1:tables}.%
 %
 \begin{sloppypar}%
