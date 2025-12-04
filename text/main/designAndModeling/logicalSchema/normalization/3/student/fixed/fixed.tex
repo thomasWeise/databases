@@ -61,7 +61,7 @@ The modified table~\sqlil{student} now uses the attribute~\sqlil{parent_mobile} 
 It must be \sqlilIdx{NOT NULL}, meaning that each row in table~\sqlil{student} is linked to one~(and exactly one) row in table~\sqlil{parent}.
 We now no longer store the name of the parent in the \sqlil{student}~table.
 
-Both tables observe the \pgls{1NF}, as there are neither compound attributes nor repeated groups.
+Both tables observe the \pgls{1NF}, as there are neither composite attributes nor repeated groups.
 Both also observe the \pgls{2NF}, because there is no compound key and, hence, it is not possible that an attribute could depend on a part of such a key only.
 They also both observe the \pgls{3NF}, because there is no transitive functional dependency.
 
