@@ -9,7 +9,7 @@ The columns that only depend on the \sqlil{building_number} have been extracted 
 \label{fig:roomsFixed2nf}%
 \end{figure}%
 %
-\gitExecSQLraw{}{}{normalization/2nf/rooms/fixed/generated_sql}{01_fixed_database_2001.sql}{}{}{}%
+\gitExecSQLraw{normalization:2nf:rooms:fixed:generated_sql:01_fixed_database_2001.sql}{}{normalization/2nf/rooms/fixed/generated_sql}{01_fixed_database_2001.sql}{}{}{}%
 %
 \gitLoadAndExecSQL{2nf:rooms:fixed:04_public_building_table_5080}{}{normalization/2nf/rooms/fixed/generated_sql}{04_public_building_table_5080.sql}{fixed}{}{}%
 \listingSQL{2nf:rooms:fixed:04_public_building_table_5080}{%
@@ -53,7 +53,7 @@ We want to change the name of Building~36 to \inQuotes{Computer Science Building
 Different from the situation in \cref{exec:2nf:rooms:violation:update_b}, only a single row needs to be changed.%
 }{}%
 %
-\gitExecSQLraw{}{}{normalization/2nf/rooms/fixed}{cleanup.sql}{}{}{}%
+\gitExecSQLraw{normalization:2nf:rooms:fixed:cleanup.sql}{}{normalization/2nf/rooms/fixed}{cleanup.sql}{}{}{}%
 %
 The violation of the \pgls{2NF} can -- either directly or indirectly -- cause several problems or anomalies.
 So let us normalize the \db\ from the previous section into the \pgls{2NF}.

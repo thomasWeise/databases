@@ -147,7 +147,7 @@ The generated script to create the \sqlil{person_database}~\db.}%
 Inserting into and selecting data from the tables in the \sqlil{person_database}.%
 }{}%
 %
-\gitExecSQLraw{}{}{teachingManagement/logical/person_database_1}{cleanup.sql}{}{}{}%
+\gitExecSQLraw{teachingManagement:logical:person_database_1:cleanup.sql}{}{teachingManagement/logical/person_database_1}{cleanup.sql}{}{}{}%
 %
 \Cref{lst:person_1:01_person_database_database_2001,lst:person_1:03_public_person_id_counter_sequence_5071,lst:person_1:04_public_id_type_table_5072,lst:person_1:05_public_personal_id_table_5078,lst:person_1:06_public_person_table_5087,lst:person_1:07_public_personal_id_personal_id_id_type_fk_constraint_5093,lst:person_1:08_public_personal_id_personal_id_person_fk_constraint_5094,lst:person_1:09_public_person_person_id_person_id_fk_constraint_5092} illustrate the generated \sql\ scripts corresponding to this logical model.
 In \cref{lst:person_1:01_person_database_database_2001}, the empty new \db\ \sqlil{person_database} is created.

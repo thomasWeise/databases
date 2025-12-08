@@ -45,7 +45,7 @@ The correct definition for the \pgls{2NF} there is given as follows~\cite{SS2005
 %
 \begin{definition}[\glsreset{2NF}\Pgls{2NF}]%
 \label{def:2nf}%
-A relation~$R$ with the primary key~$P\subseteq\relSchema{R}$ is in the \glsreset{2NF}\pgls{2NF} if and only if it is in the \pgls{1NF} and for all sets of attributes~$X\subseteq\relSchemab{R}$ and all attributes~$a\in\relSchemab{R}$ with~$a\not\in X$, $a\not\in P$ and~$\funcDepb{X}{a}$, it holds that $X$ is either a key or a super key, but not a proper subset of any key of~$R$.%
+A relation~$R$ with the primary key~$P\subseteq\relSchemab{R}$ is in the \glsreset{2NF}\pgls{2NF} if and only if it is in the \pgls{1NF} and for all sets of attributes~$X\subseteq\relSchemab{R}$ and all attributes~$a\in\relSchemab{R}$ with~$a\not\in X$, $a\not\in P$ and~$\funcDepb{X}{a}$, it holds that $X$ is either a key or a super key, but not a proper subset of any key of~$R$.%
 \end{definition}%
 %
 This definition may not be entirely clear at first glance.

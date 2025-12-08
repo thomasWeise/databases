@@ -10,7 +10,7 @@
 \label{fig:studentFixed3nf}%
 \end{figure}%
 %
-\gitExecSQLraw{}{}{normalization/3nf/student/fixed/generated_sql}{01_fixed_database_2001.sql}{}{}{}
+\gitExecSQLraw{normalization:3nf:student:fixed:generated_sql:01_fixed_database_2001.sql}{}{normalization/3nf/student/fixed/generated_sql}{01_fixed_database_2001.sql}{}{}{}
 %
 \gitLoadAndExecSQL{3nf:student:fixed:03_public_student_table_5071}{}{normalization/3nf/student/fixed/generated_sql}{03_public_student_table_5071.sql}{fixed}{}{}%
 \listingSQL{3nf:student:fixed:03_public_student_table_5071}{%
@@ -39,7 +39,7 @@ We noticed that the name of the father of Mr.~Bibbo, Mr.~Bibotto, and Ms.~Bibbob
 Since we now observe the \pgls{3NF}, we need to touch only a single records to change this.%
 }{}%
 %
-\gitExecSQLraw{}{}{normalization/3nf/student/fixed}{cleanup.sql}{}{}{}%
+\gitExecSQLraw{normalization:3nf:student:fixed:cleanup.sql}{}{normalization/3nf/student/fixed}{cleanup.sql}{}{}{}%
 %
 %
 Let us fix this problem.

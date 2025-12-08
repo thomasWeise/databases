@@ -22,7 +22,7 @@ However, the other attributes each only depend on one part of this primary key.}
 \label{fig:roomsViolation2nf}%
 \end{figure}%
 %
-\gitExecSQLraw{}{}{normalization/2nf/rooms/violation/generated_sql}{01_violation_database_2001.sql}{}{}{}%
+\gitExecSQLraw{normalization:2nf:rooms:violation:generated_sql:01_violation_database_2001.sql}{}{normalization/2nf/rooms/violation/generated_sql}{01_violation_database_2001.sql}{}{}{}%
 %
 \gitLoadAndExecSQL{2nf:rooms:violation:03_public_building_room_table_5071}{}{normalization/2nf/rooms/violation/generated_sql}{03_public_building_room_table_5071.sql}{violation}{}{}%
 \listingSQL{2nf:rooms:violation:03_public_building_room_table_5071}{%
@@ -54,7 +54,7 @@ While we only want to change one single piece of information, we actually have t
 This is an update anomaly~(\cref{def:updateAnomaly}) caused by the violation of the \pgls{2NF} of our design.%
 }{}%
 %
-\gitExecSQLraw{}{}{normalization/2nf/rooms/violation}{cleanup.sql}{}{}{}%
+\gitExecSQLraw{normalization:2nf:rooms:violation:cleanup.sql}{}{normalization/2nf/rooms/violation}{cleanup.sql}{}{}{}%
 %
 In \cref{fig:roomsViolation2nf:model}, we show only a part of this diagram, namely the two entity types \emph{Room} and \emph{Building}.
 As you can see, the two entity types are related based on the \crowsFoot{Room}{OM}{Building}{M1} pattern.

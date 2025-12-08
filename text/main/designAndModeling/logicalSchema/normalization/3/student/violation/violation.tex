@@ -10,7 +10,7 @@
 \label{fig:studentViolation3nf}%
 \end{figure}%
 %
-\gitExecSQLraw{}{}{normalization/3nf/student/violation/generated_sql}{01_violation_database_2002.sql}{}{}{}%
+\gitExecSQLraw{normalization:3nf:student:violation:generated_sql:01_violation_database_2002}{}{normalization/3nf/student/violation/generated_sql}{01_violation_database_2002.sql}{}{}{}%
 %
 \gitLoadAndExecSQL{3nf:student:violation:03_public_student_table_5103}{}{normalization/3nf/student/violation/generated_sql}{03_public_student_table_5103.sql}{violation}{}{}%
 \listingSQL{3nf:student:violation:03_public_student_table_5103}{%
@@ -26,7 +26,7 @@ We noticed that the name of the father of Mr.~Bibbo, Mr.~Bibotto, and Ms.~Bibbob
 To change it, we need to touch three records, which is a typical update anomaly.%
 }{}%
 %
-\gitExecSQLraw{}{}{normalization/3nf/student/violation}{cleanup.sql}{}{}{}%
+\gitExecSQLraw{normalization:3nf:student:violation:cleanup.sql}{}{normalization/3nf/student/violation}{cleanup.sql}{}{}{}%
 %
 In a first attempt, we again put all the data in one table.
 In \cref{fig:studentViolation3nf}, we show a part of logical model which illustrates a \db\ table for storing information about students and their parents.
