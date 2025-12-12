@@ -15,7 +15,10 @@ scriptDir="$(realpath "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/bookbas
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): The script directory is '$scriptDir'."
 
 download="$(realpath "$scriptDir/downloadMulti.sh")"
-echo "$(date +'%0Y-%0m-%0d %0R:%0S'): The download script directory is '$download'."
+echo "$(date +'%0Y-%0m-%0d %0R:%0S'): The download script is '$download'."
+
+gitDownload="$(realpath "$scriptDir/gitDownload.sh")"
+echo "$(date +'%0Y-%0m-%0d %0R:%0S'): The git download script is 'gitDownload'."
 
 downloadDir="databases_$(date +"%Y%m%d")"
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): We will use the download directory '$downloadDir'."
@@ -34,8 +37,7 @@ cd slidesDE
 mv "03_python_installieren.pdf" "14_python_installieren_03_python_course.pdf"
 
 cd ..
-git clone --depth 1 https://github.com/thomasWeise/databasesCode
+"$gitDownload" databasesCode
 mv databasesCode examples
-rm -rf examples/.git
 
 echo "$(date +'%0Y-%0m-%0d %0R:%0S'): Done with the download script."
