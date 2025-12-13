@@ -87,14 +87,21 @@ The slides in German language can be found at <https://thomasweise.github.io/dat
 43. [Logisches Schema: 3.&nbsp;Normalform](https://thomasweise.github.io/databasesSlidesDE/43_logisches_schema_3nf.pdf)
 
 
-### 2.4. The Examples
+### 2.4. Complete Packages / Komplettpaket
+
+The following complete packages are available:
+
+- [`2025.12.12`](https://github.com/thomasWeise/databases/releases/download/2025.12.12/databases_2025_12_12.tar.xz) provides the end state of the book, slides (in German), questions, and example sources after the lecture period in Winter Semester 2025 at Hefei University (合肥大学).
+
+
+### 2.5. The Examples
 This is a practice-oriented course on databases.
 Therefore, we also provide a set of examples.
 The examples that we provide are all "real" in the sense that they can actually be executed and their results are actually presented in the book.
 All of them are available in the online repository <https://github.com/thomasweise/databasesCode>.
 
 
-### 2.5. LaTeX Sources, Graphics, Bibliography, etc.
+### 2.6. LaTeX Sources, Graphics, Bibliography, etc.
 The book is written in LaTeX.
 You can find its sources in <https://github.com/thomasWeise/databases>.
 You may use these files under the licensing terms provided below.
